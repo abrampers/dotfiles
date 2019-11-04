@@ -1,0 +1,10 @@
+call plug#begin('~/.vim/plugged')
+
+"Fugitive Vim Github Wrapper
+Plug 'tpope/vim-fugitive'
+" Vim tree
+Plug 'scrooloose/nerdtree'
+" cpp highlighting
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+call plug#end()
