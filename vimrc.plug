@@ -4,7 +4,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 " Vim tree
 Plug 'scrooloose/nerdtree'
+" Airline status bar
+Plug 'vim-airline/vim-airline'
+" Airline status bar theme
+Plug 'vim-airline/vim-airline-themes'
 " cpp highlighting
 Plug 'octol/vim-cpp-enhanced-highlight'
+" Seti colorscheme
+Plug 'trusktr/seti.vim'
 
 call plug#end()

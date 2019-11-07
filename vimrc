@@ -54,9 +54,6 @@ set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 " Show line numbers
 set number
 
-" Set status line display
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ [BUFFER=%n]\ %{strftime('%c')}
-
 " Encoding
 set encoding=utf-8
 
@@ -110,3 +107,16 @@ let g:cpp_member_variable_highlight = 1
 
 " Highlighting class names
 let g:cpp_class_decl_highlight = 1
+
+" Enable powerline fonts
+let g:airline_powerline_fonts = 1
+
+" Enable airline tab bar
+let g:airline#extensions#tabline#enabled = 1
+
+" Set airline theme
+let g:airline_theme='deus'
+
+" Seti colorscheme
+colorscheme seti
+hi NonText ctermbg=NONE
