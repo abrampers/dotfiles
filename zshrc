@@ -68,6 +68,7 @@ plugins=(
     zsh-syntax-highlighting
     zsh-autosuggestions
     kubectl
+    mvn
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -153,7 +154,7 @@ export LIBRARY_PATH=/usr/local/Cellar/assimp/4.1.0/lib/
 export PATH=$PATH:/usr/local/opt/rabbitmq/sbin
 
 # Kubernetes Editor
-export KUBE_EDITOR="nano"
+export KUBE_EDITOR="vi"
 
 # Locale
 export LC_ALL=en_US.UTF-8
