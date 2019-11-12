@@ -12,5 +12,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'octol/vim-cpp-enhanced-highlight'
 " Seti colorscheme
 Plug 'trusktr/seti.vim'
+" Match brackets
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
