@@ -1,18 +1,12 @@
 call plug#begin('~/.vim/plugged')
 
-"Fugitive Vim Github Wrapper
-Plug 'tpope/vim-fugitive'
-" Vim tree
-Plug 'scrooloose/nerdtree'
-" Airline status bar
-Plug 'vim-airline/vim-airline'
-" Airline status bar theme
-Plug 'vim-airline/vim-airline-themes'
-" cpp highlighting
-Plug 'octol/vim-cpp-enhanced-highlight'
-" Seti colorscheme
-Plug 'trusktr/seti.vim'
-" Match brackets
-Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-fugitive' " Fugitive Vim Github Wrapper
+Plug 'scrooloose/nerdtree' " Vim tree
+Plug 'vim-airline/vim-airline' " Airline status bar
+Plug 'vim-airline/vim-airline-themes' " Airline status bar theme
+Plug 'octol/vim-cpp-enhanced-highlight' " cpp highlighting
+Plug 'trusktr/seti.vim' " Seti colorscheme
+Plug 'jiangmiao/auto-pairs' " Match brackets
+Plug 'neovimhaskell/haskell-vim' " Haskell plugin
 
 call plug#end()

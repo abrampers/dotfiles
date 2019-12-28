@@ -1,87 +1,86 @@
-" Set compatibility to Vim only.
-set nocompatible
+set nocompatible " Set compatibility to Vim only.
 
-" Helps force plug-ins to load correctly when it is turned back on below.
-filetype off
+filetype off " Helps force plug-ins to load correctly when it is turned back on below.
 
-" Turn on syntax highlighting.
-syntax on
+syntax on " Turn on syntax highlighting.
 
-" For plug-ins to load correctly.
-filetype plugin indent on
+filetype plugin indent on " For plug-ins to load correctly.
 
-" Turn off modelines
-set modelines=0
+set modelines=0 " Turn off modelines
 
-" Automatically wrap text that extends beyond the screen length.
-set wrap
+set wrap " Automatic     wrap text that extends beyond the screen length.
+
 " Vim's auto indentation feature does not work properly with text copied from outside of Vim. Press the <F2> key to toggle paste mode on/off.
 nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
 set pastetoggle=<F2>
 
-" Uncomment below to set the max textwidth. Use a value corresponding to the width of your screen.
-" set textwidth=79
 set formatoptions=tcqrn1
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
 set noshiftround
-
-" Display 5 lines above/below the cursor when scrolling with a mouse.
-set scrolloff=5
-" Fixes common backspace problems
-set backspace=indent,eol,start
-
-" Speed up scrolling in Vim
-set ttyfast
-
-" Status bar
-set laststatus=2
+set scrolloff=5 " Display 5 lines above/below the cursor when scrolling with a mouse.
+set backspace=indent,eol,start " Fixes common backspace problems
+set ttyfast " Speed up scrolling in Vim
+set laststatus=2 " Status bar
 
 " Display options
 set showmode
 set showcmd
 
-" Highlight matching pairs of brackets. Use the '%' character to jump between them.
-set matchpairs+=<:>
+" Menu tab options
+set wildmode=longest,full
+set wildmenu
+
+set matchpairs+=<:> " Highlight matching pairs of brackets. Use the '%' character to jump between them.
 
 " Display different types of white spaces.
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 
-" Show line numbers
-set number
-
-" Encoding
-set encoding=utf-8
-
-" Highlight matching search patterns
-set hlsearch
-" Enable incremental search
-set incsearch
-" Include matching uppercase words with lowercase search term
-set ignorecase
-" Include only uppercase words with uppercase search term
-set smartcase
-
-" Store info from no more than 100 files at a time, 9999 lines of text, 100kb of data. Useful for copying large amounts of data between files.
-set viminfo='100,<9999,s100
+set number " Show line numbers
+set encoding=utf-8 " Encoding
+set hlsearch " Highlight matching search patterns
+set incsearch " Enable incremental search
+set ignorecase " Include matching uppercase words with lowercase search term
+set smartcase " Include only uppercase words with uppercase search term
+set viminfo='100,<9999,s100 " Store info from no more than 100 files at a time, 9999 lines of text, 100kb of data. Useful for copying large amounts of data between files.
 
 " Map the <Space> key to toggle a selected fold opened/closed.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
+" [KEY MAPPINGS]
+" Ctrl+n to toggle NERDTree
+map <C-n> :NERDTreeToggle<CR>
+
+" Split movement
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 " Automatically save and load folds
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview"
 
+
+" [Colorscheme setup]
+" Seti colorscheme
+colorscheme seti
+hi NonText ctermbg=NONE
+
+
+" [vimrc]
 " Call the .vimrc.plug file
 if filereadable(expand("~/.vimrc.plug"))
     source ~/.vimrc.plug
 endif
 
+
+" [NERDTree]
 " Open NERDTree every vim startup
 autocmd vimenter * NERDTree
 
@@ -96,9 +95,8 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " Close NERDTree if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" Ctrl+n to toggle NERDTree
-map <C-n> :NERDTreeToggle<CR>
 
+" [vim-cpp-enchanced-highlight setup]
 " Highlighting class scope
 let g:cpp_class_scope_highlight = 1
 
@@ -108,6 +106,8 @@ let g:cpp_member_variable_highlight = 1
 " Highlighting class names
 let g:cpp_class_decl_highlight = 1
 
+
+" [airline setup]
 " Enable powerline fonts
 let g:airline_powerline_fonts = 1
 
@@ -116,7 +116,3 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Set airline theme
 let g:airline_theme='deus'
-
-" Seti colorscheme
-colorscheme seti
-hi NonText ctermbg=NONE

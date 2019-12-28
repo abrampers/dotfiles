@@ -60,10 +60,10 @@ ZSH_THEME="avit"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git 
-    history-substring-search 
-    vi-mode 
-    osx 
+    git
+    history-substring-search
+    vi-mode
+    osx
     brew
     zsh-syntax-highlighting
     zsh-autosuggestions
@@ -84,7 +84,7 @@ bindkey '^[[B' history-substring-search-down
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-export EDITOR='code'
+export EDITOR='vi'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -110,9 +110,6 @@ export PATH
 # The original version is saved in .bash_profile.pysave
 PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 export PATH
-
-# added by Anaconda3 5.0.1 installer
-export PATH="$HOME/anaconda3/bin:$PATH"
 
 # Elixir
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
@@ -158,3 +155,25 @@ export KUBE_EDITOR="vi"
 
 # Locale
 export LC_ALL=en_US.UTF-8
+
+# GHC for Haskell
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+
+# Arcanist
+export PATH="$PATH:/Users/abrampers/arcanist/bin/"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/abrampers/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/abrampers/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/abrampers/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/abrampers/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
