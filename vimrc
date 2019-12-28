@@ -67,17 +67,17 @@ autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview"
 
 
-" [Colorscheme setup]
-" Seti colorscheme
-colorscheme seti
-hi NonText ctermbg=NONE
-
-
 " [vimrc]
 " Call the .vimrc.plug file
 if filereadable(expand("~/.vimrc.plug"))
     source ~/.vimrc.plug
 endif
+
+
+" [Colorscheme setup]
+" Seti colorscheme
+colorscheme seti
+hi NonText ctermbg=NONE
 
 
 " [NERDTree]
