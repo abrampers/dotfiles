@@ -177,3 +177,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# stoqo-transport postgres database
+export DB_HOST='localhost'
+export DB_NAME='stoqoTransport'
+export DB_USER='stoqoTransport'
+export DB_PASSWORD='stoqo'

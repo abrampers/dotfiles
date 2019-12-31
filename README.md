@@ -15,7 +15,9 @@ direction = { h (left), j (down), k (up), l (right) }
 
 | Command | Description |
 | --- | ----------- |
-| `<C-W>{direction}`| Change between splits |
+| `<C-{direction}>`| Change between splits |
 | `gt` | Next tab |
 | `gT` | Prev tab |
 | `{num}gt` | Go to tab[num] |
+| `<C-p>` | ctrlp |
+| `\d` | Go to definition for Python |

@@ -95,6 +95,10 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " Close NERDTree if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" NERDTree syntax highlighting
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
 
 " [vim-cpp-enchanced-highlight setup]
 " Highlighting class scope
@@ -116,3 +120,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 " Set airline theme
 let g:airline_theme='deus'
+
+" [ctrlp vim]
+" Enable hidden files
+let g:ctrlp_show_hidden = 1
