@@ -48,6 +48,21 @@ set ignorecase " Include matching uppercase words with lowercase search term
 set smartcase " Include only uppercase words with uppercase search term
 set viminfo='100,<9999,s100 " Store info from no more than 100 files at a time, 9999 lines of text, 100kb of data. Useful for copying large amounts of data between files.
 
+" Timeout settings (to timeout the key codes)
+set ttimeout
+set ttimeoutlen=100
+set timeoutlen=3000
+
+" Change cursor to line in insert mode
+" TODO: Configure to tmux if tmux is used
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
+
+" Highlight line in insert mode
+autocmd InsertEnter,InsertLeave * set cul!
+
 " Map the <Space> key to toggle a selected fold opened/closed.
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
@@ -81,24 +96,15 @@ hi NonText ctermbg=NONE
 
 
 " [NERDTree]
-" Open NERDTree every vim startup
-autocmd vimenter * NERDTree
-
-" Open NERDTree even if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && v:this_session == "" && !exists("s:std_in") | NERDTree | endif
-
-" Open NERDTree when vim starts up on opening a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-
 " Close NERDTree if the only window open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+let g:NERDTreeShowHidden = 1
+
 " NERDTree syntax highlighting
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
+" [vim-nerdtree-syntax-highlight]
+" Mitigating lag issues
+let g:NERDTreeLimitedSyntax = 1
 
 " [vim-cpp-enchanced-highlight setup]
 " Highlighting class scope
@@ -124,3 +130,12 @@ let g:airline_theme='deus'
 " [ctrlp vim]
 " Enable hidden files
 let g:ctrlp_show_hidden = 1
+
+
+" [devicons]
+" adding to vim-airline's tabline
+let g:webdevicons_enable_airline_tabline = 1
+" adding to vim-airline's statusline
+let g:webdevicons_enable_airline_statusline = 1
+" ctrlp glyphs
+let g:webdevicons_enable_ctrlp = 1

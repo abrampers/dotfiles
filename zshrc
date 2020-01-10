@@ -182,3 +182,12 @@ export DB_HOST='localhost'
 export DB_NAME='stoqoTransport'
 export DB_USER='stoqoTransport'
 export DB_PASSWORD='stoqo'
+export ALGOLIA_API_KEY=b6f9b11810d6e1457b80a744e2305c7f
+export ALGOLIA_APP_ID=18DEYBQPP4
+export ALGOLIA_INDEX_SUFFIX=prod
+
+# nvm setup
+source /usr/local/opt/nvm/nvm.sh
+
+# default vim
+export PATH="$PATH:/usr/local/Cellar/vim/8.2.0050_1/bin/"
