@@ -15,6 +15,12 @@ if [ -L "$HOME/.zshrc" ]; then
 fi
 ln -s $SCRIPTPATH/.zshrc $HOME/.zshrc
 
+# .zshenv
+if [ -L "$HOME/.zshenv" ]; then
+    unlink $HOME/.zshenv
+fi
+ln -s $SCRIPTPATH/.zshenv $HOME/.zshenv
+
 # .vim
 if [ -L "$HOME/.vim" ]; then
     unlink $HOME/.vim

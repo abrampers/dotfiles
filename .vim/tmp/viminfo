@@ -20,6 +20,10 @@
 $
 
 # Command Line History (newest to oldest):
+:wq
+|2,0,1581337380,,"wq"
+:w
+|2,0,1581337313,,"w"
 :q!
 |2,0,1581335669,,"q!"
 :q
@@ -40,8 +44,6 @@ $
 |2,0,1581334958,,"completeopt"
 :YcmCompleter GoTo
 |2,0,1581334658,,"YcmCompleter GoTo"
-:wq
-|2,0,1581334621,,"wq"
 :AirlineTheme base16_spacemacs
 |2,0,1581331541,,"AirlineTheme base16_spacemacs"
 :AirlineTheme deus
@@ -58,8 +60,6 @@ $
 |2,0,1581330860,,"AirlineTheme"
 :execute pathogen#infect()
 |2,0,1581330074,,"execute pathogen#infect()"
-:w
-|2,0,1581327167,,"w"
 :echo has('python') || has('python3')
 |2,0,1580183776,,"echo has('python') || has('python3')"
 

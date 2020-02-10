@@ -1,23 +1,24 @@
 # My Terminal Cheatsheet
 
-## Vim
-### NERDTree
-| Command | Description |
-| --- | ----------- |
-| `<C-n>`| Toggle NERDTree |
-| `s` | Open file in new vertical split |
-| `i` | Open file in new horizontal split |
-| `t` | Open in new tab |1
-| `T` | Open in new tab silently |
+## What's included
+### zsh
+* autodotenv
+* base16-shell
+* color
+* git-aliases
+* plugin-osx
+* zsh-autosuggestions
+* zsh-history-substring-search
+* zsh-syntax-highlighting
 
-### Navigation
-direction = { h (left), j (down), k (up), l (right) }
+### Vim
+* NerdTree
+* vim-airline
+* vim-pathogen
+* YouCompleteMe
 
-| Command | Description |
-| --- | ----------- |
-| `<C-{direction}>`| Change between splits |
-| `gt` | Next tab |
-| `gT` | Prev tab |
-| `{num}gt` | Go to tab[num] |
-| `<C-p>` | ctrlp |
-| `\d` | Go to definition for Python |
+### tmux
+With everything it includes.
+
+# References
+This setup is my modification of [Greg Hurell](https://github.com/wincent)'s dotfiles setup. Check it out [here](https://github.com/wincent/wincent)
