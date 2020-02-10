@@ -221,6 +221,7 @@ if &loadplugins
     packadd! vim-textobj-rubyblock
     packadd! vim-textobj-user
     packadd! vim-zsh
+    packadd! youcompleteme
   else
     source $HOME/.vim/pack/bundle/opt/vim-pathogen/autoload/pathogen.vim
     call pathogen#infect('pack/bundle/opt/{}')

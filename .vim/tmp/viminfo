@@ -20,14 +20,32 @@
 $
 
 # Command Line History (newest to oldest):
+:q!
+|2,0,1581335669,,"q!"
 :q
-|2,0,1581331571,,"q"
+|2,0,1581335296,,"q"
+:set completeopt=preview
+|2,0,1581335053,,"set completeopt=preview"
+:set completeopt
+|2,0,1581335039,,"set completeopt"
+:set completeopt 1
+|2,0,1581335034,,"set completeopt 1"
+:set completeopt=1
+|2,0,1581335028,,"set completeopt=1"
+:set completeopt?
+|2,0,1581334995,,"set completeopt?"
+:h completeopt
+|2,0,1581334968,,"h completeopt"
+:completeopt
+|2,0,1581334958,,"completeopt"
+:YcmCompleter GoTo
+|2,0,1581334658,,"YcmCompleter GoTo"
+:wq
+|2,0,1581334621,,"wq"
 :AirlineTheme base16_spacemacs
 |2,0,1581331541,,"AirlineTheme base16_spacemacs"
 :AirlineTheme deus
 |2,0,1581331496,,"AirlineTheme deus"
-:q!
-|2,0,1581331454,,"q!"
 :execute s:term_red
 |2,0,1581331153,,"execute s:term_red"
 :s:\vterm_red
@@ -40,8 +58,6 @@ $
 |2,0,1581330860,,"AirlineTheme"
 :execute pathogen#infect()
 |2,0,1581330074,,"execute pathogen#infect()"
-:wq
-|2,0,1581327311,,"wq"
 :w
 |2,0,1581327167,,"w"
 :echo has('python') || has('python3')
