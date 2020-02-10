@@ -1,0 +1,84 @@
+# Safe delete
+alias rm="trash"
+
+# Unix
+alias tlf="tail -f"
+alias ln='ln -v'
+alias mkdir='mkdir -p'
+alias ...='../..'
+alias -g G='| grep'
+alias -g M='| less'
+alias -g ONE="| awk '{ print \$1}'"
+alias e="$EDITOR"
+alias v="$VISUAL"
+# because typing is hard
+alias ls='ls -G'
+alias grep='grep --color'
+
+# fix for passing params to rake tasks
+alias rake='noglob rake'
+
+# Vim
+alias :w="echo this isn\'t vim 🌟"
+alias :q='exit'
+
+# Config Files
+alias vimrc="vim ~/.vimrc"
+alias vimplugins="vim ~/.dotfiles/vim/vim.symlink/plugin/plugins.vim"
+alias zshrc="vim ~/.zshrc"
+
+# Example aliases
+alias zshconfig="vim ~/.zshrc"
+
+# Aliases for gcc
+alias gcc='gcc-8'
+alias cc='gcc-8'
+alias g++='g++-8'
+alias c++='g++-8'
+
+# Aliases for repos
+alias e-columba="atom ~/Documents/Bukalapak/columba"
+alias to-columba="cd ~/Documents/Bukalapak/columba"
+r-columba() {
+  to-columba
+  iex -S mix
+}
+
+alias e-linelix="atom ~/Documents/Bukalapak/linelix"
+alias to-linelix="cd ~/Documents/Bukalapak/linelix"
+
+# For mothership
+alias to-mothership="cd ~/Documents/Bukalapak/mothership"
+r-mothership() {
+  to-mothership
+  brew services run mysql
+  brew services run redis
+  brew services run mongodb
+  brew services run beanstalkd
+  brew services run elasticsearch@2.4
+  foreman start
+}
+s-mothership() {
+  brew services stop mysql
+  brew services stop redis
+  brew services stop mongodb
+  brew services stop beanstalkd
+  brew services stop elasticsearch@2.4
+}
+
+# For palaver
+alias to-palaver="cd ~/Documents/Bukalapak/palaver"
+alias e-palaver="atom ~/Documents/Bukalapak/palaver"
+r-palaver() {
+  to-palaver
+  open -a terminal ""
+  source .env
+  iex --name master@127.0.0.1 -S mix
+  iex --name slave1@127.0.01 -S mix
+}
+
+alias to-ml="cd ~/Documents/ML"
+
+# ANTLR
+alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.7.1-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'
