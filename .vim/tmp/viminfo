@@ -11,21 +11,45 @@
 # hlsearch on (H) or off (h):
 ~H
 # Last Search Pattern:
-~MSle0~/\vdocuments
+~MSle0/\vdocuments
+
+# Last Substitute Search Pattern:
+~MSle0~&\vterm_red
+
+# Last Substitute String:
+$
 
 # Command Line History (newest to oldest):
 :q
-|2,0,1581328014,,"q"
+|2,0,1581331571,,"q"
+:AirlineTheme base16_spacemacs
+|2,0,1581331541,,"AirlineTheme base16_spacemacs"
+:AirlineTheme deus
+|2,0,1581331496,,"AirlineTheme deus"
+:q!
+|2,0,1581331454,,"q!"
+:execute s:term_red
+|2,0,1581331153,,"execute s:term_red"
+:s:\vterm_red
+|2,0,1581331144,,"s:\\vterm_red"
+:AirlineTheme base16_google
+|2,0,1581330896,,"AirlineTheme base16_google"
+:AirlineTheme base16_irblack
+|2,0,1581330890,,"AirlineTheme base16_irblack"
+:AirlineTheme
+|2,0,1581330860,,"AirlineTheme"
+:execute pathogen#infect()
+|2,0,1581330074,,"execute pathogen#infect()"
 :wq
 |2,0,1581327311,,"wq"
 :w
 |2,0,1581327167,,"w"
-:q!
-|2,0,1581322699,,"q!"
 :echo has('python') || has('python3')
 |2,0,1580183776,,"echo has('python') || has('python3')"
 
 # Search String History (newest to oldest):
+? \vterm_red
+|2,1,1581331144,,"\\vterm_red"
 ?/\vdocuments
 |2,1,1581327222,47,"\\vdocuments"
 ?/\vvim-

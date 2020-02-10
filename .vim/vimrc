@@ -37,6 +37,13 @@ let g:vim_markdown_conceal=0
 let g:vim_markdown_frontmatter=1
 let g:vim_markdown_new_list_item_indent=0
 
+" Enable hidden files for ctrlp
+let g:ctrlp_show_hidden = 1
+
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='base16_spacemacs'
+
 let g:LanguageClient_useFloatingHover=1
 let g:LanguageClient_hoverPreview='Always'
 let g:LanguageClient_diagnosticsDisplay={
@@ -173,7 +180,7 @@ endif
 if &loadplugins
   if has('packages')
     packadd! base16-vim
-    packadd! command-t
+    packadd! ctrlp.vim
     packadd! ferret
     packadd! indentLine
     packadd! loupe
@@ -186,6 +193,8 @@ if &loadplugins
     packadd! typescript-vim
     packadd! ultisnips
     packadd! vcs-jump
+    packadd! vim-airline
+    packadd! vim-airline-themes
     packadd! vim-ansible-yaml
     packadd! vim-clipper
     packadd! vim-dispatch
