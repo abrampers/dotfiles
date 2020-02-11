@@ -1,5 +1,7 @@
 # My Terminal Cheatsheet
 
+![Terminal](assets/tmux.png "Terminal") ![Vim](assets/vim.png "Vim")
+
 ## What's included
 ### zsh
 * autodotenv
@@ -20,7 +22,12 @@
 ### tmux
 With everything it includes.
 
-## To Update Packages
+## Get Started
+```sh-session
+./install.sh
+```
+
+## Update Packages
 ```sh-session
 git submodule update --remote --recursive
 ```
