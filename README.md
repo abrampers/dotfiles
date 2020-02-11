@@ -20,5 +20,10 @@
 ### tmux
 With everything it includes.
 
-# References
+## To Update Packages
+```sh-session
+git submodule update --remote --recursive
+```
+
+## References
 This setup is my modification of [Greg Hurell](https://github.com/wincent)'s dotfiles setup. Check it out [here](https://github.com/wincent/wincent)
