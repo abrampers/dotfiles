@@ -1,0 +1,15 @@
+[submodule ".vim/pack/bundle/opt/YouCompleteMe"]
+	path = .vim/pack/bundle/opt/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git
+[submodule ".vim/pack/bundle/opt/ctrlp.vim"]
+	path = .vim/pack/bundle/opt/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule ".vim/pack/bundle/opt/vim-airline"]
+	path = .vim/pack/bundle/opt/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule ".vim/pack/bundle/opt/vim-airline-themes"]
+	path = .vim/pack/bundle/opt/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule ".zsh/zsh-history-substring-search"]
+	path = .zsh/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search.git

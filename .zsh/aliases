@@ -1,6 +1,3 @@
-# Safe delete
-alias rm="trash"
-
 # Unix
 alias tlf="tail -f"
 alias ln='ln -v'
