@@ -14,13 +14,16 @@
 * zsh-syntax-highlighting
 
 ### Vim
+Includes:
 * NerdTree
 * vim-airline
 * vim-pathogen
 * YouCompleteMe
 
+For keybindings cheatsheet, go [here](vim-cheatsheet.md)
+
 ### tmux
-With everything it includes.
+With everything it includes. For keybindings cheatsheet, go [here](tmux-cheatsheet.md)
 
 ## Get Started
 ```sh-session
