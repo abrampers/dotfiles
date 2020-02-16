@@ -7,7 +7,7 @@
 ### Navigation
 ```bash
 -        # open nerdtree or go up directory in nerdtree
-<C-p>    # ctrl-p fuzzy file finder
+Ctrl + p # ctrl-p fuzzy file finder
 ```
 
 ### YouCompleteme
