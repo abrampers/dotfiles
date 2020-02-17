@@ -233,7 +233,6 @@ source $HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 source $HOME/.zsh/plugin-osx/osx-aliases.plugin.zsh
 source $HOME/.zsh/brew-zsh-plugin/brew.plugin.zsh
 source $HOME/.zsh/git-aliases/git-aliases.zsh
-source $HOME/.zsh/autodotenv/autoenv.plugin.zsh
 
 #
 # Bindings
