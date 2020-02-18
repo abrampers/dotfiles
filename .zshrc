@@ -446,6 +446,7 @@ source $HOME/.zsh/functions
 source $HOME/.zsh/hash
 source $HOME/.zsh/path
 source $HOME/.zsh/vars
+source $HOME/.zsh/conda
 
 #
 # Third-Party
