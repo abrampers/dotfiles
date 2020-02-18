@@ -27,5 +27,7 @@ PATH=$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin
 PATH=$PATH:/usr/local/opt/rabbitmq/sbin
 PATH=$PATH:/Users/abrampers/arcanist/bin/
 PATH=$PATH:/usr/local/Cellar/vim/8.2.0050_1/bin/
+PATH=$PATH:$M2
+PATH=$PATH:$GOPATH/bin
 
 export PATH
