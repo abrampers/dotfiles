@@ -13,3 +13,6 @@
 [submodule ".zsh/zsh-history-substring-search"]
 	path = .zsh/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule ".vim/pack/bundle/opt/vim-go"]
+	path = .vim/pack/bundle/opt/vim-go
+	url = https://github.com/fatih/vim-go.git
