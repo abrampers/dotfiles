@@ -2,7 +2,7 @@ if v:progname == 'vi'
   set noloadplugins
 endif
 
-let mapleader="\<Space>"
+let mapleader=","
 let maplocalleader="\\"
 
 " Extension -> filetype mappings.
@@ -41,6 +41,7 @@ let g:vim_markdown_new_list_item_indent=0
 let g:ctrlp_show_hidden = 1
 
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='base16_spacemacs'
 
@@ -150,7 +151,7 @@ nmap <leader>f <Plug>(FerretAckWord)
 
 " Normally <leader>r (mnemonic: "[r]eplace");
 " use <leader>s (mnemonic: "[s]ubstitute") instead.
-nmap <leader>s <Plug>(FerretAcks)
+nmap <leader>r <Plug>(FerretAcks)
 
 " Allow for per-machine overrides in ~/.vim/host/$HOSTNAME.vim and
 " ~/.vim/vimrc.local.

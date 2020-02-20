@@ -6,12 +6,48 @@
 
 ### Navigation
 ```bash
--        # open nerdtree or go up directory in nerdtree
-Ctrl + p # ctrl-p fuzzy file finder
+-           # open nerdtree or go up directory in nerdtree
+Ctrl + p    # ctrl-p fuzzy file finder
+\b          # go back buffer
+\f          # go forward buffer
+\g          # go last-used buffer
+\1 \2 \3    # go to buffer 1/2/3 etc
+,d          # move to git places such as conflict, merge, etc
+```
+
+### Find in project
+```bash
+,f # Find current word in current directory
+,l
+,a
+
+```
+
+### Editing
+```bash
+,w  # save changes
+
+,e  # change all occurence of word under cursor
+,r  # change all word that was found with ,f
+
+,zz # zap/delete all trailing whitespace
 ```
 
 ### YouCompleteme
 TODO
+
+### Misc
+```bash
+,x  # :exit
+,q  # :quit
+
+za  # fold code
+=   # fold code
+
+,n  # clear highlight
+,1  # cycle numbering
+,y  # copy yanked text to clipboard (TODO)
+```
 
 ## Vim General
 

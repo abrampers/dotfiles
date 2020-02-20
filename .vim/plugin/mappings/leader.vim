@@ -18,9 +18,9 @@ nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
 
 nnoremap <Leader>q :quit<CR>
 
-" <Leader>r -- Cycle through relativenumber + number, number (only), and no
+" <Leader>1 -- Cycle through relativenumber + number, number (only), and no
 " numbering (mnemonic: relative).
-nnoremap <silent> <Leader>r :call wincent#mappings#leader#cycle_numbering()<CR>
+nnoremap <silent> <Leader>1 :call wincent#mappings#leader#cycle_numbering()<CR>
 
 nnoremap <Leader>w :write<CR>
 nnoremap <Leader>x :xit<CR>
@@ -72,3 +72,23 @@ nnoremap <LocalLeader>x :%s#\v<C-r><c-w>#<C-r><C-a>#gc<CR>
 "
 " (mnemonic: [m]atch paren)
 nnoremap <silent> <Leader>m :call wincent#mappings#leader#matchparen()<CR>
+
+" Mappings to access buffers (don't use "\p" because a
+" delay before pressing "p" would accidentally paste).
+" \l       : list buffers
+" \b \f \g : go back/forward/last-used
+" \1 \2 \3 : go to buffer 1/2/3 etc
+nnoremap <LocalLeader>l :ls<CR>
+nnoremap <LocalLeader>b :bp<CR>
+nnoremap <LocalLeader>f :bn<CR>
+nnoremap <LocalLeader>g :e#<CR>
+nnoremap <LocalLeader>1 :1b<CR>
+nnoremap <LocalLeader>2 :2b<CR>
+nnoremap <LocalLeader>3 :3b<CR>
+nnoremap <LocalLeader>4 :4b<CR>
+nnoremap <LocalLeader>5 :5b<CR>
+nnoremap <LocalLeader>6 :6b<CR>
+nnoremap <LocalLeader>7 :7b<CR>
+nnoremap <LocalLeader>8 :8b<CR>
+nnoremap <LocalLeader>9 :9b<CR>
+nnoremap <LocalLeader>0 :10b<CR>
