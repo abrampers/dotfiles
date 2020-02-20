@@ -17,9 +17,9 @@ Ctrl + p    # ctrl-p fuzzy file finder
 
 ### Find in project
 ```bash
-,f # Find current word in current directory
-,l
-,a
+,f  # find current word in current directory
+,l  # find in current directory
+,a  # find in current directory (using quickfix listing) [I don't even know what's quickfix LOL]
 
 ```
 
