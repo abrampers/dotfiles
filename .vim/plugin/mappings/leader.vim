@@ -92,3 +92,7 @@ nnoremap <LocalLeader>7 :7b<CR>
 nnoremap <LocalLeader>8 :8b<CR>
 nnoremap <LocalLeader>9 :9b<CR>
 nnoremap <LocalLeader>0 :10b<CR>
+
+" Mappings for YouCompleteMe
+nnoremap <LocalLeader>t :YcmCompleter GoTo<CR>
+nnoremap <LocalLeader>d :YcmCompleter GoToDefinition<CR>

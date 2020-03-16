@@ -31,10 +31,15 @@ Ctrl + p    # ctrl-p fuzzy file finder
 ,r  # change all word that was found with ,f
 
 ,zz # zap/delete all trailing whitespace
+
+gcc # comment a current line / selected lines
 ```
 
 ### YouCompleteme
-TODO
+```bash
+\d    # :YcmCompleter GoToDefinition
+\t    # :YcmCompleter GoTo
+```
 
 ### Misc
 ```bash

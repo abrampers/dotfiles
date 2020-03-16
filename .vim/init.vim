@@ -204,6 +204,7 @@ if &loadplugins
     packadd! vim-eunuch
     packadd! vim-fugitive
     packadd! vim-git
+    packadd! vim-go
     packadd! vim-javascript
     packadd! vim-json
     packadd! vim-jsx
