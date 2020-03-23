@@ -21,9 +21,6 @@ export MAVEN_OPTS=-Xms256m #-Xmx512m
 
 export PGDATABASE=postgres
 
-# Assimp Library
-export LIBRARY_PATH=/usr/local/Cellar/assimp/4.1.0/lib/
-
 # Kubernetes Editor
 export KUBE_EDITOR="vi"
 
