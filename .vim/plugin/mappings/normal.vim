@@ -29,3 +29,6 @@ nnoremap <silent> <S-Right> :lnfile<CR>
 " Store relative line number jumps in the jumplist if they exceed a threshold.
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
+
+" Mappings for vim-go
+autocmd FileType go nnoremap <buffer> <C-t> :GoTest<CR>

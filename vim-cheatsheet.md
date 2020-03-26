@@ -33,12 +33,38 @@ Ctrl + p    # ctrl-p fuzzy file finder
 ,zz # zap/delete all trailing whitespace
 
 gcc # comment a current line / selected lines
+
+# change everything inside and insert
+ci[\"|\'|\(|\{|\[|\`]
+# delete everything inside and insert
+di[\"|\'|\(|\{|\[|\`]
+# yank everything inside and insert
+yi[\"|\'|\(|\{|\[|\`]
+
+# Delete surrounding punctuation
+ds[\"|\'|\(|\{|\[|\`]
+# Change surrounding punctuation and go to insert
+cs[\"|\'|\(|\{|\[|\`]
+# Put punctuation around given expression
+ys<expression>[\"|\'|\(|\{|\[|\`]
+# Put punctuation around given line
+yss[\"|\'|\(|\{|\[|\`]
+
+# same like above, but put the punctuation on different lines
+[d|c|s]S[\"|\'|\(|\{|\[|\`]
+
+# VISUAL MODE
+S[\"|\'|\(|\{|\[|\`] # add punctuation around selected item
 ```
 
-### YouCompleteme
+### Programming
 ```bash
-\d    # :YcmCompleter GoToDefinition
-\t    # :YcmCompleter GoTo
+\d    # (:YcmCompleter GoToDefinition<CR>)
+\t    # (:YcmCompleter GoTo<CR>)
+
+# Go only
+Ctrl + t # (:GoTest<CR>) run all tests
+Ctrl + T # (:GoTestFunc<CR>) run test for function under cursor
 ```
 
 ### Misc
