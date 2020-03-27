@@ -8,7 +8,7 @@ export EDITOR='vi'
 export GOPATH=$HOME/Go
 
 # Java
-export JAVA_HOME=/Library/Java/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home
 export JUNIT_HOME=/Library/JUNIT
 export JDEPEND_HOME=/Library/jdepend-2.9.1
 export CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.10.jar:.

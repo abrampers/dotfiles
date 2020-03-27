@@ -10,3 +10,9 @@
 [submodule ".vim/pack/bundle/opt/vim-go"]
 	path = .vim/pack/bundle/opt/vim-go
 	url = https://github.com/fatih/vim-go.git
+[submodule ".vim/pack/bundle/opt/vim-airline-themes"]
+	path = .vim/pack/bundle/opt/vim-airline-themes
+	url = git@github.com:vim-airline/vim-airline-themes.git
+[submodule ".vim/pack/bundle/opt/YouCompleteMe"]
+	path = .vim/pack/bundle/opt/YouCompleteMe
+	url = git@github.com:ycm-core/YouCompleteMe.git
