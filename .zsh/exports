@@ -2,7 +2,7 @@
 export ZSH=~/.oh-my-zsh
 
 # Editor
-export EDITOR='vi'
+export EDITOR='vim'
 
 # GO
 export GOPATH=$HOME/Go
@@ -22,7 +22,7 @@ export MAVEN_OPTS=-Xms256m #-Xmx512m
 export PGDATABASE=postgres
 
 # Kubernetes Editor
-export KUBE_EDITOR="vi"
+export KUBE_EDITOR="vim"
 
 # Locale
 export LC_ALL=en_US.UTF-8
