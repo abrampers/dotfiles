@@ -13,6 +13,8 @@ Ctrl + p    # ctrl-p fuzzy file finder
 \g          # go last-used buffer
 \1 \2 \3    # go to buffer 1/2/3 etc
 ,d          # move to git places such as conflict, merge, etc
+
+\a          # Go to alternate file
 ```
 
 ### Find in project
