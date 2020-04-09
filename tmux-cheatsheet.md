@@ -12,7 +12,7 @@ I've remapped prefix into `<C-a>`.
 
 * `tmux ls` (`:ls`) - list sessions
 * `tmux switch [-t name]` (`:switch`) - switches to an existing session
-* `tmux as [id] [-t name]` (`:attach`) - attaches to an existing session
+* `tmux attach [-t name]` (`:attach`) - attaches to an existing session
 * `<prefix>d` (`:detach`) - detach the currently attached session
 
 ### Session Management
