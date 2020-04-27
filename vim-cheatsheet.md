@@ -19,10 +19,9 @@ Ctrl + p    # ctrl-p fuzzy file finder
 
 ### Find in project
 ```bash
-,f  # find current word in current directory
-,l  # find in current directory
-,a  # find in current directory (using quickfix listing) [I don't even know what's quickfix LOL]
-
+,f  # find current word under current directory
+,a  # find pattern under current directory.
+,r  # replace every occurence in the quickfix listing (produced by ,f or ,a).
 ```
 
 ### Editing
@@ -30,7 +29,6 @@ Ctrl + p    # ctrl-p fuzzy file finder
 ,w  # save changes
 
 ,e  # change all occurence of word under cursor
-,r  # change all word that was found with ,f
 
 ,zz # zap/delete all trailing whitespace
 
@@ -64,7 +62,7 @@ S[\"|\'|\(|\{|\[|\`] # add punctuation around selected item
 \d    # (:YcmCompleter GoToDefinition<CR>)
 \t    # (:YcmCompleter GoTo<CR>)
 
-# Go only
+# Go
 Ctrl + t # (:GoTest<CR>) run all tests
 Ctrl + T # (:GoTestFunc<CR>) run test for function under cursor
 ```
