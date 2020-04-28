@@ -41,8 +41,8 @@ let g:vim_markdown_new_list_item_indent=0
 let g:ctrlp_show_hidden = 1
 
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_theme='base16_spacemacs'
 
 let g:LanguageClient_useFloatingHover=1

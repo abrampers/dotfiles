@@ -145,7 +145,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export LIBRARY_PATH=/usr/local/Cellar/assimp/4.1.0/lib/
+## export LIBRARY_PATH=/usr/local/Cellar/assimp/4.1.0/lib/
 
 # RabbitMQ
 export PATH=$PATH:/usr/local/opt/rabbitmq/sbin
