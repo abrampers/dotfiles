@@ -8,12 +8,19 @@
 ```bash
 -           # open nerdtree or go up directory in nerdtree
 Ctrl + p    # ctrl-p fuzzy file finder
+
+# Tab Navigation
+Ctrl + left   # go back tab
+Ctrl + right  # go forward tab
+
+# Buffer Navigation
 \b          # go back buffer
 \f          # go forward buffer
 \g          # go last-used buffer
 \1 \2 \3    # go to buffer 1/2/3 etc
-,d          # move to git places such as conflict, merge, etc
 
+# etc
+,d          # move to git places such as conflict, merge, etc
 \a          # Go to alternate file
 ```
 

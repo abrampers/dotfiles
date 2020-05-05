@@ -462,3 +462,6 @@ if [ -f '/Users/abrampers/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/abram
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/abrampers/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/abrampers/google-cloud-sdk/completion.zsh.inc'; fi
+
+# kubectl
+source <(kubectl completion zsh)

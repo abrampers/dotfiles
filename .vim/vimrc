@@ -37,14 +37,6 @@ let g:vim_markdown_conceal=0
 let g:vim_markdown_frontmatter=1
 let g:vim_markdown_new_list_item_indent=0
 
-" Enable hidden files for ctrlp
-let g:ctrlp_show_hidden = 1
-
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_theme='base16_spacemacs'
-
 let g:LanguageClient_useFloatingHover=1
 let g:LanguageClient_hoverPreview='Always'
 let g:LanguageClient_diagnosticsDisplay={

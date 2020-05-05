@@ -14,6 +14,10 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Tab navigation
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+
 " Repurpose cursor keys (accessible near homerow via "SpaceFN" layout) for one
 " of my most oft-use key sequences.
 nnoremap <silent> <Up> :cprevious<CR>
