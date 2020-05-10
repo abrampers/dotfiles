@@ -238,3 +238,5 @@ syntax on
 " To see all leader mappings, including those from plugins:
 "
 "   vim -c 'set t_te=' -c 'set t_ti=' -c 'map <space>' -c q | sort
+
+let g:python3_host_prog = '/Users/abrampers/anaconda3/envs/neovim/bin/python'
