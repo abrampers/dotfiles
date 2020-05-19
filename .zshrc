@@ -465,3 +465,6 @@ if [ -f '/Users/abrampers/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users
 
 # kubectl
 source <(kubectl completion zsh)
+
+# Bazel
+source ~/.bazel/bin/bazel-complete.bash
