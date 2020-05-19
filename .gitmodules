@@ -16,3 +16,6 @@
 [submodule ".vim/pack/bundle/opt/YouCompleteMe"]
 	path = .vim/pack/bundle/opt/YouCompleteMe
 	url = git@github.com:ycm-core/YouCompleteMe.git
+[submodule ".vim/pack/bundle/opt/ferret"]
+	path = .vim/pack/bundle/opt/ferret
+	url = https://github.com/wincent/ferret.git
