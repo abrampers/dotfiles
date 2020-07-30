@@ -12,20 +12,13 @@ alias v="$VISUAL"
 alias ls='ls -G'
 alias grep='grep --color'
 
-# fix for passing params to rake tasks
-alias rake='noglob rake'
-
 # Vim
 alias :w="echo this isn\'t vim 🌟"
 alias :q='exit'
 
 # Config Files
 alias vimrc="nvim ~/.vimrc"
-alias vimplugins="nvim ~/.dotfiles/vim/vim.symlink/plugin/plugins.vim"
 alias zshrc="nvim ~/.zshrc"
-
-# Example aliases
-alias zshconfig="nvim ~/.zshrc"
 
 # Aliases for gcc
 alias gcc='gcc-8'

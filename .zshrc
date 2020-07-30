@@ -457,14 +457,8 @@ test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" # GHC for Haskell
 source /usr/local/opt/nvm/nvm.sh # nvm setup
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/abrampers/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/abrampers/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/abrampers/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/abrampers/google-cloud-sdk/completion.zsh.inc'; fi
-
 # kubectl
 source <(kubectl completion zsh)
 
 # Bazel
-source ~/.bazel/bin/bazel-complete.bash
+source /Users/abrampers/.bazel/bin/bazel-complete.bash

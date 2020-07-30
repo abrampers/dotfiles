@@ -239,4 +239,6 @@ syntax on
 "
 "   vim -c 'set t_te=' -c 'set t_ti=' -c 'map <space>' -c q | sort
 
-let g:python3_host_prog = '/Users/abrampers/anaconda3/envs/neovim/bin/python'
+if has('nvim')
+  let g:python3_host_prog = '/Users/abrampers/anaconda3/envs/neovim/bin/python'
+endif
