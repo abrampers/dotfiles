@@ -455,10 +455,28 @@ source $HOME/.zsh/conda
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
 [ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" # GHC for Haskell
-source /usr/local/opt/nvm/nvm.sh # nvm setup
+
+# nvm setup
+# source /usr/local/opt/nvm/nvm.sh 
 
 # kubectl
 source <(kubectl completion zsh)
 
 # Bazel
 source /Users/abrampers/.bazel/bin/bazel-complete.bash
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/abram.perdanaputra/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/abram.perdanaputra/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/abram.perdanaputra/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/abram.perdanaputra/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
