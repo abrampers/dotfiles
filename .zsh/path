@@ -29,6 +29,6 @@ PATH=$PATH:/Users/abrampers/arcanist/bin/
 PATH=$PATH:/usr/local/Cellar/vim/8.2.0050_1/bin/
 PATH=$PATH:$M2
 PATH=$PATH:$GOPATH/bin
-PATH=$PATH:/var/folders/bk/ljj3_qvs6dx0z23t_hw5vzkw0000gn/T/rust_install_hvtnge2r/bin
+PATH=$PATH:/usr/local/opt/ncurses/bin
 
 export PATH

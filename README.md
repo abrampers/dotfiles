@@ -53,6 +53,11 @@ cd ~/.vim/pack/bundle/opt/YouCompleteMe/
 python install.py --all
 ```
 
+### Install tmux
+```sh-session
+brew install tmux
+```
+
 ### Restart terminal
 Don't forget to restart your terminal to apply changes!
 
