@@ -142,4 +142,4 @@ function () {
   fi
 }
 
-color irblack
+color seti
