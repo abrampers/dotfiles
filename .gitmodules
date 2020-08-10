@@ -1,18 +1,12 @@
 [submodule ".vim/pack/bundle/opt/ctrlp.vim"]
 	path = .vim/pack/bundle/opt/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim.git
-[submodule ".vim/pack/bundle/opt/vim-airline"]
-	path = .vim/pack/bundle/opt/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
 [submodule ".zsh/zsh-history-substring-search"]
 	path = .zsh/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
 [submodule ".vim/pack/bundle/opt/vim-go"]
 	path = .vim/pack/bundle/opt/vim-go
 	url = https://github.com/fatih/vim-go.git
-[submodule ".vim/pack/bundle/opt/vim-airline-themes"]
-	path = .vim/pack/bundle/opt/vim-airline-themes
-	url = git@github.com:vim-airline/vim-airline-themes.git
 [submodule ".vim/pack/bundle/opt/ferret"]
 	path = .vim/pack/bundle/opt/ferret
 	url = https://github.com/wincent/ferret.git
