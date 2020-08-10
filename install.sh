@@ -27,12 +27,11 @@ if [ -L "$HOME/.vim" ]; then
 fi
 ln -s $SCRIPTPATH/.vim $HOME/.vim
 
-# .config/nvim/init.vim
-if [ -L "$HOME/.config/nvim/init.vim" ]; then
-    unlink $HOME/.config/nvim/init.vim
+# nvim
+if [ -L "$HOME/.config/nvim" ]; then
+    unlink $HOME/.config/nvim
 fi
-mkdir -p .config/nvim/
-ln -s $SCRIPTPATH/.config/nvim/init.vim $HOME/.config/nvim/init.vim
+ln -s $SCRIPTPATH/.vim $HOME/.config/nvim
 
 # .tmux.conf
 if [ -L "$HOME/.tmux.conf" ]; then

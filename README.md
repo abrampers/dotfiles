@@ -40,6 +40,11 @@ git clone --recursive https://github.com/abrampers/dotfiles
 ./install.sh
 ```
 
+### Install ag (for vim code search)
+```sh-session
+brew install the_silver_searcher
+```
+
 ### Install Neovim
 ```sh-session
 brew install neovim
