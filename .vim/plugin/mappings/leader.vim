@@ -102,3 +102,4 @@ nnoremap <LocalLeader>a :A<CR>
 
 " Mappings for vim-go
 autocmd FileType go nnoremap <LocalLeader>a :GoAlternate<CR>
+autocmd FileType go nnoremap <LocalLeader>d :GoDef<CR>

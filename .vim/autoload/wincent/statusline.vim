@@ -58,7 +58,18 @@ endfunction
 function! wincent#statusline#lhs() abort
   let l:line=wincent#statusline#gutterpadding()
   " HEAVY BALLOT X - Unicode: U+2718, UTF-8: E2 9C 98
+  let l:currentmode={
+       \ 'n'  : 'NORMAL ',
+       \ 'v'  : 'VISUAL ',
+       \ 'V'  : 'V·Line ',
+       \ '' : 'V·Block ',
+       \ 'i'  : 'INSERT ',
+       \ 'R'  : 'R ',
+       \ 'Rv' : 'V·Replace ',
+       \ 'c'  : 'Command ',
+       \}
   let l:line.=&modified ? '✘ ' : '  '
+  let l:line.=toupper(l:currentmode[mode()])
   return l:line
 endfunction
 
@@ -133,10 +144,6 @@ function! wincent#statusline#update_highlight() abort
     return
   endif
 
-  " Update StatusLine to use italics (used for filetype).
-  let l:highlight=pinnacle#italicize('StatusLine')
-  execute 'highlight User1 ' . l:highlight
-
   " Update MatchParen to use italics (used for blurred statuslines).
   let l:highlight=pinnacle#italicize('MatchParen')
   execute 'highlight User2 ' . l:highlight
@@ -174,6 +181,31 @@ function! wincent#statusline#update_highlight() abort
         \   'bg': l:fg,
         \   'fg': l:bg,
         \   'term': 'bold,italic'
+        \ })
+
+  let l:fg=pinnacle#extract_fg('User7')
+  let l:bg=pinnacle#extract_bg('StatusLine')
+  execute 'highlight User2 ' .
+        \ pinnacle#highlight({
+        \   'bg': l:bg,
+        \   'fg': l:fg,
+        \   'term': 'bold'
+        \ })
+
+  execute 'highlight User1 ' .
+        \ pinnacle#highlight({
+        \   'bg': l:bg,
+        \   'fg': l:fg,
+        \   'term': 'italic'
+        \ })
+
+  let l:bg=pinnacle#extract_bg('User5')
+  let l:fg=pinnacle#extract_fg(s:wincent_statusline_status_highlight)
+  execute 'highlight User8 ' .
+        \ pinnacle#highlight({
+        \   'bg': l:bg,
+        \   'fg': l:fg,
+        \   'term': 'bold'
         \ })
 
   highlight clear StatusLineNC

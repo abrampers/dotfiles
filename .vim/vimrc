@@ -186,8 +186,6 @@ if &loadplugins
     packadd! typescript-vim
     packadd! ultisnips
     packadd! vcs-jump
-    packadd! vim-airline
-    packadd! vim-airline-themes
     packadd! vim-ansible-yaml
     packadd! vim-clipper
     packadd! vim-dispatch
