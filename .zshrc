@@ -473,3 +473,6 @@ source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 # Bazel
 source /Users/abrampers/.bazel/bin/bazel-complete.bash
 
+# Rust
+source /var/folders/bk/ljj3_qvs6dx0z23t_hw5vzkw0000gn/T/rust_install_4f0lf1b5/env
+
