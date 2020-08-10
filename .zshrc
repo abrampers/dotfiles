@@ -462,6 +462,9 @@ test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
 # kubectl
 source <(kubectl completion zsh)
 
+# rbenv
+eval "$(rbenv init -)"
+
 # gcloud
 #
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
