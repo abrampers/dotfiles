@@ -3,3 +3,5 @@
 /rplugin
 /vimrc.local
 undo
+tmp/swap
+tmp/undo

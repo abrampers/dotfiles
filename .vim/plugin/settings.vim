@@ -30,6 +30,7 @@ set diffopt+=foldcolumn:0             " don't show fold column in diff view
 if exists('$SUDO_USER')
   set noswapfile                      " don't create root-owned files
 else
+  silent !mkdir ~/.vim/tmp/swap > /dev/null 2>&1
   set directory=~/.vim/tmp/swap//     " keep swap files out of the way
   set directory+=.
 endif
@@ -160,6 +161,7 @@ if has('persistent_undo')
   if exists('$SUDO_USER')
     set noundofile                    " don't create root-owned files
   else
+    silent !mkdir ~/.vim/tmp/undo > /dev/null 2>&1
     set undodir=~/.vim/tmp/undo       " keep undo files out of the way
     set undodir+=.
     set undofile                      " actually use undo files
