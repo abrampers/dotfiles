@@ -142,4 +142,4 @@ function () {
   fi
 }
 
-color seti
+color nord

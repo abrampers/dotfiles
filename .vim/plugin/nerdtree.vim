@@ -1,3 +1,11 @@
+" NERDTree syntax highlighting
+let g:NERDTreeFileExtensionHighlightFullName = 1
+let g:NERDTreeExactMatchHighlightFullName = 1
+let g:NERDTreePatternMatchHighlightFullName = 1
+
+" Show hidden files
+let g:NERDTreeShowHidden=1
+
 " Ignore turds left behind by Mercurial.
 let g:NERDTreeIgnore=['\.orig']
 

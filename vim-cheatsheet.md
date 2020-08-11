@@ -8,6 +8,7 @@
 ```bash
 -           # open nerdtree or go up directory in nerdtree
 Ctrl + p    # ctrl-p fuzzy file finder
+Ctrl + m    # toggle nerdtree
 
 # Tab Navigation
 Ctrl + left   # go back tab
