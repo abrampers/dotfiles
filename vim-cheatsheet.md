@@ -70,9 +70,10 @@ S[\"|\'|\(|\{|\[|\`] # add punctuation around selected item
 \d    # (:YcmCompleter GoTo<CR>)
 
 # Go
-\t    # (:GoInfo<CR>) check type
-Ctrl + t # (:GoTest<CR>) run all tests
-Ctrl + T # (:GoTestFunc<CR>) run test for function under cursor
+\t        # (:GoInfo<CR>) check type
+\r        # (:GoRename<CR>) smart rename
+Ctrl + c  # (:GoTest<CR>) run all tests
+Ctrl + t  # (:GoTestFunc<CR>) run test for function under cursor
 ```
 
 ### Misc

@@ -103,3 +103,4 @@ nnoremap <LocalLeader>a :A<CR>
 autocmd FileType go nnoremap <LocalLeader>a :GoAlternate<CR>
 " corresponds to check [t]ype
 autocmd FileType go nnoremap <LocalLeader>t :GoInfo<CR>
+autocmd FileType go nnoremap <LocalLeader>r :GoRename<CR>

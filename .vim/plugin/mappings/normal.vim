@@ -32,6 +32,7 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 " Mappings for vim-go
 autocmd FileType go nnoremap <buffer> <C-t> :GoTestFunc<CR>
+autocmd FileType go nnoremap <buffer> <C-c> :GoTest<CR>
 
 " NERDTree toggle
 nnoremap <C-m> :NERDTreeToggle<CR>
