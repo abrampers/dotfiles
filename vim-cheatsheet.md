@@ -67,19 +67,18 @@ S[\"|\'|\(|\{|\[|\`] # add punctuation around selected item
 
 ### Programming
 ```bash
-gd  # goto (:YcmCompleter GoTo<CR>)
-\t  # check type (:YcmCompleter GetType<CR>)
+gd        # goto (:YcmCompleter GoTo<CR>)
+\t        # check type (:YcmCompleter GetType<CR>)
 
-tT  # run all tests (:GoTest<CR>)
-tt  # run test for function under cursor (:GoTestFunc<CR>)
-td  # debug test (:GoDebugTest [current path]<CR>)
+tT        # run all tests (:GoTest<CR>)
+tt        # run test for function under cursor (:GoTestFunc<CR>)
+td        # debug test (:GoDebugTest [current path]<CR>)
 
-,b  # add breakpoint (:GoDebugBreakpoint<CR>)
-,c  # debug continue (:GoDebugContinue<CR>)
-,n  # debug next (:GoDebugNext<CR>)
+Ctrl + n  # add breakpoint (:GoDebugBreakpoint<CR>)
+,c        # debug continue (:GoDebugContinue<CR>)
 
 # Go
-\r  # (:GoRename<CR>) smart rename
+\r        # (:GoRename<CR>) smart rename
 ```
 
 ### Misc

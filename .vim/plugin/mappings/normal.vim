@@ -39,6 +39,4 @@ autocmd FileType go
 autocmd FileType go nnoremap <buffer> tT :GoTest<CR>
 autocmd FileType go 
   \ autocmd Bufread **_test.go nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
-
-" NERDTree toggle
-nnoremap <C-m> :NERDTreeToggle<CR>
+autocmd FileType go nnoremap <C-n> :GoDebugBreakpoint<CR>
