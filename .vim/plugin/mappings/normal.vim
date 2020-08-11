@@ -34,8 +34,11 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 nnoremap gd :YcmCompleter GoTo<CR>
 
 " Mappings for vim-go
-autocmd FileType go nnoremap <buffer> tt :GoTestFunc<CR>
+autocmd FileType go 
+  \ autocmd Bufread **_test.go nnoremap <buffer> tt :GoTestFunc<CR>
 autocmd FileType go nnoremap <buffer> tT :GoTest<CR>
+autocmd FileType go 
+  \ autocmd Bufread **_test.go nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
 
 " NERDTree toggle
 nnoremap <C-m> :NERDTreeToggle<CR>

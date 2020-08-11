@@ -101,3 +101,6 @@ autocmd FileType go nnoremap <LocalLeader>a :GoAlternate<CR>
 " corresponds to check [t]ype
 autocmd FileType go nnoremap <LocalLeader>t :YcmCompleter GetType<CR>
 autocmd FileType go nnoremap <LocalLeader>r :GoRename<CR>
+autocmd FileType go nnoremap <Leader>b :GoDebugBreakpoint<CR>
+autocmd FileType go nnoremap <Leader>c :GoDebugContinue<CR>
+autocmd FileType go nnoremap <Leader>n :GoDebugNext<CR>
