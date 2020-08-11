@@ -31,7 +31,7 @@ nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 " Mappings for vim-go
-autocmd FileType go nnoremap <buffer> <C-t> :GoTest<CR>
+autocmd FileType go nnoremap <buffer> <C-t> :GoTestFunc<CR>
 
 " NERDTree toggle
 nnoremap <C-m> :NERDTreeToggle<CR>
