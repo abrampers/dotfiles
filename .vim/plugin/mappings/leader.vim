@@ -93,14 +93,11 @@ nnoremap <LocalLeader>8 :8b<CR>
 nnoremap <LocalLeader>9 :9b<CR>
 nnoremap <LocalLeader>0 :10b<CR>
 
-" Mappings for YouCompleteMe
-nnoremap <LocalLeader>d :YcmCompleter GoTo<CR>
-
 " Mappings for projectionist
 nnoremap <LocalLeader>a :A<CR>
 
 " Mappings for vim-go
 autocmd FileType go nnoremap <LocalLeader>a :GoAlternate<CR>
 " corresponds to check [t]ype
-autocmd FileType go nnoremap <LocalLeader>t :GoInfo<CR>
+autocmd FileType go nnoremap <LocalLeader>t :YcmCompleter GetType<CR>
 autocmd FileType go nnoremap <LocalLeader>r :GoRename<CR>
