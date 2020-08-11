@@ -32,6 +32,13 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
 " Mappings for YouCompleteMe
 nnoremap gd :YcmCompleter GoTo<CR>
+" go to [r]eferences
+autocmd FileType c,cpp,objc,objcpp,cuda,go,java,javascript,python,typescript,rust nnoremap gr :YcmCompleter GoToReferences<CR>
+autocmd FileType go nnoremap gr :GoReferrers<CR>
+" go to i[m]plementation
+autocmd FileType cs,go,java,rust,typescript,javascript nnoremap gm :YcmCompleter GoToImplementation<CR>
+" go to [t]ype
+autocmd FileType go,java,typescript,javascript nnoremap gt :YcmCompleter GoToType<CR>
 
 " Mappings for vim-go
 autocmd FileType go 
