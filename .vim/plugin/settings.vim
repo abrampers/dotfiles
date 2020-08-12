@@ -2,6 +2,7 @@ scriptencoding utf-8
 
 set autoindent                        " maintain indent of current line
 set backspace=indent,start,eol        " allow unrestricted backspacing in insert mode
+set clipboard+=unnamedplus            " Add clipboard syncing support on yank
 
 if exists('$SUDO_USER')
   set nobackup                        " don't create root-owned files
