@@ -75,6 +75,12 @@ gt        # go to [t]ype
 
 m<CR>     # run make
 m!        # run make with optional command async
+`<Space>  # run terminal command
+`!        # run terminal command async
+`<CR>     : run dispatch
+:Copen    # open the async command window
+<C-c>     # Abort most recent build dispatch
+
 tT        # run all tests (:GoTest<CR>)
 tt        # run test for function under cursor (:GoTestFunc<CR>)
 td        # debug test (:GoDebugTest [current path]<CR>)

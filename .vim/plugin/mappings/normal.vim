@@ -33,6 +33,9 @@ nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 " NerdTree
 nnoremap <C-n> :NERDTreeToggle<CR>
 
+" Dispatch
+nnoremap <C-c> :AbortDispatch<CR>
+
 " Mappings for YouCompleteMe
 autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
