@@ -462,8 +462,8 @@ test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
 # kubectl
 source <(kubectl completion zsh)
 
-# rbenv
-eval "$(rbenv init -)"
+# rvm
+source $HOME/.rvm/scripts/rvm
 
 # gcloud
 #
@@ -471,5 +471,8 @@ source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.in
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # Bazel
-source /Users/abrampers/.bazel/bin/bazel-complete.bash
+source $HOME/.bazel/bin/bazel-complete.bash
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

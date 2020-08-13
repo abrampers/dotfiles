@@ -8,7 +8,7 @@
 ```bash
 -           # open nerdtree or go up directory in nerdtree
 Ctrl + p    # ctrl-p fuzzy file finder
-Ctrl + m    # toggle nerdtree
+Ctrl + n    # toggle nerdtree
 
 # Tab Navigation
 Ctrl + left   # go back tab
@@ -73,11 +73,13 @@ gm        # go to i[m]plementations
 gt        # go to [t]ype
 \t        # check type (:YcmCompleter GetType<CR>)
 
+m<CR>     # run make
+m!        # run make with optional command async
 tT        # run all tests (:GoTest<CR>)
 tt        # run test for function under cursor (:GoTestFunc<CR>)
 td        # debug test (:GoDebugTest [current path]<CR>)
 
-Ctrl + n  # add breakpoint (:GoDebugBreakpoint<CR>)
+mb        # mark breakpoint (:GoDebugBreakpoint<CR>)
 ,c        # debug continue (:GoDebugContinue<CR>)
 
 \r        # smart rename (:GoRename<CR> || :YcmCompleter RefactorRename )

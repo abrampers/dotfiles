@@ -30,20 +30,22 @@ nnoremap <silent> <S-Right> :lnfile<CR>
 nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
 nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
 
+" NerdTree
+nnoremap <C-n> :NERDTreeToggle<CR>
+
 " Mappings for YouCompleteMe
-nnoremap gd :YcmCompleter GoTo<CR>
+autocmd FileType c,cpp,objc,objcpp,cuda,cs,go,java,javascript,python,rust,typescript nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
-autocmd FileType c,cpp,objc,objcpp,cuda,go,java,javascript,python,typescript,rust nnoremap gr :YcmCompleter GoToReferences<CR>
-autocmd FileType go nnoremap gr :GoReferrers<CR>
+autocmd FileType c,cpp,objc,objcpp,cuda,go,java,javascript,python,typescript,rust nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
+autocmd FileType go nnoremap <buffer> gr :GoReferrers<CR>
 " go to i[m]plementation
-autocmd FileType cs,go,java,rust,typescript,javascript nnoremap gm :YcmCompleter GoToImplementation<CR>
+autocmd FileType cs,go,java,rust,typescript,javascript nnoremap <buffer> gm :YcmCompleter GoToImplementation<CR>
 " go to [t]ype
-autocmd FileType go,java,typescript,javascript nnoremap gt :YcmCompleter GoToType<CR>
+autocmd FileType go,java,typescript,javascript nnoremap <buffer> gt :YcmCompleter GoToType<CR>
 
 " Mappings for vim-go
-autocmd FileType go 
-  \ autocmd Bufread **_test.go nnoremap <buffer> tt :GoTestFunc<CR>
 autocmd FileType go nnoremap <buffer> tT :GoTest<CR>
-autocmd FileType go 
-  \ autocmd Bufread **_test.go nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
-autocmd FileType go nnoremap <C-n> :GoDebugBreakpoint<CR>
+autocmd BufEnter **/*_test.go nnoremap <buffer> tt :GoTestFunc<CR>
+autocmd BufEnter **/*_test.go nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
+" [m]ark [b]reakpoint
+autocmd FileType go nnoremap <buffer> mb :GoDebugBreakpoint<CR>
