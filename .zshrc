@@ -457,7 +457,7 @@ test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" # GHC for Haskell
 
 # nvm setup
-# source /usr/local/opt/nvm/nvm.sh 
+source $(brew --prefix nvm)/nvm.sh
 
 # kubectl
 source <(kubectl completion zsh)
@@ -472,7 +472,3 @@ source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 
 # Bazel
 source $HOME/.bazel/bin/bazel-complete.bash
-
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"

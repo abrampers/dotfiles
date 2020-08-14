@@ -30,5 +30,6 @@ PATH=$PATH:/usr/local/Cellar/vim/8.2.0050_1/bin/
 PATH=$PATH:$M2
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/local/opt/ncurses/bin
+PATH=$PATH:$HOME/.rvm/bin
 
 export PATH
