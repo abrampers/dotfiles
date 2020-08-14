@@ -73,6 +73,9 @@ gm        # go to i[m]plementations
 gt        # go to [t]ype
 \t        # check type (:YcmCompleter GetType<CR>)
 
+Ctrl + ]  # go to tag (go to definition using ctags)
+Ctrl + t  # go to previous tag
+
 m<CR>     # run make
 m!        # run make with optional command async
 `<Space>  # run terminal command

@@ -41,6 +41,9 @@ git clone --recursive https://github.com/abrampers/dotfiles
 ```
 
 ### Install ag (for vim code search)
+
+Code search capability. Like Cmd/Ctrl + f on other text editor.
+
 ```sh-session
 brew install the_silver_searcher
 ```
@@ -52,10 +55,23 @@ conda env create -f env/neovim.yml
 ```
 
 ### Setup YouCompleteMe
+
+Add these capability for c, cpp, objc, objcpp, cuda, cs, go, java, javascript, python, rust, typescript:
+- Code completion for multiple languages
+- Code navigation
+
 ```sh-session
 brew install cmake go mono nodejs
 cd ~/.vim/pack/bundle/opt/YouCompleteMe/
 python install.py --all
+```
+
+### Setup Ctags
+
+Code navigation capability for unsupported languages in YouCompleteMe
+
+```sh-session
+brew install ctags
 ```
 
 ### Install tmux
