@@ -236,7 +236,3 @@ syntax on
 " To see all leader mappings, including those from plugins:
 "
 "   vim -c 'set t_te=' -c 'set t_ti=' -c 'map <space>' -c q | sort
-
-if has('nvim')
-  let g:python3_host_prog = '/usr/local/bin/python3'
-endif
