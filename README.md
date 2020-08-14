@@ -28,6 +28,7 @@ With everything it includes. For keybindings cheatsheet, go [here](tmux-cheatshe
 ## Prerequisites
 1. [Homebrew](https://brew.sh)
 2. [miniconda](https://docs.conda.io/en/latest/miniconda.html)
+3. [rvm](https://rvm.io/rvm/install)
 
 ## Build Instructions
 ### Clone
