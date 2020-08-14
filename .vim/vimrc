@@ -202,8 +202,10 @@ if &loadplugins
     packadd! vim-markdown
     packadd! vim-operator-user
     packadd! vim-projectionist
+    packadd! vim-rails
     packadd! vim-reason-plus
     packadd! vim-repeat
+    packadd! vim-ruby
     packadd! vim-signature
     packadd! vim-slime
     packadd! vim-soy
