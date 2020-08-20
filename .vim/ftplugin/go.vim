@@ -26,3 +26,9 @@ autocmd FileType go nnoremap <buffer> gr :GoReferrers<CR>
 autocmd FileType go nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
 autocmd FileType go nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
+" Mappings for vim-go
+autocmd FileType go nnoremap <buffer> <LocalLeader>a :GoAlternate<CR>
+" corresponds to check [t]ype
+autocmd FileType go nnoremap <buffer> <LocalLeader>t :YcmCompleter GetType<CR>
+autocmd FileType go nnoremap <buffer> <LocalLeader>r :GoRename<CR>
+autocmd FileType go nnoremap <buffer> <Leader>c :GoDebugContinue<CR>

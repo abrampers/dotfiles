@@ -10,3 +10,5 @@ autocmd FileType javascript nnoremap <buffer> gm :YcmCompleter GoToImplementatio
 autocmd FileType javascript nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
 autocmd FileType javascript nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
+
+autocmd FileType javascript nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename 

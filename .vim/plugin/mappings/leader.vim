@@ -95,12 +95,3 @@ nnoremap <LocalLeader>0 :10b<CR>
 
 " Mappings for projectionist
 nnoremap <LocalLeader>a :A<CR>
-
-autocmd FileType c,cpp,objc,objcpp,cuda,java,javascript,typescript,rust,cs nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename 
-
-" Mappings for vim-go
-autocmd FileType go nnoremap <buffer> <LocalLeader>a :GoAlternate<CR>
-" corresponds to check [t]ype
-autocmd FileType go nnoremap <buffer> <LocalLeader>t :YcmCompleter GetType<CR>
-autocmd FileType go nnoremap <buffer> <LocalLeader>r :GoRename<CR>
-autocmd FileType go nnoremap <buffer> <Leader>c :GoDebugContinue<CR>
