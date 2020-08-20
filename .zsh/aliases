@@ -12,13 +12,11 @@ alias v="$VISUAL"
 alias ls='ls -G'
 alias grep='grep --color'
 
+alias cat='bat'
+
 # Vim
 alias :w="echo this isn\'t vim 🌟"
 alias :q='exit'
-
-# Config Files
-alias vimrc="nvim ~/.vimrc"
-alias zshrc="nvim ~/.zshrc"
 
 # Aliases for gcc
 alias gcc='gcc-8'

@@ -41,12 +41,33 @@ git clone --recursive https://github.com/abrampers/dotfiles
 ./install.sh
 ```
 
+### Install fzf install binaries
+```sh-session
+~/.fzf/install
+```
+
+### Install ripgrep (for vim code search)
+
+Code search capability. Like Cmd/Ctrl + f on other text editor.
+
+```sh-session
+brew install ripgrep
+```
+
 ### Install ag (for vim code search)
 
 Code search capability. Like Cmd/Ctrl + f on other text editor.
 
 ```sh-session
 brew install the_silver_searcher
+```
+
+### Install bat
+
+Syntax highlighter
+
+```sh-session
+brew install bat
 ```
 
 ### Install Neovim

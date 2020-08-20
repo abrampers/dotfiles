@@ -44,3 +44,15 @@ if [ -L "$HOME/.condarc" ]; then
     unlink $HOME/.condarc
 fi
 ln -s $SCRIPTPATH/.condarc $HOME/.condarc
+
+# .fzf
+if [ -L "$HOME/.fzf" ]; then
+    unlink $HOME/.fzf
+fi
+ln -s $SCRIPTPATH/.fzf $HOME/.fzf
+
+# bat
+if [ -L "$HOME/.config/bat" ]; then
+    unlink $HOME/.config/bat
+fi
+ln -s $SCRIPTPATH/.config/bat $HOME/.config/bat
