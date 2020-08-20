@@ -36,7 +36,6 @@ endif
 " from being used.
 if len(filter(argv(), 'isdirectory(v:val)')) > 0
   call wincent#plugin#packadd('nerdtree', 'NERD_tree.vim')
-  " nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>
   nnoremap <C-_> :NERDTreeFind<CR>
 else
   call wincent#plugin#lazy({
@@ -53,7 +52,6 @@ else
         \     'NERDTreeToggle': '-n=? -complete=dir -bar',
         \   },
         \   'nnoremap': {
-        \     '<silent> -': ":silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>",
         \     '<C-_>': ':NERDTreeFind<CR>'
         \   }
         \ })
