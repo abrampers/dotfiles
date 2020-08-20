@@ -91,20 +91,20 @@ endfunction
 
 function! wincent#autocmds#blur_statusline() abort
   " Default blurred statusline (buffer number: filename).
-  let l:blurred='%{wincent#statusline#gutterpadding()}'
-  let l:blurred.='\ ' " space
-  let l:blurred.='\ ' " space
-  let l:blurred.='\ ' " space
-  let l:blurred.='\ ' " space
-  let l:blurred.='%<' " truncation point
-  let l:blurred.='%f' " filename
-  let l:blurred.='%=' " split left/right halves (makes background cover whole)
-  call s:update_statusline(l:blurred, 'blur')
+  " let l:blurred='%{wincent#statusline#gutterpadding()}'
+  " let l:blurred.='\ ' " space
+  " let l:blurred.='\ ' " space
+  " let l:blurred.='\ ' " space
+  " let l:blurred.='\ ' " space
+  " let l:blurred.='%<' " truncation point
+  " let l:blurred.='%f' " filename
+  " let l:blurred.='%=' " split left/right halves (makes background cover whole)
+  " call s:update_statusline(l:blurred, 'blur')
 endfunction
 
 function! wincent#autocmds#focus_statusline() abort
   " `setlocal statusline=` will revert to global 'statusline' setting.
-  call s:update_statusline('', 'focus')
+  " call s:update_statusline('', 'focus')
 endfunction
 
 function! s:update_statusline(default, action) abort

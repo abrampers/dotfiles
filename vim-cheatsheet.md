@@ -6,13 +6,12 @@
 
 ### Navigation
 ```bash
--           # open nerdtree or go up directory in nerdtree
-
-,f          # fzf files
-,s          # fzf content (using rg)
+Ctrl + p    # fzf files
+,f          # fzf content (using rg)
 ,l          # fzf lines in open buffers
 
 Ctrl + n    # toggle nerdtree
+Ctrl + -    # show current file in nerdtree
 
 # Tab Navigation
 Ctrl + left   # go back tab
@@ -32,6 +31,8 @@ Ctrl + right  # go forward tab
 ### Find in project
 ```bash
 # Todo. Will use vim-grepper
+,g # find all in project
+,r # replace all current word occurences in project
 ```
 
 ### Editing
@@ -74,6 +75,11 @@ gr        # go to [r]eferences
 gm        # go to i[m]plementations
 gt        # go to [t]ype
 \t        # check type (:YcmCompleter GetType<CR>)
+
+,g        # search across working directory
+
+[c        # go to prev hunk (edited location)
+]c        # go to next hunk
 
 Ctrl + ]  # go to tag (go to definition using ctags)
 Ctrl + t  # go to previous tag
