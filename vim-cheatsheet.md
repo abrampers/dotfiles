@@ -7,7 +7,11 @@
 ### Navigation
 ```bash
 -           # open nerdtree or go up directory in nerdtree
-Ctrl + p    # ctrl-p fuzzy file finder
+
+,f          # fzf files
+,s          # fzf content (using rg)
+,l          # fzf lines in open buffers
+
 Ctrl + n    # toggle nerdtree
 
 # Tab Navigation
@@ -27,9 +31,7 @@ Ctrl + right  # go forward tab
 
 ### Find in project
 ```bash
-,f  # find current word under current directory
-,a  # find pattern under current directory.
-,r  # replace every occurence in the quickfix listing (produced by ,f or ,a).
+# Todo. Will use vim-grepper
 ```
 
 ### Editing
