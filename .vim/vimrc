@@ -199,6 +199,7 @@ if &loadplugins
     packadd! vim-git
     packadd! vim-gitgutter
     packadd! vim-go
+    packadd! vim-grepper
     packadd! vim-javascript
     packadd! vim-json
     packadd! vim-jsx
