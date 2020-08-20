@@ -173,6 +173,7 @@ endif
 if &loadplugins
   if has('packages')
     packadd! base16-vim
+    packadd! base16-vim-airline-themes
     packadd! ctrlp.vim
     packadd! ferret
     packadd! indentLine
@@ -186,6 +187,7 @@ if &loadplugins
     packadd! typescript-vim
     packadd! ultisnips
     packadd! vcs-jump
+    packadd! vim-airline
     packadd! vim-ansible-yaml
     packadd! vim-clipper
     packadd! vim-dispatch
