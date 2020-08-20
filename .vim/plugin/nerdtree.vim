@@ -23,6 +23,9 @@ let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
 let g:NERDTreeMouseMode=2
 
 if has('autocmd')
+  " Close NERDTree if the only window open is NERDTree
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
   augroup WincentNERDTree
     autocmd!
     autocmd User NERDTreeInit call wincent#autocmds#attempt_select_last_file()
@@ -55,3 +58,19 @@ else
         \   }
         \ })
 endif
+
+if exists('+colorcolumn')
+  setlocal colorcolumn=
+endif
+
+if has('folding')
+  setlocal nofoldenable
+endif
+
+setlocal nolist
+
+" Move up a directory using "-" like vim-vinegar (usually "u" does this).
+nmap <buffer> <expr> - g:NERDTreeMapUpdir
+
+" NerdTree
+nnoremap <C-n> :NERDTreeToggle<CR>
