@@ -178,6 +178,7 @@ if &loadplugins
     packadd! indentLine
     packadd! loupe
     packadd! neco-ghc
+    packadd! nerdtree-git-plugin
     packadd! pinnacle
     packadd! replay
     packadd! scalpel
