@@ -36,7 +36,7 @@ endif
 " from being used.
 if len(filter(argv(), 'isdirectory(v:val)')) > 0
   call wincent#plugin#packadd('nerdtree', 'NERD_tree.vim')
-  nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>
+  " nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>
   nnoremap <C-_> :NERDTreeFind<CR>
 else
   call wincent#plugin#lazy({
@@ -69,8 +69,8 @@ endif
 
 setlocal nolist
 
-" Move up a directory using "-" like vim-vinegar (usually "u" does this).
-nmap <buffer> <expr> - g:NERDTreeMapUpdir
+" " Move up a directory using "-" like vim-vinegar (usually "u" does this).
+" nmap <buffer> <expr> - g:NERDTreeMapUpdir
 
 " NerdTree
 nnoremap <C-n> :NERDTreeToggle<CR>
