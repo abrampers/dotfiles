@@ -208,6 +208,7 @@ if &loadplugins
     packadd! vim-rails
     packadd! vim-reason-plus
     packadd! vim-repeat
+    packadd! vim-rooter
     packadd! vim-ruby
     packadd! vim-signature
     packadd! vim-slime
