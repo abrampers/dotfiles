@@ -173,7 +173,6 @@ endif
 if &loadplugins
   if has('packages')
     packadd! base16-vim
-    packadd! ctrlp.vim
     packadd! ferret
     packadd! indentLine
     packadd! loupe
