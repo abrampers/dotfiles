@@ -190,6 +190,7 @@ if &loadplugins
     packadd! vim-airline
     packadd! vim-airline-themes
     packadd! vim-ansible-yaml
+    packadd! vim-bundler
     packadd! vim-clipper
     packadd! vim-dispatch
     packadd! vim-docvim
