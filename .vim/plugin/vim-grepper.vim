@@ -4,4 +4,4 @@ let g:grepper.highlight = 1
 
 command! Todo :Grepper -tool ag -query '\(TODO\|FIXME\)'
 
-nnoremap <Leader>g :Grepper<CR>
+nnoremap <Leader>gr :Grepper<CR>
