@@ -94,7 +94,7 @@ set nojoinspaces                      " don't autoinsert two spaces after '.', '
 set number                            " show line numbers in gutter
 
 if exists('+relativenumber')
-  set relativenumber                  " show relative numbers in gutter
+  set norelativenumber                  " show relative numbers in gutter
 endif
 
 set scrolloff=3                       " start scrolling 3 lines before edge of viewport
