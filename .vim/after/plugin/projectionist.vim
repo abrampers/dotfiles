@@ -31,7 +31,17 @@ let g:projectionist_heuristics = {
       \         'src/{}.re',
       \       ],
       \       'type': 'test'
-      \     }
+      \     },
+      \   },
+      \   '*.go': {
+      \     '*.go': {
+      \         'alternate': '{}_test.go',
+      \         'type': 'source'
+      \     },
+      \     '*_test.go': {
+      \         'alternate': '{}.go',
+      \         'type': 'test'
+      \     },
       \   }
       \ }
 
