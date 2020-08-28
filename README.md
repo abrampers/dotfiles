@@ -95,6 +95,10 @@ Code navigation capability for unsupported languages in YouCompleteMe
 ```sh-session
 brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 ```
+Don't forget to point ctags to universal ctags by
+```sh
+alias ctags="$(brew --prefix)/bin/ctags"
+```
 
 ### Install tmux
 ```sh-session
