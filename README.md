@@ -88,12 +88,12 @@ cd ~/.vim/pack/bundle/opt/YouCompleteMe/
 python install.py --all
 ```
 
-### Setup Ctags
+### Setup Universal Ctags
 
 Code navigation capability for unsupported languages in YouCompleteMe
 
 ```sh-session
-brew install ctags
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 ```
 
 ### Install tmux

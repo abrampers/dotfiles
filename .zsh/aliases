@@ -18,6 +18,9 @@ alias cat='bat'
 alias :w="echo this isn\'t vim 🌟"
 alias :q='exit'
 
+# ctags
+alias ctags="$(brew --prefix)/bin/ctags"
+
 # Aliases for gcc
 alias gcc='gcc-8'
 alias cc='gcc-8'
