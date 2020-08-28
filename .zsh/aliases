@@ -15,6 +15,7 @@ alias grep='grep --color'
 alias cat='bat'
 
 # Vim
+alias vim="$(brew --prefix)/bin/vim"
 alias :w="echo this isn\'t vim 🌟"
 alias :q='exit'
 
