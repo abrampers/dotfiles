@@ -6,5 +6,5 @@ command! -bang -nargs=* Rg call
   \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --follow --glob ".gitignore" --glob ".zshrc" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 nnoremap <leader>f :Rg<CR>
-nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :GFiles<CR>
 nnoremap <leader>l :Lines<CR>
