@@ -13,13 +13,21 @@ nnoremap <Leader>p :echo expand('%')<CR>
 " off to Clipper.
 nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
 
-nnoremap <Leader>q :quit<CR>
+" re source vimrc
+if has("nvim")
+  nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
+else
+  nnoremap <Leader><CR> :so ~/.vim/vimrc<CR>
+endif
+
+nnoremap <Leader>q :qa<CR>
+nnoremap <LocalLeader>q :quit<CR>
 
 " <Leader>1 -- Cycle through relativenumber + number, number (only), and no
 " numbering (mnemonic: relative).
 nnoremap <silent> <Leader>1 :call wincent#mappings#leader#cycle_numbering()<CR>
 
-nnoremap <Leader>w :write<CR>
+nnoremap <LocalLeader>w :write<CR>
 nnoremap <Leader>x :xit<CR>
 
 " <Leader>zz -- Zap trailing whitespace in the current buffer.

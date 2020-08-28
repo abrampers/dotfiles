@@ -2,8 +2,8 @@ if v:progname == 'vi'
   set noloadplugins
 endif
 
-let mapleader=","
-let maplocalleader="\\"
+let mapleader=" "
+let maplocalleader=","
 
 " Extension -> filetype mappings.
 let filetype_m='objc'
