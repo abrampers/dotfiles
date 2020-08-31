@@ -4,6 +4,12 @@
 
 ## Personal Space
 
+### Cool commands
+```bash
+:Gbrowse    # opens file on github/gitlab
+:Gdiffsplit # opens side by side diff
+```
+
 ### Navigation
 ```bash
 Ctrl + p    # fzf files
