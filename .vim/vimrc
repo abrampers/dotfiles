@@ -175,6 +175,7 @@ if &loadplugins
     packadd! base16-vim
     packadd! ferret
     packadd! fzf.vim
+    packadd! fzf-checkout.vim
     packadd! indentLine
     packadd! loupe
     packadd! neco-ghc
