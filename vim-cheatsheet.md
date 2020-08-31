@@ -7,8 +7,8 @@
 ### Navigation
 ```bash
 Ctrl + p    # fzf files
-,f          # fzf content (using rg)
-,l          # fzf lines in open buffers
+<space>f    # fzf content (using rg)
+<space>l    # fzf lines in open buffers
 
 Ctrl + n    # toggle nerdtree
 Ctrl + -    # show current file in nerdtree
@@ -18,54 +18,53 @@ Ctrl + left   # go back tab
 Ctrl + right  # go forward tab
 
 # Buffer Navigation
-\b          # go back buffer
-\f          # go forward buffer
-\g          # go last-used buffer
-\1 \2 \3    # go to buffer 1/2/3 etc
+,b          # go back buffer
+,f          # go forward buffer
+,g          # go last-used buffer
+,1 ,2 ,3    # go to buffer 1/2/3 etc
 
 # etc
-,d          # move to git places such as conflict, merge, etc
-\a          # Go to alternate file
+,a          # Go to alternate file
 ```
 
 ### Find in project
 ```bash
-# Todo. Will use vim-grepper
-,g # find all in project
-,r # replace all current word occurences in project
+<space>a # find in project
+<space>s # find current word in project
 ```
 
 ### Editing
 ```bash
-,w  # save changes
+<space>w  # save changes
 
-,e  # change all occurence of word under cursor
+<space>e  # change all occurence of word under cursor
+<space>r  # replace current word occurences in project
 
-,zz # zap/delete all trailing whitespace
+<space>zz # zap/delete all trailing whitespace
 
 gcc # comment a current line / selected lines
 
 # change everything inside and insert
-ci[\"|\'|\(|\{|\[|\`]
+ci["|'|(|{|[|`]
 # delete everything inside and insert
-di[\"|\'|\(|\{|\[|\`]
+di["|'|(|{|[|`]
 # yank everything inside and insert
-yi[\"|\'|\(|\{|\[|\`]
+yi["|'|(|{|[|`]
 
 # Delete surrounding punctuation
-ds[\"|\'|\(|\{|\[|\`]
+ds["|'|(|{|[|`]
 # Change surrounding punctuation and go to insert
-cs[\"|\'|\(|\{|\[|\`]
+cs["|'|(|{|[|`]
 # Put punctuation around given expression
-ys<expression>[\"|\'|\(|\{|\[|\`]
+ys<expression>["|'|(|{|[|`]
 # Put punctuation around given line
-yss[\"|\'|\(|\{|\[|\`]
+yss["|'|(|{|[|`]
 
-# same like above, but put the punctuation on different lines
-[d|c|s]S[\"|\'|\(|\{|\[|\`]
+# same like above<space> but put the punctuation on different lines
+[d|c|s]S["|'|(|{|[|`]
 
 # VISUAL MODE
-S[\"|\'|\(|\{|\[|\`] # add punctuation around selected item
+S["|'|(|{|[|`] # add punctuation around selected item
 ```
 
 ### Programming
@@ -74,9 +73,9 @@ gd        # go to (mostly) [d]efinition (:YcmCompleter GoTo<CR>)
 gr        # go to [r]eferences
 gm        # go to i[m]plementations
 gt        # go to [t]ype
-\t        # check type (:YcmCompleter GetType<CR>)
+,t        # check type (:YcmCompleter GetType<CR>)
 
-,g        # search across working directory
+<space>g        # search across working directory
 
 [c        # go to prev hunk (edited location)
 ]c        # go to next hunk
@@ -97,22 +96,22 @@ tt        # run test for function under cursor (:GoTestFunc<CR>)
 td        # debug test (:GoDebugTest [current path]<CR>)
 
 mb        # mark breakpoint (:GoDebugBreakpoint<CR>)
-,c        # debug continue (:GoDebugContinue<CR>)
+<space>c        # debug continue (:GoDebugContinue<CR>)
 
-\r        # smart rename (:GoRename<CR> || :YcmCompleter RefactorRename )
+,r        # smart rename (:GoRename<CR> || :YcmCompleter RefactorRename )
 ```
 
 ### Misc
 ```bash
-,x  # :exit
-,q  # :quit
+<space>x  # :exit
+<space>q  # :quit
 
 za  # fold code
 =   # fold code
 
-,n  # clear highlight
-,1  # cycle numbering
-,y  # copy yanked text to clipboard (TODO)
+<space>n  # clear highlight
+<space>1  # cycle numbering
+<space>y  # copy yanked text to clipboard (TODO)
 ```
 
 ## Vim General
