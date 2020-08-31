@@ -3,4 +3,4 @@ autocmd FileType objc,objcpp nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
 autocmd FileType objc,objcpp nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
 
-autocmd FileType objc,objcpp nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename 
+autocmd FileType objc,objcpp nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>

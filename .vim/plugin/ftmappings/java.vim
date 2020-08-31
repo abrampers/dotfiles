@@ -7,4 +7,4 @@ autocmd FileType java nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
 autocmd FileType java nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
 
-autocmd FileType java nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename 
+autocmd FileType java nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>

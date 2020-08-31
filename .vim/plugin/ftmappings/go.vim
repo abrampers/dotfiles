@@ -8,7 +8,6 @@ autocmd FileType go nnoremap <buffer> mb :GoDebugBreakpoint<CR>
 autocmd FileType go nnoremap <buffer> gt :YcmCompleter GoToType<CR>
 " go to i[m]plementation
 autocmd FileType go nnoremap <buffer> gm :YcmCompleter GoToImplementation<CR>
-autocmd FileType go nnoremap <buffer> gr :GoReferrers<CR>
 " Mappings for YouCompleteMe
 autocmd FileType go nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences

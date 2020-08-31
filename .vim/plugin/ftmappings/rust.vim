@@ -5,4 +5,4 @@ autocmd FileType rust nnoremap <buffer> gd :YcmCompleter GoTo<CR>
 " go to [r]eferences
 autocmd FileType rust nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
 
-autocmd FileType rust nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename 
+autocmd FileType rust nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>
