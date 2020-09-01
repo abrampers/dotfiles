@@ -25,7 +25,7 @@ nnoremap <LocalLeader>q :quit<CR>
 
 " <Leader>1 -- Cycle through relativenumber + number, number (only), and no
 " numbering (mnemonic: relative).
-nnoremap <silent> <Leader>1 :call wincent#mappings#leader#cycle_numbering()<CR>
+nnoremap <silent> <Leader># :call wincent#mappings#leader#cycle_numbering()<CR>
 
 nnoremap <LocalLeader>w :write<CR>
 nnoremap <Leader>x :xit<CR>

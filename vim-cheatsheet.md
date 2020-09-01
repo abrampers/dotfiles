@@ -116,7 +116,7 @@ za  # fold code
 =   # fold code
 
 <space>n  # clear highlight
-<space>1  # cycle numbering
+<space>#  # cycle numbering
 <space>y  # copy yanked text to clipboard (TODO)
 ```
 
