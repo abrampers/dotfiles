@@ -170,65 +170,49 @@ if has('gui')
   set guioptions-=r
 endif
 
-if &loadplugins
-  if has('packages')
-    packadd! base16-vim
-    packadd! ferret
-    packadd! fugitive-gitlab.vim
-    packadd! fzf.vim
-    packadd! fzf-checkout.vim
-    packadd! indentLine
-    packadd! loupe
-    packadd! neco-ghc
-    packadd! nerdtree-git-plugin
-    packadd! pinnacle
-    packadd! replay
-    packadd! scalpel
-    packadd! tcomment_vim
-    packadd! terminus
-    packadd! typescript-vim
-    packadd! ultisnips
-    packadd! vim-airline
-    packadd! vim-airline-themes
-    packadd! vim-ansible-yaml
-    packadd! vim-bundler
-    packadd! vim-clipper
-    packadd! vim-dispatch
-    packadd! vim-docvim
-    packadd! vim-easydir
-    packadd! vim-eunuch
-    packadd! vim-fugitive
-    packadd! vim-git
-    packadd! vim-gitgutter
-    packadd! vim-go
-    packadd! vim-javascript
-    packadd! vim-json
-    packadd! vim-jsx
-    packadd! vim-lion
-    packadd! vim-markdown
-    packadd! vim-operator-user
-    packadd! vim-projectionist
-    packadd! vim-rails
-    packadd! vim-reason-plus
-    packadd! vim-repeat
-    packadd! vim-rhubarb
-    packadd! vim-rooter
-    packadd! vim-ruby
-    packadd! vim-signature
-    packadd! vim-slime
-    packadd! vim-soy
-    packadd! vim-speeddating
-    packadd! vim-surround
-    packadd! vim-textobj-comment
-    packadd! vim-textobj-rubyblock
-    packadd! vim-textobj-user
-    packadd! vim-zsh
-    packadd! youcompleteme
-  else
-    source $HOME/.vim/pack/bundle/opt/vim-pathogen/autoload/pathogen.vim
-    call pathogen#infect('pack/bundle/opt/{}')
-  endif
-endif
+call plug#begin('~/.vim/plugged')
+Plug 'chriskempson/base16-vim'
+Plug 'wincent/ferret'
+Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'wincent/loupe'
+Plug 'preservim/nerdtree' |
+  \ Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'wincent/pinnacle'
+Plug 'wincent/replay'
+Plug 'wincent/scalpel'
+Plug 'tomtom/tcomment_vim'
+Plug 'wincent/terminus'
+Plug 'mbbill/undotree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-bundler'
+Plug 'wincent/vim-clipper'
+Plug 'tpope/vim-dispatch'
+Plug 'wincent/vim-docvim'
+Plug 'duggiefresh/vim-easydir'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'fatih/vim-go'
+Plug 'elzr/vim-json'
+Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'airblade/vim-rooter'
+Plug 'vim-ruby/vim-ruby'
+Plug 'kshenoy/vim-signature'
+Plug 'tpope/vim-surround'
+Plug 'thinca/vim-textobj-comment'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'kana/vim-textobj-user'
+Plug 'chrisbra/vim-zsh'
+Plug 'ycm-core/YouCompleteMe'
+call plug#end()
 
 " Automatic, language-dependent indentation, syntax coloring and other
 " functionality.
