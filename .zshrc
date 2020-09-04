@@ -470,8 +470,8 @@ source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.
 # Bazel
 source $HOME/.bazel/bin/bazel-complete.bash
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+# rbenv
+eval "$(rbenv init -)"
 
 # Setup fzf
 # ---------
