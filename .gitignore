@@ -1,3 +1,4 @@
 .vim/.base16.previous
 .vim/tmp
 .vim/plugin/local-settings.vim
+.vim/pack/bundle/opt/YouCompleteMe
