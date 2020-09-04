@@ -5,3 +5,5 @@
 undo
 tmp/
 tags*
+.base16.previous
+plugin/local-settings.vim
