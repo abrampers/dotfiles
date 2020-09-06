@@ -69,8 +69,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'wincent/loupe'
-Plug 'preservim/nerdtree' |
-  \ Plug 'Xuyuanp/nerdtree-git-plugin'
+
+if len(filter(argv(), 'isdirectory(v:val)')) > 0
+  Plug 'preservim/nerdtree'
+else
+  Plug 'preservim/nerdtree', { 'on': ['NERDTree', 'NERDTreeCWD', 'NERDTreeClose', 'NERDTreeFind', 'NERDTreeFocus', 'NERDTreeFromBookmark', 'NERDTreeMirror', 'NERDTreeToggle'] }
+  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeCWD', 'NERDTreeClose', 'NERDTreeFind', 'NERDTreeFocus', 'NERDTreeFromBookmark', 'NERDTreeMirror', 'NERDTreeToggle'] }
+endif
+
 Plug 'wincent/pinnacle'
 Plug 'wincent/replay'
 Plug 'wincent/scalpel'
@@ -79,7 +85,7 @@ Plug 'wincent/terminus'
 Plug 'mbbill/undotree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'wincent/vim-clipper'
 Plug 'tpope/vim-dispatch'
 Plug 'wincent/vim-docvim'
@@ -87,19 +93,19 @@ Plug 'duggiefresh/vim-easydir'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'elzr/vim-json'
-Plug 'plasticboy/vim-markdown'
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-rooter'
-Plug 'vim-ruby/vim-ruby'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'kshenoy/vim-signature'
 Plug 'tpope/vim-surround'
 Plug 'thinca/vim-textobj-comment'
-Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
 Plug 'chrisbra/vim-zsh'
 Plug 'ycm-core/YouCompleteMe'
