@@ -10,6 +10,8 @@ if has('nvim')
   let g:ruby_host_prog = '~/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
 endif
 
+let g:ruby_path = "~/.rbenv/shims/ruby"
+
 " Extension -> filetype mappings.
 let filetype_m='objc'
 let filetype_pl='prolog'
@@ -57,6 +59,8 @@ if has('gui')
 endif
 
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
+
 Plug 'chriskempson/base16-vim'
 Plug 'wincent/ferret'
 Plug 'shumphrey/fugitive-gitlab.vim'
