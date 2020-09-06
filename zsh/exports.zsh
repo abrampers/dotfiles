@@ -1,6 +1,3 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
-
 # Editor
 export EDITOR='nvim'
 
@@ -8,7 +5,6 @@ export EDITOR='nvim'
 export GOPATH=$HOME/Go
 
 # Java
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
 export JUNIT_HOME=/Library/JUNIT
 export JDEPEND_HOME=/Library/jdepend-2.9.1
 export CLASSPATH=$CLASSPATH:$JUNIT_HOME/junit-4.10.jar:.
