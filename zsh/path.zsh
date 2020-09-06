@@ -14,6 +14,12 @@ if [ -d /usr/local/opt/mysql@5.7 ]; then
   PATH=$PATH:/usr/local/opt/mysql@5.7/bin
 fi
 
+# Setup fzf
+# ---------
+if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
+  PATH=${PATH:+${PATH}:}$HOME/.fzf/bin
+fi
+
 PATH=$PATH:/usr/local/bin
 PATH=$PATH:/usr/local/sbin
 PATH=$PATH:/usr/local/opt/srm/bin
