@@ -475,9 +475,9 @@ eval "$(rbenv init -)"
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "$HOME/.fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh" 2> /dev/null
 
 # Key bindings
 # ------------
-source "$HOME/.fzf/shell/key-bindings.zsh"
+source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
 
