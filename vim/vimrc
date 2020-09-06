@@ -58,6 +58,12 @@ if has('gui')
   set guioptions-=r
 endif
 
+function! BuildYCM(info)
+  if a:info.status == 'installed' || a:info.force
+    !/usr/local/bin/python3 install.py --clangd-completer --go-completer --java-completer
+  endif
+endfunction
+
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 
@@ -108,7 +114,7 @@ Plug 'thinca/vim-textobj-comment'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-user'
 Plug 'chrisbra/vim-zsh'
-Plug 'ycm-core/YouCompleteMe'
+Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
 call plug#end()
 
 filetype indent plugin on
@@ -123,6 +129,3 @@ syntax on
 "
 "   vim -c 'set t_te=' -c 'set t_ti=' -c 'map <space>' -c q | sort
 "
-
-" refer to local installation of fzf
-set rtp+=~/.fzf
