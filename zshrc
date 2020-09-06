@@ -438,15 +438,15 @@ test -f $HOST_RC && source $HOST_RC
 #
 
 # source $ZSH/oh-my-zsh.sh
-source $HOME/.zsh/aliases
-source $HOME/.zsh/common
-source $HOME/.zsh/colors
-source $HOME/.zsh/exports
-source $HOME/.zsh/functions
-source $HOME/.zsh/hash
-source $HOME/.zsh/path
-source $HOME/.zsh/vars
-source $HOME/.zsh/conda
+source $HOME/.zsh/aliases.zsh
+source $HOME/.zsh/common.zsh
+source $HOME/.zsh/colors.zsh
+source $HOME/.zsh/exports.zsh
+source $HOME/.zsh/functions.zsh
+source $HOME/.zsh/hash.zsh
+source $HOME/.zsh/path.zsh
+source $HOME/.zsh/vars.zsh
+source $HOME/.zsh/conda.zsh
 
 #
 # Third-Party
@@ -472,12 +472,6 @@ source $HOME/.bazel/bin/bazel-complete.bash
 
 # rbenv
 eval "$(rbenv init -)"
-
-# Setup fzf
-# ---------
-if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
-  export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
-fi
 
 # Auto-completion
 # ---------------
