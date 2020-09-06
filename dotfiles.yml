@@ -1,6 +1,9 @@
 ---
 - name: Setup local workstation
   hosts: localhost
+  vars:
+    miniconda_installer: Miniconda3-latest-MacOSX-x86_64.sh
+    ycm_extra_flags: --clangd-completer --go-completer --java-completer
   vars_files:
     - ./vars/custom.yml
   tasks:
@@ -15,16 +18,12 @@
         state: latest
 
     - name: zsh | Sets zsh as default shell for root | command
-      become: yes
-      become_user: root
       command: chsh -s /bin/zsh
       register: zsh_for_root
       failed_when: zsh_for_root.rc >= 1
       changed_when: zsh_for_root.rc == 0
 
     - name: zsh | Sets zsh as default shell for {{ whoami_output.stdout }} | command
-      become: yes
-      become_user: root
       command: chsh -s /bin/zsh {{ whoami_output.stdout }}
       register: zsh_for_user
       failed_when: zsh_for_user.rc >= 1
@@ -65,6 +64,21 @@
         name: neovim
         state: latest
         executable: /usr/local/bin/pip3
+
+    - name: miniconda | Downloads miniconda installation script | get_url
+      get_url:
+        url: "https://repo.anaconda.com/miniconda/{{ miniconda_installer }}"
+        dest: "/tmp/{{ miniconda_installer }}"
+        mode: 0755
+
+    - name: miniconda | Installs miniconda | command
+      command:
+        cmd: "/bin/zsh /tmp/{{ miniconda_installer }}"
+        creates: "{{ ansible_env.HOME }}/miniconda3"
+    - name: miniconda | Remove miniconda installer | file
+      file:
+        path: "/tmp/{{ miniconda_installer }}"
+        state: absent
 
     - name: rbenv | Installs rbenv | brew
       homebrew:
@@ -110,8 +124,8 @@
 
     - name: YouCompleteMe | Runs YCM install script
       command:
-        chdir: ~/.vim/plugged/YouCompleteMe
-        cmd: /usr/local/bin/python3 install.py --clangd-completer --go-completer --java-completer
+        chdir: "{{ ansible_env.HOME }}/.vim/plugged/YouCompleteMe"
+        cmd: "/usr/local/bin/python3 install.py {{ ycm_extra_flags }}"
       register: ycm_output
       failed_when: ycm_output.rc >= 1
       changed_when: ycm_output.rc == 0
