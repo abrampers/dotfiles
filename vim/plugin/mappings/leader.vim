@@ -101,3 +101,7 @@ nnoremap <LocalLeader>0 :10b<CR>
 
 " Mappings for projectionist
 nnoremap <LocalLeader>a :A<CR>
+
+" Window resizing
+nnoremap <silent> <Leader>+ :resize +10<CR>
+nnoremap <silent> <Leader>- :resize -10<CR>

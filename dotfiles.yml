@@ -1,0 +1,99 @@
+---
+- name: Setup local workstation
+  hosts: localhost
+  vars_files:
+    - ./vars/custom.yml
+  tasks:
+    - name: Get the username running the deploy | whoami
+      local_action: command whoami
+      register: whoami_output
+      check_mode: no
+
+    - name: zsh | Installs zsh | brew
+      homebrew:
+        name: zsh
+        state: latest
+
+    - name: zsh | Sets zsh as default shell for root | command
+      command: chsh -s /bin/zsh
+      register: zsh_for_root
+      failed_when: zsh_for_root.rc >= 1
+      changed_when: zsh_for_root.rc == 0
+
+    - name: zsh | Sets zsh as default shell for {{ whoami_output.stdout }} | command
+      command: chsh -s /bin/zsh {{ whoami_output.stdout }}
+      register: zsh_for_user
+      failed_when: zsh_for_user.rc >= 1
+      changed_when: zsh_for_user.rc == 0
+
+    - name: neovim | Installs neovim | brew
+      homebrew:
+        name: neovim
+        state: latest
+
+    - name: tmux | Installs tmux | brew
+      homebrew:
+        name: tmux
+        state: latest
+
+    - name: cmake | Installs cmake | brew
+      homebrew:
+        name: cmake
+        state: latest
+
+    - name: go | Installs go | brew
+      homebrew:
+        name: go
+        state: latest
+
+    - name: python | Installs python | brew
+      homebrew:
+        name: python
+        state: latest
+
+    - name: python | Installs neovim package | pip
+      pip:
+        name: neovim
+        state: latest
+        executable: /usr/local/bin/pip3
+
+    - name: rbenv | Installs rbenv | brew
+      homebrew:
+        name: rbenv
+        state: latest
+
+    - name: nvm | Installs nvm | brew
+      homebrew:
+        name: nvm
+        state: latest
+
+    - name: fzf | Installs fzf | brew
+      homebrew:
+        name: fzf
+        state: latest
+
+    - name: fzf | Installs bat | brew
+      homebrew:
+        name: bat
+        state: latest
+
+    - name: rcm | Installs rcm | brew
+      homebrew:
+        name: rcm
+        state: latest
+
+    - name: rcm | Installs dotfiles
+      command:
+        cmd: rcup
+      register: rcup_output
+      failed_when: rcup_output.rc >= 1
+      changed_when: rcup_output.rc == 0
+
+    - name: YouCompleteMe | Runs YCM install script
+      command:
+        chdir: ~/.vim/plugged/YouCompleteMe
+        cmd: /usr/local/bin/python3 install.py --clangd-completer --go-completer --java-completer
+      register: ycm_output
+      failed_when: ycm_output.rc >= 1
+      changed_when: ycm_output.rc == 0
+
