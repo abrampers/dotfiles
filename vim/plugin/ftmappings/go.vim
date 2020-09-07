@@ -1,6 +1,4 @@
 " Mappings for vim-go
-autocmd FileType go nnoremap <buffer> tT :GoTest<CR>
-autocmd BufEnter */*_test.go nnoremap <buffer> tt :GoTestFunc<CR>
 autocmd BufEnter **/*_test.go nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
 " [m]ark [b]reakpoint
 autocmd FileType go nnoremap <buffer> mb :GoDebugBreakpoint<CR>
