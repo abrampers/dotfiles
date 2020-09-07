@@ -87,7 +87,7 @@ nnoremap <silent> <Leader>m :call wincent#mappings#leader#matchparen()<CR>
 nnoremap <LocalLeader>l :ls<CR>
 nnoremap <LocalLeader>b :bp<CR>
 nnoremap <LocalLeader>f :bn<CR>
-nnoremap <LocalLeader>g :e#<CR>
+nnoremap <LocalLeader>v :e#<CR>
 nnoremap <LocalLeader>1 :1b<CR>
 nnoremap <LocalLeader>2 :2b<CR>
 nnoremap <LocalLeader>3 :3b<CR>
