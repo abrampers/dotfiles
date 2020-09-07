@@ -26,7 +26,7 @@ Ctrl + right  # go forward tab
 # Buffer Navigation
 ,b          # go back buffer
 ,f          # go forward buffer
-,g          # go last-used buffer
+,v          # go last-used buffer
 ,1 ,2 ,3    # go to buffer 1/2/3 etc
 
 # etc
@@ -71,6 +71,14 @@ yss["|'|(|{|[|`]
 
 # VISUAL MODE
 S["|'|(|{|[|`] # add punctuation around selected item
+```
+
+### Git
+```bash
+,g          # git status
+<Space>gb   # git branch
+<Space>gco  # git checkout
+<Space>gr   # git rebase
 ```
 
 ### Programming
