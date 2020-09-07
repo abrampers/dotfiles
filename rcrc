@@ -1,1 +1,1 @@
-EXCLUDES="*.md *.png *.jpg install.sh *.yml *.yaml"
+EXCLUDES="*.md *.png *.jpg install.sh *.yml *.yaml tags*"
