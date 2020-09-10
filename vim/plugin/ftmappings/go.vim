@@ -1,18 +1,19 @@
-" Mappings for vim-go
-autocmd BufEnter **/*_test.go nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
-autocmd FileType go nnoremap <buffer> mb :GoDebugBreakpoint<CR>
-autocmd FileType go nnoremap <silent> <buffer> <LocalLeader>r :GoRename<CR>
-autocmd FileType go nnoremap <buffer> <Leader>c :GoDebugContinue<CR>
+function! ftmappings#go#debug_maps()
+  nnoremap <buffer> td :execute 'GoDebugTest' expand('%:p')<CR>
+  nnoremap <buffer> mb :GoDebugBreakpoint<CR>
+  nnoremap <buffer> <Leader>c :GoDebugContinue<CR>
+endfunction
 
-function! YCMGoMaps()
+function! ftmappings#go#ycm_maps()
   nnoremap <silent> <buffer> gt :YcmCompleter GoToType<CR>
   nnoremap <silent> <buffer> gm :YcmCompleter GoToImplementation<CR>
   nnoremap <silent> <buffer> gd :YcmCompleter GoTo<CR>
   nnoremap <silent> <buffer> gr :YcmCompleter GoToReferences<CR>
+  nnoremap <silent> <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>
   nnoremap <silent> <buffer> <LocalLeader>t :YcmCompleter GetType<CR>
 endfunction
 
-function! VimGoMaps()
+function! ftmappings#go#vim_go_maps()
   nnoremap <silent> <buffer> gt :GoDefType<CR>
   nnoremap <silent> <buffer> gd :GoDef<CR>
   nnoremap <silent> <buffer> gr :GoReferrers<CR>
@@ -20,4 +21,5 @@ function! VimGoMaps()
   nnoremap <silent> <buffer> gm :GoImplements<CR>
 endfunction
 
-autocmd FileType go call YCMGoMaps()
+autocmd FileType go call ftmappings#go#ycm_maps()
+autocmd FileType go call ftmappings#go#debug_maps()

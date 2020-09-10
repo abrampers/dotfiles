@@ -1,4 +1,6 @@
-" Mappings for YouCompleteMe
-autocmd FileType python nnoremap <buffer> gd :YcmCompleter GoTo<CR>
-" go to [r]eferences
-autocmd FileType python nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
+function! ftmappings#python#ycm_maps()
+  nnoremap <silent> <buffer> gd :YcmCompleter GoTo<CR>
+  nnoremap <silent> <buffer> gr :YcmCompleter GoToReferences<CR>
+endfunction
+
+autocmd FileType python call ftmappings#python#ycm_maps()
