@@ -1,10 +1,9 @@
-" go to [t]ype
-autocmd FileType java nnoremap <buffer> gt :YcmCompleter GoToType<CR>
-" go to i[m]plementation
-autocmd FileType java nnoremap <buffer> gm :YcmCompleter GoToImplementation<CR>
-" Mappings for YouCompleteMe
-autocmd FileType java nnoremap <buffer> gd :YcmCompleter GoTo<CR>
-" go to [r]eferences
-autocmd FileType java nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
+function! ftmappings#java#ycm_maps()
+  nnoremap <silent> <buffer> gt :YcmCompleter GoToType<CR>
+  nnoremap <silent> <buffer> gm :YcmCompleter GoToImplementation<CR>
+  nnoremap <silent> <buffer> gd :YcmCompleter GoTo<CR>
+  nnoremap <silent> <buffer> gr :YcmCompleter GoToReferences<CR>
+  nnoremap <silent> <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>
+endfunction
 
-autocmd FileType java nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>
+autocmd FileType java call ftmappings#java#ycm_maps()

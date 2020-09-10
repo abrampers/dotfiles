@@ -1,8 +1,8 @@
-" go to i[m]plementation
-autocmd FileType rust nnoremap <buffer> gm :YcmCompleter GoToImplementation<CR>
-" Mappings for YouCompleteMe
-autocmd FileType rust nnoremap <buffer> gd :YcmCompleter GoTo<CR>
-" go to [r]eferences
-autocmd FileType rust nnoremap <buffer> gr :YcmCompleter GoToReferences<CR>
+function! ftmappings#rust#ycm_maps()
+  nnoremap <silent> <buffer> gm :YcmCompleter GoToImplementation<CR>
+  nnoremap <silent> <buffer> gd :YcmCompleter GoTo<CR>
+  nnoremap <silent> <buffer> gr :YcmCompleter GoToReferences<CR>
+  nnoremap <silent> <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>
+endfunction
 
-autocmd FileType rust nnoremap <buffer> <LocalLeader>r :YcmCompleter RefactorRename<Space>
+autocmd FileType rust call ftmappings#rust#ycm_maps()
