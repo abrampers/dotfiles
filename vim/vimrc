@@ -7,10 +7,10 @@ let maplocalleader=","
 
 if has('nvim')
   let g:python3_host_prog = '/usr/local/bin/python3'
-  let g:ruby_host_prog = $HOME . '/.rbenv/shims/neovim-ruby-host'
+  let g:ruby_host_prog = $HOME . '/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
 endif
 
-let g:ruby_path = $HOME . "/.rbenv/shims/ruby"
+let g:ruby_path = $HOME . '/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
 
 " Extension -> filetype mappings.
 let filetype_m='objc'
@@ -60,13 +60,14 @@ endif
 
 function! BuildYCM(info)
   if a:info.status == 'installed' || a:info.force
-    !$(brew --prefix)/bin/python3 install.py --clangd-completer --go-completer --java-completer
+    !$(brew --prefix)/bin/python3 install.py --clangd-completer --java-completer --go-completer
   endif
 endfunction
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 
+Plug 'jiangmiao/auto-pairs'
 Plug 'chriskempson/base16-vim'
 Plug 'wincent/ferret'
 Plug 'shumphrey/fugitive-gitlab.vim'
@@ -117,6 +118,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'chrisbra/vim-zsh'
 Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
 call plug#end()
+
+let g:deoplete#enable_at_startup = 1
 
 filetype indent plugin on
 syntax on
