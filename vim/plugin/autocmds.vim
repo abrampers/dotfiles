@@ -58,7 +58,7 @@ if has('autocmd')
       " When we later expand it with ":p", that will make it look like a
       " file (eg. "javascript") in the current directory. Fortunately, this
       " serves our purposes adequately.
-      autocmd FileType * call wincent#autocmds#apply_overrides(expand('<afile>'), expand('<amatch>'))
+      " autocmd FileType * call wincent#autocmds#apply_overrides(expand('<afile>'), expand('<amatch>'))
     augroup END
   endfunction
 
