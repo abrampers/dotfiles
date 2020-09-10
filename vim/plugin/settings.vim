@@ -4,6 +4,8 @@ set autoindent                        " maintain indent of current line
 set backspace=indent,start,eol        " allow unrestricted backspacing in insert mode
 set clipboard+=unnamedplus            " Add clipboard syncing support on yank
 
+set completeopt=longest,menuone       " inserts the longest common text of all matches
+
 if exists('$SUDO_USER')
   set nobackup                        " don't create root-owned files
   set nowritebackup                   " don't create root-owned files
