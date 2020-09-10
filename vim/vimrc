@@ -74,7 +74,7 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'junegunn/goyo.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'wincent/loupe'
 
