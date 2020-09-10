@@ -6,3 +6,16 @@ autocmd FileType c,cpp,objc,objcpp,cuda,java,javascript,go,python,typescript,rus
     \ 'command': 'GetType',
     \ 'syntax': &filetype
     \ }
+
+let g:ycm_language_server = [
+  \   {
+  \     'name': 'ruby',
+  \     'cmdline': [ expand( $HOME . '/.rbenv/shims/solargraph' ), 'stdio' ],
+  \     'filetypes': [ 'ruby' ],
+  \   },
+  \   {
+  \     'name': 'vim',
+  \     'filetypes': [ 'vim' ],
+  \     'cmdline': [ expand( '/usr/local/bin/vim-language-server' ), '--stdio' ]
+  \   },
+  \ ]
