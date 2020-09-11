@@ -67,6 +67,7 @@ endfunction
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 
+Plug 'vim-scripts/argtextobj.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'chriskempson/base16-vim'
 Plug 'wincent/ferret'
