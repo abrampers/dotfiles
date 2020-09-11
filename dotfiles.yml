@@ -115,6 +115,13 @@
         name: rcm
         state: latest
 
+    - name: rcm | Installs rcm config
+      command:
+        cmd: rcup rcrc
+      register: rcup_rcrc_output
+      failed_when: rcup_rcrc_output.rc >= 1
+      changed_when: rcup_rcrc_output.rc == 0
+
     - name: rcm | Installs dotfiles
       command:
         cmd: rcup
