@@ -8,6 +8,10 @@ function s:CheckColorScheme()
   if filereadable(s:config_file)
     let s:config = readfile(s:config_file, '', 2)
 
+    if s:config[0] == 'nord'
+      execute 'colorscheme nord'
+    endif
+
     if s:config[1] =~# '^dark\|light$'
       execute 'set background=' . s:config[1]
     else
@@ -58,6 +62,11 @@ function s:CheckColorScheme()
   " - `statusline.vim` will re-set User1, User2 etc.
   " - `after/plugin/loupe.vim` will override Search.
   doautocmd ColorScheme
+
+  if s:config[0] == 'nord'
+    " let g:airline_theme='nord'
+    execute 'AirlineTheme nord'
+  endif
 endfunction
 
 if v:progname !=# 'vi'
