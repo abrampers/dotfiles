@@ -57,7 +57,11 @@ fi
 # Completion
 #
 
-fpath=($HOME/.zsh/completions $fpath)
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+
+fpath=($HOME/.zsh/completions.zsh $fpath)
 
 autoload -U compinit
 compinit -u
