@@ -78,14 +78,13 @@ Plug 'stsewd/fzf-checkout.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'wincent/loupe'
-
 if len(filter(argv(), 'isdirectory(v:val)')) > 0
   Plug 'preservim/nerdtree'
 else
   Plug 'preservim/nerdtree', { 'on': ['NERDTree', 'NERDTreeCWD', 'NERDTreeClose', 'NERDTreeFind', 'NERDTreeFocus', 'NERDTreeFromBookmark', 'NERDTreeMirror', 'NERDTreeToggle'] }
   Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeCWD', 'NERDTreeClose', 'NERDTreeFind', 'NERDTreeFocus', 'NERDTreeFromBookmark', 'NERDTreeMirror', 'NERDTreeToggle'] }
 endif
-
+Plug 'arcticicestudio/nord-vim'
 Plug 'wincent/pinnacle'
 Plug 'wincent/replay'
 Plug 'wincent/scalpel'
