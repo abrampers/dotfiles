@@ -27,15 +27,6 @@ let g:NERDTreeMapJumpNextSibling='<Nop>'
 
 let g:NERDTreeCaseSensitiveSort=1
 
-" Prevent tcomment from making a zillion mappings (we just want the operator).
-let g:tcomment_mapleader1=''
-let g:tcomment_mapleader2=''
-let g:tcomment_mapleader_comment_anyway=''
-let g:tcomment_textobject_inlinecomment=''
-
-" The default (g<) is a bit awkward to type.
-let g:tcomment_mapleader_uncomment_anyway='gu'
-
 " Turn off most of the features of this plug-in; I really just want the folding.
 let g:vim_markdown_override_foldtext=0
 let g:vim_markdown_no_default_key_mappings=1
