@@ -9,19 +9,26 @@ function s:CheckColorScheme()
     let s:config = readfile(s:config_file, '', 2)
 
     if s:config[0] == 'nord'
+      let g:nord_uniform_diff_background = 1
+      let g:nord_cursor_line_number_background = 1
       execute 'colorscheme nord'
-    endif
 
-    if s:config[1] =~# '^dark\|light$'
-      execute 'set background=' . s:config[1]
+      if wincent#pinnacle#active()
+        highlight clear Special
+        execute 'highlight Special ' . pinnacle#extract_highlight('SpecialComment')
+      endif
     else
-      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
-    endif
+      if s:config[1] =~# '^dark\|light$'
+        execute 'set background=' . s:config[1]
+      else
+        echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+      endif
 
-    if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-      execute 'colorscheme base16-' . s:config[0]
-    else
-      echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+      if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
+        execute 'colorscheme base16-' . s:config[0]
+      else
+        echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
+      endif
     endif
   else " default
     set background=dark
@@ -33,12 +40,12 @@ function s:CheckColorScheme()
   endif
 
   " Hide (or at least make less obvious) the EndOfBuffer region
-  highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
+  " highlight! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
 
   " Sync with corresponding non-nvim 'highlight' settings in
   " ~/.vim/plugin/settings.vim:
-  highlight clear NonText
-  highlight link NonText Conceal
+  " highlight clear NonText
+  " highlight link NonText Conceal
 
   if wincent#pinnacle#active()
     highlight clear CursorLineNr
@@ -50,8 +57,8 @@ function s:CheckColorScheme()
 
   " Resolve clashes with ColorColumn.
   " Instead of linking to Normal (which has a higher priority, link to nothing).
-  highlight link vimUserFunc NONE
-  highlight link NERDTreeFile NONE
+  " highlight link vimUserFunc NONE
+  " highlight link NERDTreeFile NONE
 
   if wincent#pinnacle#active()
     let l:highlight=pinnacle#italicize('ModeMsg')
@@ -62,14 +69,10 @@ function s:CheckColorScheme()
   " - `statusline.vim` will re-set User1, User2 etc.
   " - `after/plugin/loupe.vim` will override Search.
   doautocmd ColorScheme
-
-  if s:config[0] == 'nord'
-    " let g:airline_theme='nord'
-    execute 'AirlineTheme nord'
-  endif
 endfunction
 
 if v:progname !=# 'vi'
+
   if has('autocmd')
     augroup WincentAutocolor
       autocmd!
