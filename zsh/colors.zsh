@@ -66,15 +66,19 @@ color() {
 
       echo "$SCHEME" >! "$__ABRAMPERS[BASE16_CONFIG]"
       echo "$BACKGROUND" >> "$__ABRAMPERS[BASE16_CONFIG]"
-      sh "$FILE"
+      if [[ $SCHEME == 'nord' ]]; then
+        echo "to activate nord scheme, restart shell"
+      else
+        sh "$FILE"
 
-      if [ -n "$TMUX" ]; then
-        local CC=$(grep color18= "$FILE" | cut -d \" -f2 | sed -e 's#/##g')
-        if [ -n "$BG" -a -n "$CC" ]; then
-          command tmux set -a window-active-style "bg=#$BG"
-          command tmux set -a window-style "bg=#$CC"
-          command tmux set -g pane-active-border-style "bg=#$CC"
-          command tmux set -g pane-border-style "bg=#$CC"
+        if [ -n "$TMUX" ]; then
+          local CC=$(grep color18= "$FILE" | cut -d \" -f2 | sed -e 's#/##g')
+          if [ -n "$BG" -a -n "$CC" ]; then
+            command tmux set -a window-active-style "bg=#$BG"
+            command tmux set -a window-style "bg=#$CC"
+            command tmux set -g pane-active-border-style "bg=#$CC"
+            command tmux set -g pane-border-style "bg=#$CC"
+          fi
         fi
       fi
     else
@@ -132,14 +136,17 @@ function () {
   if [[ -s "$__ABRAMPERS[BASE16_CONFIG]" ]]; then
     local SCHEME=$(head -1 "$__ABRAMPERS[BASE16_CONFIG]")
     local BACKGROUND=$(sed -n -e '2 p' "$__ABRAMPERS[BASE16_CONFIG]")
-    if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
-      echo "warning: unknown background type in $__ABRAMPERS[BASE16_CONFIG]"
+    if [[ "$SCHEME" != "nord" ]]; then
+      if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
+        echo "warning: unknown background type in $__ABRAMPERS[BASE16_CONFIG]"
+      else
+        color "$SCHEME"
+      fi
     fi
-    color "$SCHEME"
   else
     # Default.
     color default-dark
   fi
 }
 
-color nord
+# color nord
