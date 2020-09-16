@@ -44,6 +44,11 @@
         name: ripgrep
         state: latest
 
+    - name: tig | Installs tig | brew
+      homebrew:
+        name: tig
+        state: latest
+
     - name: cmake | Installs cmake | brew
       homebrew:
         name: cmake

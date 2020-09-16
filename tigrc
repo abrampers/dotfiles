@@ -1,0 +1,2 @@
+bind main <Ctrl-f>	scroll-page-down
+bind main <Ctrl-b>	scroll-page-up
