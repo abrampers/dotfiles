@@ -133,12 +133,3 @@
       register: rcup_output
       failed_when: rcup_output.rc >= 1
       changed_when: rcup_output.rc == 0
-
-    - name: YouCompleteMe | Runs YCM install script
-      command:
-        chdir: "{{ ansible_env.HOME }}/.vim/plugged/YouCompleteMe"
-        cmd: "/usr/local/bin/python3 install.py {{ ycm_extra_flags }}"
-      register: ycm_output
-      failed_when: ycm_output.rc >= 1
-      changed_when: ycm_output.rc == 0
-
