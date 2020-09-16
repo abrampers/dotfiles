@@ -11,11 +11,17 @@ function s:CheckColorScheme()
     if s:config[0] == 'nord'
       let g:nord_uniform_diff_background = 1
       let g:nord_cursor_line_number_background = 1
-      execute 'colorscheme nord'
+      colorscheme nord
 
       if wincent#pinnacle#active()
         highlight clear Special
         execute 'highlight Special ' . pinnacle#extract_highlight('SpecialComment')
+
+        highlight clear Identifier
+        execute 'highlight Identifier ' . pinnacle#extract_highlight('SpecialComment')
+
+        highlight clear goParamName
+        execute 'highlight goParamName ' . pinnacle#extract_highlight('goBuiltins')
       endif
     else
       if s:config[1] =~# '^dark\|light$'
