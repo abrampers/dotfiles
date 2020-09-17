@@ -61,7 +61,6 @@ Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'chriskempson/base16-vim'
-Plug 'wincent/ferret'
 Plug 'shumphrey/fugitive-gitlab.vim'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
