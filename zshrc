@@ -369,15 +369,15 @@ function -report-start-time() {
 }
 add-zsh-hook precmd -report-start-time
 
-function -check-python-env() {
-  emulate -L zsh
-  if [ $CONDA_DEFAULT_ENV ]; then
-    export RPROMPT="$RPROMPT %F{yellow}$CONDA_DEFAULT_ENV%f"
-  else
-    export RPROMPT="$RPROMPT"
-  fi
-}
-add-zsh-hook precmd -check-python-env
+# function -check-python-env() {
+#   emulate -L zsh
+#   if [ $CONDA_DEFAULT_ENV ]; then
+#     export RPROMPT="$RPROMPT %F{yellow}$CONDA_DEFAULT_ENV%f"
+#   else
+#     export RPROMPT="$RPROMPT"
+#   fi
+# }
+# add-zsh-hook precmd -check-python-env
 
 function -auto-ls-after-cd() {
   emulate -L zsh
