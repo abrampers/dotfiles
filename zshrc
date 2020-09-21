@@ -438,6 +438,7 @@ source $HOME/.zsh/hash.zsh
 source $HOME/.zsh/path.zsh
 source $HOME/.zsh/vars.zsh
 source $HOME/.zsh/conda.zsh
+source $HOME/.zsh/after.zsh
 
 #
 # Third-Party

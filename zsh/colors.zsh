@@ -148,5 +148,3 @@ function () {
     color default-dark
   fi
 }
-
-# color nord
