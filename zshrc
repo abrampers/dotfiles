@@ -445,7 +445,6 @@ source $HOME/.zsh/after.zsh
 #
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
-[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" # GHC for Haskell
 
 # nvm setup
