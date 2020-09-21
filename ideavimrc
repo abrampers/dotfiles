@@ -7,18 +7,19 @@ set clipboard+=unnamed
 let mapleader = " "
 let maplocalleader = ","
 
+nmap <Leader><Leader> :action GotoTest<CR>
 nmap <LocalLeader>w :w<CR>
-nmap <LocalLeader>a :action GotoTest<CR>
 
 nmap <Leader>f :action FindInPath<CR>
-nmap <Leder>c :action GotoClass<CR>
+nmap <Leader>c :action GotoClass<CR>
 nmap <C-p> :action GotoFile<CR>
 nmap <C-a><C-a> :action HideAllWindows<CR>
 
 nmap mb :action ToggleLineBreakpoint<CR>
 
-nmap tt :action RunClass<CR>
+nmap tt :action RunCoverage<CR>
 nmap td :action DebugClass<CR>
+nmap ta :action RunAnything<CR>
 
-nmap <LocalLeader>c :action RunConfiguration<CR>
+nmap <LocalLeader>c :action RunAnything<CR>
 nmap <LocalLeader>r :action Run<CR>
