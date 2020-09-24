@@ -7,6 +7,11 @@ function s:CheckColorScheme()
 
   if filereadable(s:config_file)
     let s:config = readfile(s:config_file, '', 2)
+    if s:config[1] =~# '^dark\|light$'
+      execute 'set background=' . s:config[1]
+    else
+      echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
+    endif
 
     if s:config[0] == 'nord'
       let g:nord_uniform_diff_background = 1
@@ -23,13 +28,9 @@ function s:CheckColorScheme()
         highlight clear goParamName
         execute 'highlight goParamName ' . pinnacle#extract_highlight('goBuiltins')
       endif
+    elseif s:config[0] =~ 'gruvbox'
+      colorscheme gruvbox
     else
-      if s:config[1] =~# '^dark\|light$'
-        execute 'set background=' . s:config[1]
-      else
-        echoerr 'Bad background ' . s:config[1] . ' in ' . s:config_file
-      endif
-
       if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
         execute 'colorscheme base16-' . s:config[0]
       else

@@ -66,6 +66,7 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'morhetz/gruvbox'
 Plug 'Yggdroot/indentLine'
 Plug 'wincent/loupe'
 if len(filter(argv(), 'isdirectory(v:val)')) > 0
