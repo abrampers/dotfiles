@@ -20,7 +20,7 @@ To learn more about what's included, go here:
 
 Clone repo to ~/.dotfiles
 
-```sh-session
+```sh
 git clone --recursive https://github.com/abrampers/dotfiles
 ```
 
@@ -31,7 +31,7 @@ This repo is using [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 
 Then run ansible
 
-```sh-session
+```sh
 ansible-playbook dotfiles.yml
 ```
 
