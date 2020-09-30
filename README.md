@@ -17,8 +17,10 @@ To learn more about what's included, go here:
 
 ## Installation
 ### Clone
+
 Clone repo to ~/.dotfiles
-```bash
+
+```sh-session
 git clone --recursive https://github.com/abrampers/dotfiles
 ```
 
@@ -28,7 +30,8 @@ git clone --recursive https://github.com/abrampers/dotfiles
 This repo is using [Ansible](https://docs.ansible.com/ansible/latest/index.html) to automate installation. Please follow [Ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos) to install Ansible.
 
 Then run ansible
-```bash
+
+```sh-session
 ansible-playbook dotfiles.yml
 ```
 
