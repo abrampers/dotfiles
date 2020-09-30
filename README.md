@@ -1,116 +1,29 @@
-# My Terminal Cheatsheet
+# dotfiles
 
-![Terminal](assets/tmux.png "Terminal") ![Vim](assets/vim.png "Vim")
+![Terminal](assets/terminal.png "Terminal")
 
-## What's included
-### zsh
-* autodotenv
-* base16-shell
-* color
-* git-aliases
-* plugin-osx
-* zsh-autosuggestions
-* zsh-history-substring-search
-* zsh-syntax-highlighting
+## Features
 
-### Vim
-Includes:
-* NerdTree
-* vim-airline
-* vim-pathogen
-* YouCompleteMe
+To learn more about what's included, go here:
+1. [zsh](https://github.com/abrampers/dotfiles/tree/master/zsh)
+2. [vim](https://github.com/abrampers/dotfiles/tree/master/vim)
+3. [tmux](https://github.com/abrampers/dotfiles/tree/master/tmux)
 
-For keybindings cheatsheet, go [here](vim-cheatsheet.md)
-
-### tmux
-With everything it includes. For keybindings cheatsheet, go [here](tmux-cheatsheet.md)
-
-## Prerequisites
-1. [Homebrew](https://brew.sh)
-2. [miniconda](https://docs.conda.io/en/latest/miniconda.html)
-3. [rvm](https://rvm.io/rvm/install)
-
-## Build Instructions
+## Installation
 ### Clone
+Clone repo to ~/.dotfiles
 ```sh-session
 git clone --recursive https://github.com/abrampers/dotfiles
 ```
 
-### Install symlink
+## Install
+> ⚠️ **WARNING**: This install method will install every bit of my configuration. In the future, I'll be supporting customized install method.
+
+This repo is using [Ansible](https://docs.ansible.com/ansible/latest/index.html) to automate installation. Please follow [Ansible installation guide](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos) to install Ansible.
+
+Then run ansible
 ```sh-session
-./install.sh
-```
-
-### Install fzf install binaries
-```sh-session
-~/.fzf/install
-```
-
-### Install ripgrep (for vim code search)
-
-Code search capability. Like Cmd/Ctrl + f on other text editor.
-
-```sh-session
-brew install ripgrep
-```
-
-### Install ag (for vim code search)
-
-Code search capability. Like Cmd/Ctrl + f on other text editor.
-
-```sh-session
-brew install the_silver_searcher
-```
-
-### Install bat
-
-Syntax highlighter
-
-```sh-session
-brew install bat
-```
-
-### Install Neovim
-```sh-session
-brew install neovim
-conda env create -f env/neovim.yml
-```
-
-### Setup YouCompleteMe
-
-Add these capability for c, cpp, objc, objcpp, cuda, cs, go, java, javascript, python, rust, typescript:
-- Code completion for multiple languages
-- Code navigation
-
-```sh-session
-brew install cmake go mono nodejs
-cd ~/.vim/pack/bundle/opt/YouCompleteMe/
-python install.py --all
-```
-
-### Setup Universal Ctags
-
-Code navigation capability for unsupported languages in YouCompleteMe
-
-```sh-session
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-```
-Don't forget to point ctags to universal ctags by
-```sh
-alias ctags="$(brew --prefix)/bin/ctags"
-```
-
-### Install tmux
-```sh-session
-brew install tmux
-```
-
-### Restart terminal
-Don't forget to restart your terminal to apply changes!
-
-## Update Packages
-```sh-session
-git submodule update --remote --recursive
+ansible-playbook dotfiles.yml
 ```
 
 ## References

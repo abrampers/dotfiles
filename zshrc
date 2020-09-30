@@ -458,9 +458,6 @@ source <(kubectl completion zsh)
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
-# Bazel
-source $HOME/.bazel/bin/bazel-complete.bash
-
 # rbenv
 eval "$(rbenv init -)"
 
