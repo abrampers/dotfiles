@@ -2,6 +2,12 @@
 
 ![Terminal](assets/terminal.png "Terminal")
 
+* Target platforms: macOS
+* Visible in the screenshot:
+  * [nord](https://www.nordtheme.com) colorscheme.
+  * [SauceCodePro Nerd Font](https://www.nerdfonts.com/font-downloads) (Regular) font.
+  * Vim, running inside tmux, inside iTerm2, on macOS "Catalina".
+
 ## Features
 
 To learn more about what's included, go here:
