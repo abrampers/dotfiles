@@ -98,6 +98,7 @@ Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'tpope/vim-rake', { 'for': 'ruby' }
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-rooter'
@@ -107,6 +108,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-test/vim-test', { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
 Plug 'thinca/vim-textobj-comment'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'chrisbra/vim-zsh'
 Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }

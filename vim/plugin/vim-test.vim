@@ -1,4 +1,5 @@
 let test#strategy = "dispatch"
+let test#java#runner = 'gradletest'
 
 nnoremap <silent> tt :TestNearest<CR>
 nnoremap <silent> tf :TestFile<CR>

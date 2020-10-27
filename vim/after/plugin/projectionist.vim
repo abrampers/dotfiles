@@ -32,8 +32,14 @@ let g:projectionist_heuristics = {
       \       ],
       \       'type': 'test'
       \     },
-      \   },
-      \   '*.go': {
+      \     'src/main/java/*.java': {
+      \       'alternate': 'src/test/java/{}Test.java',
+      \       'type': 'source'
+      \     },
+      \     'src/test/java/*Test.java': {
+      \       'alternate': 'src/main/java/{}.java',
+      \       'type': 'test'
+      \     },
       \     '*.go': {
       \         'alternate': '{}_test.go',
       \         'type': 'source'
@@ -42,7 +48,7 @@ let g:projectionist_heuristics = {
       \         'alternate': '{}.go',
       \         'type': 'test'
       \     },
-      \   }
+      \   },
       \ }
 
 " Helper function for batch-updating the g:projectionist_heuristics variable.

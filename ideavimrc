@@ -5,10 +5,9 @@ set textobj-entire
 set clipboard+=unnamed
 
 let mapleader = " "
-let maplocalleader = ","
 
-nmap <Leader><Leader> :action GotoTest<CR>
-nmap <LocalLeader>w :w<CR>
+nmap ,a :action GotoTest<CR>
+nmap ,w :w<CR>
 
 nmap <Leader>f :action FindInPath<CR>
 nmap <Leader>c :action GotoClass<CR>
@@ -19,7 +18,6 @@ nmap mb :action ToggleLineBreakpoint<CR>
 
 nmap tt :action RunCoverage<CR>
 nmap td :action DebugClass<CR>
-nmap ta :action RunAnything<CR>
+nmap ts :action Run<CR>
 
-nmap <LocalLeader>c :action RunAnything<CR>
-nmap <LocalLeader>r :action Run<CR>
+nmap ,r :action Run<CR>
