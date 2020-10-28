@@ -64,9 +64,10 @@
   (ivy-mode 1))
 
 ;; Themes
-(use-package nord-theme)
+;(use-package nord-theme t)
 (use-package doom-themes)
-(load-theme 'nord)
+;(load-theme 'doom-gruvbox t)
+(load-theme 'doom-dracula t)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
