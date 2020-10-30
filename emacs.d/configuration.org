@@ -373,6 +373,8 @@ When running emacs from the app, emacs won't have the user's shell environment v
 
 #+end_src
 
+** TODO Make sure emacs won't clutter working tree
+
 * Development
 
 ** Languages
@@ -481,6 +483,10 @@ Setup =tab-width= for =.go= files.
 
 #+RESULTS:
 
+*** TODO Ruby
+
+*** TODO Java
+
 ** Company Mode
 
 [[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
@@ -527,6 +533,8 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :config (counsel-projectile-mode))
 
 #+end_src
+
+*** TODO Move =Documents/projects= and =Documents/source.golabs.io= to =Code/=
 
 ** Magit
 
@@ -607,4 +615,12 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-collection-init))
 
 #+end_src
+
+** TODO supress error on =evil-want-keybindings=
+
+** TODO Remap ctrl to caps lock
+
+** TODO Add vim like keybindings
+
+*** TODO go to definition
 
