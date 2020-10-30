@@ -210,6 +210,11 @@
 
 (use-package go-playground :ensure t)
 
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq tab-width 4)))
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)

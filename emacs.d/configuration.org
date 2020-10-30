@@ -468,6 +468,17 @@ This is a basic configuration for the Go language so that =.go= files activate =
 
 #+end_src
 
+Setup =tab-width= for =.go= files.
+
+#+begin_src emacs-lisp
+
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode t)
+              (setq tab-width 4)))
+
+#+end_src
+
 #+RESULTS:
 
 ** Company Mode
