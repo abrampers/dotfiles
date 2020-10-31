@@ -174,13 +174,6 @@
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 
-(use-package exec-path-from-shell
-  :init
-  (setq exec-path-from-shell-check-startup-files nil)
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
-
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -189,7 +182,6 @@
   :commands (lsp lsp-deferred)
   :hook 
   (lsp-mode . efs/lsp-mode-setup)
-  (go-mode . lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :config
@@ -207,6 +199,7 @@
 
 (use-package go-mode
   :mode "\\.go\\'"
+  :hook (go-mode . lsp-deferred)
   :init (setq gofmt-command "goimports")
   :config (add-hook 'before-save-hook 'gofmt-before-save))
 
@@ -253,19 +246,16 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
 (use-package general
-  :config
-  (general-create-definer abram/leader-keys
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
+:config
+(general-create-definer abram/leader-keys
+  :keymaps '(normal insert visual emacs)
+  :prefix "SPC"
+  :global-prefix "C-SPC")
 
-  (abram/leader-keys
-    "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")))
+(abram/leader-keys
+  "t"  '(:ignore t :which-key "toggles")
+  "tt" '(counsel-load-theme :which-key "choose theme")))
 
 (use-package evil
   :init
@@ -286,9 +276,12 @@
   (evil-set-initial-state 'dashboard-mode 'normal))
 
 (use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
+ :after evil
+ :config
+ (evil-collection-init))
 
 (use-package evil-magit
   :after magit)
+
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)

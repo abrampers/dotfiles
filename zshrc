@@ -429,6 +429,7 @@ test -f $HOST_RC && source $HOST_RC
 #
 
 # source $ZSH/oh-my-zsh.sh
+source $HOME/.zshenv
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/common.zsh
 source $HOME/.zsh/colors.zsh

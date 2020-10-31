@@ -360,25 +360,10 @@ These templates is created to write code blocks faster in org files.
 #+RESULTS:
 : ((py . src python) (el . src emacs-lisp) (sh . src shell) (a . export ascii) (c . center) (C . comment) (e . example) (E . export) (h . export html) (l . export latex) (q . quote) (s . src) (v . verse))
 
-* Sync Emacs Environment Variables
-
-When running emacs from the app, emacs won't have the user's shell environment variable. =exec-path-from-shell= will help us to sync user shell's environment variable with emacs environment variable.
-
-#+begin_src emacs-lisp
-
-  (use-package exec-path-from-shell
-    :init
-    (setq exec-path-from-shell-check-startup-files nil)
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
-
-#+end_src
-
+* System stuff
 ** TODO Make sure emacs won't clutter working tree
 
 * Development
-
 ** Languages
 
 *** IDE Features with lsp-mode
@@ -401,7 +386,6 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     :commands (lsp lsp-deferred)
     :hook 
     (lsp-mode . efs/lsp-mode-setup)
-    (go-mode . lsp-deferred)
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :config
@@ -465,6 +449,7 @@ This is a basic configuration for the Go language so that =.go= files activate =
 
   (use-package go-mode
     :mode "\\.go\\'"
+    :hook (go-mode . lsp-deferred)
     :init (setq gofmt-command "goimports")
     :config (add-hook 'before-save-hook 'gofmt-before-save))
 
@@ -570,25 +555,31 @@ Forge is used to integrate with GitHub and GitLab from emacs.
   :hook (prog-mode . rainbow-delimiters-mode))
 
 #+end_src
-* Keybinding Configuration
 
-This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.  [[https://github.com/emacs-evil/evil-magit][evil-magit]] is used to configure Magit and Evil to play well with each other.
+* Keybinding Configuration
+** General
+
+[[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.
 
 #+begin_src emacs-lisp
-
-  ;; Make ESC quit prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
   (use-package general
-    :config
-    (general-create-definer abram/leader-keys
-      :keymaps '(normal insert visual emacs)
-      :prefix "SPC"
-      :global-prefix "C-SPC")
+  :config
+  (general-create-definer abram/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
 
-    (abram/leader-keys
-      "t"  '(:ignore t :which-key "toggles")
-      "tt" '(counsel-load-theme :which-key "choose theme")))
+  (abram/leader-keys
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")))
+
+#+end_src
+
+** =evil-mode=
+
+This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience. 
+
+#+begin_src emacs-lisp
 
   (use-package evil
     :init
@@ -608,17 +599,39 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal))
 
+#+end_src
+
+** =evil-collection=
+
+[[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.  
+ 
+#+begin_src emacs-lisp
   (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+   :after evil
+   :config
+   (evil-collection-init))
+
+#+end_src
+ 
+** =evil-magit=
+
+[[https://github.com/emacs-evil/evil-magit][evil-magit]] is used to configure Magit and Evil to play well with each other.
+
+#+begin_src emacs-lisp
 
   (use-package evil-magit
     :after magit)
 
 #+end_src
 
-** TODO supress error on =evil-want-keybindings=
+** Others
+
+#+begin_src emacs-lisp
+
+  ;; Make ESC quit prompts
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+#+end_src
 
 ** TODO Remap ctrl to caps lock
 
