@@ -435,7 +435,6 @@ source $HOME/.zsh/colors.zsh
 source $HOME/.zsh/exports.zsh
 source $HOME/.zsh/functions.zsh
 source $HOME/.zsh/hash.zsh
-source $HOME/.zsh/vars.zsh
 source $HOME/.zsh/after.zsh
 
 #
