@@ -361,7 +361,18 @@ These templates is created to write code blocks faster in org files.
 : ((py . src python) (el . src emacs-lisp) (sh . src shell) (a . export ascii) (c . center) (C . comment) (e . example) (E . export) (h . export html) (l . export latex) (q . quote) (s . src) (v . verse))
 
 * System stuff
-** TODO Make sure emacs won't clutter working tree
+** Make sure emacs won't clutter working tree
+
+As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide]] this will put all [[https://www.emacswiki.org/emacs/AutoSave][auto-saves]] and backups in the directory pointed by =temporary-file-directory=.
+
+#+begin_src emacs-lisp
+
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+
+#+end_src
 
 * Development
 ** Languages
