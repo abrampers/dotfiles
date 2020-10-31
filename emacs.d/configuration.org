@@ -453,7 +453,6 @@ Try these commands with =M-x=:
 
 *** Go
 
-
 This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code.
 
 #+begin_src emacs-lisp
@@ -480,6 +479,8 @@ Setup =tab-width= for =.go= files.
 #+end_src
 
 #+RESULTS:
+
+**** TODO Text object
 
 *** TODO Ruby
 
@@ -655,4 +656,20 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
             (define-key evil-normal-state-local-map (kbd "gd") 'lsp-find-definition)))
 
 #+end_src
+
+*** TODO go to test file
+
+*** TODO run tests
+
+**** run test per file
+
+**** run test suite
+
+**** run test per function
+
+*** TODO quick write
+
+*** TODO go to implementation
+
+*** TODO commenting
 
