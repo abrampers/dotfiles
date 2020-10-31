@@ -15,7 +15,7 @@ The following variables are used to tweak some of the configuration pieces for u
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar efs/default-font-size 160) ;; TODO check if 140 is better
+(defvar efs/default-font-size 150)
 
 #+end_src
 

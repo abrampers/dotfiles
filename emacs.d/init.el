@@ -2,7 +2,7 @@
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar efs/default-font-size 160) ;; TODO check if 140 is better
+(defvar efs/default-font-size 150)
 
 ;; Initialize package sources
 (require 'package)
