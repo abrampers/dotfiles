@@ -367,9 +367,11 @@ When running emacs from the app, emacs won't have the user's shell environment v
 #+begin_src emacs-lisp
 
   (use-package exec-path-from-shell
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+    :init
+    (setq exec-path-from-shell-check-startup-files nil)
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
 
 #+end_src
 
