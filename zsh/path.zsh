@@ -37,5 +37,6 @@ PATH=$PATH:$M2
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/local/opt/ncurses/bin
 PATH=$PATH:/usr/local/opt/sqlite/bin
+source $HOME/.zsh/conda.zsh
 
 export PATH

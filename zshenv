@@ -6,3 +6,6 @@ if [ -d "$HOME/.zshenv.d" ]; then
     source "$EXTENSION_FILE"
   done
 fi
+
+# Source paths
+source $HOME/.zsh/path.zsh
