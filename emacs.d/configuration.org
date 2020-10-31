@@ -673,3 +673,5 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 *** TODO commenting
 
+*** TODO show treemacs
+
