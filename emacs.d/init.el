@@ -290,3 +290,7 @@
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (define-key evil-normal-state-local-map (kbd "gd") 'lsp-find-definition)))

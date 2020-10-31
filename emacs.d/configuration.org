@@ -648,5 +648,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 ** TODO Add vim like keybindings
 
-*** TODO go to definition
+#+begin_src emacs-lisp
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (define-key evil-normal-state-local-map (kbd "gd") 'lsp-find-definition)))
+
+#+end_src
 
