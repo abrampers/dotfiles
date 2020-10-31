@@ -139,7 +139,6 @@ Here's to install and use [[https://www.nordtheme.com/docs/ports/emacs][nord]].
   :init (load-theme 'nord t))
 
 #+end_src
-
 ** Better Modeline
 
 [[https://github.com/seagle0128/doom-modeline][doom-modeline]] is a very attractive and rich (yet still minimal) mode line configuration for Emacs.  The default configuration is quite good but you can check out the [[https://github.com/seagle0128/doom-modeline#customize][configuration options]] for more things you can enable or disable.
@@ -157,7 +156,7 @@ Here's to install and use [[https://www.nordtheme.com/docs/ports/emacs][nord]].
 #+end_src
 
 #+RESULTS:
-
+** TODO Nyan Mode
 ** Which Key
 
 [[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key binding in Emacs to offer you all possible completions for the prefix.  For example, if you press =C-c= (hold control and press the letter =c=), a panel will appear at the bottom of the frame displaying all of the bindings under that prefix and which command they run.  This is very useful for learning the possible key bindings in the mode of your current buffer.
