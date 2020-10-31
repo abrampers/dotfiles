@@ -175,8 +175,6 @@
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 
 (use-package exec-path-from-shell
-  :init
-  (setq exec-path-from-shell-check-startup-files nil)
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
@@ -250,9 +248,6 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package evil-magit
-  :after magit)
-
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -270,9 +265,9 @@
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")))
 
-(setq evil-want-keybinding nil)
 (use-package evil
   :init
+  (setq evil-want-keybinding nil)
   (setq evil-want-integration t)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
@@ -292,3 +287,6 @@
   :after evil
   :config
   (evil-collection-init))
+
+(use-package evil-magit
+  :after magit)
