@@ -252,6 +252,8 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package evil-nerd-commenter)
+
 (use-package general
 :config
 (general-create-definer abram/leader-keys

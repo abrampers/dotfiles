@@ -568,6 +568,16 @@ Forge is used to integrate with GitHub and GitLab from emacs.
 
 #+end_src
 
+** Commenting
+
+Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] to provide a more familiar behavior.  I've bound it to =M-/= since other editors sometimes use this binding but you could also replace Emacs' =M-;= binding with this command.
+
+#+begin_src emacs-lisp
+
+  (use-package evil-nerd-commenter)
+
+#+end_src
+
 * Keybinding Configuration
 ** General
 
