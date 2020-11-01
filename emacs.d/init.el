@@ -300,4 +300,4 @@
 
 (add-hook 'prog-mode-hook
           (lambda ()
-            (define-key evil-normal-state-local-map (kbd "gd") 'lsp-find-definition)))
+            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)))
