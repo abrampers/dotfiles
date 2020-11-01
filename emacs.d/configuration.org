@@ -771,6 +771,23 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 
 #+end_src
 
+*** Buffer Navigation
+**** Navigating two most recent buffers
+
+#+begin_src emacs-lisp
+
+  (defun abram/switch-to-most-recent-buffer ()
+    "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer) 1)))
+    
+  (evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
+
+#+end_src
+
+#+RESULTS:
+: abram/switch-to-most-recent-buffer
+
 *** TODO run tests
 
 **** TODO run test per file

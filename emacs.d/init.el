@@ -329,3 +329,10 @@
           (lambda ()
             (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
             (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)))
+
+(defun abram/switch-to-most-recent-buffer ()
+  "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
