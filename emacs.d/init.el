@@ -213,6 +213,8 @@
   (lsp-mode . efs/lsp-mode-setup)
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+  :custom
+  (lsp-file-watch-threshold 2000)
   :config
   (lsp-enable-which-key-integration t))
 
