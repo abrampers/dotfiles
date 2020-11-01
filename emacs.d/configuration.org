@@ -395,6 +395,7 @@ As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide
         `((".*" ,temporary-file-directory t)))
 
 #+end_src
+** TODO Ensure emacs can be ran from outside terminal
 
 * Evil Mode
 ** =evil-mode=
