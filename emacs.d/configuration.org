@@ -640,6 +640,32 @@ Setup =tab-width= for =.go= files.
 
 *** TODO Ruby
 
+**** TODO Custom project type
+
+Read [[https://docs.projectile.mx/projectile/projects.html][projectile documentation]] on how to register custom projectile project types.
+
+#+begin_src emacs-lisp :tangle no
+
+  ;; Rails + RSpec
+  (projectile-register-project-type 'rails-rspec '("Gemfile" "app" "lib" "db" "config" "spec")
+                                    :project-file "Gemfile"
+                                    :compile "bundle exec rails server"
+                                    :src-dir "lib/"
+                                    :test "bundle exec rspec"
+                                    :test-dir "spec/"
+                                    :test-suffix "_spec")
+
+  ;; Ruby + RSpec
+  (projectile-register-project-type 'ruby-rspec '("Gemfile" "lib" "spec")
+                                    :project-file "Gemfile"
+                                    :compile "bundle exec rake"
+                                    :src-dir "lib/"
+                                    :test "bundle exec rspec"
+                                    :test-dir "spec/"
+                                    :test-suffix "_spec")
+
+#+end_src
+
 * Keybinding Configuration
 ** General
 
