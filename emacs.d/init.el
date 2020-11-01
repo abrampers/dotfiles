@@ -64,6 +64,11 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
+(use-package nyan-mode
+  :init (setq nyan-animate-nyancat t
+              nyan-wavy-trail t)
+  :config (nyan-mode))
+
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
