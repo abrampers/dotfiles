@@ -641,6 +641,8 @@ Setup =tab-width= for =.go= files.
 
 **** Run Tests Capability
 
+For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in various level of granularity.
+
 #+begin_src emacs-lisp
 
   (defun abram/go-test-keybindings ()
