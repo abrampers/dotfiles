@@ -658,27 +658,11 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 ** TODO Remap ctrl to caps lock
 
-** TODO Add vim like keybindings
+** TODO Vim-like Keybindings
 
-#+begin_src emacs-lisp
+Since I'm moving from vim environment, I like my emacs to have a similar keybinding with my vim configuration.
 
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)))
-
-#+end_src
-
-*** TODO go to test file
-
-*** TODO run tests
-
-**** run test per file
-
-**** run test suite
-
-**** run test per function
-
-*** TODO quick write
+*** Quick Write
 
 #+begin_src emacs-lisp
 
@@ -689,9 +673,33 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+RESULTS:
 : evil-write
 
-*** TODO go to implementation
+*** Code navigations & refactor using LSP
 
-*** TODO commenting
+
+#+begin_src emacs-lisp
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
+            (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
+            (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
+            (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
+            (evil-local-set-key 'normal (kbd ",r") 'lsp-rename)))
+
+#+end_src
+
+#+RESULTS:
+| (lambda nil (evil-local-set-key 'normal (kbd gd) 'lsp-find-definition) (evil-local-set-key 'normal (kbd gi) 'lsp-find-implementation) (evil-local-set-key 'normal (kbd gr) 'lsp-find-references)) | (lambda nil (evil-local-set-key 'normal (kbd gd) 'lsp-find-definition)) | rainbow-delimiters-mode |
+
+*** TODO go to test file
+
+*** TODO run tests
+
+**** run test per file
+
+**** run test suite
+
+**** run test per function
 
 *** TODO show treemacs
 

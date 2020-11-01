@@ -298,8 +298,12 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(evil-global-set-key 'normal (kbd ",w") 'evil-write)
+
 (add-hook 'prog-mode-hook
           (lambda ()
-            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)))
-
-(evil-global-set-key 'normal (kbd ",w") 'evil-write)
+            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
+            (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
+            (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
+            (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
+            (evil-local-set-key 'normal (kbd ",r") 'lsp-rename)))
