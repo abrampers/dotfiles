@@ -228,19 +228,6 @@
 
 (use-package lsp-ivy)
 
-(use-package go-mode
-  :mode "\\.go\\'"
-  :hook (go-mode . lsp-deferred)
-  :init (setq gofmt-command "goimports")
-  :config (add-hook 'before-save-hook 'gofmt-before-save))
-
-(use-package go-playground :ensure t)
-
-(add-hook 'go-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode t)
-            (setq tab-width 4)))
-
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -283,6 +270,25 @@
 (use-package evil-commentary
   :config
   (evil-commentary-mode))
+
+(use-package go-mode
+  :mode "\\.go\\'"
+  :hook (go-mode . lsp-deferred)
+  :init (setq gofmt-command "goimports")
+  :config (add-hook 'before-save-hook 'gofmt-before-save))
+
+(use-package go-playground :ensure t)
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)
+            (setq tab-width 4)))
+
+(projectile-register-project-type 'go '("go.mod")
+                                  :project-file "go.mod"
+				  :compile "go build"
+				  :test "go test"
+				  :test-suffix "_test")
 
 (use-package general
   :config

@@ -417,9 +417,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 #+end_src
 
 * Development
-** Languages
-*** IDE Features with lsp-mode
-**** lsp-mode
+** LSP
+*** lsp-mode
 
 We use the excellent [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]] to enable IDE-like functionality for many different programming languages via "language servers" that speak the [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]].  Before trying to set up =lsp-mode= for a particular language, check out the [[https://emacs-lsp.github.io/lsp-mode/page/languages/][documentation for your language]] so that you can learn which language servers are available and how to install them.
 
@@ -446,7 +445,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
 #+end_src
 
-**** lsp-ui
+*** lsp-ui
 
 [[https://emacs-lsp.github.io/lsp-ui/][lsp-ui]] is a set of UI enhancements built on top of =lsp-mode= which make Emacs feel even more like an IDE.  Check out the screenshots on the =lsp-ui= homepage (linked at the beginning of this paragraph) to see examples of what it can do.
 
@@ -459,7 +458,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
 #+end_src
 
-**** lsp-treemacs
+*** lsp-treemacs
 
 [[https://github.com/emacs-lsp/lsp-treemacs][lsp-treemacs]] provides nice tree views for different aspects of your code like symbols in a file, references of a symbol, or diagnostic messages (errors and warnings) that are found in your code.
 
@@ -478,7 +477,7 @@ This package is built on the [[https://github.com/Alexander-Miller/treemacs][tre
 
 #+end_src
 
-**** lsp-ivy
+*** lsp-ivy
 
 [[https://github.com/emacs-lsp/lsp-ivy][lsp-ivy]] integrates Ivy with =lsp-mode= to make it easy to search for things by name in your code.  When you run these commands, a prompt will appear in the minibuffer allowing you to type part of the name of a symbol in your code.  Results will be populated in the minibuffer so that you can find what you're looking for and jump to that location in the code upon selecting the result.
 
@@ -492,41 +491,6 @@ Try these commands with =M-x=:
   (use-package lsp-ivy)
 
 #+end_src
-
-*** Go
-
-This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code.
-
-#+begin_src emacs-lisp
-
-  (use-package go-mode
-    :mode "\\.go\\'"
-    :hook (go-mode . lsp-deferred)
-    :init (setq gofmt-command "goimports")
-    :config (add-hook 'before-save-hook 'gofmt-before-save))
-
-  (use-package go-playground :ensure t)
-
-#+end_src
-
-Setup =tab-width= for =.go= files.
-
-#+begin_src emacs-lisp
-
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (setq indent-tabs-mode t)
-              (setq tab-width 4)))
-
-#+end_src
-
-#+RESULTS:
-
-**** TODO Text object
-
-*** TODO Ruby
-
-*** TODO Java
 
 ** Company Mode
 
@@ -627,6 +591,54 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+RESULTS:
 : t
+
+** Language Support
+*** Go
+
+This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code.
+
+#+begin_src emacs-lisp
+
+  (use-package go-mode
+    :mode "\\.go\\'"
+    :hook (go-mode . lsp-deferred)
+    :init (setq gofmt-command "goimports")
+    :config (add-hook 'before-save-hook 'gofmt-before-save))
+
+  (use-package go-playground :ensure t)
+
+#+end_src
+
+Setup =tab-width= for =.go= files.
+
+#+begin_src emacs-lisp
+
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode t)
+              (setq tab-width 4)))
+
+#+end_src
+
+#+RESULTS:
+
+**** Custom project type
+
+#+begin_src emacs-lisp
+
+(projectile-register-project-type 'go '("go.mod")
+                                  :project-file "go.mod"
+				  :compile "go build"
+				  :test "go test"
+				  :test-suffix "_test")
+
+#+end_src
+
+**** TODO Text object
+
+*** TODO Java
+
+*** TODO Ruby
 
 * Keybinding Configuration
 ** General
