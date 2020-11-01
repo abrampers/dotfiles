@@ -301,3 +301,5 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)))
+
+(evil-global-set-key 'normal (kbd ",w") 'evil-write)

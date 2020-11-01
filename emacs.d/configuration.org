@@ -680,6 +680,15 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 *** TODO quick write
 
+#+begin_src emacs-lisp
+
+  (evil-global-set-key 'normal (kbd ",w") 'evil-write)
+
+#+end_src
+
+#+RESULTS:
+: evil-write
+
 *** TODO go to implementation
 
 *** TODO commenting
