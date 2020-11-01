@@ -374,11 +374,49 @@ As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide
 
 #+end_src
 
+* Evil Mode
+** =evil-mode=
+
+This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience. 
+
+#+begin_src emacs-lisp
+
+  (use-package evil
+    :init
+    (setq evil-want-keybinding nil)
+    (setq evil-want-integration t)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump t)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
+
+#+end_src
+
+** =evil-collection=
+
+[[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
+
+#+begin_src emacs-lisp
+
+  (use-package evil-collection
+   :after evil
+   :config
+   (evil-collection-init))
+
+#+end_src
+
 * Development
 ** Languages
-
 *** IDE Features with lsp-mode
-
 **** lsp-mode
 
 We use the excellent [[https://emacs-lsp.github.io/lsp-mode/][lsp-mode]] to enable IDE-like functionality for many different programming languages via "language servers" that speak the [[https://microsoft.github.io/language-server-protocol/][Language Server Protocol]].  Before trying to set up =lsp-mode= for a particular language, check out the [[https://emacs-lsp.github.io/lsp-mode/page/languages/][documentation for your language]] so that you can learn which language servers are available and how to install them.
@@ -545,6 +583,9 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+  (use-package evil-magit
+    :after magit)
+
 #+end_src
 
 Forge is used to integrate with GitHub and GitLab from emacs.
@@ -594,55 +635,6 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     (abram/leader-keys
       "t"  '(:ignore t :which-key "toggles")
       "tt" '(counsel-load-theme :which-key "choose theme")))
-
-#+end_src
-
-** =evil-mode=
-
-This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience. 
-
-#+begin_src emacs-lisp
-
-  (use-package evil
-    :init
-    (setq evil-want-keybinding nil)
-    (setq evil-want-integration t)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump t)
-    :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
-
-#+end_src
-
-** =evil-collection=
-
-[[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.  
- 
-#+begin_src emacs-lisp
-  (use-package evil-collection
-   :after evil
-   :config
-   (evil-collection-init))
-
-#+end_src
- 
-** =evil-magit=
-
-[[https://github.com/emacs-evil/evil-magit][evil-magit]] is used to configure Magit and Evil to play well with each other.
-
-#+begin_src emacs-lisp
-
-  (use-package evil-magit
-    :after magit)
 
 #+end_src
 
