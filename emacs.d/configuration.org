@@ -747,4 +747,5 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 **** TODO run test per function
 
 *** TODO show treemacs
+* TODO Terminal & Shell Config
 
