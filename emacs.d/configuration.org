@@ -126,8 +126,7 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 
 #+begin_src emacs-lisp
 
-(use-package doom-themes
-  :init (load-theme 'doom-dracula t))
+(use-package doom-themes)
 
 #+end_src
 
@@ -135,10 +134,18 @@ Here's to install and use [[https://www.nordtheme.com/docs/ports/emacs][nord]].
 
 #+begin_src emacs-lisp :tangle no
 
-(use-package nord-theme
-  :init (load-theme 'nord t))
+(use-package nord-theme)
 
 #+end_src
+
+Activate nord theme.
+
+#+begin_src emacs-lisp
+
+(load-theme 'nord t)
+
+#+end_src
+
 ** Better Modeline
 
 [[https://github.com/seagle0128/doom-modeline][doom-modeline]] is a very attractive and rich (yet still minimal) mode line configuration for Emacs.  The default configuration is quite good but you can check out the [[https://github.com/seagle0128/doom-modeline#customize][configuration options]] for more things you can enable or disable.

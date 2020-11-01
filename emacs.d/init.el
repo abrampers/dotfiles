@@ -54,8 +54,9 @@
 
 (use-package command-log-mode)
 
-(use-package doom-themes
-  :init (load-theme 'doom-dracula t))
+(use-package doom-themes)
+
+(load-theme 'nord t)
 
 (use-package all-the-icons)
 
