@@ -291,6 +291,15 @@
 				  :test "go test"
 				  :test-suffix "_test")
 
+(defun abram/go-test-keybindings ()
+  (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+  (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+  (evil-local-set-key 'normal (kbd "ts") 'go-test-current-project)
+  (evil-local-set-key 'normal (kbd "tc") 'go-test-current-coverage))
+
+(use-package gotest
+  :hook (go-mode . abram/go-test-keybindings))
+
 (use-package general
   :config
   (general-create-definer abram/leader-keys

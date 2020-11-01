@@ -639,7 +639,27 @@ Setup =tab-width= for =.go= files.
 
 #+end_src
 
-**** TODO Run Tests Capability
+**** Run Tests Capability
+
+#+begin_src emacs-lisp
+
+  (defun abram/go-test-keybindings ()
+    (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+    (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+    (evil-local-set-key 'normal (kbd "ts") 'go-test-current-project)
+    (evil-local-set-key 'normal (kbd "tc") 'go-test-current-coverage))
+
+  (use-package gotest
+    :hook (go-mode . abram/go-test-keybindings))
+
+#+end_src
+
+#+RESULTS:
+| abram/go-test-keybindings | (lambda nil (setq indent-tabs-mode t) (setq tab-width 4)) | lsp-deferred | doom-modeline-env-setup-go |
+
+***** TODO fix base project path
+
+Currently running =ts= only ran the tests per package.
 
 **** TODO Text object
 
