@@ -313,3 +313,8 @@
             (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
             (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
             (evil-local-set-key 'normal (kbd ",r") 'lsp-rename)))
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
+            (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)))

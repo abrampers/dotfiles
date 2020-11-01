@@ -703,7 +703,16 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 #+RESULTS:
 | (lambda nil (evil-local-set-key 'normal (kbd gd) 'lsp-find-definition) (evil-local-set-key 'normal (kbd gi) 'lsp-find-implementation) (evil-local-set-key 'normal (kbd gr) 'lsp-find-references)) | (lambda nil (evil-local-set-key 'normal (kbd gd) 'lsp-find-definition)) | rainbow-delimiters-mode |
 
-*** TODO go to test file
+*** Navigate to Test Files
+
+#+begin_src emacs-lisp
+
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
+            (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)))
+
+#+end_src
 
 *** TODO run tests
 
