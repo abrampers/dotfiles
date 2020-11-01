@@ -278,7 +278,9 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package evil-nerd-commenter)
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
 
 (use-package general
   :config
