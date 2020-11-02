@@ -645,7 +645,7 @@ Enable =whitespace-mode= when starting =prog-mode=.
 ** Language Support
 *** Go
 
-This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code.
+This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code. For Go specific utis, we use [[https://github.com/dominikh/go-mode.el][go-mode]] package.
 
 #+begin_src emacs-lisp
 
