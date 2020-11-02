@@ -292,8 +292,8 @@
 
 (projectile-register-project-type 'go '("go.mod")
                                   :project-file "go.mod"
-				  :compile "go build"
-				  :test "go test"
+				  :compile "make build"
+				  :test "make test"
 				  :test-suffix "_test")
 
 (defun abram/go-test-keybindings ()

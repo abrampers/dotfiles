@@ -649,8 +649,8 @@ Setup =tab-width= for =.go= files.
 
 (projectile-register-project-type 'go '("go.mod")
                                   :project-file "go.mod"
-				  :compile "go build"
-				  :test "go test"
+				  :compile "make build"
+				  :test "make test"
 				  :test-suffix "_test")
 
 #+end_src
