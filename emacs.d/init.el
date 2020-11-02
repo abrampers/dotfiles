@@ -316,6 +316,10 @@
 (use-package gotest
   :hook (go-mode . abram/go-test-keybindings))
 
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (lsp)))
+
 (use-package general
   :config
   (general-create-definer abram/leader-keys-map
