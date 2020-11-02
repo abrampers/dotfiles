@@ -630,6 +630,20 @@ Disable tabs when indenting a region by default.
 
 #+end_src
 
+Enable =whitespace-mode= when starting =prog-mode=.
+
+#+begin_src emacs-lisp
+  
+  (use-package whitespace
+    :hook (prog-mode . whitespace-mode)
+    :init
+    (setq whitespace-style '(face spaces tabs trailing tab-mark space-mark)))
+
+#+end_src
+
+#+RESULTS:
+: t
+
 ** Language Support
 *** Go
 

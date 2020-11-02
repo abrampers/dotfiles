@@ -282,6 +282,12 @@
   (evil-commentary-mode))
 
 (setq-default indent-tabs-mode nil)
+
+(use-package whitespace
+  :hook (prog-mode . whitespace-mode)
+  :init
+  (setq whitespace-style '(face spaces tabs trailing tab-mark space-mark)))
+
 (use-package go-mode
   :mode "\\.go\\'"
   :hook (go-mode . lsp-deferred)
