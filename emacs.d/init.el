@@ -314,8 +314,7 @@
 
   (abram/leader-keys
     "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")
-    "o" 'delete-other-windows))
+    "tt" '(counsel-load-theme :which-key "choose theme"))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -330,10 +329,18 @@
             (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
             (evil-local-set-key 'normal (kbd ",r") 'lsp-rename)))
 
+(evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
+
+(abram/leader-keys
+  "f" 'counsel-projectile-rg)
+
 (add-hook 'prog-mode-hook
           (lambda ()
             (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
             (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)))
+
+(abram/leader-key
+    "o" 'delete-other-windows)
 
 (defun abram/switch-to-most-recent-buffer ()
   "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
