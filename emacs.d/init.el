@@ -45,6 +45,9 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+;; Scroll compilation buffer whenever output came
+(setq compilation-scroll-output t)
+
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 (when (eq system-type 'darwin)

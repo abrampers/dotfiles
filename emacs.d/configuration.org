@@ -80,8 +80,14 @@ This section configures basic UI settings that remove unneeded elements to make 
                   shell-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    
+  ;; Scroll compilation buffer whenever output came
+  (setq compilation-scroll-output t)
 
 #+end_src
+
+#+RESULTS:
+: t
 
 Start "maximized".
 #+begin_src emacs-lisp
