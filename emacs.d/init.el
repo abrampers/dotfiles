@@ -39,6 +39,7 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
+                compilation-mode-hook
                 term-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
