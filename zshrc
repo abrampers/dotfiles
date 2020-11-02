@@ -144,6 +144,24 @@ function +vi-git-untracked() {
   fi
 }
 
+# Emacs vterm compatibility
+vterm_printf() {
+    if [ -n "$TMUX" ]; then
+        # Tell tmux to pass the escape sequences through
+        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+
+vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+}
+
 RPROMPT_BASE="\${vcs_info_msg_0_}%F{blue}%~%f"
 setopt PROMPT_SUBST
 
@@ -165,7 +183,8 @@ function () {
   else
     local SUFFIX=$(printf '%%F{red}\u276f%.0s%%f' {1..$LVL})
   fi
-  export PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f %B${SUFFIX}%b "
+  PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f %B${SUFFIX}%b "
+  export PS1=$PS1'%{$(vterm_prompt_end)%}'
   if [[ -n "$TMUXING" ]]; then
     # Outside tmux, ZLE_RPROMPT_INDENT ends up eating the space after PS1, and
     # prompt still gets corrupted even if we add an extra space to compensate.

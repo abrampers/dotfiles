@@ -41,6 +41,7 @@
 (dolist (mode '(org-mode-hook
                 compilation-mode-hook
                 term-mode-hook
+                vterm-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
@@ -372,3 +373,9 @@
 
 (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
 (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
+
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-shell "zsh")                       ;; Set this to customize the shell to launch
+  (setq vterm-max-scrollback 10000))
