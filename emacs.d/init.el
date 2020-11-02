@@ -214,7 +214,10 @@
  (evil-collection-init))
 
 (defun efs/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
+  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-completion-show-detail t)
+  (setq lsp-completion-show-kind t)
   (lsp-headerline-breadcrumb-mode))
 
 (use-package lsp-mode
@@ -247,10 +250,13 @@
          ("<tab>" . company-indent-or-complete-common))
   :custom
   (company-minimum-prefix-length 1)
+  (company-tooltip-align-annotations t)
   (company-idle-delay 0.0))
 
 (use-package company-box
-  :hook (company-mode . company-box-mode))
+  :hook (company-mode . company-box-mode)
+  :init
+  (setq company-box-enable-icon nil))
 
 (use-package projectile
   :diminish projectile-mode

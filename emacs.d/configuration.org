@@ -116,7 +116,6 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 #+end_src
 
 * UI Configuration
-
 ** Command Log Mode
 
 [[https://github.com/lewang/command-log-mode][command-log-mode]] is useful for displaying a panel showing each key binding you use in a panel on the right side of the frame.  Great for live streams and screencasts!
@@ -459,7 +458,10 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 #+begin_src emacs-lisp
 
   (defun efs/lsp-mode-setup ()
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
+    (setq lsp-eldoc-enable-hover nil)
+    (setq lsp-completion-show-detail t)
+    (setq lsp-completion-show-kind t)
     (lsp-headerline-breadcrumb-mode))
 
   (use-package lsp-mode
@@ -539,12 +541,18 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
            ("<tab>" . company-indent-or-complete-common))
     :custom
     (company-minimum-prefix-length 1)
+    (company-tooltip-align-annotations t)
     (company-idle-delay 0.0))
 
   (use-package company-box
-    :hook (company-mode . company-box-mode))
+    :hook (company-mode . company-box-mode)
+    :init
+    (setq company-box-enable-icon nil))
 
 #+end_src
+
+#+RESULTS:
+| company-box-mode | company-mode-set-explicitly |
 
 ** Projectile
 
