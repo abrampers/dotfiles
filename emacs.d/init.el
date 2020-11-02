@@ -281,6 +281,7 @@
   :config
   (evil-commentary-mode))
 
+(setq-default indent-tabs-mode nil)
 (use-package go-mode
   :mode "\\.go\\'"
   :hook (go-mode . lsp-deferred)

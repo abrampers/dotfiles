@@ -620,6 +620,16 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+RESULTS:
 : t
 
+** Indendation
+
+Disable tabs when indenting a region by default.
+
+#+begin_src emacs-lisp
+
+  (setq-default indent-tabs-mode nil)
+
+#+end_src
+
 ** Language Support
 *** Go
 
