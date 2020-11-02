@@ -806,6 +806,18 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 #+RESULTS:
 : abram/switch-to-most-recent-buffer
 
+**** Next & Previous buffers
+
+#+begin_src emacs-lisp
+
+  (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
+  (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
+
+#+end_src
+
+#+RESULTS:
+: next-buffer
+
 *** TODO run tests
 
 **** TODO run test per file
