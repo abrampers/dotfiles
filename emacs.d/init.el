@@ -385,4 +385,6 @@
   :commands vterm
   :config
   (setq vterm-shell "zsh")                       ;; Set this to customize the shell to launch
-  (setq vterm-max-scrollback 10000))
+  (setq vterm-max-scrollback 10000)
+  :custom
+  (vterm-buffer-name-string "vterm [%s]"))

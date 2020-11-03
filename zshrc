@@ -144,7 +144,11 @@ function +vi-git-untracked() {
   fi
 }
 
-# Emacs vterm compatibility
+########### Emacs vterm compatibility
+
+autoload -U add-zsh-hook
+add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
+
 vterm_printf() {
     if [ -n "$TMUX" ]; then
         # Tell tmux to pass the escape sequences through
@@ -161,6 +165,7 @@ vterm_printf() {
 vterm_prompt_end() {
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
 }
+###########
 
 RPROMPT_BASE="\${vcs_info_msg_0_}%F{blue}%~%f"
 setopt PROMPT_SUBST
