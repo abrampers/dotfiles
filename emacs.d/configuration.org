@@ -730,7 +730,16 @@ Currently running =ts= only ran the tests per package.
 
 #+end_src
 
-*** TODO yaml
+*** Markup / Config file support
+**** yaml
+
+For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
+
+#+begin_src emacs-lisp
+
+(use-package yaml-mode)
+
+#+end_src
 
 * Keybinding Configuration
 ** General
