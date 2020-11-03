@@ -749,6 +749,10 @@ Currently running =ts= only ran the tests per package.
 
 **** TODO Run Tests Capability
 
+*** TODO zsh
+
+*** TODO yaml
+
 * Keybinding Configuration
 ** General
 
