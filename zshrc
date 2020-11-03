@@ -440,14 +440,6 @@ zstyle ':completion:*:*:cdr:*:*' menu selection
 # fall through to cd if cdr is passed a non-recent dir as an argument
 zstyle ':chpwd:*' recent-dirs-default true
 
-# Local and host-specific overrides.
-
-LOCAL_RC=$HOME/.zshrc.local
-test -f $LOCAL_RC && source $LOCAL_RC
-
-HOST_RC=$HOME/.zsh/host/$(hostname -s)
-test -f $HOST_RC && source $HOST_RC
-
 #
 # Source variables
 #
@@ -463,23 +455,20 @@ source $HOME/.zsh/functions.zsh
 source $HOME/.zsh/hash.zsh
 source $HOME/.zsh/after.zsh
 
+# Local and host-specific overrides.
+
+LOCAL_RC=$HOME/.zshrc.local
+test -f $LOCAL_RC && source $LOCAL_RC
+
+HOST_RC=$HOME/.zsh/host/$(hostname -s)
+test -f $HOST_RC && source $HOST_RC
+
 #
 # Third-Party
 #
 
-test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" # Elixir
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" # GHC for Haskell
-
 # nvm setup
 source $(brew --prefix nvm)/nvm.sh
-
-# kubectl
-source <(kubectl completion zsh)
-
-# gcloud
-#
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # rbenv
 eval "$(rbenv init -)"
@@ -491,4 +480,3 @@ eval "$(rbenv init -)"
 # Key bindings
 # ------------
 source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
-
