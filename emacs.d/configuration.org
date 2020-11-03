@@ -731,7 +731,7 @@ Currently running =ts= only ran the tests per package.
 #+end_src
 
 *** Markup / Config file support
-**** yaml
+**** =.yml=
 
 For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
 
@@ -740,6 +740,7 @@ For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
 (use-package yaml-mode)
 
 #+end_src
+**** TODO =.json=
 
 * Keybinding Configuration
 ** General
