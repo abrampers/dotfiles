@@ -336,6 +336,8 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 
 #+end_src
 
+** TODO =org-agenda=
+
 ** Configure Babel Languages
 
 To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use.  [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
@@ -458,6 +460,10 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
    (evil-collection-init))
 
 #+end_src
+
+** TODO =evil-surround=
+
+** TODO =org-evil=
 
 * Development
 ** LSP
