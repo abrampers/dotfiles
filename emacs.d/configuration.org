@@ -406,7 +406,7 @@ As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide
 #+end_src
 ** Ensure emacs can be ran from outside terminal
 
-When running emacs from the app, emacs won't have the user's shell environment variable. =[[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]]= will help us to sync user shell's environment variable with emacs environment variable.
+When running emacs from the app, emacs won't have the user's shell environment variable. [[https://github.com/purcell/exec-path-from-shell][=exec-path-from-shell=]] will help us to sync user shell's environment variable with emacs environment variable.
 
 #+begin_src emacs-lisp
 
