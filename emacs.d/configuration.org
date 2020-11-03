@@ -402,7 +402,20 @@ As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide
         `((".*" ,temporary-file-directory t)))
 
 #+end_src
-** TODO Ensure emacs can be ran from outside terminal
+** Ensure emacs can be ran from outside terminal
+
+When running emacs from the app, emacs won't have the user's shell environment variable. =[[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]]= will help us to sync user shell's environment variable with emacs environment variable.
+
+#+begin_src emacs-lisp
+
+  (use-package exec-path-from-shell
+    :init
+    (setq exec-path-from-shell-check-startup-files nil)
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+
+#+end_src
 
 * Evil Mode
 ** =evil-mode=

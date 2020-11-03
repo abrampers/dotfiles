@@ -7,5 +7,3 @@ if [ -d "$HOME/.zshenv.d" ]; then
   done
 fi
 
-# Source paths
-source $HOME/.zsh/path.zsh
