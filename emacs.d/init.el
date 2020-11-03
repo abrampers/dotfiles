@@ -334,6 +334,9 @@
           (lambda ()
             (lsp)))
 
+(add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
+
 (use-package general
   :config
   (general-create-definer abram/leader-keys-map
