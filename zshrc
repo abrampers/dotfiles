@@ -146,9 +146,6 @@ function +vi-git-untracked() {
 
 ########### Emacs vterm compatibility
 
-autoload -U add-zsh-hook
-add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
-
 vterm_printf() {
     if [ -n "$TMUX" ]; then
         # Tell tmux to pass the escape sequences through
@@ -306,8 +303,7 @@ autoload -U add-zsh-hook
 
 function -set-tab-and-window-title() {
   emulate -L zsh
-  local CMD="${1:gs/$/\\$}"
-  print -Pn "\e]0;$CMD:q\a"
+  print -Pn "\e]2;%m:%2~\a"
 }
 
 # $HISTCMD (the current history event number) is shared across all shells
