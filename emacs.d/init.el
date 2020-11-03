@@ -296,6 +296,7 @@
   (evil-commentary-mode))
 
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 (use-package whitespace
   :hook (prog-mode . whitespace-mode)
@@ -312,8 +313,7 @@
 
 (add-hook 'go-mode-hook
           (lambda ()
-            (setq indent-tabs-mode t)
-            (setq tab-width 4)))
+            (setq indent-tabs-mode t)))
 
 (projectile-register-project-type 'go '("go.mod")
                                   :project-file "go.mod"

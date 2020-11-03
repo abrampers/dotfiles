@@ -640,13 +640,17 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 ** Indendation
 
-Disable tabs when indenting a region by default.
+Disable tabs when indenting a region by default and set =tab-width= default value.
 
 #+begin_src emacs-lisp
 
   (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
 
 #+end_src
+
+#+RESULTS:
+: 4
 
 Enable =whitespace-mode= when starting =prog-mode=.
 
@@ -685,8 +689,7 @@ Setup =tab-width= for =.go= files.
 
   (add-hook 'go-mode-hook
             (lambda ()
-              (setq indent-tabs-mode t)
-              (setq tab-width 4)))
+              (setq indent-tabs-mode t)))
 
 #+end_src
 
