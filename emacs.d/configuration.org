@@ -446,8 +446,6 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+end_src
 
-** TODO =evil-surround=
-
 ** TODO =org-evil=
 
 * Development
