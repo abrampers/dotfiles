@@ -131,19 +131,11 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 
 #+end_src
 
-Here's to install and use [[https://www.nordtheme.com/docs/ports/emacs][nord]].
-
-#+begin_src emacs-lisp :tangle no
-
-(use-package nord-theme)
-
-#+end_src
-
 Activate nord theme.
 
 #+begin_src emacs-lisp
 
-(load-theme 'nord t)
+(load-theme 'doom-nord t)
 
 #+end_src
 

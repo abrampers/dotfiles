@@ -61,7 +61,7 @@
 
 (use-package doom-themes)
 
-(load-theme 'nord t)
+(load-theme 'doom-nord t)
 
 (use-package all-the-icons)
 
