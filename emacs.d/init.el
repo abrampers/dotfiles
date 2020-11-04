@@ -318,7 +318,7 @@
   :config
   (global-evil-surround-mode 1))
 
-(add-hook 'prog-mode-hook 'electric-pair-mode)
+(add-hook 'prog-mode-hook 'electric-pair-local-mode)
 
 (use-package go-mode
   :mode "\\.go\\'"

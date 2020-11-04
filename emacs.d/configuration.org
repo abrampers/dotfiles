@@ -679,7 +679,7 @@ Emacs 24 has =electric-pair-mode= builtin.
 
 #+begin_src emacs-lisp
 
-  (add-hook 'prog-mode-hook 'electric-pair-mode)
+  (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 
 #+end_src
 
