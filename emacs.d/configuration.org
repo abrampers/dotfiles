@@ -373,7 +373,7 @@ This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-con
 #+end_src
 
 * System stuff
-** Make sure emacs won't clutter working tree
+** Ensure emacs won't clutter working tree
 
 As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide]] this will put all [[https://www.emacswiki.org/emacs/AutoSave][auto-saves]] and backups in the directory pointed by =temporary-file-directory=.
 
