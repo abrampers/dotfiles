@@ -227,6 +227,21 @@
  :config
  (evil-collection-init))
 
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/Code")
+    (setq projectile-project-search-path '("~/Code")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
   (setq lsp-eldoc-enable-hover nil)
@@ -272,21 +287,6 @@
   :init
   (setq company-box-enable-icon nil))
 
-(use-package projectile
-  :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (when (file-directory-p "~/Code")
-    (setq projectile-project-search-path '("~/Code")))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :config (counsel-projectile-mode))
-
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -297,10 +297,6 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode))
-
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
@@ -310,13 +306,13 @@
   :init
   (setq whitespace-style '(face tabs empty trailing tab-mark)))
 
-(use-package smartparens
-  :hook ((clojure-mode . smartparens-strict-mode)
-         (emacs-lisp-mode . smartparens-strict-mode)))
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode))
 
-(use-package evil-smartparens
-  :hook ((clojure-mode . evil-smartparens-mode)
-         (emacs-lisp-mode . evil-smartparens-mode)))
+(use-package smartparens)
+
+(use-package evil-smartparens)
 
 (use-package evil-surround
   :config
@@ -338,9 +334,9 @@
 
 (projectile-register-project-type 'go '("go.mod")
                                   :project-file "go.mod"
-				  :compile "make build"
-				  :test "make test"
-				  :test-suffix "_test")
+                                  :compile "make build"
+                                  :test "make test"
+                                  :test-suffix "_test")
 
 (defun abram/go-test-keybindings ()
   (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
@@ -354,6 +350,23 @@
 (add-hook 'ruby-mode-hook
           (lambda ()
             (lsp)))
+
+(use-package clojure-mode)
+
+(use-package cider
+  :hook (clojure-mode . cider-mode))
+
+(defun abram/clojure-mode-hooks ()
+  (smartparens-strict-mode)
+  (evil-smartparens-mode))
+
+(add-hook 'clojure-mode-hook 'abram/clojure-mode-hooks)
+
+(defun abram/emacs-lisp-mode-hooks ()
+  (smartparens-strict-mode)
+  (evil-smartparens-mode))
+
+(add-hook 'emacs-lisp-mode 'abram/emacs-lisp-mode-hooks)
 
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))

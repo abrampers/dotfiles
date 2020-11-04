@@ -78,7 +78,7 @@ This section configures basic UI settings that remove unneeded elements to make 
                   shell-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
-    
+
   ;; Scroll compilation buffer whenever output came
   (setq compilation-scroll-output t)
 
@@ -449,6 +449,29 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 ** TODO =org-evil=
 
 * Development
+** Projectile
+
+[[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various languages.  Many packages integrate with Projectile so it's a good idea to have it installed even if you don't use its commands directly.
+
+#+begin_src emacs-lisp
+
+  (use-package projectile
+    :diminish projectile-mode
+    :config (projectile-mode)
+    :custom ((projectile-completion-system 'ivy))
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
+    :init
+    ;; NOTE: Set this to the folder where you keep your Git repos!
+    (when (file-directory-p "~/Code")
+      (setq projectile-project-search-path '("~/Code")))
+    (setq projectile-switch-project-action #'projectile-dired))
+
+  (use-package counsel-projectile
+    :config (counsel-projectile-mode))
+
+#+end_src
+
 ** LSP
 *** lsp-mode
 
@@ -554,29 +577,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
 #+end_src
 
-** Projectile
-
-[[https://projectile.mx/][Projectile]] is a project management library for Emacs which makes it a lot easier to navigate around code projects for various languages.  Many packages integrate with Projectile so it's a good idea to have it installed even if you don't use its commands directly.
-
-#+begin_src emacs-lisp
-
-  (use-package projectile
-    :diminish projectile-mode
-    :config (projectile-mode)
-    :custom ((projectile-completion-system 'ivy))
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :init
-    ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/Code")
-      (setq projectile-project-search-path '("~/Code")))
-    (setq projectile-switch-project-action #'projectile-dired))
-
-  (use-package counsel-projectile
-    :config (counsel-projectile-mode))
-
-#+end_src
-
 ** Magit
 
 [[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
@@ -605,18 +605,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
 #+end_src
 
-** Commenting
-
-Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/linktohack/evil-commentary][evil-commentary]] to provide a more familiar behavior (just like in vim).
-
-#+begin_src emacs-lisp
-
-  (use-package evil-commentary
-    :config
-    (evil-commentary-mode))
-
-#+end_src
-
 ** Indendation
 
 Disable tabs when indenting a region by default and set =tab-width= default value.
@@ -640,6 +628,18 @@ Enable =whitespace-mode= when starting =prog-mode=.
 
 #+end_src
 
+** Commenting
+
+Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/linktohack/evil-commentary][evil-commentary]] to provide a more familiar behavior (just like in vim).
+
+#+begin_src emacs-lisp
+
+  (use-package evil-commentary
+    :config
+    (evil-commentary-mode))
+
+#+end_src
+
 ** Paranthesis related stuff
 *** =smartparens=
 
@@ -647,9 +647,7 @@ Enable =whitespace-mode= when starting =prog-mode=.
 
 #+begin_src emacs-lisp
 
-  (use-package smartparens
-    :hook ((clojure-mode . smartparens-strict-mode)
-           (emacs-lisp-mode . smartparens-strict-mode)))
+  (use-package smartparens)
 
 #+end_src
 
@@ -659,9 +657,7 @@ Enable =whitespace-mode= when starting =prog-mode=.
 
 #+begin_src emacs-lisp
 
-  (use-package evil-smartparens
-    :hook ((clojure-mode . evil-smartparens-mode)
-           (emacs-lisp-mode . evil-smartparens-mode)))
+  (use-package evil-smartparens)
 
 #+end_src
 
@@ -689,6 +685,7 @@ Emacs 24 has =electric-pair-mode= builtin.
 
 ** Language Support
 *** Go
+**** =go-mode=
 
 This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code. For Go specific utis, we use [[https://github.com/dominikh/go-mode.el][go-mode]] package.
 
@@ -703,6 +700,8 @@ This is a basic configuration for the Go language so that =.go= files activate =
   (use-package go-playground :ensure t)
 
 #+end_src
+
+**** Setup tab width for golang files
 
 Setup =tab-width= for =.go= files.
 
@@ -722,9 +721,9 @@ Read [[https://docs.projectile.mx/projectile/projects.html][projectile documenta
 
 (projectile-register-project-type 'go '("go.mod")
                                   :project-file "go.mod"
-				  :compile "make build"
-				  :test "make test"
-				  :test-suffix "_test")
+                                  :compile "make build"
+                                  :test "make test"
+                                  :test-suffix "_test")
 
 #+end_src
 
@@ -765,6 +764,52 @@ Currently running =ts= only ran the tests per package.
 
 **** TODO Run Tests Capability
 
+*** Clojure
+**** =clojure-mode=
+
+[[https://github.com/clojure-emacs/clojure-mode/][clojure-mode]] for =.clj= languages.
+
+#+begin_src emacs-lisp
+
+  (use-package clojure-mode)
+
+#+end_src
+
+**** cider
+
+[[https://github.com/clojure-emacs/cider][cider]] is used for REPL capability for clojure in Emacs.
+
+#+begin_src emacs-lisp
+
+(use-package cider
+  :hook (clojure-mode . cider-mode))
+
+#+end_src
+
+**** Hooks
+
+#+begin_src emacs-lisp
+
+  (defun abram/clojure-mode-hooks ()
+    (smartparens-strict-mode)
+    (evil-smartparens-mode))
+
+  (add-hook 'clojure-mode-hook 'abram/clojure-mode-hooks)
+
+#+end_src
+
+*** Emacs Lisp
+**** Hooks
+
+#+begin_src emacs-lisp
+
+  (defun abram/emacs-lisp-mode-hooks ()
+    (smartparens-strict-mode)
+    (evil-smartparens-mode))
+
+  (add-hook 'emacs-lisp-mode 'abram/emacs-lisp-mode-hooks)
+#+end_src
+
 *** TODO zsh
 
 #+begin_src emacs-lisp
@@ -785,7 +830,6 @@ For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
 
 #+end_src
 **** TODO =.json=
-
 * Keybinding Configuration
 ** General
 
