@@ -299,9 +299,10 @@
 (setq-default tab-width 4)
 
 (use-package whitespace
-  :hook (prog-mode . whitespace-mode)
+  :hook ((prog-mode . whitespace-mode)
+         (text-mode . whitespace-mode))
   :init
-  (setq whitespace-style '(face spaces tabs trailing tab-mark space-mark)))
+  (setq whitespace-style '(face tabs empty trailing tab-mark)))
 
 (use-package go-mode
   :mode "\\.go\\'"
