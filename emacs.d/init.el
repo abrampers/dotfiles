@@ -389,7 +389,6 @@
 (use-package vterm
   :commands vterm
   :config
-  (setq vterm-shell "zsh")
   (setq vterm-max-scrollback 10000)
   :custom
   (vterm-buffer-name-string "vterm [%s]"))

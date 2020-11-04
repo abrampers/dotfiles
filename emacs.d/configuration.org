@@ -868,7 +868,6 @@ Make sure that you have the [[https://github.com/akermu/emacs-libvterm/#requirem
   (use-package vterm
     :commands vterm
     :config
-    (setq vterm-shell "zsh")
     (setq vterm-max-scrollback 10000)
     :custom
     (vterm-buffer-name-string "vterm [%s]"))
