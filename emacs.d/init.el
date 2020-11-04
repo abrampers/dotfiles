@@ -304,6 +304,14 @@
   :init
   (setq whitespace-style '(face tabs empty trailing tab-mark)))
 
+(use-package smartparens
+  :hook ((clojure-mode . smartparens-strict-mode)
+         (emacs-lisp-mode . smartparens-strict-mode)))
+
+(use-package evil-smartparens
+  :hook ((clojure-mode . evil-smartparens-mode)
+         (emacs-lisp-mode . evil-smartparens-mode)))
+
 (use-package go-mode
   :mode "\\.go\\'"
   :hook (go-mode . lsp-deferred)
