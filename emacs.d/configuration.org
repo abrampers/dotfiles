@@ -639,6 +639,7 @@ Enable =whitespace-mode= when starting =prog-mode=.
 #+end_src
 
 ** Paranthesis
+*** =smartparens=
 
 [[https://github.com/Fuco1/smartparens][smartparens]] is used to make dealing with pairs easier in Emacs.
 
@@ -649,6 +650,8 @@ Enable =whitespace-mode= when starting =prog-mode=.
            (emacs-lisp-mode . smartparens-strict-mode)))
 
 #+end_src
+
+*** =evil-smartparens=
 
 [[https://github.com/expez/evil-smartparens][evil-smartparens]] makes evil play nice with smartparens.
 
