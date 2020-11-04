@@ -312,6 +312,12 @@
   :hook ((clojure-mode . evil-smartparens-mode)
          (emacs-lisp-mode . evil-smartparens-mode)))
 
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
+(add-hook 'prog-mode-hook 'electric-pair-mode)
+
 (use-package go-mode
   :mode "\\.go\\'"
   :hook (go-mode . lsp-deferred)
