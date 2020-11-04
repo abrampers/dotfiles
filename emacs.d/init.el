@@ -366,7 +366,7 @@
   (smartparens-strict-mode)
   (evil-smartparens-mode))
 
-(add-hook 'emacs-lisp-mode 'abram/emacs-lisp-mode-hooks)
+(add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
 
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
