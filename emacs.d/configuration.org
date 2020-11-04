@@ -403,9 +403,12 @@ When running emacs from the app, emacs won't have the user's shell environment v
 * Evil Mode
 ** =evil-mode=
 
-This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience. 
+This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.
 
 #+begin_src emacs-lisp
+
+  (use-package undo-tree
+    :config (global-undo-tree-mode))
 
   (use-package evil
     :init
@@ -413,6 +416,9 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
     (setq evil-want-integration t)
     (setq evil-want-C-u-scroll t)
     (setq evil-want-C-i-jump t)
+    (setq evil-vsplit-window-right t)
+    (setq evil-split-window-below t)
+    (setq evil-undo-system 'undo-tree)
     :config
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
