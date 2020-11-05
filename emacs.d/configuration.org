@@ -938,12 +938,12 @@ Currently running =ts= only ran the tests per package.
 
 #+begin_src emacs-lisp
 
-(use-package cider
-  :hook (clojure-mode . cider-mode))
+  (use-package cider
+    :hook ((clojure-mode . cider-mode)
+           (cider-repl-mode . company-mode)
+           (cider-mode . company-mode)))
 
 #+end_src
-
-**** Hooks
 
 *** Emacs Lisp
 **** Hooks
