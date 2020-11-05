@@ -926,7 +926,9 @@ Currently running =ts= only ran the tests per package.
 
 #+begin_src emacs-lisp
 
-  (use-package clojure-mode)
+  (use-package clojure-mode
+    :hook ((clojure-mode . smartparens-strict-mode)
+           (clojure-mode . evil-smartparens-mode)))
 
 #+end_src
 
@@ -942,16 +944,6 @@ Currently running =ts= only ran the tests per package.
 #+end_src
 
 **** Hooks
-
-#+begin_src emacs-lisp
-
-  (defun abram/clojure-mode-hooks ()
-    (smartparens-strict-mode)
-    (evil-smartparens-mode))
-
-  (add-hook 'clojure-mode-hook 'abram/clojure-mode-hooks)
-
-#+end_src
 
 *** Emacs Lisp
 **** Hooks

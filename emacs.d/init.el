@@ -487,16 +487,12 @@
           (lambda ()
             (lsp)))
 
-(use-package clojure-mode)
+(use-package clojure-mode
+  :hook ((clojure-mode . smartparens-strict-mode)
+         (clojure-mode . evil-smartparens-mode)))
 
 (use-package cider
   :hook (clojure-mode . cider-mode))
-
-(defun abram/clojure-mode-hooks ()
-  (smartparens-strict-mode)
-  (evil-smartparens-mode))
-
-(add-hook 'clojure-mode-hook 'abram/clojure-mode-hooks)
 
 (defun abram/emacs-lisp-mode-hooks ()
   (smartparens-strict-mode)
