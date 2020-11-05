@@ -172,6 +172,13 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-max-scrollback 10000)
+  :custom
+  (vterm-buffer-name-string "vterm [%s]"))
+
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -548,10 +555,3 @@
 
 (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
 (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
-
-(use-package vterm
-  :commands vterm
-  :config
-  (setq vterm-max-scrollback 10000)
-  :custom
-  (vterm-buffer-name-string "vterm [%s]"))
