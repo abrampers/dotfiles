@@ -922,13 +922,18 @@ Currently running =ts= only ran the tests per package.
 *** Clojure
 **** =clojure-mode=
 
-[[https://github.com/clojure-emacs/clojure-mode/][clojure-mode]] for =.clj= languages.
+[[https://github.com/clojure-emacs/clojure-mode/][clojure-mode]] for =.clj= languages. For lsp integration, make sure [[https://github.com/snoe/clojure-lsp][clojure-lsp]] is configured properly.
 
 #+begin_src emacs-lisp
 
   (use-package clojure-mode
     :hook ((clojure-mode . smartparens-strict-mode)
-           (clojure-mode . evil-smartparens-mode)))
+           (clojure-mode . evil-smartparens-mode)
+           (clojure-mode . lsp)
+           (clojurec-mode . lsp)
+           (clojurescript-mode . lsp))
+    :config
+    (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
 
 #+end_src
 

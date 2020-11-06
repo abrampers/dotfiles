@@ -489,7 +489,12 @@
 
 (use-package clojure-mode
   :hook ((clojure-mode . smartparens-strict-mode)
-         (clojure-mode . evil-smartparens-mode)))
+         (clojure-mode . evil-smartparens-mode)
+         (clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp))
+  :config
+  (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
 
 (defun abram/cider-format-on-save ()
   (when (member (file-name-extension (buffer-file-name))
