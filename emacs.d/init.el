@@ -498,22 +498,24 @@
 
 (use-package clojure-mode
   :hook ((clojure-mode . smartparens-strict-mode)
-         (clojure-mode . evil-smartparens-mode)
-         (clojure-mode . lsp)
-         (clojurec-mode . lsp)
-         (clojurescript-mode . lsp))
-  :config
-  (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp")))
-
-(defun abram/cider-format-on-save ()
-  (when (member (file-name-extension (buffer-file-name))
-                '("clj" "cljs" "cljc"))
-    (add-hook 'before-save-hook 'cider-format-buffer)))
+         (clojure-mode . evil-smartparens-mode)))
 
 (use-package cider
   :hook ((clojure-mode . cider-mode)
-         (cider-repl-mode . company-mode)
-         (cider-mode . abram/cider-format-on-save)))
+         (clojure-mode . company-mode)
+         (cider-repl-mode . company-mode))
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map cider-mode-map
+         ("<tab>" . company-indent-or-complete-common)))
+
+(defun abram/cider-format-for-clj ()
+  (when (member (file-name-extension (buffer-file-name))
+                '("clj" "cljs" "cljc"))
+    (cider-format-buffer)))
+
+(add-hook 'cider-mode-hook
+          (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
 
 (defun abram/emacs-lisp-mode-hooks ()
   (smartparens-strict-mode)
