@@ -265,6 +265,7 @@ When running emacs from the app, emacs won't have the user's shell environment v
     (setq exec-path-from-shell-check-startup-files nil)
     :config
     (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-copy-env "GOPATH")
       (exec-path-from-shell-initialize)))
 
 #+end_src
@@ -624,6 +625,14 @@ This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-con
 
   (use-package counsel-projectile
     :config (counsel-projectile-mode))
+
+#+end_src
+
+Set general keybinding to run =projectile-test-project=.
+
+#+begin_src emacs-lisp
+
+  (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
 #+end_src
 

@@ -131,6 +131,7 @@
   (setq exec-path-from-shell-check-startup-files nil)
   :config
   (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-copy-env "GOPATH")
     (exec-path-from-shell-initialize)))
 
 (use-package undo-tree
@@ -377,6 +378,8 @@
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
+
+(evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
 (defun efs/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
