@@ -705,6 +705,19 @@ Try these commands with =M-x=:
 
 #+end_src
 
+*** Code navigations & refactor using LSP
+
+#+begin_src emacs-lisp
+
+  (defun abram/evil-lsp-keybindings ()
+    (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
+    (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
+    (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
+    (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
+    (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
+
+#+end_src
+
 ** Company Mode
 
 [[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
@@ -848,7 +861,8 @@ This is a basic configuration for the Go language so that =.go= files activate =
 
   (use-package go-mode
     :mode "\\.go\\'"
-    :hook (go-mode . lsp-deferred)
+    :hook ((go-mode . lsp-deferred)
+           (go-mode . abram/evil-lsp-keybindings))
     :init (setq gofmt-command "goimports")
     :config (add-hook 'before-save-hook 'gofmt-before-save))
 
@@ -913,6 +927,7 @@ Currently running =ts= only ran the tests per package.
 
 (add-hook 'ruby-mode-hook
           (lambda ()
+            (abram/evil-lsp-keybindings)
             (lsp)))
 
 #+end_src
@@ -1064,21 +1079,6 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 #+begin_src emacs-lisp
 
   (evil-global-set-key 'normal (kbd ",w") 'evil-write)
-
-#+end_src
-
-*** Code navigations & refactor using LSP
-
-#+begin_src emacs-lisp
-
-  (defun abram/evil-lsp-keybindings ()
-    (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
-    (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
-    (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
-    (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
-    (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
-
-(add-hook 'prog-mode-hook (lambda () abram/evil-lsp-keybindings))
 
 #+end_src
 

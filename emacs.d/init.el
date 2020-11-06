@@ -406,6 +406,13 @@
 
 (use-package lsp-ivy)
 
+(defun abram/evil-lsp-keybindings ()
+  (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
+  (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
+  (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
+  (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
+  (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -458,7 +465,8 @@
 
 (use-package go-mode
   :mode "\\.go\\'"
-  :hook (go-mode . lsp-deferred)
+  :hook ((go-mode . lsp-deferred)
+         (go-mode . abram/evil-lsp-keybindings))
   :init (setq gofmt-command "goimports")
   :config (add-hook 'before-save-hook 'gofmt-before-save))
 
@@ -485,6 +493,7 @@
 
 (add-hook 'ruby-mode-hook
           (lambda ()
+            (abram/evil-lsp-keybindings)
             (lsp)))
 
 (use-package clojure-mode
@@ -545,15 +554,6 @@
 (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
 
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
-
-(defun abram/evil-lsp-keybindings ()
-    (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
-    (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
-    (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
-    (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
-    (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
-
-(add-hook 'prog-mode-hook (lambda () abram/evil-lsp-keybindings))
 
 (evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
 
