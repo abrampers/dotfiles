@@ -1005,6 +1005,43 @@ For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
 
 #+end_src
 
+** Buffer & Window management
+
+*** Buffer management
+
+Close everything except current window using =SPC-o=.
+
+#+begin_src emacs-lisp
+
+  (abram/leader-keys-map
+      "o" 'delete-other-windows)
+
+#+end_src
+
+Navigating two most recent buffers.
+
+#+begin_src emacs-lisp
+
+  (defun abram/switch-to-most-recent-buffer ()
+    "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+  (evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
+
+#+end_src
+
+Next & Previous buffers
+
+#+begin_src emacs-lisp
+
+  (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
+  (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
+
+#+end_src
+
+*** TODO Window management
+
 ** TODO Remap ctrl to caps lock
 
 ** TODO Vim-like Keybindings
@@ -1063,37 +1100,8 @@ Search in project using =SPC-f=.
 
 #+end_src
 
-*** Buffer Management
-
-Close everything except current window using =SPC-o=.
-
-#+begin_src emacs-lisp
-
-  (abram/leader-keys-map
-      "o" 'delete-other-windows)
-
-#+end_src
-
-Navigating two most recent buffers.
-
-#+begin_src emacs-lisp
-
-  (defun abram/switch-to-most-recent-buffer ()
-    "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer) 1)))
-    
-  (evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
-
-#+end_src
-
-Next & Previous buffers
-
-#+begin_src emacs-lisp
-
-  (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
-  (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
-
-#+end_src
-
 *** TODO show treemacs
+
+#+begin_src emacs-lisp
+
+#+end_src

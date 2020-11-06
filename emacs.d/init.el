@@ -520,6 +520,19 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+(abram/leader-keys-map
+    "o" 'delete-other-windows)
+
+(defun abram/switch-to-most-recent-buffer ()
+  "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+(evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
+
+(evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
+(evil-global-set-key 'normal (kbd ",f") 'next-buffer)
+
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
 
 (add-hook 'prog-mode-hook
@@ -540,15 +553,4 @@
             (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
             (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)))
 
-(abram/leader-keys-map
-    "o" 'delete-other-windows)
 
-(defun abram/switch-to-most-recent-buffer ()
-  "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) 1)))
-
-(evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
-
-(evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
-(evil-global-set-key 'normal (kbd ",f") 'next-buffer)
