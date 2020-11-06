@@ -387,7 +387,7 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook 
+  :hook
   (lsp-mode . efs/lsp-mode-setup)
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
