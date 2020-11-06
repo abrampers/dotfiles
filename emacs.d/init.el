@@ -493,8 +493,7 @@
 
 (use-package cider
   :hook ((clojure-mode . cider-mode)
-         (cider-repl-mode . company-mode)
-         (cider-mode . company-mode)))
+         (cider-repl-mode . company-mode)))
 
 (defun abram/emacs-lisp-mode-hooks ()
   (smartparens-strict-mode)
