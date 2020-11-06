@@ -938,13 +938,15 @@ Currently running =ts= only ran the tests per package.
 
 #+begin_src emacs-lisp
 
-  (defun abram/cider/format-on-save ()
-    (add-hook 'before-save-hook 'cider-format-buffer))
+  (defun abram/cider-format-on-save ()
+    (when (member (file-name-extension (buffer-file-name))
+                  '("clj" "cljs" "cljc"))
+      (add-hook 'before-save-hook 'cider-format-buffer)))
 
   (use-package cider
     :hook ((clojure-mode . cider-mode)
            (cider-repl-mode . company-mode)
-           (cider-mode . abram/cider/format-on-save)))
+           (cider-mode . abram/cider-format-on-save)))
 
 #+end_src
 
