@@ -491,9 +491,13 @@
   :hook ((clojure-mode . smartparens-strict-mode)
          (clojure-mode . evil-smartparens-mode)))
 
+(defun abram/cider/format-on-save ()
+  (add-hook 'before-save-hook 'cider-format-buffer))
+
 (use-package cider
   :hook ((clojure-mode . cider-mode)
-         (cider-repl-mode . company-mode)))
+         (cider-repl-mode . company-mode)
+         (cider-mode . abram/cider/format-on-save)))
 
 (defun abram/emacs-lisp-mode-hooks ()
   (smartparens-strict-mode)
