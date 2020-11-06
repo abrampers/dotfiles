@@ -1071,13 +1071,14 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 
 #+begin_src emacs-lisp
 
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
-            (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
-            (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
-            (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
-            (evil-local-set-key 'normal (kbd ",r") 'lsp-rename)))
+  (defun abram/evil-lsp-keybindings ()
+    (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
+    (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
+    (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
+    (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
+    (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
+
+(add-hook 'prog-mode-hook (lambda () abram/evil-lsp-keybindings))
 
 #+end_src
 

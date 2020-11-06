@@ -546,13 +546,14 @@
 
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
 
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
-            (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
-            (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
-            (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
-            (evil-local-set-key 'normal (kbd ",r") 'lsp-rename)))
+(defun abram/evil-lsp-keybindings ()
+    (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
+    (evil-local-set-key 'normal (kbd "gi") 'lsp-find-implementation)
+    (evil-local-set-key 'normal (kbd "gr") 'lsp-find-references)
+    (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
+    (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
+
+(add-hook 'prog-mode-hook (lambda () abram/evil-lsp-keybindings))
 
 (evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
 
