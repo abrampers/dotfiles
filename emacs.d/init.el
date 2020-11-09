@@ -429,9 +429,6 @@
   :custom
   (lsp-ui-doc-position 'bottom))
 
-(use-package lsp-treemacs
-  :after lsp)
-
 (use-package lsp-ivy)
 
 (defun abram/evil-lsp-keybindings ()

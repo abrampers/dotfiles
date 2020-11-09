@@ -801,8 +801,9 @@ Try these commands with =M-x=:
 
 This package is built on the [[https://github.com/Alexander-Miller/treemacs][treemacs]] package which might be of some interest to you if you like to have a file browser at the left side of your screen in your editor.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
+  ;; Not tangled
   (use-package lsp-treemacs
     :after lsp)
 
