@@ -654,19 +654,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+end_src
 
-*** Keybindings
-
-Key bindings to call =org-agenda= and =org-capture=.
-
-#+begin_src emacs-lisp
-
-  (abram/leader-keys-map
-    "g"  '(:ignore t :which-key "org-mode helper prefixes")
-    "ga" 'org-agenda
-    "gc" 'org-capture)
-
-#+end_src
-
 *** Automatically change TODO entry to automatically change to DONE when all children are done
 
 #+begin_src emacs-lisp
@@ -1206,6 +1193,19 @@ For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
   ;; Make SPC-# to cycle numbering modes
   (abram/leader-keys-map
       "#" 'abram/cycle-numbering-style)
+
+#+end_src
+
+** Org Mode
+
+Key bindings to call =org-agenda= and =org-capture=.
+
+#+begin_src emacs-lisp
+
+  (abram/leader-keys-map
+    "g"  '(:ignore t :which-key "org-mode helper prefixes")
+    "ga" 'org-agenda
+    "gc" 'org-capture)
 
 #+end_src
 

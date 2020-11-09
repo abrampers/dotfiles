@@ -356,11 +356,6 @@
 
   (efs/org-font-setup))
 
-(abram/leader-keys-map
-  "g"  '(:ignore t :which-key "org-mode helper prefixes")
-  "ga" 'org-agenda
-  "gc" 'org-capture)
-
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
   (let (org-log-done org-log-states)   ; turn off logging
@@ -587,6 +582,11 @@
 ;; Make SPC-# to cycle numbering modes
 (abram/leader-keys-map
     "#" 'abram/cycle-numbering-style)
+
+(abram/leader-keys-map
+  "g"  '(:ignore t :which-key "org-mode helper prefixes")
+  "ga" 'org-agenda
+  "gc" 'org-capture)
 
 (abram/leader-keys-map
     "o" 'delete-other-windows)
