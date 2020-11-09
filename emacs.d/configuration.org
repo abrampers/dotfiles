@@ -72,6 +72,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
+                  dired-sidebar-mode-hook
                   compilation-mode-hook
                   term-mode-hook
                   vterm-mode-hook
@@ -431,6 +432,23 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
   (use-package dired-hide-dotfiles
     :hook (dired-mode . dired-hide-dotfiles-mode))
+
+#+end_src
+
+** Dired Sidebar
+
+[[https://github.com/jojojames/dired-sidebar][dired-sidebar]] is giving us the power of dired on sidebar. Just like we used to in typical editor.
+
+#+begin_src emacs-lisp
+
+  (use-package dired-sidebar
+    :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+    :commands (dired-sidebar-toggle-sidebar)
+    :init
+    (add-hook 'dired-sidebar-mode-hook
+              (lambda ()
+                (unless (file-remote-p default-directory)
+                  (auto-revert-mode)))))
 
 #+end_src
 

@@ -39,6 +39,7 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
+                dired-sidebar-mode-hook
                 compilation-mode-hook
                 term-mode-hook
                 vterm-mode-hook
@@ -193,6 +194,15 @@
 
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode))
+
+(use-package dired-sidebar
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode)))))
 
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
