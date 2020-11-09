@@ -34,19 +34,6 @@
 ;; Set up the visible bell
 (setq visible-bell t)
 
-(column-number-mode)
-(global-display-line-numbers-mode t)
-
-;; Disable line numbers for some modes
-(dolist (mode '(org-mode-hook
-                dired-sidebar-mode-hook
-                compilation-mode-hook
-                term-mode-hook
-                vterm-mode-hook
-                shell-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
 ;; Scroll compilation buffer whenever output came
 (setq compilation-scroll-output t)
 
@@ -57,6 +44,30 @@
   (add-to-list 'default-frame-alist '(ns-appearance . dark)))
 
 (set-face-attribute 'default nil :font "Monego" :height efs/default-font-size)
+
+(column-number-mode)
+(global-display-line-numbers-mode t)
+
+(dolist (mode '(org-mode-hook
+                dired-sidebar-mode-hook
+                compilation-mode-hook
+                term-mode-hook
+                vterm-mode-hook
+                shell-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(defvar abram/current-numbering-style-index)
+(setq abram/current-numbering-style-index 0)
+(defvar abram/numbering-styles)
+(setq abram/numbering-styles '(t nil relative))
+
+(defun abram/cycle-numbering-style ()
+  (interactive)
+  (let ((next-numbering-index (% (+ abram/current-numbering-style-index 1) (length abram/numbering-styles))))
+    (let ((next-numbering-style (nth next-numbering-index abram/numbering-styles)))
+      (setq display-line-numbers next-numbering-style)
+      (setq abram/current-numbering-style-index next-numbering-index))))
 
 (use-package command-log-mode)
 
@@ -567,6 +578,10 @@
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; Make SPC-# to cycle numbering modes
+(abram/leader-keys-map
+    "#" 'abram/cycle-numbering-style)
 
 (abram/leader-keys-map
     "o" 'delete-other-windows)

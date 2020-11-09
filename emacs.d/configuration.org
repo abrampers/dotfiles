@@ -67,25 +67,13 @@ This section configures basic UI settings that remove unneeded elements to make 
   ;; Set up the visible bell
   (setq visible-bell t)
 
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
-
-  ;; Disable line numbers for some modes
-  (dolist (mode '(org-mode-hook
-                  dired-sidebar-mode-hook
-                  compilation-mode-hook
-                  term-mode-hook
-                  vterm-mode-hook
-                  shell-mode-hook
-                  eshell-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
   ;; Scroll compilation buffer whenever output came
   (setq compilation-scroll-output t)
 
 #+end_src
 
 Start "maximized".
+
 #+begin_src emacs-lisp
 
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -93,6 +81,7 @@ Start "maximized".
 #+end_src
 
 Get that fancy dark transparent title bar on OSX.
+
 #+begin_src emacs-lisp
 
   (when (eq system-type 'darwin)
@@ -108,6 +97,50 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 #+begin_src emacs-lisp
 
 (set-face-attribute 'default nil :font "Monego" :height efs/default-font-size)
+
+#+end_src
+
+** Line Numbers Configuration
+
+Setup line and column number mode.
+
+#+begin_src emacs-lisp
+
+  (column-number-mode)
+  (global-display-line-numbers-mode t)
+
+#+end_src
+
+Disable line numbers on certain modes.
+
+#+begin_src emacs-lisp
+
+  (dolist (mode '(org-mode-hook
+                  dired-sidebar-mode-hook
+                  compilation-mode-hook
+                  term-mode-hook
+                  vterm-mode-hook
+                  shell-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+#+end_src
+
+Cycle numbering.
+
+#+begin_src emacs-lisp
+
+  (defvar abram/current-numbering-style-index)
+  (setq abram/current-numbering-style-index 0)
+  (defvar abram/numbering-styles)
+  (setq abram/numbering-styles '(t nil relative))
+
+  (defun abram/cycle-numbering-style ()
+    (interactive)
+    (let ((next-numbering-index (% (+ abram/current-numbering-style-index 1) (length abram/numbering-styles))))
+      (let ((next-numbering-style (nth next-numbering-index abram/numbering-styles)))
+        (setq display-line-numbers next-numbering-style)
+        (setq abram/current-numbering-style-index next-numbering-index))))
 
 #+end_src
 
@@ -1157,6 +1190,10 @@ For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+  ;; Make SPC-# to cycle numbering modes
+  (abram/leader-keys-map
+      "#" 'abram/cycle-numbering-style)
+
 #+end_src
 
 ** Buffer & Window management
@@ -1208,7 +1245,7 @@ Next & Previous buffers
 
 ** TODO Remap ctrl to caps lock
 
-** TODO Vim-like Keybindings
+** Vim-like Keybindings
 
 Since I'm moving from vim environment, I like my emacs to have a similar keybinding with my vim configuration.
 
