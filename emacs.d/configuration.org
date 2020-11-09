@@ -654,6 +654,19 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+end_src
 
+*** Keybindings
+
+Key bindings to call =org-agenda= and =org-capture=.
+
+#+begin_src emacs-lisp
+
+  (abram/leader-keys-map
+    "g"  '(:ignore t :which-key "org-mode helper prefixes")
+    "ga" 'org-agenda
+    "gc" 'org-capture)
+
+#+end_src
+
 *** Automatically change TODO entry to automatically change to DONE when all children are done
 
 #+begin_src emacs-lisp
