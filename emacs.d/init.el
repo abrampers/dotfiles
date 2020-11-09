@@ -180,6 +180,20 @@
   :custom
   (vterm-buffer-name-string "vterm [%s]"))
 
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :bind (("C-x C-j" . dired-jump))
+  :custom ((dired-listing-switches "-agho")))
+
+(use-package dired-single)
+
+(use-package all-the-icons-dired
+  :hook (dired-mode . all-the-icons-dired-mode))
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode))
+
 (defun efs/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -557,6 +571,11 @@
 
 (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
 (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
+
+(evil-collection-define-key 'normal 'dired-mode-map
+  "h" 'dired-single-up-directory
+  "l" 'dired-single-buffer
+  "H" 'dired-hide-dotfiles-mode)
 
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
 
