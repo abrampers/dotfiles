@@ -417,13 +417,23 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 
 *** Configuration
 
+Since macOS =ls= command don't have =--group-directories-first= flag, we have to use =gls= that =coreutils= provided. Please make sure =coreutils= is installed in the system.
+
+#+begin_src emacs-lisp
+
+(setq insert-directory-program "gls" dired-use-ls-dired t)
+
+#+end_src
+
+Now here's the real =dired= configuration.
+
 #+begin_src emacs-lisp
 
   (use-package dired
     :ensure nil
     :commands (dired dired-jump)
     :bind (("C-x C-j" . dired-jump))
-    :custom ((dired-listing-switches "-agho")))
+    :custom ((dired-listing-switches "-agho --group-directories-first")))
 
   (use-package dired-single)
 
@@ -442,7 +452,6 @@ Dired is a built-in file manager for Emacs that does some pretty amazing things!
 #+begin_src emacs-lisp
 
   (use-package dired-sidebar
-    :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
     :commands (dired-sidebar-toggle-sidebar)
     :init
     (add-hook 'dired-sidebar-mode-hook
@@ -1192,6 +1201,9 @@ Next & Previous buffers
     "h" 'dired-single-up-directory
     "l" 'dired-single-buffer
     "H" 'dired-hide-dotfiles-mode)
+
+  (evil-global-set-key 'normal (kbd "C--") 'dired-sidebar-jump-to-sidebar)
+  (evil-global-set-key 'normal (kbd "C-n") 'dired-sidebar-toggle-sidebar)
 
 #+end_src
 

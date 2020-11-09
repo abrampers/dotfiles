@@ -181,11 +181,13 @@
   :custom
   (vterm-buffer-name-string "vterm [%s]"))
 
+(setq insert-directory-program "gls" dired-use-ls-dired t)
+
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
   :bind (("C-x C-j" . dired-jump))
-  :custom ((dired-listing-switches "-agho")))
+  :custom ((dired-listing-switches "-agho --group-directories-first")))
 
 (use-package dired-single)
 
@@ -196,7 +198,6 @@
   :hook (dired-mode . dired-hide-dotfiles-mode))
 
 (use-package dired-sidebar
-  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
   :commands (dired-sidebar-toggle-sidebar)
   :init
   (add-hook 'dired-sidebar-mode-hook
@@ -586,6 +587,9 @@
   "h" 'dired-single-up-directory
   "l" 'dired-single-buffer
   "H" 'dired-hide-dotfiles-mode)
+
+(evil-global-set-key 'normal (kbd "C--") 'dired-sidebar-jump-to-sidebar)
+(evil-global-set-key 'normal (kbd "C-n") 'dired-sidebar-toggle-sidebar)
 
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
 
