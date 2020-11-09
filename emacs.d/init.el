@@ -199,6 +199,7 @@
 
 (use-package dired-sidebar
   :commands (dired-sidebar-toggle-sidebar)
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
   :init
   (add-hook 'dired-sidebar-mode-hook
             (lambda ()
@@ -584,9 +585,6 @@
   "h" 'dired-single-up-directory
   "l" 'dired-single-buffer
   "H" 'dired-hide-dotfiles-mode)
-
-(evil-global-set-key 'normal (kbd "C--") 'dired-sidebar-jump-to-sidebar)
-(evil-global-set-key 'normal (kbd "C-n") 'dired-sidebar-toggle-sidebar)
 
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
 
