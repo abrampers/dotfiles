@@ -1254,6 +1254,10 @@ Next & Previous buffers
     "l" 'dired-single-buffer
     "H" 'dired-hide-dotfiles-mode)
 
+  (evil-collection-define-key 'normal 'dired-sidebar-mode-map
+    "h" 'dired-sidebar-up-directory
+    "l" 'dired-sidebar-find-file)
+
 #+end_src
 
 ** TODO Remap ctrl to caps lock

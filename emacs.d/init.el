@@ -605,6 +605,10 @@
   "l" 'dired-single-buffer
   "H" 'dired-hide-dotfiles-mode)
 
+(evil-collection-define-key 'normal 'dired-sidebar-mode-map
+  "h" 'dired-sidebar-up-directory
+  "l" 'dired-sidebar-find-file)
+
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
 
 (evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
