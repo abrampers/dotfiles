@@ -15,7 +15,7 @@ The following variables are used to tweak some of the configuration pieces for u
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar efs/default-font-size 150)
+(defvar abram/default-font-size 150)
 
 #+end_src
 
@@ -96,7 +96,7 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 
 #+begin_src emacs-lisp
 
-(set-face-attribute 'default nil :font "Monego" :height efs/default-font-size)
+(set-face-attribute 'default nil :font "Monego" :height abram/default-font-size)
 
 #+end_src
 
@@ -502,11 +502,11 @@ Now here's the real =dired= configuration.
 
 ** Better Font Faces
 
-The =efs/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.
+The =abram/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.
 
 #+begin_src emacs-lisp
 
-  (defun efs/org-font-setup ()
+  (defun abram/org-font-setup ()
     ;; Replace list hyphen with dot
     (font-lock-add-keywords 'org-mode
                             '(("^ *\\([-]\\) "
@@ -531,12 +531,12 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-  (defun efs/org-mode-setup ()
+  (defun abram/org-mode-setup ()
     (org-indent-mode)
     (visual-line-mode 1))
 
   (use-package org
-    :hook (org-mode . efs/org-mode-setup)
+    :hook (org-mode . abram/org-mode-setup)
     :config
     (setq org-ellipsis " ▾")
 
@@ -651,7 +651,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (define-key global-map (kbd "C-c j")
       (lambda () (interactive) (org-capture nil "jj")))
 
-    (efs/org-font-setup))
+    (abram/org-font-setup))
 
 #+end_src
 
@@ -688,13 +688,13 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 
 #+begin_src emacs-lisp
 
-  (defun efs/org-mode-visual-fill ()
+  (defun abram/org-mode-visual-fill ()
     (setq visual-fill-column-width 100
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
-    :hook (org-mode . efs/org-mode-visual-fill))
+    :hook (org-mode . abram/org-mode-visual-fill))
 
 #+end_src
 
@@ -732,19 +732,19 @@ You can add more =src= block templates below by copying one of the lines and cha
 
 ** Auto-tangle Configuration Files
 
-This snippet adds a hook to =org-mode= buffers so that =efs/org-babel-tangle-config= gets executed each time such a buffer gets saved.  This function checks to see if the file being saved is the Emacs.org file you're looking at right now, and if so, automatically exports the configuration here to the associated output files.
+This snippet adds a hook to =org-mode= buffers so that =abram/org-babel-tangle-config= gets executed each time such a buffer gets saved.  This function checks to see if the file being saved is the Emacs.org file you're looking at right now, and if so, automatically exports the configuration here to the associated output files.
 
 #+begin_src emacs-lisp
 
   ;; Automatically tangle our Emacs.org config file when we save it
-  (defun efs/org-babel-tangle-config ()
+  (defun abram/org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
                         (expand-file-name "~/.dotfiles/emacs.d/configuration.org"))
       ;; Dynamic scoping to the rescue
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle))))
 
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'abram/org-babel-tangle-config)))
 
 #+end_src
 
@@ -791,7 +791,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
 #+begin_src emacs-lisp
 
-  (defun efs/lsp-mode-setup ()
+  (defun abram/lsp-mode-setup ()
     (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
     (setq lsp-eldoc-enable-hover nil)
     (setq lsp-completion-show-detail t)
@@ -800,7 +800,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
     :hook
-    (lsp-mode . efs/lsp-mode-setup)
+    (lsp-mode . abram/lsp-mode-setup)
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :custom

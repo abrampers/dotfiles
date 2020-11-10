@@ -2,7 +2,7 @@
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar efs/default-font-size 150)
+(defvar abram/default-font-size 150)
 
 ;; Initialize package sources
 (require 'package)
@@ -43,7 +43,7 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)))
 
-(set-face-attribute 'default nil :font "Monego" :height efs/default-font-size)
+(set-face-attribute 'default nil :font "Monego" :height abram/default-font-size)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -217,7 +217,7 @@
               (unless (file-remote-p default-directory)
                 (auto-revert-mode)))))
 
-(defun efs/org-font-setup ()
+(defun abram/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
@@ -234,12 +234,12 @@
                   (org-level-8 . 1.1)))
     (set-face-attribute (car face) nil :font "Monego" :weight 'regular :height (cdr face))))
 
-(defun efs/org-mode-setup ()
+(defun abram/org-mode-setup ()
   (org-indent-mode)
   (visual-line-mode 1))
 
 (use-package org
-  :hook (org-mode . efs/org-mode-setup)
+  :hook (org-mode . abram/org-mode-setup)
   :config
   (setq org-ellipsis " ▾")
 
@@ -354,7 +354,7 @@
   (define-key global-map (kbd "C-c j")
     (lambda () (interactive) (org-capture nil "jj")))
 
-  (efs/org-font-setup))
+  (abram/org-font-setup))
 
 (defun org-summary-todo (n-done n-not-done)
   "Switch entry to DONE when all subentries are done, to TODO otherwise."
@@ -369,13 +369,13 @@
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-(defun efs/org-mode-visual-fill ()
+(defun abram/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-  :hook (org-mode . efs/org-mode-visual-fill))
+  :hook (org-mode . abram/org-mode-visual-fill))
 
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -392,14 +392,14 @@
 (add-to-list 'org-structure-template-alist '("py" . "src python"))
 
 ;; Automatically tangle our Emacs.org config file when we save it
-(defun efs/org-babel-tangle-config ()
+(defun abram/org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
                       (expand-file-name "~/.dotfiles/emacs.d/configuration.org"))
     ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'abram/org-babel-tangle-config)))
 
 (use-package projectile
   :diminish projectile-mode
@@ -418,7 +418,7 @@
 
 (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
-(defun efs/lsp-mode-setup ()
+(defun abram/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
   (setq lsp-eldoc-enable-hover nil)
   (setq lsp-completion-show-detail t)
@@ -427,7 +427,7 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook
-  (lsp-mode . efs/lsp-mode-setup)
+  (lsp-mode . abram/lsp-mode-setup)
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :custom
