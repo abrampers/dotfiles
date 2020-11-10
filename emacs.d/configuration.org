@@ -1301,8 +1301,3 @@ Search in project using =SPC-f=.
 
 #+end_src
 
-*** TODO show treemacs
-
-#+begin_src emacs-lisp
-
-#+end_src
