@@ -288,6 +288,7 @@ As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide
         `((".*" ,temporary-file-directory t)))
 
 #+end_src
+
 ** Ensure emacs can be ran from outside terminal
 
 When running emacs from the app, emacs won't have the user's shell environment variable. [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] will help us to sync user shell's environment variable with emacs environment variable.
@@ -1295,7 +1296,8 @@ Search in project using =SPC-f=.
 (add-hook 'prog-mode-hook
           (lambda ()
             (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
-            (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)))
+            (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)
+            (evil-ex-define-cmd "AV" 'projectile-find-implementation-or-test-other-window)))
 
 #+end_src
 
