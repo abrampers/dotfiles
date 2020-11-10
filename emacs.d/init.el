@@ -422,8 +422,7 @@
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
   (setq lsp-eldoc-enable-hover nil)
   (setq lsp-completion-show-detail t)
-  (setq lsp-completion-show-kind t)
-  (lsp-headerline-breadcrumb-mode))
+  (setq lsp-completion-show-kind t))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
