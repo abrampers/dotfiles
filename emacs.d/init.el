@@ -401,6 +401,9 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'abram/org-babel-tangle-config)))
 
+(use-package restclient
+:mode (("\\.http\\'" . restclient-mode)))
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)

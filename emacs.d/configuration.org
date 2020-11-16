@@ -748,6 +748,17 @@ This snippet adds a hook to =org-mode= buffers so that =abram/org-babel-tangle-c
 
 #+end_src
 
+* =restclient=
+
+[[https://github.com/pashky/restclient.el][restclient]] is a postman in emacs. We can use this to run HTTP REST request.
+
+#+begin_src emacs-lisp
+
+  (use-package restclient
+  :mode (("\\.http\\'" . restclient-mode)))
+
+#+end_src
+
 * Development
 ** Projectile
 
