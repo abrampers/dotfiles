@@ -1,0 +1,94 @@
+#+title: ~/.dotfiles
+
+I am currently running [[https://www.apple.com/macos][macOS]].
+
+Here's a few examples of my workspace.
+
+#+caption: Terminal + neovim
+[[assets/terminal.png]]
+
+- Visible in the screenshot:
+  - [[https://www.nordtheme.com][nord]] colorscheme.
+  - [[https://www.nerdfonts.com/font-downloads][SauceCodePro Nerd Font]] (Regular) font.
+  - neovim, running inside tmux, inside iTerm2, on macOS 10.15 Catalina
+
+#+caption: Emacs
+[[assets/emacs.png]]
+
+- Visible in the screenshot:
+  - [[https://www.nordtheme.com][nord]] colorscheme.
+  - [[https://github.com/cseelus/monego][Monego]] (Regular) font.
+  - Emacs
+
+#+begin_quote
+This whole repository isn't /really/ intended for anyone's use but my own, and
+of course it's catered to my way of doing things, so, you know, be prepared for
+that.
+#+end_quote
+
+* Features
+
+Since I'm using =evil-mode=, I configured vim and emacs to have the same keybindings when possible.
+
+** [[zshrc][zsh]]
+
+- [[https://github.com/junegunn/fzf][fzf]]: fuzzy finder to search for files, strings, or history
+- =color=: change terminal and Vim color scheme
+- =tmux=: terminal multiplexer to organize sessions
+- =zsh-autosuggestions=: suggest previously entered commands
+- =zsh-history-substring-search=: search previous command by substring
+- =zsh-syntax-highlighting=: highlighting on zsh
+
+and many more..
+
+** [[vim/vimrc][vim]]
+
+- [[https://github.com/ycm-core/YouCompleteMe][YouCompleteMe]]: code completion engine + language server
+- [[https://github.com/junegunn/fzf.vim][fzf.vim]]: fuzzy finder in vim
+- [[https://github.com/preservim/nerdtree][nerdtree]]: tree representation for projects and folders
+- [[https://github.com/tpope/vim-fugitive][vim-fugitive]]: git client on vim
+
+and many more..
+
+For cheatsheet, go to [[vim/README.md]].
+
+** [[emacs.d/configuration.org][emacs]]
+
+- [[https://github.com/emacs-evil/evil][evil-mode]]: vim emulation on emacs
+- [[https://magit.vc][magit]]: git client on emacs
+- [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]]: same functionality like YouCompleteMe but for emacs
+- [[https://github.com/jojojames/dired-sidebar][dired-sidebar]]: dired on sidebar
+
+and many more..
+
+* Installation
+
+** Clone
+
+Clone repo to =~/.dotfiles=
+
+#+begin_src shell
+
+git clone --recursive https://github.com/abrampers/dotfiles
+
+#+end_src
+
+** Install
+
+#+begin_quote
+⚠️ **WARNING**: This install method will install every bit of my configuration. In the future, I'll be supporting customized install method.
+#+end_quote
+
+This repo is using [[https://docs.ansible.com/ansible/latest/index.html][Ansible]] to automate installation. Please follow [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos][Ansible installation guide]] to install ansible.
+
+Then run ansible.
+
+#+begin_src shell
+
+ansible-playbook dotfiles.yml
+
+#+end_src
+
+* References
+1. [[https://github.com/wincent/wincent][Greg Hurell's dotfiles setup]]
+2. [[https://www.youtube.com/watch?v=74zOY-vgkyw&list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][System Crafters Emacs from scratch series]] + the [[https://github.com/daviwil/emacs-from-scratch][configuration files]]
