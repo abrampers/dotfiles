@@ -90,6 +90,8 @@ ansible-playbook dotfiles.yml
 
 #+end_src
 
+To find what's included in the installation, go to [[dotfiles.yml]].
+
 * References
 1. [[https://github.com/wincent/wincent][Greg Hurell's dotfiles setup]]
 2. [[https://www.youtube.com/watch?v=74zOY-vgkyw&list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][System Crafters Emacs from scratch series]] + the [[https://github.com/daviwil/emacs-from-scratch][configuration files]]
