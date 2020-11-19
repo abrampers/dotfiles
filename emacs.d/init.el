@@ -583,7 +583,8 @@ See `org-capture-templates' for more information."
                      ,(concat ":EXPORT_FILE_NAME: " fname)
                      ":END:"
                      "#+toc: headlines 1 local"
-                     "%?\n")
+                     "\n"
+                     "%?\n\n\n")
                    "\n")))
 
     (add-to-list 'org-capture-templates
