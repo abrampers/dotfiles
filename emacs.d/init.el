@@ -240,6 +240,7 @@
 
 (use-package org
   :hook (org-mode . abram/org-mode-setup)
+  :custom (org-image-actual-width nil)
   :config
   (setq org-ellipsis " ▾")
 
