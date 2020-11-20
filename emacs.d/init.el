@@ -69,6 +69,13 @@
       (setq display-line-numbers next-numbering-style)
       (setq abram/current-numbering-style-index next-numbering-index))))
 
+(setq initial-major-mode 'org-mode)
+
+(setq initial-scratch-message "\
+# This buffer is for notes you don't want to save, and for org-mode.
+# If you want to create a file, visit that file with C-x C-f,
+# then enter the text in that file's own buffer.")
+
 (use-package command-log-mode)
 
 (use-package doom-themes)

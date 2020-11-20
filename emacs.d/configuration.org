@@ -144,6 +144,19 @@ Cycle numbering.
 
 #+end_src
 
+** Set =org-mode= as initial major mode
+
+#+begin_src emacs-lisp
+
+  (setq initial-major-mode 'org-mode)
+
+  (setq initial-scratch-message "\
+  # This buffer is for notes you don't want to save, and for org-mode.
+  # If you want to create a file, visit that file with C-x C-f,
+  # then enter the text in that file's own buffer.")
+
+#+end_src
+
 * UI Configuration
 ** Command Log Mode
 
