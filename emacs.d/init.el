@@ -626,7 +626,7 @@ See `org-capture-templates' for more information."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 
-(evil-global-set-key 'normal (kbd ",g") 'abram/switch-to-most-recent-buffer)
+(evil-global-set-key 'normal (kbd ",v") 'abram/switch-to-most-recent-buffer)
 
 (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
 (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
