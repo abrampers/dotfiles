@@ -1029,6 +1029,18 @@ Emacs 24 has =electric-pair-mode= builtin.
 
 #+end_src
 
+** Folding
+
+[[https://github.com/gregsexton/origami.el][origami]] will enable us to fold code. [[https://github.com/emacs-lsp/lsp-origami][lsp-origami]] will enable us to use lsp's code folding feature.
+
+#+begin_src emacs-lisp
+
+  (use-package origami)
+
+  (use-package lsp-origami)
+
+#+end_src
+
 ** Language Support
 *** Go
 **** =go-mode=
@@ -1316,6 +1328,14 @@ Since I'm moving from vim environment, I like my emacs to have a similar keybind
 #+begin_src emacs-lisp
 
   (evil-global-set-key 'normal (kbd ",w") 'evil-write)
+
+#+end_src
+
+*** Quick folding
+
+#+begin_src emacs-lisp
+
+  (evil-global-set-key 'normal (kbd "=") 'evil-toggle-fold)
 
 #+end_src
 

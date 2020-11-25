@@ -510,6 +510,10 @@
 
 (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 
+(use-package origami)
+
+(use-package lsp-origami)
+
 (use-package go-mode
   :mode "\\.go\\'"
   :hook ((go-mode . lsp-deferred)
@@ -639,6 +643,8 @@ See `org-capture-templates' for more information."
   "l" 'dired-sidebar-find-file)
 
 (evil-global-set-key 'normal (kbd ",w") 'evil-write)
+
+(evil-global-set-key 'normal (kbd "=") 'evil-toggle-fold)
 
 (evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
 
