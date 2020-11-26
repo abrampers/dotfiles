@@ -1086,6 +1086,22 @@ Read [[https://docs.projectile.mx/projectile/projects.html][projectile documenta
 
 #+end_src
 
+**** Run Tests Capability
+
+For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in various level of granularity.
+
+#+begin_src emacs-lisp
+
+  (defun abram/go-test-keybindings ()
+    (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+    (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+    (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache))
+
+  (use-package gotest
+    :hook (go-mode . abram/go-test-keybindings))
+
+#+end_src
+
 **** TODO Text object
 
 *** TODO Java

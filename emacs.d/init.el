@@ -533,6 +533,14 @@
                                   :test "make test"
                                   :test-suffix "_test")
 
+(defun abram/go-test-keybindings ()
+  (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+  (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+  (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache))
+
+(use-package gotest
+  :hook (go-mode . abram/go-test-keybindings))
+
 (add-hook 'ruby-mode-hook
           (lambda ()
             (abram/evil-lsp-keybindings)
