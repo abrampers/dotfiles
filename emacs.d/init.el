@@ -279,6 +279,7 @@
        ("@errand" . ?E)
        ("@home" . ?H)
        ("@work" . ?W)
+       ("@spiritual" . ?S)
        ("agenda" . ?a)
        ("planning" . ?p)
        ("publish" . ?P)
