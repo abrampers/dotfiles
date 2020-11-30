@@ -22,8 +22,3 @@ alias :q='exit'
 # ctags
 alias ctags="$(brew --prefix)/bin/ctags"
 
-# Aliases for gcc
-alias gcc='gcc-8'
-alias cc='gcc-8'
-alias g++='g++-8'
-alias c++='g++-8'
