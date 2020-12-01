@@ -182,7 +182,7 @@ Activate nord theme.
 
 #+begin_src emacs-lisp
 
-(load-theme 'doom-nord t)
+(load-theme 'nord t)
 
 #+end_src
 

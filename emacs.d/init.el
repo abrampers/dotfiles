@@ -80,7 +80,7 @@
 
 (use-package doom-themes)
 
-(load-theme 'doom-nord t)
+(load-theme 'nord t)
 
 (use-package all-the-icons)
 
