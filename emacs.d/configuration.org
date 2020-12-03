@@ -570,7 +570,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (setq org-refile-targets
       '(("Archived.org" :maxlevel . 1)
-        ("Tasks.org" :maxlevel . 1)))
+        ("Tasks.org" :maxlevel . 2)))
 
     ;; Save Org buffers after refiling!
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -640,8 +640,12 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (setq org-capture-templates
       `(("t" "Tasks / Projects")
-        ("tt" "Task" entry (file+olp "~/org/Tasks.org" "Inbox")
+        ("tt" "General Task" entry (file+olp "~/org/Tasks.org" "Inbox")
              "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+        ("tw" "Work Task" entry (file+olp "~/org/Tasks.org" "Gojek")
+             "* TODO %? :@work:\n  %U\n  %a\n  %i" :empty-lines 1)
+        ("ti" "Implementation Task" entry (file+olp "~/org/Tasks.org" "Gojek")
+             "* TODO %? :implementation:@work:\n  %U\n  %a\n  %i" :empty-lines 1)
 
         ("j" "Journal Entries")
         ("jj" "Journal" entry
@@ -1213,6 +1217,7 @@ For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
 *** Add =org-capture= template
 
 #+begin_src emacs-lisp
+
   (with-eval-after-load 'org-capture
     (defun abram/org-hugo-new-subtree-post-capture-template ()
       "Returns `org-capture' template string for new Hugo post.
@@ -1235,7 +1240,9 @@ See `org-capture-templates' for more information."
                    "Hugo blogpost"
                    entry
                    (file+olp "BlogContent.org" "blog")
-                   (function abram/org-hugo-new-subtree-post-capture-template))))
+                   (function abram/org-hugo-new-subtree-post-capture-template)
+                   :empty-lines 1)))
+
 #+end_src
 
 * Keybinding Configuration
@@ -1362,7 +1369,7 @@ Find file using =C-p=.
 
 #+begin_src emacs-lisp
 
-  (evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
+  (evil-global-set-key 'normal (kbd "C-p") 'counsel-fzf)
 
 #+end_src
 

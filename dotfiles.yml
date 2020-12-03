@@ -3,7 +3,6 @@
   hosts: localhost
   vars:
     miniconda_installer: Miniconda3-latest-MacOSX-x86_64.sh
-    ycm_extra_flags: --clangd-completer --go-completer --java-completer
   vars_files:
     - ./vars/custom.yml
   tasks:

@@ -83,11 +83,12 @@ S["|'|(|{|[|`] # add punctuation around selected item
 
 ### Programming
 ```bash
-gd        # go to (mostly) [d]efinition (:YcmCompleter GoTo<CR>)
+# Note: not all programming language will have this
+gd        # go to (mostly) [d]efinition (<Plug>(coc-definition))
 gr        # go to [r]eferences
 gm        # go to i[m]plementations
-gt        # go to [t]ype
-,t        # check type (:YcmCompleter GetType<CR>)
+gy        # go to [t]ype
+,t        # refactor (<Plug>(coc-refactor))
 
 <space>g        # search across working directory
 
@@ -112,7 +113,7 @@ td        # debug test (:GoDebugTest [current path]<CR>)
 mb        # mark breakpoint (:GoDebugBreakpoint<CR>)
 <space>c        # debug continue (:GoDebugContinue<CR>)
 
-,r        # smart rename (:GoRename<CR> || :YcmCompleter RefactorRename )
+,r        # smart rename (:GoRename<CR> || <Plug>(coc-rename) )
 ```
 
 ### Misc

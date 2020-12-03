@@ -45,7 +45,7 @@ and many more..
 
 ** [[vim/vimrc][vim]]
 
-- [[https://github.com/ycm-core/YouCompleteMe][YouCompleteMe]]: code completion engine + language server
+- [[https://github.com/neoclide/coc.nvim][coc.nvim]]: code completion engine + language server. easy plugin installation
 - [[https://github.com/junegunn/fzf.vim][fzf.vim]]: fuzzy finder in vim
 - [[https://github.com/preservim/nerdtree][nerdtree]]: tree representation for projects and folders
 - [[https://github.com/tpope/vim-fugitive][vim-fugitive]]: git client on vim
@@ -59,7 +59,7 @@ For cheatsheet, go to [[vim/README.md]].
 - [[https://github.com/emacs-evil/evil][evil-mode]]: vim emulation on emacs
 - [[https://orgmode.org][org-mode]]: must have outliner + planner + life management tool
 - [[https://magit.vc][magit]]: git client on emacs
-- [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]]: same functionality like YouCompleteMe but for emacs
+- [[https://github.com/emacs-lsp/lsp-mode][lsp-mode]]: lsp support for emacs
 - [[https://github.com/jojojames/dired-sidebar][dired-sidebar]]: dired on sidebar
 
 and many more..

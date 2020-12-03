@@ -4,5 +4,5 @@ function! mappings#coc#SetupMappings()
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
   nmap <silent> <LocalLeader>r <Plug>(coc-rename)
-  nmap <silent> <Leader>t <Plug>(coc-refactor)
+  nmap <silent> <LocalLeader>t <Plug>(coc-refactor)
 endfunction

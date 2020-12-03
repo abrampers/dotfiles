@@ -267,7 +267,7 @@
 
   (setq org-refile-targets
     '(("Archived.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 1)))
+      ("Tasks.org" :maxlevel . 2)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -337,8 +337,12 @@
 
   (setq org-capture-templates
     `(("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/org/Tasks.org" "Inbox")
+      ("tt" "General Task" entry (file+olp "~/org/Tasks.org" "Inbox")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+      ("tw" "Work Task" entry (file+olp "~/org/Tasks.org" "Gojek")
+           "* TODO %? :@work:\n  %U\n  %a\n  %i" :empty-lines 1)
+      ("ti" "Implementation Task" entry (file+olp "~/org/Tasks.org" "Gojek")
+           "* TODO %? :implementation:@work:\n  %U\n  %a\n  %i" :empty-lines 1)
 
       ("j" "Journal Entries")
       ("jj" "Journal" entry
@@ -604,7 +608,8 @@ See `org-capture-templates' for more information."
                    "Hugo blogpost"
                    entry
                    (file+olp "BlogContent.org" "blog")
-                   (function abram/org-hugo-new-subtree-post-capture-template))))
+                   (function abram/org-hugo-new-subtree-post-capture-template)
+                   :empty-lines 1)))
 
 (use-package general
   :config
@@ -655,7 +660,7 @@ See `org-capture-templates' for more information."
 
 (evil-global-set-key 'normal (kbd "=") 'evil-toggle-fold)
 
-(evil-global-set-key 'normal (kbd "C-p") 'projectile--find-file)
+(evil-global-set-key 'normal (kbd "C-p") 'counsel-fzf)
 
 (abram/leader-keys-map
   "f" 'counsel-projectile-rg)
