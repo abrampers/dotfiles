@@ -111,7 +111,6 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'chrisbra/vim-zsh'
-Plug 'ycm-core/YouCompleteMe', { 'do': function('BuildYCM') }
 call plug#end()
 
 filetype indent plugin on
