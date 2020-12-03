@@ -9,6 +9,7 @@ let g:go_fmt_command = "goimports"
 let g:go_echo_command_info = 0
 let g:go_code_completion_enabled = 1
 let g:go_implements_mode = 'gopls'
+let g:go_auto_sameids = 1
 
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
