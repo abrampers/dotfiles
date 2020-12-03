@@ -1,4 +1,4 @@
-func! mappings#omnifunc#navigation_mappings()
+func! mappings#omnifunc#SetupMappings()
   inoremap <buffer> <expr> <CR>  pumvisible() ? "\<C-y>" : "\<CR>"
   inoremap <buffer> <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
   inoremap <buffer> <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
