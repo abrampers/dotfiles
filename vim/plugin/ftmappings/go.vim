@@ -14,3 +14,5 @@ endfunction
 
 autocmd FileType go call ftmappings#go#vim_go_maps()
 autocmd FileType go call ftmappings#go#debug_maps()
+autocmd FileType go call mappings#omnifunc#navigation_mappings()
+autocmd FileType go inoremap <buffer> . .<C-x><C-o>

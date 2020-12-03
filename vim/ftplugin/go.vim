@@ -2,12 +2,12 @@ setlocal noexpandtab
 setlocal shiftwidth=4
 setlocal tabstop=4
 
-let g:go_gopls_enabled = 0
+let g:go_gopls_enabled = 1
 
 " vim-go
 let g:go_fmt_command = "goimports"
 let g:go_echo_command_info = 0
-let g:go_code_completion_enabled = 0
+let g:go_code_completion_enabled = 1
 let g:go_implements_mode = 'gopls'
 
 let g:go_highlight_build_constraints = 1
