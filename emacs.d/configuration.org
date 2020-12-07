@@ -901,6 +901,217 @@ Try these commands with =M-x=:
 
 #+end_src
 
+*** Debugging with dap-mode
+
+[[https://emacs-lsp.github.io/dap-mode/][dap-mode]] is an excellent package for bringing rich debugging capabilities to Emacs via the [[https://microsoft.github.io/debug-adapter-protocol/][Debug Adapter Protocol]].  You should check out the [[https://emacs-lsp.github.io/dap-mode/page/configuration/][configuration docs]] to learn how to configure the debugger for your language.  Also make sure to check out the documentation for the debug adapter to see what configuration parameters are available to use for your debug templates!
+
+#+begin_src emacs-lisp
+
+  (use-package dap-mode
+    ;; Uncomment the config below if you want all UI panes to be hidden by default!
+    ;; :custom
+    ;; (lsp-enable-dap-auto-configure nil)
+    ;; :config
+    ;; (dap-ui-mode 1)
+    :config
+    (require 'dap-go)
+    (dap-go-setup))
+
+#+end_src
+
+** Language Support
+*** Go
+**** =go-mode=
+
+This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code. For Go specific utis, we use [[https://github.com/dominikh/go-mode.el][go-mode]] package.
+
+#+begin_src emacs-lisp
+
+  (use-package go-mode
+    :mode "\\.go\\'"
+    :hook ((go-mode . lsp-deferred)
+           (go-mode . abram/evil-lsp-keybindings))
+    :init (setq gofmt-command "goimports")
+    :config (add-hook 'before-save-hook 'gofmt-before-save))
+
+  (use-package go-playground :ensure t)
+
+#+end_src
+
+**** Setup tab width for golang files
+
+Setup =tab-width= for =.go= files.
+
+#+begin_src emacs-lisp
+
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode t)))
+
+#+end_src
+
+**** Custom project type
+
+Read [[https://docs.projectile.mx/projectile/projects.html][projectile documentation]] on how to register custom projectile project types.
+
+#+begin_src emacs-lisp
+
+(projectile-register-project-type 'go '("go.mod")
+                                  :project-file "go.mod"
+                                  :compile "make build"
+                                  :test "make test"
+                                  :test-suffix "_test")
+
+#+end_src
+
+**** Run Tests Capability
+
+For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in various level of granularity.
+
+#+begin_src emacs-lisp
+
+  (defun abram/go-test-keybindings ()
+    (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+    (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+    (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache))
+
+  (use-package gotest
+    :hook (go-mode . abram/go-test-keybindings))
+
+#+end_src
+
+**** Debug Keybindings
+
+#+begin_src emacs-lisp
+
+  (defun abram/go-test-debug ()
+    (interactive)
+    (let ((func-name (nth 1 (go-test--get-current-test-info)))
+          (suite-name (nth 0 (go-test--get-current-test-info))))
+      (if (= (length suite-name) 0)
+        (dap-debug 
+            (list :type "go"
+                :request "launch"
+                :name (format "Launch test %s" func-name)
+                :mode "auto"
+                :program default-directory
+                :buildFlags nil
+                :args (format "-test.v -test.run %s" func-name)
+                :env nil
+                :envFile nil))
+        (dap-debug 
+            (list :type "go"
+                :request "launch"
+                :name (format "Launch test %s.%s" suite-name func-name)
+                :mode "auto"
+                :program default-directory
+                :buildFlags nil
+                :args (format "-test.v -testify.m %s" func-name)
+                :env nil
+                :envFile nil)))))
+
+              
+(add-hook 
+  'go-mode-hook
+  (lambda ()
+    (evil-local-set-key 'normal (kbd "td") 'abram/go-test-debug)))
+
+#+end_src
+
+**** TODO Text object
+
+*** TODO Java
+
+*** TODO Ruby
+
+#+begin_src emacs-lisp
+
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (abram/evil-lsp-keybindings)
+            (lsp)))
+
+#+end_src
+
+**** TODO Run Tests Capability
+
+*** Clojure
+**** =clojure-mode=
+
+[[https://github.com/clojure-emacs/clojure-mode/][clojure-mode]] for =.clj= languages.
+
+#+begin_src emacs-lisp
+
+  (use-package clojure-mode
+    :hook ((clojure-mode . smartparens-strict-mode)
+           (clojure-mode . evil-smartparens-mode)))
+
+#+end_src
+
+**** cider
+
+[[https://github.com/clojure-emacs/cider][cider]] is used for REPL capability for clojure in Emacs.
+
+#+begin_src emacs-lisp
+
+  (use-package cider
+    :hook ((clojure-mode . cider-mode)
+           (clojure-mode . company-mode)
+           (cider-repl-mode . company-mode))
+    :bind (:map company-active-map
+           ("<tab>" . company-complete-selection))
+          (:map cider-mode-map
+           ("<tab>" . company-indent-or-complete-common)))
+
+#+end_src
+
+Add hook to format buffer for clojure files.
+
+#+begin_src emacs-lisp
+
+  (defun abram/cider-format-for-clj ()
+    (when (member (file-name-extension (buffer-file-name))
+                  '("clj" "cljs" "cljc"))
+      (cider-format-buffer)))
+
+  (add-hook 'cider-mode-hook
+            (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
+
+#+end_src
+
+*** Emacs Lisp
+**** Hooks
+
+#+begin_src emacs-lisp
+
+  (defun abram/emacs-lisp-mode-hooks ()
+    (smartparens-strict-mode)
+    (evil-smartparens-mode))
+
+  (add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
+
+#+end_src
+
+*** TODO zsh
+
+#+begin_src emacs-lisp
+
+(add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
+
+#+end_src
+
+*** Markup / Config file support
+**** =.yml=
+
+For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
+
+#+begin_src emacs-lisp
+
+(use-package yaml-mode)
+
+#+end_src
+**** TODO =.json=
 ** Company Mode
 
 [[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
@@ -1046,161 +1257,6 @@ Emacs 24 has =electric-pair-mode= builtin.
 
 #+end_src
 
-** Language Support
-*** Go
-**** =go-mode=
-
-This is a basic configuration for the Go language so that =.go= files activate =go-mode= when opened.  We're also adding a hook to =go-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit Go code. For Go specific utis, we use [[https://github.com/dominikh/go-mode.el][go-mode]] package.
-
-#+begin_src emacs-lisp
-
-  (use-package go-mode
-    :mode "\\.go\\'"
-    :hook ((go-mode . lsp-deferred)
-           (go-mode . abram/evil-lsp-keybindings))
-    :init (setq gofmt-command "goimports")
-    :config (add-hook 'before-save-hook 'gofmt-before-save))
-
-  (use-package go-playground :ensure t)
-
-#+end_src
-
-**** Setup tab width for golang files
-
-Setup =tab-width= for =.go= files.
-
-#+begin_src emacs-lisp
-
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (setq indent-tabs-mode t)))
-
-#+end_src
-
-**** Custom project type
-
-Read [[https://docs.projectile.mx/projectile/projects.html][projectile documentation]] on how to register custom projectile project types.
-
-#+begin_src emacs-lisp
-
-(projectile-register-project-type 'go '("go.mod")
-                                  :project-file "go.mod"
-                                  :compile "make build"
-                                  :test "make test"
-                                  :test-suffix "_test")
-
-#+end_src
-
-**** Run Tests Capability
-
-For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in various level of granularity.
-
-#+begin_src emacs-lisp
-
-  (defun abram/go-test-keybindings ()
-    (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
-    (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
-    (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache))
-
-  (use-package gotest
-    :hook (go-mode . abram/go-test-keybindings))
-
-#+end_src
-
-**** TODO Text object
-
-*** TODO Java
-
-*** TODO Ruby
-
-#+begin_src emacs-lisp
-
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (abram/evil-lsp-keybindings)
-            (lsp)))
-
-#+end_src
-
-**** TODO Run Tests Capability
-
-*** Clojure
-**** =clojure-mode=
-
-[[https://github.com/clojure-emacs/clojure-mode/][clojure-mode]] for =.clj= languages.
-
-#+begin_src emacs-lisp
-
-  (use-package clojure-mode
-    :hook ((clojure-mode . smartparens-strict-mode)
-           (clojure-mode . evil-smartparens-mode)))
-
-#+end_src
-
-**** cider
-
-[[https://github.com/clojure-emacs/cider][cider]] is used for REPL capability for clojure in Emacs.
-
-#+begin_src emacs-lisp
-
-  (use-package cider
-    :hook ((clojure-mode . cider-mode)
-           (clojure-mode . company-mode)
-           (cider-repl-mode . company-mode))
-    :bind (:map company-active-map
-           ("<tab>" . company-complete-selection))
-          (:map cider-mode-map
-           ("<tab>" . company-indent-or-complete-common)))
-
-#+end_src
-
-Add hook to format buffer for clojure files.
-
-#+begin_src emacs-lisp
-
-  (defun abram/cider-format-for-clj ()
-    (when (member (file-name-extension (buffer-file-name))
-                  '("clj" "cljs" "cljc"))
-      (cider-format-buffer)))
-
-  (add-hook 'cider-mode-hook
-            (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
-
-#+end_src
-
-*** Emacs Lisp
-**** Hooks
-
-#+begin_src emacs-lisp
-
-  (defun abram/emacs-lisp-mode-hooks ()
-    (smartparens-strict-mode)
-    (evil-smartparens-mode))
-
-  (add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
-
-#+end_src
-
-*** TODO zsh
-
-#+begin_src emacs-lisp
-
-(add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
-(add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
-
-#+end_src
-
-*** Markup / Config file support
-**** =.yml=
-
-For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
-
-#+begin_src emacs-lisp
-
-(use-package yaml-mode)
-
-#+end_src
-**** TODO =.json=
 * Writing
 
 ** =ox-hugo=
@@ -1239,7 +1295,7 @@ See `org-capture-templates' for more information."
                  '("b"
                    "Hugo blogpost"
                    entry
-                   (file+olp "BlogContent.org" "blog")
+                   (file+olp "~/Code/projects/blog.abram.id/content.org" "blog")
                    (function abram/org-hugo-new-subtree-post-capture-template)
                    :empty-lines 1)))
 
@@ -1274,6 +1330,32 @@ See `org-capture-templates' for more information."
   ;; Make SPC-# to cycle numbering modes
   (abram/leader-keys-map
       "#" 'abram/cycle-numbering-style)
+
+#+end_src
+
+** Debugger
+
+Hydra debugger prefix
+
+#+begin_src emacs-lisp
+
+  (use-package hydra)
+
+  (general-define-key
+    :keymaps 'lsp-mode-map
+    :prefix lsp-keymap-prefix
+    "d" '(dap-hydra t :wk "debugger"))
+
+#+end_src
+
+Toggling breakpoints
+
+#+begin_src emacs-lisp
+
+(add-hook 
+  'prog-mode-hook
+  (lambda ()
+    (evil-local-set-key 'normal (kbd "mb") 'dap-breakpoint-toggle)))
 
 #+end_src
 

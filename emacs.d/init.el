@@ -465,6 +465,112 @@
   (evil-local-set-key 'normal (kbd "gy") 'lsp-find-type-definition)
   (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
 
+(use-package dap-mode
+  ;; Uncomment the config below if you want all UI panes to be hidden by default!
+  ;; :custom
+  ;; (lsp-enable-dap-auto-configure nil)
+  ;; :config
+  ;; (dap-ui-mode 1)
+  :config
+  (require 'dap-go)
+  (dap-go-setup))
+
+(use-package go-mode
+  :mode "\\.go\\'"
+  :hook ((go-mode . lsp-deferred)
+         (go-mode . abram/evil-lsp-keybindings))
+  :init (setq gofmt-command "goimports")
+  :config (add-hook 'before-save-hook 'gofmt-before-save))
+
+(use-package go-playground :ensure t)
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)))
+
+(projectile-register-project-type 'go '("go.mod")
+                                  :project-file "go.mod"
+                                  :compile "make build"
+                                  :test "make test"
+                                  :test-suffix "_test")
+
+(defun abram/go-test-keybindings ()
+  (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+  (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+  (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache))
+
+(use-package gotest
+  :hook (go-mode . abram/go-test-keybindings))
+
+(defun abram/go-test-debug ()
+    (interactive)
+    (let ((func-name (nth 1 (go-test--get-current-test-info)))
+          (suite-name (nth 0 (go-test--get-current-test-info))))
+      (if (= (length suite-name) 0)
+        (dap-debug 
+            (list :type "go"
+                :request "launch"
+                :name (format "Launch test %s" func-name)
+                :mode "auto"
+                :program default-directory
+                :buildFlags nil
+                :args (format "-test.v -test.run %s" func-name)
+                :env nil
+                :envFile nil))
+        (dap-debug 
+            (list :type "go"
+                :request "launch"
+                :name (format "Launch test %s.%s" suite-name func-name)
+                :mode "auto"
+                :program default-directory
+                :buildFlags nil
+                :args (format "-test.v -testify.m %s" func-name)
+                :env nil
+                :envFile nil)))))
+
+              
+(add-hook 
+  'go-mode-hook
+  (lambda ()
+    (evil-local-set-key 'normal (kbd "td") 'abram/go-test-debug)))
+
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (abram/evil-lsp-keybindings)
+            (lsp)))
+
+(use-package clojure-mode
+  :hook ((clojure-mode . smartparens-strict-mode)
+         (clojure-mode . evil-smartparens-mode)))
+
+(use-package cider
+  :hook ((clojure-mode . cider-mode)
+         (clojure-mode . company-mode)
+         (cider-repl-mode . company-mode))
+  :bind (:map company-active-map
+         ("<tab>" . company-complete-selection))
+        (:map cider-mode-map
+         ("<tab>" . company-indent-or-complete-common)))
+
+(defun abram/cider-format-for-clj ()
+  (when (member (file-name-extension (buffer-file-name))
+                '("clj" "cljs" "cljc"))
+    (cider-format-buffer)))
+
+(add-hook 'cider-mode-hook
+          (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
+
+(defun abram/emacs-lisp-mode-hooks ()
+  (smartparens-strict-mode)
+  (evil-smartparens-mode))
+
+(add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
+
+(add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
+
+(use-package yaml-mode)
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -519,70 +625,6 @@
 
 (use-package lsp-origami)
 
-(use-package go-mode
-  :mode "\\.go\\'"
-  :hook ((go-mode . lsp-deferred)
-         (go-mode . abram/evil-lsp-keybindings))
-  :init (setq gofmt-command "goimports")
-  :config (add-hook 'before-save-hook 'gofmt-before-save))
-
-(use-package go-playground :ensure t)
-
-(add-hook 'go-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode t)))
-
-(projectile-register-project-type 'go '("go.mod")
-                                  :project-file "go.mod"
-                                  :compile "make build"
-                                  :test "make test"
-                                  :test-suffix "_test")
-
-(defun abram/go-test-keybindings ()
-  (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
-  (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
-  (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache))
-
-(use-package gotest
-  :hook (go-mode . abram/go-test-keybindings))
-
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (abram/evil-lsp-keybindings)
-            (lsp)))
-
-(use-package clojure-mode
-  :hook ((clojure-mode . smartparens-strict-mode)
-         (clojure-mode . evil-smartparens-mode)))
-
-(use-package cider
-  :hook ((clojure-mode . cider-mode)
-         (clojure-mode . company-mode)
-         (cider-repl-mode . company-mode))
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map cider-mode-map
-         ("<tab>" . company-indent-or-complete-common)))
-
-(defun abram/cider-format-for-clj ()
-  (when (member (file-name-extension (buffer-file-name))
-                '("clj" "cljs" "cljc"))
-    (cider-format-buffer)))
-
-(add-hook 'cider-mode-hook
-          (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
-
-(defun abram/emacs-lisp-mode-hooks ()
-  (smartparens-strict-mode)
-  (evil-smartparens-mode))
-
-(add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
-
-(add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
-(add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
-
-(use-package yaml-mode)
-
 (use-package ox-hugo
   :after ox)
 
@@ -607,7 +649,7 @@ See `org-capture-templates' for more information."
                  '("b"
                    "Hugo blogpost"
                    entry
-                   (file+olp "BlogContent.org" "blog")
+                   (file+olp "~/Code/projects/blog.abram.id/content.org" "blog")
                    (function abram/org-hugo-new-subtree-post-capture-template)
                    :empty-lines 1)))
 
@@ -628,6 +670,18 @@ See `org-capture-templates' for more information."
 ;; Make SPC-# to cycle numbering modes
 (abram/leader-keys-map
     "#" 'abram/cycle-numbering-style)
+
+(use-package hydra)
+
+(general-define-key
+  :keymaps 'lsp-mode-map
+  :prefix lsp-keymap-prefix
+  "d" '(dap-hydra t :wk "debugger"))
+
+(add-hook 
+  'prog-mode-hook
+  (lambda ()
+    (evil-local-set-key 'normal (kbd "mb") 'dap-breakpoint-toggle)))
 
 (abram/leader-keys-map
   "g"  '(:ignore t :which-key "org-mode helper prefixes")
