@@ -1183,7 +1183,17 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
 #+end_src
 
-*** TODO Add something like =gitgutter= for modified lines.
+*** =gitgutter=
+
+I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to show differences on newly added text.
+
+#+begin_src emacs-lisp
+
+  (use-package git-gutter
+    :config
+    (global-git-gutter-mode t))
+
+#+end_src
 
 ** Rainbow Delimiters
 

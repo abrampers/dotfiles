@@ -624,6 +624,10 @@
 (use-package evil-magit
   :after magit)
 
+(use-package git-gutter
+  :config
+  (global-git-gutter-mode t))
+
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
