@@ -656,7 +656,8 @@
 
 (use-package origami)
 
-(use-package lsp-origami)
+(use-package lsp-origami
+  :hook (lsp-mode . lsp-origami-try-enable))
 
 (use-package ox-hugo
   :after ox)
