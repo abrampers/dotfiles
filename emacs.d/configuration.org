@@ -988,12 +988,21 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
     "Repeat the previous current test execution."
     (interactive)
     (abram/go-test-current-test 'last))
+    
+  (defun abram/go-test-current-project ()
+    "Launch go test on the current project."
+    (interactive)
+    (let ((packages (cl-remove-if (lambda (s) (s-contains? "/vendor/" s))
+                                  (s-split "\n"
+                                         (shell-command-to-string (format "cd %s && go list ./..." (projectile-project-root)))))))
+      (go-test--go-test (s-join " " packages))))
 
 
   (defun abram/go-test-keybindings ()
     (evil-local-set-key 'normal (kbd "tt") 'abram/go-test-current-test)
     (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
-    (evil-local-set-key 'normal (kbd "t.") 'abram/go-test-current-test-cache))
+    (evil-local-set-key 'normal (kbd "t.") 'abram/go-test-current-test-cache)
+    (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
 
   (use-package gotest
     :hook (go-mode . abram/go-test-keybindings))
