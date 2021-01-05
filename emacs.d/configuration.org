@@ -919,6 +919,16 @@ Try these commands with =M-x=:
 
 #+end_src
 
+** Flycheck
+
+I'm using [[https://www.flycheck.org/en/latest/index.html][flycheck]] for code diagnostics.
+
+#+begin_src emacs-lisp
+
+  (use-package flycheck)
+
+#+end_src
+
 ** Language Support
 *** Go
 **** =go-mode=
@@ -931,7 +941,9 @@ This is a basic configuration for the Go language so that =.go= files activate =
     :mode "\\.go\\'"
     :hook ((go-mode . lsp-deferred)
            (go-mode . abram/evil-lsp-keybindings))
-    :init (setq gofmt-command "goimports")
+    :init 
+    (setq gofmt-command "goimports")
+    (flycheck-mode)
     :config (add-hook 'before-save-hook 'gofmt-before-save))
 
   (use-package go-playground :ensure t)
@@ -1167,7 +1179,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     (setq company-box-enable-icon nil))
 
 #+end_src
-
 ** Magit
 
 [[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.

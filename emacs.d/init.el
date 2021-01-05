@@ -475,11 +475,15 @@
   (require 'dap-go)
   (dap-go-setup))
 
+(use-package flycheck)
+
 (use-package go-mode
   :mode "\\.go\\'"
   :hook ((go-mode . lsp-deferred)
          (go-mode . abram/evil-lsp-keybindings))
-  :init (setq gofmt-command "goimports")
+  :init 
+  (setq gofmt-command "goimports")
+  (flycheck-mode)
   :config (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package go-playground :ensure t)
