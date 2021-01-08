@@ -266,8 +266,11 @@
       (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
 
   (setq org-refile-targets
-    '(("Archived.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 2)))
+    '(("Archived.org" :maxlevel . 2)
+      ("Work.org" :maxlevel . 1)
+      ("Personal.org" :maxlevel . 1)
+      ("Inbox.org" :maxlevel . 1)
+      ("Dev.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -276,15 +279,17 @@
     '((:startgroup)
        ; Put mutually exclusive tags here
        (:endgroup)
-       ("@errand" . ?E)
+       ("@errand" . ?e)
        ("@home" . ?H)
        ("@work" . ?W)
-       ("@spiritual" . ?S)
+       ("@spiritual" . ?s)
+       ("@personal" . ?p)
        ("agenda" . ?a)
-       ("planning" . ?p)
        ("publish" . ?P)
        ("batch" . ?b)
        ("note" . ?n)
+       ("emacs" . ?E)
+       ("vim" . ?V)
        ("idea" . ?i)))
 
   ;; Configure custom agenda views
@@ -337,12 +342,16 @@
 
   (setq org-capture-templates
     `(("t" "Tasks / Projects")
-      ("tt" "General Task" entry (file+olp "~/org/Tasks.org" "Inbox")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-      ("tw" "Work Task" entry (file+olp "~/org/Tasks.org" "Gojek")
+      ("tt" "General Task" entry (file+olp "~/org/Inbox.org" "Inbox")
+           "* TODO %?\n  %U\n\n  %i" :empty-lines 1)
+      ("tp" "Personal Task" entry (file+olp "~/org/Personal.org" "Personal")
+           "* TODO %? :@personal:\n  %U\n\n  %i" :empty-lines 1)
+      ("te" "Errand" entry (file+olp "~/org/Inbox.org" "Inbox")
+           "* TODO %? :@errand:\n  %U\n\n  %i" :empty-lines 1)
+      ("tw" "Work Task" entry (file+olp "~/org/Work.org" "Work")
            "* TODO %? :@work:\n  %U\n  %a\n  %i" :empty-lines 1)
-      ("ti" "Implementation Task" entry (file+olp "~/org/Tasks.org" "Gojek")
-           "* TODO %? :implementation:@work:\n  %U\n  %a\n  %i" :empty-lines 1)
+      ("ti" "Implementation Task" entry (file+olp "~/org/Work.org" "Work")
+           "* TODO %? :implementation:\n  %U\n  %a\n  %i" :empty-lines 1)
 
       ("j" "Journal Entries")
       ("jj" "Journal" entry
