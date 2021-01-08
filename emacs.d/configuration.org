@@ -922,12 +922,23 @@ Try these commands with =M-x=:
     ;; (lsp-enable-dap-auto-configure nil)
     ;; :config
     ;; (dap-ui-mode 1)
+    :custom 
+    (dap-auto-configure-features '(locals expressions tooltip))
+    (dap-auto-show-output nil)
     :config
     (require 'dap-go)
     (dap-go-setup))
 
 #+end_src
 
+Run hydra when breakpoint is hit
+
+#+begin_src emacs-lisp
+
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra)))
+
+#+end_src
 ** Flycheck
 
 I'm using [[https://www.flycheck.org/en/latest/index.html][flycheck]] for code diagnostics.

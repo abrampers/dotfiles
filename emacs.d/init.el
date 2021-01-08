@@ -480,9 +480,15 @@
   ;; (lsp-enable-dap-auto-configure nil)
   ;; :config
   ;; (dap-ui-mode 1)
+  :custom 
+  (dap-auto-configure-features '(locals expressions tooltip))
+  (dap-auto-show-output nil)
   :config
   (require 'dap-go)
   (dap-go-setup))
+
+(add-hook 'dap-stopped-hook
+          (lambda (arg) (call-interactively #'dap-hydra)))
 
 (use-package flycheck)
 
