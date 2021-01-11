@@ -776,6 +776,19 @@ This snippet adds a hook to =org-mode= buffers so that =abram/org-babel-tangle-c
 
 #+end_src
 
+** Agenda notifications
+
+I'm using [[https://github.com/akhramov/org-wild-notifier.el][org-wild-notifier]] for agenda notifications
+
+#+begin_src emacs-lisp
+
+  (use-package org-wild-notifier
+    :config
+    (setq alert-default-style 'osx-notifier)
+    :init
+    (org-wild-notifier-mode))
+
+#+end_src
 * =restclient=
 
 [[https://github.com/pashky/restclient.el][restclient]] is a postman in emacs. We can use this to run HTTP REST request.

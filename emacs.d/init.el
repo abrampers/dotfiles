@@ -423,6 +423,12 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'abram/org-babel-tangle-config)))
 
+(use-package org-wild-notifier
+  :config
+  (setq alert-default-style 'osx-notifier)
+  :init
+  (org-wild-notifier-mode))
+
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)))
 
