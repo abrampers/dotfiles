@@ -1259,7 +1259,8 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
 #+begin_src emacs-lisp
 
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook ((lisp-mode . rainbow-delimiters-mode)
+         (emacs-lisp-mode . rainbow-delimiters-mode)))
 
 #+end_src
 

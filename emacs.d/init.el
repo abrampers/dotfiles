@@ -662,7 +662,8 @@
   (global-git-gutter-mode t))
 
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :hook ((lisp-mode . rainbow-delimiters-mode)
+         (emacs-lisp-mode . rainbow-delimiters-mode)))
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
