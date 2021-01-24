@@ -69,6 +69,8 @@
       (setq display-line-numbers next-numbering-style)
       (setq abram/current-numbering-style-index next-numbering-index))))
 
+(add-hook 'prog-mode-hook 'hl-line-mode)
+
 (setq initial-major-mode 'org-mode)
 
 (setq initial-scratch-message "\
@@ -79,6 +81,9 @@
 (use-package command-log-mode)
 
 (use-package doom-themes)
+(use-package nord-theme)
+(use-package gruvbox-theme)
+(use-package material-theme)
 
 (load-theme 'nord t)
 

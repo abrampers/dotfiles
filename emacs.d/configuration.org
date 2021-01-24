@@ -144,6 +144,14 @@ Cycle numbering.
 
 #+end_src
 
+Highlight current line
+
+#+begin_src emacs-lisp
+
+  (add-hook 'prog-mode-hook 'hl-line-mode)
+
+#+end_src
+
 ** Set =org-mode= as initial major mode
 
 #+begin_src emacs-lisp
@@ -175,6 +183,9 @@ Cycle numbering.
 #+begin_src emacs-lisp
 
 (use-package doom-themes)
+(use-package nord-theme)
+(use-package gruvbox-theme)
+(use-package material-theme)
 
 #+end_src
 
@@ -182,10 +193,9 @@ Activate nord theme.
 
 #+begin_src emacs-lisp
 
-(load-theme 'nord t)
+  (load-theme 'nord t)
 
 #+end_src
-
 ** Better Modeline
 
 [[https://github.com/seagle0128/doom-modeline][doom-modeline]] is a very attractive and rich (yet still minimal) mode line configuration for Emacs.  The default configuration is quite good but you can check out the [[https://github.com/seagle0128/doom-modeline#customize][configuration options]] for more things you can enable or disable.
