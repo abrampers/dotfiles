@@ -374,7 +374,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+end_src
 
-** TODO =evil-org-mode=
+** =evil-org-mode=
 
 [[https://github.com/Somelauw/evil-org-mode][evil-org-mode]] made sure evil works nicely with org mode.
 
