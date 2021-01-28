@@ -656,15 +656,15 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (setq org-capture-templates
       `(("t" "Tasks / Projects")
         ("tt" "General Task" entry (file+olp "~/org/Inbox.org" "Inbox")
-             "* TODO %?\n%U\n\n  %i" :empty-lines 1)
+             "* TODO %?\n%U\n\n  %i" :empty-lines 0)
         ("tp" "Personal Task" entry (file+olp "~/org/Personal.org" "Personal")
-             "* TODO %? :@personal:\n%U\n\n  %i" :empty-lines 1)
+             "* TODO %? :@personal:\n%U\n\n  %i" :empty-lines 0)
         ("te" "Errand" entry (file+olp "~/org/Inbox.org" "Inbox")
-             "* TODO %? :@errand:\n%U\n\n  %i" :empty-lines 1)
+             "* TODO %? :@errand:\n%U\n\n  %i" :empty-lines 0)
         ("tw" "Work Task" entry (file+olp "~/org/Work.org" "Work")
-             "* TODO %? :@work:\n%U\n%a\n%i" :empty-lines 1)
+             "* TODO %? :@work:\n%U\n%a\n%i" :empty-lines 0)
         ("ti" "Implementation Task" entry (file+olp "~/org/Work.org" "Work")
-             "* TODO %? :implementation:\n%U\n%a\n%i" :empty-lines 1)
+             "* TODO %? :implementation:\n%U\n%a\n%i" :empty-lines 0)
 
         ("j" "Journal Entries")
         ("jj" "Journal" entry
