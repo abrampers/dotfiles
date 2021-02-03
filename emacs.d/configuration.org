@@ -579,7 +579,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
 
     (setq org-refile-targets
-      '(("Archived.org" :maxlevel . 2)
+      '(("Archived.org" :maxlevel . 3)
         ("Work.org" :maxlevel . 1)
         ("Personal.org" :maxlevel . 1)
         ("Inbox.org" :maxlevel . 1)
