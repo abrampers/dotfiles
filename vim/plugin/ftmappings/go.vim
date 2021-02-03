@@ -10,6 +10,7 @@ function! ftmappings#go#vim_go_maps()
   nnoremap <silent> <buffer> gd :GoDef<CR>
   nnoremap <silent> <buffer> gr :GoReferrers<CR>
   nnoremap <silent> <buffer> <LocalLeader>t :GoInfo<CR>
+  nnoremap <silent> <buffer> ,r :GoRename<CR>
 endfunction
 
 autocmd FileType go call ftmappings#go#vim_go_maps()
