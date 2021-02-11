@@ -193,7 +193,7 @@ Activate nord theme.
 
 #+begin_src emacs-lisp
 
-  (load-theme 'nord t)
+  (load-theme 'gruvbox-dark-medium t)
 
 #+end_src
 ** Better Modeline

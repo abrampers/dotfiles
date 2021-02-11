@@ -85,7 +85,7 @@
 (use-package gruvbox-theme)
 (use-package material-theme)
 
-(load-theme 'nord t)
+(load-theme 'gruvbox-dark-medium t)
 
 (use-package all-the-icons)
 
