@@ -474,7 +474,8 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :custom
-  (lsp-ui-doc-position 'bottom))
+  (lsp-ui-doc-enable nil)
+  (lsp-signature-auto-activate '(:on-trigger-char :after-completion)))
 
 (use-package lsp-ivy)
 
@@ -642,11 +643,6 @@
   (company-minimum-prefix-length 1)
   (company-tooltip-align-annotations t)
   (company-idle-delay 0.0))
-
-(use-package company-box
-  :hook (company-mode . company-box-mode)
-  :init
-  (setq company-box-enable-icon nil))
 
 (use-package magit
   :custom
