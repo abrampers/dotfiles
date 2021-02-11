@@ -72,11 +72,11 @@ This section configures basic UI settings that remove unneeded elements to make 
 
 #+end_src
 
-Start "maximized".
+Start "fullscreen".
 
 #+begin_src emacs-lisp
 
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (toggle-frame-fullscreen)
 
 #+end_src
 

@@ -37,7 +37,7 @@
 ;; Scroll compilation buffer whenever output came
 (setq compilation-scroll-output t)
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(toggle-frame-fullscreen)
 
 (when (eq system-type 'darwin)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
