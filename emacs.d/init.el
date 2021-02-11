@@ -43,7 +43,7 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)))
 
-(set-face-attribute 'default nil :font "Monego" :height abram/default-font-size)
+(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)

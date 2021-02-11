@@ -96,7 +96,7 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 
 #+begin_src emacs-lisp
 
-(set-face-attribute 'default nil :font "Monego" :height abram/default-font-size)
+(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
 
 #+end_src
 
