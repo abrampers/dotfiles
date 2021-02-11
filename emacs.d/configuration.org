@@ -1526,7 +1526,6 @@ Next & Previous buffers
 #+end_src
 
 *** TODO Window management
-
 ** Dired
 
 #+begin_src emacs-lisp
