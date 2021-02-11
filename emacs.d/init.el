@@ -600,6 +600,15 @@
             (abram/evil-lsp-keybindings)
             (lsp)))
 
+(defun abram/rspec-keybindings ()
+  (evil-local-set-key 'normal (kbd "tt") 'rspec-verify-single)
+  (evil-local-set-key 'normal (kbd "tf") 'rspec-verify-matching)
+  (evil-local-set-key 'normal (kbd "t.") 'rspec-rerun)
+  (evil-local-set-key 'normal (kbd "ts") 'rspec-verify-all))
+
+(use-package rspec-mode
+  :hook (ruby-mode . abram/rspec-keybindings))
+
 (use-package clojure-mode
   :hook ((clojure-mode . smartparens-strict-mode)
          (clojure-mode . evil-smartparens-mode)))

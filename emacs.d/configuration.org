@@ -1108,7 +1108,7 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
 
 *** TODO Java
 
-*** TODO Ruby
+*** Ruby
 
 #+begin_src emacs-lisp
 
@@ -1119,7 +1119,22 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
 
 #+end_src
 
-**** TODO Run Tests Capability
+**** Run Tests Capability
+
+For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test in various level of granularity. 
+
+#+begin_src emacs-lisp
+
+  (defun abram/rspec-keybindings ()
+    (evil-local-set-key 'normal (kbd "tt") 'rspec-verify-single)
+    (evil-local-set-key 'normal (kbd "tf") 'rspec-verify-matching)
+    (evil-local-set-key 'normal (kbd "t.") 'rspec-rerun)
+    (evil-local-set-key 'normal (kbd "ts") 'rspec-verify-all))
+
+  (use-package rspec-mode
+    :hook (ruby-mode . abram/rspec-keybindings))
+
+#+end_src
 
 *** Clojure
 **** =clojure-mode=
