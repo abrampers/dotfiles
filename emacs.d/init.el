@@ -455,7 +455,7 @@
 (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
 (defun abram/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
+  (setq lsp-headerline-breadcrumb-segments nil)
   (setq lsp-eldoc-enable-hover nil)
   (setq lsp-completion-show-detail t)
   (setq lsp-completion-show-kind t))
@@ -659,9 +659,6 @@
   :init
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
-
-(use-package evil-magit
-  :after magit)
 
 (use-package git-gutter
   :config

@@ -854,7 +854,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 #+begin_src emacs-lisp
 
   (defun abram/lsp-mode-setup ()
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project))
+    (setq lsp-headerline-breadcrumb-segments nil)
     (setq lsp-eldoc-enable-hover nil)
     (setq lsp-completion-show-detail t)
     (setq lsp-completion-show-kind t))
@@ -1255,9 +1255,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :init
     (setq ediff-split-window-function 'split-window-horizontally)
     (setq ediff-window-setup-function 'ediff-setup-windows-plain))
-
-  (use-package evil-magit
-    :after magit)
 
 #+end_src
 
