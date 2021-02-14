@@ -23,6 +23,5 @@ PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
 PATH=$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin
 PATH=$PATH:$GOPATH/bin
-source $HOME/.zsh/conda.zsh
 
 export PATH

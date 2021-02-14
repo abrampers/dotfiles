@@ -440,16 +440,13 @@ zstyle ':chpwd:*' recent-dirs-default true
 # Source variables
 #
 
-# source $ZSH/oh-my-zsh.sh
-source $HOME/.zshenv
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/common.zsh
 source $HOME/.zsh/colors.zsh
-source $HOME/.zsh/exports.zsh
-source $HOME/.zsh/path.zsh
+source $HOME/.zsh/conda.zsh
 source $HOME/.zsh/functions.zsh
-source $HOME/.zsh/hash.zsh
-source $HOME/.zsh/after.zsh
+
+# Note: All variables are sourced in $HOME/.zshenv
 
 # Local and host-specific overrides.
 
@@ -462,6 +459,11 @@ test -f $HOST_RC && source $HOST_RC
 #
 # Third-Party
 #
+
+conda deactivate
+conda activate base
+
+jdk 1.8 true
 
 # nvm setup
 source $(brew --prefix nvm)/nvm.sh
@@ -476,3 +478,7 @@ eval "$(rbenv init -)"
 # Key bindings
 # ------------
 source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
+
+# Say hello
+echo ""
+echo "Hello there"
