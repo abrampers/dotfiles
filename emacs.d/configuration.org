@@ -1539,8 +1539,6 @@ Next & Previous buffers
 
 #+end_src
 
-** TODO Remap ctrl to caps lock
-
 ** Vim-like Keybindings
 
 Since I'm moving from vim environment, I like my emacs to have a similar keybinding with my vim configuration.
