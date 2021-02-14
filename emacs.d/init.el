@@ -1,9 +1,6 @@
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
 ;;       in Emacs and init.el will be generated automatically!
 
-;; You will most likely need to adjust this font size for your system!
-(defvar abram/default-font-size 140)
-
 ;; Initialize package sources
 (require 'package)
 
@@ -22,6 +19,15 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(use-package doom-themes)
+(use-package nord-theme)
+(use-package gruvbox-theme)
+(use-package material-theme)
+
+(load-theme 'gruvbox-dark-medium t)
+
+(toggle-frame-fullscreen)
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -37,11 +43,12 @@
 ;; Scroll compilation buffer whenever output came
 (setq compilation-scroll-output t)
 
-(toggle-frame-fullscreen)
-
 (when (eq system-type 'darwin)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+
+;; You will most likely need to adjust this font size for your system!
+(defvar abram/default-font-size 140)
 
 (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
 
@@ -78,14 +85,27 @@
 # If you want to create a file, visit that file with C-x C-f,
 # then enter the text in that file's own buffer.")
 
+(use-package auto-package-update
+  :custom
+  (auto-package-update-interval 7)
+  (auto-package-update-prompt-before-update t)
+  (auto-package-update-hide-results t)
+  :config
+  (auto-package-update-maybe)
+  (auto-package-update-at-time "08:00"))
+
+;; NOTE: If you want to move everything out of the ~/.emacs.d folder
+;; reliably, set `user-emacs-directory` before loading no-littering!
+;(setq user-emacs-directory "~/.cache/emacs")
+
+(use-package no-littering)
+
+;; no-littering doesn't set this by default so we must place
+;; auto save files in the same path as it uses for sessions
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
 (use-package command-log-mode)
-
-(use-package doom-themes)
-(use-package nord-theme)
-(use-package gruvbox-theme)
-(use-package material-theme)
-
-(load-theme 'gruvbox-dark-medium t)
 
 (use-package all-the-icons)
 
@@ -145,14 +165,11 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
 (use-package exec-path-from-shell
   :init
   (setq exec-path-from-shell-check-startup-files nil)
+  :custom
+  (exec-path-from-shell-arguments '("-l"))
   :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-copy-env "GOPATH")
