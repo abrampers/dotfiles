@@ -697,6 +697,15 @@
 (use-package lsp-origami
   :hook (lsp-mode . lsp-origami-try-enable))
 
+(use-package makefile-executor
+  :config
+  (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+
+(add-hook
+  'prog-mode-hook
+  (lambda ()
+    (evil-local-set-key 'normal (kbd "m ") 'makefile-executor-execute-project-target)))
+
 (use-package ox-hugo
   :after ox)
 

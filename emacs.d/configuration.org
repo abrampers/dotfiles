@@ -1374,6 +1374,30 @@ Emacs 24 has =electric-pair-mode= builtin.
 
 #+end_src
 
+** Makefile
+
+I'm using [[https://github.com/thiderman/makefile-executor.el][makefile-executor]] to execute makefiles quickly.
+
+#+begin_src emacs-lisp
+
+  (use-package makefile-executor
+    :config
+    (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+
+#+end_src
+
+Keybindings for makefile
+
+#+begin_src emacs-lisp
+
+  (add-hook
+    'prog-mode-hook
+    (lambda ()
+      (evil-local-set-key 'normal (kbd "m ") 'makefile-executor-execute-project-target)))
+
+#+end_src
+
+
 * Writing
 
 ** =ox-hugo=
