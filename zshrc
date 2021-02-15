@@ -441,7 +441,6 @@ zstyle ':chpwd:*' recent-dirs-default true
 #
 
 source $HOME/.zsh/aliases.zsh
-source $HOME/.zsh/common.zsh
 source $HOME/.zsh/colors.zsh
 source $HOME/.zsh/conda.zsh
 source $HOME/.zsh/functions.zsh
