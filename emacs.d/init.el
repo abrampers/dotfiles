@@ -718,7 +718,7 @@
 (add-hook
   'prog-mode-hook
   (lambda ()
-    (evil-local-set-key 'normal (kbd "m ") 'makefile-executor-execute-project-target)))
+    (evil-local-set-key 'normal (kbd "m SPC") 'makefile-executor-execute-project-target)))
 
 (use-package ox-hugo
   :after ox)
