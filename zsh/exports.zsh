@@ -2,7 +2,7 @@
 export EDITOR='nvim'
 
 # GO
-export GOPATH=$HOME/Go
+export GOPATH=$HOME/.gvm/pkgsets/go1.14.5/global
 
 # Kubernetes Editor
 export KUBE_EDITOR="nvim"
