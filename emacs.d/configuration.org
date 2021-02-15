@@ -864,8 +864,7 @@ I'm using [[https://github.com/akhramov/org-wild-notifier.el][org-wild-notifier]
     ("C-c p" . projectile-command-map)
     :init
     ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/Code")
-      (setq projectile-project-search-path '("~/Code")))
+    (setq projectile-project-search-path '("~/Code/source.golabs.io/go-food/"))
     (setq projectile-switch-project-action #'projectile-dired))
 
   (use-package counsel-projectile
@@ -880,6 +879,7 @@ Set general keybinding to run =projectile-test-project=.
   (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
 #+end_src
+*** TODO Move directories to private folder
 
 ** LSP
 *** lsp-mode
