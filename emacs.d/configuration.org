@@ -1404,8 +1404,6 @@ Emacs 24 has =electric-pair-mode= builtin.
 
 #+begin_src emacs-lisp
 
-  (use-package origami)
-
   (use-package lsp-origami
     :hook (lsp-mode . lsp-origami-try-enable))
 

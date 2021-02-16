@@ -706,8 +706,6 @@
 
 (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 
-(use-package origami)
-
 (use-package lsp-origami
   :hook (lsp-mode . lsp-origami-try-enable))
 
