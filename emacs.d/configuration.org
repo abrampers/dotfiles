@@ -1074,8 +1074,6 @@ Read [[https://docs.projectile.mx/projectile/projects.html][projectile documenta
 
 #+end_src
 
-***** TODO add wrapper to run this command after projectile is loaded
-
 **** Run Tests Capability
 
 For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in various level of granularity. In this section I am reimplementing functions that =gotest= package provided to adapt the flags to the specific Go version I'm using (Go 1.14.5).
