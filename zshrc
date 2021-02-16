@@ -477,7 +477,3 @@ eval "$(rbenv init -)"
 # Key bindings
 # ------------
 source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
-
-# Say hello
-echo ""
-echo "Hello there"
