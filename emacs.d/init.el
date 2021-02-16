@@ -661,8 +661,6 @@
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
 
-(use-package yaml-mode)
-
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)

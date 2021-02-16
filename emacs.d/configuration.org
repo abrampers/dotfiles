@@ -1254,15 +1254,6 @@ Add hook to format buffer for clojure files.
 #+end_src
 
 *** Markup / Config file support
-**** =.yml=
-
-For yaml I use [[https://github.com/yoshiki/yaml-mode][yaml-mode]].
-
-#+begin_src emacs-lisp
-
-(use-package yaml-mode)
-
-#+end_src
 **** TODO =.json=
 ** Company Mode
 
