@@ -467,13 +467,12 @@
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
+  :custom
+  (projectile-completion-system 'ivy)
+  (projectile-project-search-path '("~/Code/source.golabs.io/go-food/"))
+  (projectile-switch-project-action #'counsel-fzf)
   :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  ;; NOTE: Set this to the folder where you keep your Git repos!
-  (setq projectile-project-search-path '("~/Code/source.golabs.io/go-food/"))
-  (setq projectile-switch-project-action #'counsel-fzf))
+  ("C-c p" . projectile-command-map))
 
 (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
