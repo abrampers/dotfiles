@@ -543,11 +543,13 @@
           (lambda ()
             (setq indent-tabs-mode t)))
 
-(projectile-register-project-type 'go '("go.mod")
-                                  :project-file "go.mod"
-                                  :compile "make build"
-                                  :test "make test"
-                                  :test-suffix "_test")
+(with-eval-after-load 'projectile
+
+  (projectile-register-project-type 'go '("go.mod")
+                                    :project-file "go.mod"
+                                    :compile "make build"
+                                    :test "make test"
+                                    :test-suffix "_test"))
 
 (defun abram/go-test-current-test (&optional last)
   "Launch go test on the current test."

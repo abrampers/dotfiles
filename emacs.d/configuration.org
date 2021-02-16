@@ -1065,11 +1065,13 @@ Read [[https://docs.projectile.mx/projectile/projects.html][projectile documenta
 
 #+begin_src emacs-lisp
 
-(projectile-register-project-type 'go '("go.mod")
-                                  :project-file "go.mod"
-                                  :compile "make build"
-                                  :test "make test"
-                                  :test-suffix "_test")
+  (with-eval-after-load 'projectile
+  
+    (projectile-register-project-type 'go '("go.mod")
+                                      :project-file "go.mod"
+                                      :compile "make build"
+                                      :test "make test"
+                                      :test-suffix "_test"))
 
 #+end_src
 
