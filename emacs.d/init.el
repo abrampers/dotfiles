@@ -554,7 +554,7 @@
     (setq go-test--current-test-cache (go-test--get-current-test-info)))
   (when go-test--current-test-cache
     (cl-destructuring-bind (test-suite test-name) go-test--current-test-cache
-      (let ((test-flag "-test.run ")
+      (let ((test-flag (if (> (length test-suite) 0) "-testify.m " "-test.run "))
             (complete-test-name (if (> (length test-suite) 0) (s-concat test-suite "/" test-name) test-name))
             (additional-arguments (if go-test-additional-arguments-function
                                       (funcall go-test-additional-arguments-function
