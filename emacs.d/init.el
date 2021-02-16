@@ -473,10 +473,7 @@
   :init
   ;; NOTE: Set this to the folder where you keep your Git repos!
   (setq projectile-project-search-path '("~/Code/source.golabs.io/go-food/"))
-  (setq projectile-switch-project-action #'projectile-dired))
-
-(use-package counsel-projectile
-  :config (counsel-projectile-mode))
+  (setq projectile-switch-project-action #'counsel-fzf))
 
 (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
