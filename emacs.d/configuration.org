@@ -1422,6 +1422,7 @@ I'm using [[https://github.com/thiderman/makefile-executor.el][makefile-executor
 #+begin_src emacs-lisp
 
   (use-package makefile-executor
+    :commands makefile-executor-execute-project-target
     :config
     (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 

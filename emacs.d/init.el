@@ -717,6 +717,7 @@
   :hook (lsp-mode . lsp-origami-try-enable))
 
 (use-package makefile-executor
+  :commands makefile-executor-execute-project-target
   :config
   (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
