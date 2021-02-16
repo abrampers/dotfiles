@@ -533,7 +533,8 @@
   (flycheck-mode)
   :config (add-hook 'before-save-hook 'gofmt-before-save))
 
-(use-package go-playground :ensure t)
+(use-package go-playground
+  :commands go-playground)
 
 (add-hook 'go-mode-hook
           (lambda ()

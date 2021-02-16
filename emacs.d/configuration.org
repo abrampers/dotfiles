@@ -1039,7 +1039,8 @@ This is a basic configuration for the Go language so that =.go= files activate =
     (flycheck-mode)
     :config (add-hook 'before-save-hook 'gofmt-before-save))
 
-  (use-package go-playground :ensure t)
+  (use-package go-playground
+    :commands go-playground)
 
 #+end_src
 
