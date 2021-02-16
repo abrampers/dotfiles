@@ -969,7 +969,8 @@ Try these commands with =M-x=:
 
 #+begin_src emacs-lisp
 
-  (use-package lsp-ivy)
+  (use-package lsp-ivy
+    :after lsp)
 
 #+end_src
 
@@ -993,11 +994,7 @@ Try these commands with =M-x=:
 #+begin_src emacs-lisp
 
   (use-package dap-mode
-    ;; Uncomment the config below if you want all UI panes to be hidden by default!
-    ;; :custom
-    ;; (lsp-enable-dap-auto-configure nil)
-    ;; :config
-    ;; (dap-ui-mode 1)
+    :commands dap-debug
     :custom 
     (dap-auto-configure-features '(locals expressions tooltip))
     (dap-auto-show-output nil)

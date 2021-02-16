@@ -500,7 +500,8 @@
   (lsp-ui-doc-enable nil)
   (lsp-signature-auto-activate '(:on-trigger-char :after-completion)))
 
-(use-package lsp-ivy)
+(use-package lsp-ivy
+  :after lsp)
 
 (defun abram/evil-lsp-keybindings ()
   (evil-local-set-key 'normal (kbd "gd") 'lsp-find-definition)
@@ -510,11 +511,7 @@
   (evil-local-set-key 'normal (kbd ",r") 'lsp-rename))
 
 (use-package dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
+  :commands dap-debug
   :custom 
   (dap-auto-configure-features '(locals expressions tooltip))
   (dap-auto-show-output nil)
