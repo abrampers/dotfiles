@@ -353,20 +353,6 @@ The legendary [[https://github.com/TeMPOraL/nyan-mode/][nyan-mode]].
 #+end_src
 
 * System stuff
-** Ensure emacs won't clutter working tree
-
-As per [[https://www.emacswiki.org/emacs/BackupDirectory][backup directory guide]] this will put all [[https://www.emacswiki.org/emacs/AutoSave][auto-saves]] and backups in the directory pointed by =temporary-file-directory=.
-
-#+begin_src emacs-lisp :tangle no
-
-  (setq backup-directory-alist
-        `((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-        `((".*" ,temporary-file-directory t)))
-
-#+end_src
-*** TODO Remove if =no-littering= is working just fine
-
 ** Ensure emacs can be ran from outside terminal
 
 When running emacs from the app, emacs won't have the user's shell environment variable. [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] will help us to sync user shell's environment variable with emacs environment variable.
