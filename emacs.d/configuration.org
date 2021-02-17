@@ -221,6 +221,27 @@ You can also use =M-x auto-package-update-now= to update right now!
     (auto-package-update-at-time "08:00"))
 
 #+end_src
+* Environment Variables
+
+When running emacs from the app, emacs won't have the user's shell environment variable. [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] will help us to sync user shell's environment variable with emacs environment variable.
+
+#+begin_src emacs-lisp
+
+  (when (memq window-system '(mac ns x))
+    (use-package exec-path-from-shell
+      :init
+      (setq exec-path-from-shell-check-startup-files nil)
+      :config
+      (exec-path-from-shell-copy-env "GOPATH")
+      (exec-path-from-shell-initialize)))
+
+#+end_src
+
+** TODO Reduce startup time
+Startup time can be reduced by removing =-i= flag. But right now, if we remove =-i= flag, lsp won't work.
+
+Tweak zshenv etc.
+
 * Keep Folders Clean
 
 We use the [[https://github.com/emacscollective/no-littering/blob/master/no-littering.el][no-littering]] package to keep folders where we edit files and the Emacs configuration folder clean!  It knows about a wide variety of variables for built in Emacs features as well as those from community packages so it can be much easier than finding and setting these variables yourself.
@@ -349,23 +370,6 @@ The legendary [[https://github.com/TeMPOraL/nyan-mode/][nyan-mode]].
     ([remap describe-command] . helpful-command)
     ([remap describe-variable] . counsel-describe-variable)
     ([remap describe-key] . helpful-key))
-
-#+end_src
-
-* System stuff
-** Ensure emacs can be ran from outside terminal
-
-When running emacs from the app, emacs won't have the user's shell environment variable. [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] will help us to sync user shell's environment variable with emacs environment variable.
-
-#+begin_src emacs-lisp
-
-  (use-package exec-path-from-shell
-    :init
-    (setq exec-path-from-shell-check-startup-files nil)
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-copy-env "GOPATH")
-      (exec-path-from-shell-initialize)))
 
 #+end_src
 
