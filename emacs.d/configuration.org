@@ -1186,8 +1186,7 @@ For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test 
 #+begin_src emacs-lisp
 
   (use-package clojure-mode
-    :hook ((clojure-mode . smartparens-strict-mode)
-           (clojure-mode . evil-smartparens-mode)))
+    :mode "\\.clj\\'")
 
 #+end_src
 
@@ -1311,7 +1310,8 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
 #+begin_src emacs-lisp
 
 (use-package rainbow-delimiters
-  :hook ((lisp-mode . rainbow-delimiters-mode)
+  :hook ((clojure-mode . rainbow-delimiters-mode)
+         (lisp-mode . rainbow-delimiters-mode)
          (emacs-lisp-mode . rainbow-delimiters-mode)))
 
 #+end_src
@@ -1358,7 +1358,8 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+begin_src emacs-lisp
 
-  (use-package smartparens)
+  (use-package smartparens
+    :hook (clojure-mode . smartparens-strict-mode))
 
 #+end_src
 
@@ -1368,7 +1369,8 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+begin_src emacs-lisp
 
-  (use-package evil-smartparens)
+  (use-package evil-smartparens
+    :hook (clojure-mode . evil-smartparens-mode))
 
 #+end_src
 

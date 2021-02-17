@@ -633,8 +633,7 @@
   :hook (ruby-mode . abram/rspec-keybindings))
 
 (use-package clojure-mode
-  :hook ((clojure-mode . smartparens-strict-mode)
-         (clojure-mode . evil-smartparens-mode)))
+  :mode "\\.clj\\'")
 
 (use-package cider
   :hook ((clojure-mode . cider-mode)
@@ -687,7 +686,8 @@
   (global-git-gutter-mode t))
 
 (use-package rainbow-delimiters
-  :hook ((lisp-mode . rainbow-delimiters-mode)
+  :hook ((clojure-mode . rainbow-delimiters-mode)
+         (lisp-mode . rainbow-delimiters-mode)
          (emacs-lisp-mode . rainbow-delimiters-mode)))
 
 (setq-default indent-tabs-mode nil)
@@ -703,9 +703,11 @@
   :config
   (evil-commentary-mode))
 
-(use-package smartparens)
+(use-package smartparens
+  :hook (clojure-mode . smartparens-strict-mode))
 
-(use-package evil-smartparens)
+(use-package evil-smartparens
+  :hook (clojure-mode . evil-smartparens-mode))
 
 (use-package evil-surround
   :config
