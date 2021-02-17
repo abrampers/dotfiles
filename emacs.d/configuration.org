@@ -1313,7 +1313,7 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
 #+end_src
 
-*** =gitgutter=
+** =gitgutter=
 
 I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to show differences on newly added text.
 
@@ -1322,6 +1322,18 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
   (use-package git-gutter
     :config
     (global-git-gutter-mode t))
+
+#+end_src
+
+** browse-at-remote
+
+[[https://github.com/rmuslimov/browse-at-remote][browse-at-remote]] can be used to open point in github/gitlab.
+
+#+begin_src emacs-lisp
+
+  (use-package browse-at-remote
+    :commands browse-at-remote
+    :bind ("C-c g g" browse-at-remote))
 
 #+end_src
 
