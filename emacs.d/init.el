@@ -825,3 +825,6 @@ See `org-capture-templates' for more information."
             (evil-local-set-key 'normal (kbd ",a") 'projectile-toggle-between-implementation-and-test)
             (evil-ex-define-cmd "A" 'projectile-toggle-between-implementation-and-test)
             (evil-ex-define-cmd "AV" 'projectile-find-implementation-or-test-other-window)))
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
