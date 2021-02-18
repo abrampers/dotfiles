@@ -773,6 +773,8 @@ See `org-capture-templates' for more information."
                    (function abram/org-hugo-new-subtree-post-capture-template)
                    :empty-lines 1)))
 
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
 (use-package general
   :config
   (general-create-definer abram/leader-keys-map

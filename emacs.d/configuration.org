@@ -1512,6 +1512,14 @@ See `org-capture-templates' for more information."
 #+end_src
 
 * Keybinding Configuration
+** ESC cancels all
+
+#+begin_src emacs-lisp
+
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+#+end_src
+
 ** General
 
 [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.
