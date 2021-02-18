@@ -13,6 +13,10 @@
 
 (add-hook 'emacs-startup-hook #'abram/display-startup-time)
 
+(let ((private-init-file "~/.emacs.d/private-init.el"))
+  (when (file-exists-p private-init-file)
+    (load-file private-init-file)))
+
 ;; Initialize package sources
 (require 'package)
 

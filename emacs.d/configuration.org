@@ -38,6 +38,18 @@ In this document I've added links in many places that lead you to documentation 
 
 #+end_src
 
+* Load Private Variables
+
+We might want to customize stuff locally.
+
+#+begin_src emacs-lisp
+
+  (let ((private-init-file "~/.emacs.d/private-init.el"))
+    (when (file-exists-p private-init-file)
+      (load-file private-init-file)))
+
+#+end_src
+
 * Package System Setup
 
 Emacs has a built in package manager but it doesn't make it easy to automatically install packages on a new system the first time you pull down your configuration.  [[https://github.com/jwiegley/use-package][use-package]] is a really helpful package used in this configuration to make it a lot easier to automate the installation and configuration of everything else we use.
