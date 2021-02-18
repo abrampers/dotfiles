@@ -693,6 +693,8 @@
   (setq ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package git-gutter
+  :hook ((text-mode . git-gutter-mode)
+         (prog-mode . git-gutter-mode))
   :config
   (global-git-gutter-mode t))
 

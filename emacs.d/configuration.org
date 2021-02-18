@@ -1320,6 +1320,8 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
 #+begin_src emacs-lisp
 
   (use-package git-gutter
+    :hook ((text-mode . git-gutter-mode)
+           (prog-mode . git-gutter-mode))
     :config
     (global-git-gutter-mode t))
 
