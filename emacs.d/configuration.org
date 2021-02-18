@@ -1333,7 +1333,7 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
 
   (use-package browse-at-remote
     :commands browse-at-remote
-    :bind ("C-c g g" browse-at-remote))
+    :bind (("C-c g g" . browse-at-remote)))
 
 #+end_src
 

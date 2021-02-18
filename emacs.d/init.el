@@ -698,7 +698,7 @@
 
 (use-package browse-at-remote
   :commands browse-at-remote
-  :bind ("C-c g g" browse-at-remote))
+  :bind (("C-c g g" . browse-at-remote)))
 
 (use-package rainbow-delimiters
   :hook ((clojure-mode . rainbow-delimiters-mode)
