@@ -766,7 +766,7 @@ See `org-capture-templates' for more information."
                  '("b"
                    "Hugo blogpost"
                    entry
-                   (file+olp "~/Code/projects/blog.abram.id/content.org" "blog")
+                   (file+olp abram/blog-content-org-file "posts")
                    (function abram/org-hugo-new-subtree-post-capture-template)
                    :empty-lines 1)))
 
