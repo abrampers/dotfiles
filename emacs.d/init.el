@@ -486,7 +486,6 @@
   :config (projectile-mode)
   :custom
   (projectile-completion-system 'ivy)
-  (projectile-project-search-path '("~/Code/source.golabs.io/go-food/"))
   (projectile-switch-project-action #'counsel-fzf)
   :bind-keymap
   ("C-c p" . projectile-command-map))
