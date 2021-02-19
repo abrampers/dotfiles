@@ -251,11 +251,6 @@ When running emacs from the app, emacs won't have the user's shell environment v
 
 #+end_src
 
-** TODO Reduce startup time
-Startup time can be reduced by removing =-i= flag. But right now, if we remove =-i= flag, lsp won't work.
-
-Tweak zshenv etc.
-
 * Keep Folders Clean
 
 We use the [[https://github.com/emacscollective/no-littering/blob/master/no-littering.el][no-littering]] package to keep folders where we edit files and the Emacs configuration folder clean!  It knows about a wide variety of variables for built in Emacs features as well as those from community packages so it can be much easier than finding and setting these variables yourself.
