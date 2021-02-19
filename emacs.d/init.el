@@ -112,6 +112,8 @@
 
 (when (memq window-system '(mac ns x))
   (use-package exec-path-from-shell
+    :custom
+    (exec-path-from-shell-arguments '("-l"))
     :init
     (setq exec-path-from-shell-check-startup-files nil)
     :config

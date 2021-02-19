@@ -22,6 +22,14 @@ PATH=$PATH:$HOME/.local/bin
 
 PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.6/bin
 PATH=$PATH:/Library/Frameworks/Python.framework/Versions/2.7/bin
+
+# Go related stuff
 PATH=$PATH:$GOPATH/bin
+PATH=$PATH:$HOME/.gvm/bin
+PATH=$PATH:$HOME/.gvm/gos/go1.14.5/bin
+PATH=$PATH:$HOME/.gvm/pkgsets/go1.14.5/global/overlay/bin
+
+# Ruby related stuff
+PATH=$PATH:$HOME/.rbenv/shims
 
 export PATH
