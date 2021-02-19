@@ -655,13 +655,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
       '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
         (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
 
-    (setq org-refile-targets
-      '(("Archived.org" :maxlevel . 3)
-        ("Work.org" :maxlevel . 1)
-        ("Personal.org" :maxlevel . 1)
-        ("Inbox.org" :maxlevel . 1)
-        ("Dev.org" :maxlevel . 1)))
-
     ;; Save Org buffers after refiling!
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
