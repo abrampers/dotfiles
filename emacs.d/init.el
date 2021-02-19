@@ -668,12 +668,6 @@
 (add-hook 'cider-mode-hook
           (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
 
-(defun abram/emacs-lisp-mode-hooks ()
-  (smartparens-strict-mode)
-  (evil-smartparens-mode))
-
-(add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
-
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
 
@@ -726,16 +720,17 @@
   (evil-commentary-mode))
 
 (use-package smartparens
-  :hook (clojure-mode . smartparens-strict-mode))
+  :hook ((clojure-mode . smartparens-strict-mode)
+         (emacs-lisp-mode . smartparens-strict-mode)
+         (go-mode . smartparens-mode)))
 
 (use-package evil-smartparens
-  :hook (clojure-mode . evil-smartparens-mode))
+  :hook ((smartparens-mode . evil-smartparens-mode)
+         (smartparens-strict-mode . evil-smartparens-mode)))
 
 (use-package evil-surround
   :config
   (global-evil-surround-mode 1))
-
-(add-hook 'prog-mode-hook 'electric-pair-local-mode)
 
 (use-package lsp-origami
   :hook (lsp-mode . lsp-origami-try-enable))

@@ -1250,19 +1250,6 @@ Add hook to format buffer for clojure files.
 
 #+end_src
 
-*** Emacs Lisp
-**** Hooks
-
-#+begin_src emacs-lisp
-
-  (defun abram/emacs-lisp-mode-hooks ()
-    (smartparens-strict-mode)
-    (evil-smartparens-mode))
-
-  (add-hook 'emacs-lisp-mode-hook 'abram/emacs-lisp-mode-hooks)
-
-#+end_src
-
 *** TODO zsh
 
 #+begin_src emacs-lisp
@@ -1402,7 +1389,9 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+begin_src emacs-lisp
 
   (use-package smartparens
-    :hook (clojure-mode . smartparens-strict-mode))
+    :hook ((clojure-mode . smartparens-strict-mode)
+           (emacs-lisp-mode . smartparens-strict-mode)
+           (go-mode . smartparens-mode)))
 
 #+end_src
 
@@ -1413,7 +1402,8 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+begin_src emacs-lisp
 
   (use-package evil-smartparens
-    :hook (clojure-mode . evil-smartparens-mode))
+    :hook ((smartparens-mode . evil-smartparens-mode)
+           (smartparens-strict-mode . evil-smartparens-mode)))
 
 #+end_src
 
@@ -1426,16 +1416,6 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
   (use-package evil-surround
     :config
     (global-evil-surround-mode 1))
-
-#+end_src
-
-*** =electric-pair-mode=
-
-Emacs 24 has =electric-pair-mode= builtin.
-
-#+begin_src emacs-lisp
-
-  (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 
 #+end_src
 
