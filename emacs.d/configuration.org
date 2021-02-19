@@ -411,6 +411,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 #+begin_src emacs-lisp
 
   (use-package undo-tree
+    :after evil
     :config (global-undo-tree-mode))
 
   (use-package evil
@@ -1375,6 +1376,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+begin_src emacs-lisp
 
   (use-package evil-commentary
+    :commands (evil-commentary evil-commentary-yank evil-commentary-line)
     :config
     (evil-commentary-mode))
 
@@ -1413,6 +1415,8 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+begin_src emacs-lisp
 
   (use-package evil-surround
+    :commands
+    (evil-surround-region evil-surround-edit evil-Surround-edit evil-Surround-region)
     :config
     (global-evil-surround-mode 1))
 
@@ -1512,6 +1516,7 @@ See `org-capture-templates' for more information."
 
 #+begin_src emacs-lisp
   (use-package general
+    :after evil
     :config
     (general-create-definer abram/leader-keys-map
       :keymaps '(normal insert visual emacs)

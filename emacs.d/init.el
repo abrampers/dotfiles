@@ -202,6 +202,7 @@
   ([remap describe-key] . helpful-key))
 
 (use-package undo-tree
+  :after evil
   :config (global-undo-tree-mode))
 
 (use-package evil
@@ -716,6 +717,7 @@
   (setq whitespace-style '(face tabs empty trailing tab-mark)))
 
 (use-package evil-commentary
+  :commands (evil-commentary evil-commentary-yank evil-commentary-line)
   :config
   (evil-commentary-mode))
 
@@ -729,6 +731,8 @@
          (smartparens-strict-mode . evil-smartparens-mode)))
 
 (use-package evil-surround
+  :commands
+  (evil-surround-region evil-surround-edit evil-Surround-edit evil-Surround-region)
   :config
   (global-evil-surround-mode 1))
 
@@ -776,6 +780,7 @@ See `org-capture-templates' for more information."
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (use-package general
+  :after evil
   :config
   (general-create-definer abram/leader-keys-map
     :keymaps '(normal insert visual emacs)
