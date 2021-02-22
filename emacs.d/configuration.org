@@ -1339,7 +1339,7 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
 
 #+end_src
 
-** Indendation
+** Indentation
 
 Disable tabs when indenting a region by default and set =tab-width= default value.
 
