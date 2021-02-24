@@ -710,7 +710,8 @@
   (setq whitespace-style '(face tabs empty trailing tab-mark)))
 
 (use-package evil-commentary
-  :commands (evil-commentary evil-commentary-yank evil-commentary-line)
+  :hook ((prog-mode . evil-commentary-mode)
+         (org-mode . evil-commentary-mode))
   :config
   (evil-commentary-mode))
 

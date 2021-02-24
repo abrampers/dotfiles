@@ -1369,7 +1369,8 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 #+begin_src emacs-lisp
 
   (use-package evil-commentary
-    :commands (evil-commentary evil-commentary-yank evil-commentary-line)
+    :hook ((prog-mode . evil-commentary-mode)
+           (org-mode . evil-commentary-mode))
     :config
     (evil-commentary-mode))
 
