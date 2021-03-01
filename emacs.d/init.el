@@ -110,15 +110,15 @@
   (auto-package-update-maybe)
   (auto-package-update-at-time "08:00"))
 
-(when (memq window-system '(mac ns x))
-  (use-package exec-path-from-shell
-    :custom
-    (exec-path-from-shell-arguments '("-l"))
-    :init
-    (setq exec-path-from-shell-check-startup-files nil)
-    :config
-    (exec-path-from-shell-copy-env "GOPATH")
-    (exec-path-from-shell-initialize)))
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :custom
+  (exec-path-from-shell-arguments '("-l"))
+  :init
+  (setq exec-path-from-shell-check-startup-files nil)
+  :config
+  (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-initialize))
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
 ;; reliably, set `user-emacs-directory` before loading no-littering!
