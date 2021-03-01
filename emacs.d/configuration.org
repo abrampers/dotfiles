@@ -1105,12 +1105,12 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
                                                  test-suite test-name) "")))
           (when complete-test-name
             (go-test--go-test (s-concat test-flag complete-test-name "\\$ . " additional-arguments)))))))
-            
+
   (defun abram/go-test-current-test-cache ()
     "Repeat the previous current test execution."
     (interactive)
     (abram/go-test-current-test 'last))
-    
+
   (defun abram/go-test-current-project ()
     "Launch go test on the current project."
     (interactive)
@@ -1127,6 +1127,7 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
     (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
 
   (use-package gotest
+    :after go-mode
     :hook (go-mode . abram/go-test-keybindings))
 
 #+end_src

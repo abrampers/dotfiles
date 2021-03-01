@@ -594,6 +594,7 @@
   (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
 
 (use-package gotest
+  :after go-mode
   :hook (go-mode . abram/go-test-keybindings))
 
 (defun abram/go-test-debug ()
