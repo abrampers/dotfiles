@@ -321,6 +321,7 @@
        ("@work" . ?W)
        ("@spiritual" . ?s)
        ("@personal" . ?p)
+       ("learn" . ?l)
        ("agenda" . ?a)
        ("publish" . ?P)
        ("batch" . ?b)

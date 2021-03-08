@@ -661,6 +661,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
          ("@work" . ?W)
          ("@spiritual" . ?s)
          ("@personal" . ?p)
+         ("learn" . ?l)
          ("agenda" . ?a)
          ("publish" . ?P)
          ("batch" . ?b)
