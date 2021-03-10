@@ -38,6 +38,12 @@
         name: tmux
         state: latest
 
+    - name: emacs | Installs emacs | brew
+      homebrew:
+        name: emacs
+        state: latest
+        options: with-cocoa,with-modules,with-imagemagick,with-librsvg
+
     - name: ripgrep | Installs ripgrep | brew
       homebrew:
         name: ripgrep
