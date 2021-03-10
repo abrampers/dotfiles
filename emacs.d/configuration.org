@@ -350,7 +350,7 @@ The legendary [[https://github.com/TeMPOraL/nyan-mode/][nyan-mode]].
 
   (use-package counsel
     :bind (("C-M-j" . 'counsel-switch-buffer)
-           ;; ("M-x" . counsel-M-x) ;; Check if without this M-x still go to counsel
+           ("M-x" . counsel-M-x) ;; Check if without this M-x still go to counsel
            ("C-x C-f" . counsel-find-file)
            :map minibuffer-local-map
            ("C-r" . 'counsel-minibuffer-history))
