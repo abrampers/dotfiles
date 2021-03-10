@@ -532,7 +532,8 @@
 (use-package go-mode
   :mode "\\.go\\'"
   :hook ((go-mode . lsp-deferred)
-         (go-mode . abram/evil-lsp-keybindings))
+         (go-mode . abram/evil-lsp-keybindings)
+         (go-mode . electric-pair-local-mode))
   :init 
   (setq gofmt-command "goimports")
   (flycheck-mode)
@@ -713,8 +714,7 @@
 
 (use-package smartparens
   :hook ((clojure-mode . smartparens-strict-mode)
-         (emacs-lisp-mode . smartparens-strict-mode)
-         (go-mode . smartparens-mode)))
+         (emacs-lisp-mode . smartparens-strict-mode)))
 
 (use-package evil-smartparens
   :hook ((smartparens-mode . evil-smartparens-mode)
