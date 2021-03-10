@@ -554,26 +554,6 @@
                                     :test "make test"
                                     :test-suffix "_test"))
 
-(defun abram/go-test-current-test (&optional last)
-  "Launch go test on the current test."
-  (interactive)
-  (unless (string-equal (symbol-name last) "last")
-    (setq go-test--current-test-cache (go-test--get-current-test-info)))
-  (when go-test--current-test-cache
-    (cl-destructuring-bind (test-suite test-name) go-test--current-test-cache
-      (let ((test-flag (if (> (length test-suite) 0) "-testify.m " "-test.run "))
-            (complete-test-name (if (> (length test-suite) 0) (s-concat test-suite "/" test-name) test-name))
-            (additional-arguments (if go-test-additional-arguments-function
-                                      (funcall go-test-additional-arguments-function
-                                               test-suite test-name) "")))
-        (when complete-test-name
-          (go-test--go-test (s-concat test-flag complete-test-name "\\$ . " additional-arguments)))))))
-
-(defun abram/go-test-current-test-cache ()
-  "Repeat the previous current test execution."
-  (interactive)
-  (abram/go-test-current-test 'last))
-
 (defun abram/go-test-current-project ()
   "Launch go test on the current project."
   (interactive)
@@ -582,11 +562,10 @@
                                        (shell-command-to-string (format "cd %s && go list ./..." (projectile-project-root)))))))
     (go-test--go-test (s-join " " packages))))
 
-
 (defun abram/go-test-keybindings ()
-  (evil-local-set-key 'normal (kbd "tt") 'abram/go-test-current-test)
+  (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
   (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
-  (evil-local-set-key 'normal (kbd "t.") 'abram/go-test-current-test-cache)
+  (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache)
   (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
 
 (use-package gotest
