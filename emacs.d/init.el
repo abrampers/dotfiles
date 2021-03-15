@@ -642,10 +642,10 @@
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
          (lambda () (require 'ccls) (lsp))))
 
-(add-hook 'c-mode 'electric-pair-local-mode)
-(add-hook 'c++-mode 'electric-pair-local-mode)
-(add-hook 'objc-mode 'electric-pair-local-mode)
-(add-hook 'cuda-mode 'electric-pair-local-mode)
+(add-hook 'c-mode-hook 'electric-pair-local-mode)
+(add-hook 'c++-mode-hook 'electric-pair-local-mode)
+(add-hook 'objc-mode-hook 'electric-pair-local-mode)
+(add-hook 'cuda-mode-hook 'electric-pair-local-mode)
 
 (use-package cmake-font-lock
   :mode ("CMakeLists\\.txt\\'" .  cmake-mode))
