@@ -129,9 +129,32 @@
 
 (use-package all-the-icons)
 
+(setq display-time-format "(%I.%M %p) [%A %b %d, %Y]")
+(setq display-time-load-average-threshold 4)
+(display-time-mode)
+(display-battery-mode)
+
+
 (use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+  :custom
+  (doom-modeline-icon t)
+  (doom-modeline-major-mode-icon t)
+  (doom-modeline-major-mode-color-icon t)
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+  (doom-modeline-buffer-state-icon t)
+  (doom-modeline-buffer-modification-icon t)
+  (doom-modeline-modal-icon t)
+  (doom-modeline-enable-word-count nil)
+  (doom-modeline-buffer-encoding t)
+  (doom-modeline-indent-info t)
+  (doom-modeline-checker-simple-format t)
+  (doom-modeline-vcs-max-length 30)
+  (doom-modeline-env-version t)
+  (doom-modeline-irc-stylize 'identity)
+  (doom-modeline-github-timer nil)
+  (doom-modeline-gnus-timer nil)
+  :init
+  (doom-modeline-mode 1))
 
 (use-package nyan-mode
   :init (setq nyan-animate-nyancat t
