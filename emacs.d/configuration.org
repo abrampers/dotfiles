@@ -273,7 +273,6 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
 (use-package command-log-mode)
 
 #+end_src
-
 ** Better Modeline
 
 [[https://github.com/seagle0128/doom-modeline][doom-modeline]] is a very attractive and rich (yet still minimal) mode line configuration for Emacs.  The default configuration is quite good but you can check out the [[https://github.com/seagle0128/doom-modeline#customize][configuration options]] for more things you can enable or disable.
@@ -1243,6 +1242,39 @@ Add hook to format buffer for clojure files.
             (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
 
 #+end_src
+
+*** C/C++
+
+We're using [[https://github.com/MaskRay/ccls][ccls]] for C family lsp.
+
+#+begin_src emacs-lisp
+
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
+#+end_src
+
+Use electric pair mode on c/c++ mode
+
+#+begin_src emacs-lisp
+
+  (add-hook 'c-mode 'electric-pair-local-mode)
+  (add-hook 'c++-mode 'electric-pair-local-mode)
+  (add-hook 'objc-mode 'electric-pair-local-mode)
+  (add-hook 'cuda-mode 'electric-pair-local-mode)
+
+#+end_src
+
+**** CMake
+
+#+begin_src emacs-lisp
+
+  (use-package cmake-font-lock
+    :mode ("CMakeLists\\.txt\\'" .  cmake-mode))
+
+#+end_src
+
 
 *** zsh
 

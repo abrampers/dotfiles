@@ -638,6 +638,18 @@
 (add-hook 'cider-mode-hook
           (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
 
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda () (require 'ccls) (lsp))))
+
+(add-hook 'c-mode 'electric-pair-local-mode)
+(add-hook 'c++-mode 'electric-pair-local-mode)
+(add-hook 'objc-mode 'electric-pair-local-mode)
+(add-hook 'cuda-mode 'electric-pair-local-mode)
+
+(use-package cmake-font-lock
+  :mode ("CMakeLists\\.txt\\'" .  cmake-mode))
+
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))
 
