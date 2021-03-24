@@ -112,6 +112,7 @@
   (setq exec-path-from-shell-check-startup-files nil)
   :config
   (exec-path-from-shell-copy-env "GOPATH")
+  (exec-path-from-shell-copy-env "GPG_TTY")
   (exec-path-from-shell-initialize))
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
@@ -328,8 +329,8 @@
   (setq org-habit-graph-column 60)
 
   (setq org-todo-keywords
-    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+    '((sequence "TODO(t)" "NEXT(n)" "WIP(w!)" "|" "DONE(d!)")
+      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)

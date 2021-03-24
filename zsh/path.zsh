@@ -32,4 +32,6 @@ PATH=$PATH:$HOME/.gvm/pkgsets/go1.14.5/global/overlay/bin
 # Ruby related stuff
 PATH=$PATH:$HOME/.rbenv/shims
 
+export PATH=$PATH:$PYENV_ROOT/bin:$PATH
+
 export PATH

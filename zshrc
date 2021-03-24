@@ -442,7 +442,6 @@ zstyle ':chpwd:*' recent-dirs-default true
 
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/colors.zsh
-source $HOME/.zsh/conda.zsh
 source $HOME/.zsh/functions.zsh
 
 # Note: All variables are sourced in $HOME/.zshenv
@@ -459,9 +458,6 @@ test -f $HOST_RC && source $HOST_RC
 # Third-Party
 #
 
-conda deactivate
-conda activate base
-
 jdk 1.8 true
 
 # nvm setup
@@ -477,3 +473,8 @@ eval "$(rbenv init -)"
 # Key bindings
 # ------------
 source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
+
+# pyenv
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi

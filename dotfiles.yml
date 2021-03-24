@@ -1,8 +1,6 @@
 ---
 - name: Setup local workstation
   hosts: localhost
-  vars:
-    miniconda_installer: Miniconda3-latest-MacOSX-x86_64.sh
   vars_files:
     - ./vars/custom.yml
   tasks:
@@ -38,11 +36,13 @@
         name: tmux
         state: latest
 
-    - name: emacs | Installs emacs | brew
+    - name: d12frosted/emacs-plus | Tap for emacs-plus | brew tap
+      community.general.homebrew_tap:
+        name: d12frosted/emacs-plus
+
+    - name: emacs-plus | Installs emacs-plus | brew
       homebrew:
-        name: emacs
-        state: latest
-        options: with-cocoa,with-modules,with-imagemagick,with-librsvg
+        name: emacs-plus
 
     - name: ripgrep | Installs ripgrep | brew
       homebrew:
@@ -75,24 +75,19 @@
         state: latest
         executable: /usr/local/bin/pip3
 
-    - name: miniconda | Downloads miniconda installation script | get_url
-      get_url:
-        url: "https://repo.anaconda.com/miniconda/{{ miniconda_installer }}"
-        dest: "/tmp/{{ miniconda_installer }}"
-        mode: 0755
-
-    - name: miniconda | Installs miniconda | command
-      command:
-        cmd: "/bin/zsh /tmp/{{ miniconda_installer }}"
-        creates: "{{ ansible_env.HOME }}/miniconda3"
-    - name: miniconda | Remove miniconda installer | file
-      file:
-        path: "/tmp/{{ miniconda_installer }}"
-        state: absent
-
     - name: rbenv | Installs rbenv | brew
       homebrew:
         name: rbenv
+        state: latest
+
+    - name: pyenv | Installs pyenv | brew
+      homebrew:
+        name: pyenv
+        state: latest
+
+    - name: pyenv-virtualenv | Installs pyenv-virtualenv | brew
+      homebrew:
+        name: pyenv-virtualenv
         state: latest
 
     - name: nvm | Installs nvm | brew
