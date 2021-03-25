@@ -586,6 +586,7 @@
     (go-test--go-test (s-join " " packages))))
 
 (defun abram/go-test-keybindings ()
+  (require 'gotest)
   (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
   (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
   (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache)
@@ -593,7 +594,9 @@
 
 (use-package gotest
   :after go-mode
-  :hook (go-mode . abram/go-test-keybindings))
+  :hook (go-mode . abram/go-test-keybindings)
+  :init
+  (setq go-test-args "-p 1"))
 
 (defun abram/go-test-debug ()
     (interactive)
