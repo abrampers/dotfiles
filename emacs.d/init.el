@@ -652,9 +652,9 @@
          (clojure-mode . company-mode)
          (cider-repl-mode . company-mode))
   :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
+         ("TAB" . company-complete-selection))
         (:map cider-mode-map
-         ("<tab>" . company-indent-or-complete-common)))
+         ("TAB" . company-indent-or-complete-common)))
 
 (defun abram/cider-format-for-clj ()
   (when (member (file-name-extension (buffer-file-name))
@@ -682,10 +682,11 @@
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map lsp-mode-map
-         ("<tab>" . company-indent-or-complete-common))
+  :bind
+  (:map company-active-map
+        ("C-j" . company-select-next))
+  (:map lsp-mode-map
+        ("TAB" . company-indent-or-complete-common))
   :custom
   (company-minimum-prefix-length 1)
   (company-tooltip-align-annotations t)
