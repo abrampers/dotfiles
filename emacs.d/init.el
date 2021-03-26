@@ -506,7 +506,8 @@
 
 (defun abram/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(symbols))
-  (setq lsp-lens-enable t)
+  (setq lsp-lens-enable nil)
+  (setq lsp-modeline-code-actions-enable nil)
   (setq lsp-eldoc-enable-hover t)
   (setq lsp-completion-show-detail t)
   (setq lsp-completion-show-kind t))
