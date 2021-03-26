@@ -505,7 +505,7 @@
 (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
 (defun abram/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments nil)
+  (setq lsp-headerline-breadcrumb-segments '(symbols))
   (setq lsp-lens-enable t)
   (setq lsp-eldoc-enable-hover t)
   (setq lsp-completion-show-detail t)
