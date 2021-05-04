@@ -21,11 +21,6 @@ brew() {
     (cd "$(brew --repo)" && git fetch && git reset --hard origin/master)
     brew update
     ;;
-  update)
-    command brew update
-    command brew upgrade
-    brew cleanup
-    ;;
   *)
     command brew "$@"
     ;;
