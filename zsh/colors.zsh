@@ -66,19 +66,15 @@ color() {
 
       echo "$SCHEME" >! "$__ABRAMPERS[BASE16_CONFIG]"
       echo "$BACKGROUND" >> "$__ABRAMPERS[BASE16_CONFIG]"
-      if [[ $SCHEME == 'nord' ]]; then
-        echo "to activate nord scheme, restart shell"
-      else
-        sh "$FILE"
+      sh "$FILE"
 
-        if [ -n "$TMUX" ]; then
-          local CC=$(grep color18= "$FILE" | cut -d \" -f2 | sed -e 's#/##g')
-          if [ -n "$BG" -a -n "$CC" ]; then
-            command tmux set -a window-active-style "bg=#$BG"
-            command tmux set -a window-style "bg=#$CC"
-            command tmux set -g pane-active-border-style "bg=#$CC"
-            command tmux set -g pane-border-style "bg=#$CC"
-          fi
+      if [ -n "$TMUX" ]; then
+        local CC=$(grep color18= "$FILE" | cut -d \" -f2 | sed -e 's#/##g')
+        if [ -n "$BG" -a -n "$CC" ]; then
+          command tmux set -a window-active-style "bg=#$BG"
+          command tmux set -a window-style "bg=#$CC"
+          command tmux set -g pane-active-border-style "bg=#$CC"
+          command tmux set -g pane-border-style "bg=#$CC"
         fi
       fi
     else
