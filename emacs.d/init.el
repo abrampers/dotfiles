@@ -538,6 +538,9 @@
   (lsp-ui-doc-enable nil)
   (lsp-signature-auto-activate '(:on-trigger-char :after-completion)))
 
+(use-package lsp-treemacs
+  :after lsp)
+
 (use-package lsp-ivy
   :after lsp)
 
