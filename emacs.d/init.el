@@ -101,6 +101,15 @@
 # If you want to create a file, visit that file with C-x C-f,
 # then enter the text in that file's own buffer.")
 
+(use-package xterm-color)
+
+(setq compilation-environment '("TERM=xterm-256color"))
+
+(defun abram/advice-compilation-filter (f proc string)
+  (funcall f proc (xterm-color-filter string)))
+
+(advice-add 'compilation-filter :around #'abram/advice-compilation-filter)
+
 (use-package auto-package-update
   :commands auto-package-update-now)
 
