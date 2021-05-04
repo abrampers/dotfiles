@@ -112,7 +112,7 @@
   (setq exec-path-from-shell-check-startup-files nil)
   :config
   (exec-path-from-shell-copy-env "GOPATH")
-  (exec-path-from-shell-copy-env "GPG_TTY")
+  (exec-path-from-shell-copy-env "PYENV_ROOT")
   (exec-path-from-shell-initialize))
 
 ;; NOTE: If you want to move everything out of the ~/.emacs.d folder
@@ -676,6 +676,12 @@
 
 (use-package cmake-font-lock
   :mode ("CMakeLists\\.txt\\'" .  cmake-mode))
+
+(setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
+
+(use-package pyenv-mode
+  :hook ((python-mode . pyenv-mode)
+         (python-mode . lsp-deferred)))
 
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))

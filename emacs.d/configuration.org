@@ -241,7 +241,7 @@ When running emacs from the app, emacs won't have the user's shell environment v
     (setq exec-path-from-shell-check-startup-files nil)
     :config
     (exec-path-from-shell-copy-env "GOPATH")
-    (exec-path-from-shell-copy-env "GPG_TTY")
+    (exec-path-from-shell-copy-env "PYENV_ROOT")
     (exec-path-from-shell-initialize))
 
 #+end_src
@@ -1278,6 +1278,28 @@ Use electric pair mode on c/c++ mode
 
 #+end_src
 
+*** Python
+
+#+begin_src emacs-lisp :tangle no
+
+  (use-package lsp-pyright
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                            (lsp-deferred)))
+    :custom
+    (lsp-pyright-venv-path (format "%s/versions" (getenv "PYENV_ROOT"))))
+
+#+end_src
+
+#+begin_src emacs-lisp
+
+  (setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
+
+  (use-package pyenv-mode
+    :hook ((python-mode . pyenv-mode)
+           (python-mode . lsp-deferred)))
+
+#+end_src
 
 *** zsh
 
