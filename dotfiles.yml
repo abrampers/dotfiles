@@ -74,17 +74,6 @@
         name: python
         state: latest
 
-    - name: python | Installs neovim package | pip
-      pip:
-        name: neovim
-        state: latest
-        executable: /usr/local/bin/pip3
-
-    - name: rbenv | Installs rbenv | brew
-      homebrew:
-        name: rbenv
-        state: latest
-
     - name: pyenv | Installs pyenv | brew
       homebrew:
         name: pyenv
@@ -93,6 +82,17 @@
     - name: pyenv-virtualenv | Installs pyenv-virtualenv | brew
       homebrew:
         name: pyenv-virtualenv
+        state: latest
+
+    - name: python | Installs neovim package | pip
+      pip:
+        name: neovim
+        state: latest
+        executable: ~/.pyenv/shims/pip3
+
+    - name: rbenv | Installs rbenv | brew
+      homebrew:
+        name: rbenv
         state: latest
 
     - name: nvm | Installs nvm | brew

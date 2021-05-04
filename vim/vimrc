@@ -6,7 +6,7 @@ let mapleader=" "
 let maplocalleader=","
 
 if has('nvim')
-  let g:python3_host_prog = '/usr/local/bin/python3'
+  let g:python3_host_prog = $HOME . '/.pyenv/shims/python3'
   let g:ruby_host_prog = $HOME . '/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
 endif
 
