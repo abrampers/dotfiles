@@ -26,6 +26,11 @@
       failed_when: zsh_for_user.rc >= 1
       changed_when: zsh_for_user.rc == 0
 
+    - name: alacritty | Installs alacritty | brew
+      homebrew:
+        name: alacritty
+        state: latest
+
     - name: neovim | Installs neovim | brew
       homebrew:
         name: neovim
