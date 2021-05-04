@@ -1122,26 +1122,26 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
 
 #+begin_src emacs-lisp
 
-  (defun abram/go-test-current-project ()
-    "Launch go test on the current project."
-    (interactive)
-    (let ((packages (cl-remove-if (lambda (s) (s-contains? "/vendor/" s))
-                                  (s-split "\n"
-                                         (shell-command-to-string (format "cd %s && go list ./..." (projectile-project-root)))))))
-      (go-test--go-test (s-join " " packages))))
+    (defun abram/go-test-current-project ()
+      "Launch go test on the current project."
+      (interactive)
+      (let ((packages (cl-remove-if (lambda (s) (s-contains? "/vendor/" s))
+                                    (s-split "\n"
+                                           (shell-command-to-string (format "cd %s && go list ./..." (projectile-project-root)))))))
+        (go-test--go-test (s-join " " packages))))
 
-  (defun abram/go-test-keybindings ()
-    (require 'gotest)
-    (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
-    (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
-    (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache)
-    (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
+    (defun abram/go-test-keybindings ()
+      (require 'gotest)
+      (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
+      (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
+      (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache)
+      (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
 
-  (use-package gotest
-    :after go-mode
-    :hook (go-mode . abram/go-test-keybindings)
-    :init
-    (setq go-test-args "-p 1"))
+    (use-package gotest
+      :after go-mode
+      :hook (go-mode . abram/go-test-keybindings)
+      :init
+      (setq go-test-args "-p 1"))
 
 #+end_src
 
@@ -1507,6 +1507,13 @@ I'm using [[https://github.com/thiderman/makefile-executor.el][makefile-executor
     :config
     (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
+  (defun abram/make-test-current-project ()
+    "Launch make test on the current project"
+    (interactive)
+
+    (let ((filename (format "%s/Makefile" (projectile-project-root))))
+      (makefile-executor-execute-target filename "test")))
+
 #+end_src
 
 Keybindings for makefile
@@ -1516,7 +1523,8 @@ Keybindings for makefile
   (add-hook
     'prog-mode-hook
     (lambda ()
-      (evil-local-set-key 'normal (kbd "m SPC") 'makefile-executor-execute-project-target)))
+      (evil-local-set-key 'normal (kbd "m SPC") 'makefile-executor-execute-project-target)
+      (evil-local-set-key 'normal (kbd "m t") 'abram/make-test-current-project)))
 
 #+end_src
 

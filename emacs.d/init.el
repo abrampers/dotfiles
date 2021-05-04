@@ -771,10 +771,18 @@
   :config
   (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
+(defun abram/make-test-current-project ()
+  "Launch make test on the current project"
+  (interactive)
+
+  (let ((filename (format "%s/Makefile" (projectile-project-root))))
+    (makefile-executor-execute-target filename "test")))
+
 (add-hook
   'prog-mode-hook
   (lambda ()
-    (evil-local-set-key 'normal (kbd "m SPC") 'makefile-executor-execute-project-target)))
+    (evil-local-set-key 'normal (kbd "m SPC") 'makefile-executor-execute-project-target)
+    (evil-local-set-key 'normal (kbd "m t") 'abram/make-test-current-project)))
 
 (use-package ox-hugo
   :after ox)
