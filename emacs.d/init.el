@@ -366,9 +366,35 @@
   (setq org-agenda-custom-commands
    '(("d" "Dashboard"
      ((agenda "" ((org-deadline-warning-days 7)))
+      (todo "WIP"
+        ((org-agenda-overriding-header "Current Tasks")))
+      (tags-todo "+PRIORITY_QUADRANT=1"
+        ((org-agenda-overriding-header "Quadrant 1 (Important + Urgent)")
+         (org-agenda-max-todos 5)))
+      (tags-todo "+PRIORITY_QUADRANT=2"
+        ((org-agenda-overriding-header "Quadrant 2 (Important + Not Urgent)")
+         (org-agenda-max-todos 5)))
+      (tags-todo "+PRIORITY_QUADRANT=3"
+        ((org-agenda-overriding-header "Quadrant 3 (Not Important + Urgent)")
+         (org-agenda-max-todos 5)))
+      (tags-todo "+PRIORITY_QUADRANT=4"
+        ((org-agenda-overriding-header "Quadrant 4 (Not Important + Not Urgent)")
+         (org-agenda-max-todos 5)))
       (todo "NEXT"
         ((org-agenda-overriding-header "Next Tasks")))
       (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+
+    ("p" "Prioritization"
+     ((tags-todo "+PRIORITY_QUADRANT=1"
+        ((org-agenda-overriding-header "Quadrant 1 (Important + Urgent)")))
+      (tags-todo "+PRIORITY_QUADRANT=2"
+        ((org-agenda-overriding-header "Quadrant 2 (Important + Not Urgent)")))
+      (tags-todo "+PRIORITY_QUADRANT=3"
+        ((org-agenda-overriding-header "Quadrant 3 (Not Important + Urgent)")))
+      (tags-todo "+PRIORITY_QUADRANT=4"
+        ((org-agenda-overriding-header "Quadrant 4 (Not Important + Not Urgent)")))
+      (tags-todo "+PRIORITY_QUADRANT=\"\""
+        ((org-agenda-overriding-header "Not prioritized yet")))))
 
     ("n" "Next Tasks"
      ((todo "NEXT"
