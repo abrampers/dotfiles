@@ -119,9 +119,9 @@ if has('linebreak')
   let &showbreak='↳ '                 " DOWNWARDS ARROW WITH TIP RIGHTWARDS (U+21B3, UTF-8: E2 86 B3)
 endif
 
-if has('showcmd')
-  set noshowcmd                       " don't show extra info at end of command line
-endif
+" if has('showcmd')
+"   set noshowcmd                       " don't show extra info at end of command line
+" endif
 
 set sidescroll=0                      " sidescroll in jumps because terminals are slow
 set sidescrolloff=3                   " same as scrolloff, but for columns
