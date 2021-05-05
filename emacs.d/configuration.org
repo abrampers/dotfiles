@@ -1318,6 +1318,14 @@ Use electric pair mode on c/c++ mode
 
 #+end_src
 
+*** Protobuf
+#+begin_src emacs-lisp
+
+  (use-package protobuf-mode
+    :mode "\\.proto\\'")
+
+#+end_src
+
 *** Python
 
 #+begin_src emacs-lisp :tangle no

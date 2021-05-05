@@ -717,6 +717,9 @@
 (use-package cmake-font-lock
   :mode ("CMakeLists\\.txt\\'" .  cmake-mode))
 
+(use-package protobuf-mode
+  :mode "\\.proto\\'")
+
 (setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
 
 (use-package pyenv-mode
