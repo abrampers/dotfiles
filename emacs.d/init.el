@@ -39,6 +39,7 @@
 (use-package nord-theme)
 (use-package gruvbox-theme)
 (use-package material-theme)
+(use-package seti-theme)
 
 (load-theme 'gruvbox-dark-medium t)
 

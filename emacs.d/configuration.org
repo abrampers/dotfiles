@@ -83,10 +83,11 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 
 #+begin_src emacs-lisp
 
-(use-package doom-themes)
-(use-package nord-theme)
-(use-package gruvbox-theme)
-(use-package material-theme)
+  (use-package doom-themes)
+  (use-package nord-theme)
+  (use-package gruvbox-theme)
+  (use-package material-theme)
+  (use-package seti-theme)
 
 #+end_src
 
