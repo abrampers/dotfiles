@@ -363,6 +363,7 @@
        ("note" . ?n)
        ("emacs" . ?E)
        ("vim" . ?V)
+       ("dev_env" . ?D)
        ("idea" . ?i)))
 
   ;; Configure custom agenda views
@@ -451,6 +452,8 @@
            "* TODO %? :@work:\n%U\n%a\n%i" :empty-lines 0)
       ("ti" "Implementation Task" entry (file+olp "~/org/Work.org" "Work")
            "* TODO %? :implementation:\n%U\n%a\n%i" :empty-lines 0)
+      ("td" "Development Environment Task" entry (file+olp "~/org/Dev.org" "Dev Enchancements")
+           "* TODO %? :dev_env:\n%U\n%a\n%i" :empty-lines 0)
 
       ("j" "Journal Entries")
       ("jj" "Journal" entry
