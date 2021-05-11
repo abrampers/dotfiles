@@ -1,48 +1,75 @@
 ---
 - name: Setup local workstation
   hosts: localhost
+  vars:
+    install_homebrwe_if_missing: false
   vars_files:
     - ./vars/custom.yml
+  pre_tasks:
+    - name: Ensuring Homebrew Is Installed
+      stat:
+        path: /usr/local/bin/brew
+      register: homebrew_check
+
+    - name: Fail If Homebrew Is Not Installed and install_homebrew_if_missing Is False
+      fail:
+        msg: Homebrew is missing...Install from http://brew.sh/
+      when:
+        - not homebrew_check.stat.exists
+        - not install_homebrew_if_missing
+
+    - name: Installing Homebrew
+      shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      when:
+        - not homebrew_check.stat.exists
+        - install_homebrew_if_missing
   tasks:
     - name: Get the username running the deploy | whoami
       local_action: command whoami
       register: whoami_output
       check_mode: no
 
+    - name: Check current shell
+      shell: echo $SHELL
+      register: current_shell_output
+      check_mode: no
+
+    - debug:
+        var: current_shell_output
+
     - name: zsh | Installs zsh | brew
       homebrew:
         name: zsh
-        state: latest
+      when: current_shell_output.stdout != "/bin/zsh"
 
     - name: zsh | Sets zsh as default shell for root | command
       command: chsh -s /bin/zsh
       register: zsh_for_root
       failed_when: zsh_for_root.rc >= 1
       changed_when: zsh_for_root.rc == 0
+      when: current_shell_output.stdout != "/bin/zsh"
 
     - name: zsh | Sets zsh as default shell for {{ whoami_output.stdout }} | command
       command: chsh -s /bin/zsh {{ whoami_output.stdout }}
       register: zsh_for_user
       failed_when: zsh_for_user.rc >= 1
       changed_when: zsh_for_user.rc == 0
+      when: current_shell_output.stdout != "/bin/zsh"
 
-    - name: alacritty | Installs alacritty | brew
-      homebrew:
+    - name: alacritty | Installs alacritty | brew cask
+      homebrew_cask:
         name: alacritty
-        state: latest
 
     - name: neovim | Installs neovim | brew
       homebrew:
         name: neovim
-        state: latest
 
     - name: tmux | Installs tmux | brew
       homebrew:
         name: tmux
-        state: latest
 
     - name: d12frosted/emacs-plus | Tap for emacs-plus | brew tap
-      community.general.homebrew_tap:
+      homebrew_tap:
         name: d12frosted/emacs-plus
 
     - name: emacs-plus | Installs emacs-plus | brew
@@ -52,78 +79,67 @@
     - name: ripgrep | Installs ripgrep | brew
       homebrew:
         name: ripgrep
-        state: latest
 
     - name: tig | Installs tig | brew
       homebrew:
         name: tig
-        state: latest
 
     - name: cmake | Installs cmake | brew
       homebrew:
         name: cmake
-        state: latest
 
     - name: go | Installs go | brew
       homebrew:
         name: go
-        state: latest
 
     - name: python | Installs python | brew
       homebrew:
         name: python
-        state: latest
 
     - name: pyenv | Installs pyenv | brew
       homebrew:
         name: pyenv
-        state: latest
 
     - name: pyenv-virtualenv | Installs pyenv-virtualenv | brew
       homebrew:
         name: pyenv-virtualenv
-        state: latest
 
     - name: python | Installs neovim package | pip
       pip:
         name: neovim
-        state: latest
         executable: ~/.pyenv/shims/pip3
 
     - name: rbenv | Installs rbenv | brew
       homebrew:
         name: rbenv
-        state: latest
 
     - name: nvm | Installs nvm | brew
       homebrew:
         name: nvm
-        state: latest
 
     - name: AdoptOpenJDK8 | Tap AdoptOpenJDK | brew tap
       homebrew_tap:
         name: AdoptOpenJDK/openjdk
-        state: present
 
     - name: AdoptOpenJDK8 | Installs AdoptOpenJDK8 | brew cask
       homebrew_cask:
         name: adoptopenjdk8
-        state: present
 
     - name: fzf | Installs fzf | brew
       homebrew:
         name: fzf
-        state: latest
 
     - name: fzf | Installs bat | brew
       homebrew:
         name: bat
-        state: latest
+
+    - name: karabiner-elements | Installs karabiner-elements | brew cask
+      homebrew_cask:
+        name: karabiner-elements
 
     - name: rcm | Installs rcm | brew
       homebrew:
         name: rcm
-        state: latest
 
     - name: rcm | Installs rcm config
       command:
