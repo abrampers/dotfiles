@@ -320,6 +320,7 @@
 
 (defun abram/org-mode-setup ()
   (org-indent-mode)
+  (setq evil-auto-indent nil)
   (visual-line-mode 1))
 
 (use-package org
