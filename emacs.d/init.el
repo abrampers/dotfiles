@@ -724,6 +724,13 @@
 (use-package protobuf-mode
   :mode "\\.proto\\'")
 
+(defconst abram/protobuf-style
+  '((c-basic-offset . 4)
+    (indent-tabs-mode . nil)))
+
+(add-hook 'protobuf-mode-hook
+  (lambda () (c-add-style "my-style" abram/protobuf-style t)))
+
 (setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
 
 (use-package pyenv-mode
