@@ -735,6 +735,7 @@
 
 (use-package pyenv-mode
   :hook ((python-mode . pyenv-mode)
+         (python-mode . electric-pair-local-mode)
          (python-mode . lsp-deferred)))
 
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
