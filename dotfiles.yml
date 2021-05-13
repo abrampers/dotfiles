@@ -137,6 +137,14 @@
       homebrew_cask:
         name: karabiner-elements
 
+    - name: yabai | Tap koekeishiya/formulae | brew tap
+      homebrew_tap:
+        name: koekeishiya/formulae
+
+    - name: yabai | Installs yabai | brew
+      homebrew:
+        name: yabai
+
     - name: rcm | Installs rcm | brew
       homebrew:
         name: rcm
