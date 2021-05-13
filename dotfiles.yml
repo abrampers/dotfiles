@@ -145,6 +145,10 @@
       homebrew:
         name: yabai
 
+    - name: skhd | Installs skhd | brew
+      homebrew:
+        name: skhd
+
     - name: rcm | Installs rcm | brew
       homebrew:
         name: rcm
