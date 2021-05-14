@@ -150,6 +150,10 @@
       homebrew:
         name: skhd
 
+    - name: keycastr | Installs keycastr | brew cask
+      homebrew_cask:
+        name: keycastr
+
     - name: rcm | Installs rcm | brew
       homebrew:
         name: rcm
