@@ -77,6 +77,12 @@
         name: emacs-plus
         options: with-no-titlebar
 
+    - name: emacs-plus | Create symlink | file
+      ansible.builtin.file:
+        src: /usr/local/opt/emacs-plus@27/Emacs.app
+        dest: /Applications/Emacs.app
+        state: link
+
     - name: ripgrep | Installs ripgrep | brew
       homebrew:
         name: ripgrep
