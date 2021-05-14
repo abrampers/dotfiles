@@ -154,6 +154,28 @@
       homebrew_cask:
         name: keycastr
 
+    - name: limelight | Clone limelight repo | git
+      ansible.builtin.git:
+        repo: https://github.com/koekeishiya/limelight.git
+        dest: ~/tmp/limelight-temp
+      register: clone_limelight_output
+
+    - name: limelight | Build limelight | make
+      community.general.make:
+        chdir: ~/tmp/limelight-temp
+      when: clone_limelight_output.failed == false
+
+    - name: limelight | Copy binary | file
+      ansible.builtin.copy:
+        src: ~/tmp/limelight-temp/bin/limelight
+        dest: /usr/local/bin/limelight
+        mode: '755'
+
+    - name: limelight | Remove repo | file
+      ansible.builtin.file:
+        path: ~/tmp/limelight-temp
+        state: absent
+
     - name: rcm | Installs rcm | brew
       homebrew:
         name: rcm
