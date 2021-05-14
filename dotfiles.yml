@@ -75,6 +75,7 @@
     - name: emacs-plus | Installs emacs-plus | brew
       homebrew:
         name: emacs-plus
+        options: with-no-titlebar
 
     - name: ripgrep | Installs ripgrep | brew
       homebrew:
