@@ -132,12 +132,10 @@ function () {
   if [[ -s "$__ABRAMPERS[BASE16_CONFIG]" ]]; then
     local SCHEME=$(head -1 "$__ABRAMPERS[BASE16_CONFIG]")
     local BACKGROUND=$(sed -n -e '2 p' "$__ABRAMPERS[BASE16_CONFIG]")
-    if [[ "$SCHEME" != "nord" ]]; then
-      if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
-        echo "warning: unknown background type in $__ABRAMPERS[BASE16_CONFIG]"
-      else
-        color "$SCHEME"
-      fi
+    if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
+      echo "warning: unknown background type in $__ABRAMPERS[BASE16_CONFIG]"
+    else
+      color "$SCHEME"
     fi
   else
     # Default.
