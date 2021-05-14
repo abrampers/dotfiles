@@ -43,8 +43,6 @@
 
 (load-theme 'gruvbox-dark-medium t)
 
-(toggle-frame-fullscreen)
-
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar

@@ -100,7 +100,7 @@ Activate nord theme.
 #+end_src
 ** Start Fullscreen
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
   (toggle-frame-fullscreen)
 
