@@ -15,7 +15,7 @@ hyper - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -
 #lshift - x : terminal-notifier -message "$(yabai -m query --windows --window | jq -re ".id")"
 
 ## open terminal
-#hyper - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
+hyper - return : /Applications/Alacritty.app/Contents/MacOS/alacritty
 
 ## swap window
 hyper - y : yabai -m window --swap west
