@@ -38,7 +38,7 @@
         var: current_shell_output
 
     - name: zsh | Installs zsh | brew
-      homebrew:
+      community.general.homebrew:
         name: zsh
       when: current_shell_output.stdout != "/bin/zsh"
 
@@ -57,23 +57,23 @@
       when: current_shell_output.stdout != "/bin/zsh"
 
     - name: alacritty | Installs alacritty | brew cask
-      homebrew_cask:
+      community.general.homebrew_cask:
         name: alacritty
 
     - name: neovim | Installs neovim | brew
-      homebrew:
+      community.general.homebrew:
         name: neovim
 
     - name: tmux | Installs tmux | brew
-      homebrew:
+      community.general.homebrew:
         name: tmux
 
     - name: d12frosted/emacs-plus | Tap for emacs-plus | brew tap
-      homebrew_tap:
+      community.general.homebrew_tap:
         name: d12frosted/emacs-plus
 
     - name: emacs-plus | Installs emacs-plus | brew
-      homebrew:
+      community.general.homebrew:
         name: emacs-plus
         options: with-no-titlebar
 
@@ -84,31 +84,31 @@
         state: link
 
     - name: ripgrep | Installs ripgrep | brew
-      homebrew:
+      community.general.homebrew:
         name: ripgrep
 
     - name: tig | Installs tig | brew
-      homebrew:
+      community.general.homebrew:
         name: tig
 
     - name: cmake | Installs cmake | brew
-      homebrew:
+      community.general.homebrew:
         name: cmake
 
     - name: go | Installs go | brew
-      homebrew:
+      community.general.homebrew:
         name: go
 
     - name: python | Installs python | brew
-      homebrew:
+      community.general.homebrew:
         name: python
 
     - name: pyenv | Installs pyenv | brew
-      homebrew:
+      community.general.homebrew:
         name: pyenv
 
     - name: pyenv-virtualenv | Installs pyenv-virtualenv | brew
-      homebrew:
+      community.general.homebrew:
         name: pyenv-virtualenv
 
     - name: python | Installs neovim package | pip
@@ -117,47 +117,47 @@
         executable: ~/.pyenv/shims/pip3
 
     - name: rbenv | Installs rbenv | brew
-      homebrew:
+      community.general.homebrew:
         name: rbenv
 
     - name: nvm | Installs nvm | brew
-      homebrew:
+      community.general.homebrew:
         name: nvm
 
     - name: AdoptOpenJDK8 | Tap AdoptOpenJDK | brew tap
-      homebrew_tap:
+      community.general.homebrew_tap:
         name: AdoptOpenJDK/openjdk
 
     - name: AdoptOpenJDK8 | Installs AdoptOpenJDK8 | brew cask
-      homebrew_cask:
+      community.general.homebrew_cask:
         name: adoptopenjdk8
 
     - name: fzf | Installs fzf | brew
-      homebrew:
+      community.general.homebrew:
         name: fzf
 
     - name: fzf | Installs bat | brew
-      homebrew:
+      community.general.homebrew:
         name: bat
 
     - name: karabiner-elements | Installs karabiner-elements | brew cask
-      homebrew_cask:
+      community.general.homebrew_cask:
         name: karabiner-elements
 
     - name: yabai | Tap koekeishiya/formulae | brew tap
-      homebrew_tap:
+      community.general.homebrew_tap:
         name: koekeishiya/formulae
 
     - name: yabai | Installs yabai | brew
-      homebrew:
+      community.general.homebrew:
         name: yabai
 
     - name: skhd | Installs skhd | brew
-      homebrew:
+      community.general.homebrew:
         name: skhd
 
     - name: jq | Installs jq | brew
-      homebrew:
+      community.general.homebrew:
         name: jq
 
     - name: limelight | Clone limelight repo | git
@@ -183,7 +183,7 @@
         state: absent
 
     - name: rcm | Installs rcm | brew
-      homebrew:
+      community.general.homebrew:
         name: rcm
 
     - name: rcm | Installs rcm config
