@@ -156,9 +156,9 @@
       homebrew:
         name: skhd
 
-    - name: keycastr | Installs keycastr | brew cask
-      homebrew_cask:
-        name: keycastr
+    - name: jq | Installs jq | brew
+      homebrew:
+        name: jq
 
     - name: limelight | Clone limelight repo | git
       ansible.builtin.git:
