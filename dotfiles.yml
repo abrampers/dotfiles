@@ -34,9 +34,6 @@
       register: current_shell_output
       check_mode: no
 
-    - debug:
-        var: current_shell_output
-
     - name: zsh | Installs zsh | brew
       community.general.homebrew:
         name: zsh
