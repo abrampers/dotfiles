@@ -164,18 +164,18 @@
       ansible.builtin.git:
         repo: https://github.com/koekeishiya/limelight.git
         dest: ~/tmp/limelight-temp
-      register: clone_limelight_output
 
     - name: limelight | Build limelight | make
       community.general.make:
         chdir: ~/tmp/limelight-temp
-      when: clone_limelight_output.failed == false
+      when: not ansible_check_mode
 
     - name: limelight | Copy binary | file
       ansible.builtin.copy:
         src: ~/tmp/limelight-temp/bin/limelight
         dest: /usr/local/bin/limelight
         mode: '755'
+      when: not ansible_check_mode
 
     - name: limelight | Remove repo | file
       ansible.builtin.file:
