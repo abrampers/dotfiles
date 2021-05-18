@@ -129,20 +129,23 @@ color() {
 function () {
   emulate -L zsh
 
-  if [[ -s "$__ABRAMPERS[BASE16_CONFIG]" ]]; then
-    local SCHEME=$(head -1 "$__ABRAMPERS[BASE16_CONFIG]")
-    local BACKGROUND=$(sed -n -e '2 p' "$__ABRAMPERS[BASE16_CONFIG]")
-    if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
-      echo "warning: unknown background type in $__ABRAMPERS[BASE16_CONFIG]"
-    else
-      color "$SCHEME"
-    fi
+  if [ -n "$TMUX" ]; then
   else
-    # Default.
-    color default-dark
+    if [[ -s "$__ABRAMPERS[BASE16_CONFIG]" ]]; then
+      local SCHEME=$(head -1 "$__ABRAMPERS[BASE16_CONFIG]")
+      local BACKGROUND=$(sed -n -e '2 p' "$__ABRAMPERS[BASE16_CONFIG]")
+      if [ "$BACKGROUND" != 'dark' -a "$BACKGROUND" != 'light' ]; then
+        echo "warning: unknown background type in $__ABRAMPERS[BASE16_CONFIG]"
+      else
+        color "$SCHEME"
+      fi
+    else
+      # Default.
+      color default-dark
+    fi
   fi
 }
 
 # Color
 export CLICOLOR=true
-export TERM=xterm-256color
+export TERM=screen-256color-bce
