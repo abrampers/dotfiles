@@ -21,4 +21,3 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
 # GPG
 export GPG_TTY=$(tty)
-

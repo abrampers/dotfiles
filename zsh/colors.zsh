@@ -43,6 +43,11 @@ luma() {
 color() {
   emulate -L zsh
 
+  if [ -n "$TMUX" ]; then
+    echo "Move out of tmux to set color"
+    return 1
+  fi
+
   local SCHEME="$1"
   local BASE16_DIR=~/.zsh/base16-shell/scripts
   local BASE16_CONFIG_PREVIOUS="${__ABRAMPERS[BASE16_CONFIG]}.previous"
@@ -129,8 +134,7 @@ color() {
 function () {
   emulate -L zsh
 
-  if [ -n "$TMUX" ]; then
-  else
+  if [ -z $TMUX ]; then
     if [[ -s "$__ABRAMPERS[BASE16_CONFIG]" ]]; then
       local SCHEME=$(head -1 "$__ABRAMPERS[BASE16_CONFIG]")
       local BACKGROUND=$(sed -n -e '2 p' "$__ABRAMPERS[BASE16_CONFIG]")
@@ -148,4 +152,4 @@ function () {
 
 # Color
 export CLICOLOR=true
-export TERM=screen-256color-bce
+export TERM=xterm-256color
