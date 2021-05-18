@@ -75,7 +75,7 @@
     - name: emacs-plus | Installs emacs-plus | brew
       community.general.homebrew:
         name: emacs-plus
-        options: with-no-titlebar
+        options: with-modern-icon
 
     - name: emacs-plus | Create symlink | file
       ansible.builtin.file:
