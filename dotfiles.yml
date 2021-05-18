@@ -182,6 +182,10 @@
         path: ~/tmp/limelight-temp
         state: absent
 
+    - name: hammerspoon | Install hammerspoon | brew cask
+      community.general.homebrew_cask:
+        name: hammerspoon
+
     - name: rcm | Installs rcm | brew
       community.general.homebrew:
         name: rcm
