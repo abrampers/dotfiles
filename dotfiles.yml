@@ -179,15 +179,6 @@
         path: ~/tmp/limelight-temp
         state: absent
 
-    - name: hammerspoon | Install hammerspoon | brew cask
-      community.general.homebrew_cask:
-        name: hammerspoon
-
-    - name: stackline | Clone stackline repo | git
-      ansible.builtin.git:
-        repo: https://github.com/AdamWagner/stackline.git
-        dest: ~/.hammerspoon/stackline
-
     - name: neofetch | Install neofetch | brew
       community.general.homebrew:
         name: neofetch
