@@ -15,14 +15,14 @@ rctrl + rcmd - e : /Applications/Emacs.app/Contents/MacOS/Emacs
 rctrl + rcmd - b : /Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser
 
 ## swap window
-hyper - j : yabai -m window --swap south
-hyper - k : yabai -m window --swap north
-#hyper - l : yabai -m window --swap west
-#hyper - h : yabai -m window --swap east
+hyper - j : yabai -m display --focus south
+hyper - k : yabai -m display --focus north
+hyper - l : yabai -m display --focus east
+hyper - h : yabai -m display --focus west
 
 ## send window to monitor and follow focus
-hyper - h : ~/.scripts/yabai/moveWindowLeftAndFollowFocus.sh
-hyper - l : ~/.scripts/yabai/moveWindowRightAndFollowFocus.sh
+ctrl + alt + cmd + lshift + rshift - h : ~/.scripts/yabai/moveWindowLeftAndFollowFocus.sh
+ctrl + alt + cmd + lshift + rshift - l : ~/.scripts/yabai/moveWindowRightAndFollowFocus.sh
 
 ## increase window size
 shift + alt - a : yabai -m window --resize left:-20:0
@@ -56,14 +56,17 @@ hyper - 2 : ~/.scripts/yabai/switchAndFocusSIP.sh 2
 hyper - 3 : ~/.scripts/yabai/switchAndFocusSIP.sh 3
 
 # cycle through windows
+hyper - i : yabai -m query --spaces \
+       | jq -re ".[] | select(.visible == 1).index" \
+       | xargs -I{} yabai -m query --windows --space {} \
+       | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | nth(index(map(select(.focused == 1))) - 1).id" \
+       | xargs -I{} yabai -m window --focus {}
 
-# go to each window WITHOUT going into a stack
-hyper - i : yabai -m query --spaces | jq -re ".[] | select(.visible == 1).index" | xargs -I{} yabai -m query --windows --space {} | jq -re "[.[] | select((.\"stack-index\" <= 1) and (.app != \"Hammerspoon\"))]" | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | nth(index(map(select(.focused == 1))) - 1).id" | xargs -I{} yabai -m window --focus {}
-ctrl + alt + cmd + lshift - i : yabai -m query --spaces | jq -re ".[] | select(.visible == 1).index" | xargs -I{} yabai -m query --windows --space {} | jq -re "[.[] | select(.app != \"Hammerspoon\")]" | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | nth(index(map(select(.focused == 1))) - 1).id" | xargs -I{} yabai -m window --focus {}
-
-# go to each window WITHOUT going into a stack
-hyper - o : yabai -m query --spaces | jq -re ".[] | select(.visible == 1).index" | xargs -I{} yabai -m query --windows --space {} | jq -re "[.[] | select((.\"stack-index\" <= 1) and (.app != \"Hammerspoon\"))]" | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id" | xargs -I{} yabai -m window --focus {}
-ctrl + alt + cmd + lshift - o : yabai -m query --spaces | jq -re ".[] | select(.visible == 1).index" | xargs -I{} yabai -m query --windows --space {} | jq -re "[.[] | select(.app != \"Hammerspoon\")]" | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id" | xargs -I{} yabai -m window --focus {}
+hyper - o : yabai -m query --spaces \
+      | jq -re ".[] | select(.visible == 1).index" \
+      | xargs -I{} yabai -m query --windows --space {} \
+      | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id" \
+      | xargs -I{} yabai -m window --focus {}
 
 # Toggle foucus on a stack
 ctrl + alt + cmd + lshift - return : yabai -m window --focus stack.next || yabai -m window --focus stack.first
@@ -84,10 +87,6 @@ cmd + alt + ctrl - k : window=$(yabai -m query --windows --window | jq -r '.id')
 ctrl + cmd - v  : yabai -m display --focus last
 ctrl + cmd - p  : yabai -m display --focus prev || yabai -m display --focus last
 ctrl + cmd - n  : yabai -m display --focus next || yabai -m display --focus first
-ctrl + cmd - h  : yabai -m display --focus west
-ctrl + cmd - l  : yabai -m display --focus east
-ctrl + cmd - j  : yabai -m display --focus north
-ctrl + cmd - k  : yabai -m display --focus south
 ctrl + cmd - 1  : yabai -m display --focus 1
 ctrl + cmd - 2  : yabai -m display --focus 2
 ctrl + cmd - 3  : yabai -m display --focus 3
