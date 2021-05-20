@@ -46,9 +46,15 @@ alt - x : yabai -m space --mirror x-axis
 
 # Move active window to next space on current display
 # hyper key won't work since it is conflicting with space moving
-lshift + lalt + lcmd + lctrl + rshift - 1 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '1' ]]; then yabai -m window --space 2; elif [[ '{}' = '2' ]]; then yabai -m window --space 1; fi"
-lshift + lalt + lcmd + lctrl + rshift - 2 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '3' ]]; then yabai -m window --space 4; elif [[ '{}' = '4' ]]; then yabai -m window --space 3; fi"
-lshift + lalt + lcmd + lctrl + rshift - 3 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '5' ]]; then yabai -m window --space 6; elif [[ '{}' = '6' ]]; then yabai -m window --space 5; fi"
+lshift + lalt + lcmd + lctrl + rshift - 1 : yabai -m query --spaces --space \
+       | jq -re ".index" \
+       | xargs -I {} bash -c "if [[ '{}' = '1' ]]; then yabai -m window --space 2; elif [[ '{}' = '2' ]]; then yabai -m window --space 1; fi"
+lshift + lalt + lcmd + lctrl + rshift - 2 : yabai -m query --spaces --space \
+       | jq -re ".index" \
+       | xargs -I {} bash -c "if [[ '{}' = '3' ]]; then yabai -m window --space 4; elif [[ '{}' = '4' ]]; then yabai -m window --space 3; fi"
+lshift + lalt + lcmd + lctrl + rshift - 3 : yabai -m query --spaces --space \
+       | jq -re ".index" \
+       | xargs -I {} bash -c "if [[ '{}' = '5' ]]; then yabai -m window --space 6; elif [[ '{}' = '6' ]]; then yabai -m window --space 5; fi"
 
 # show next space per display
 hyper - 1 : ~/.scripts/yabai/switchAndFocusSIP.sh 1
@@ -69,8 +75,7 @@ hyper - o : yabai -m query --spaces \
       | xargs -I{} yabai -m window --focus {}
 
 # Toggle foucus on a stack
-ctrl + alt + cmd + lshift - return : yabai -m window --focus stack.next || yabai -m window --focus stack.first
-
+hyper - return : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 hyper - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last || yabai -m window --focus prev
 hyper - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first || yabai -m window --focus next
 
