@@ -14,15 +14,15 @@ rctrl + rcmd - t : /Applications/Alacritty.app/Contents/MacOS/alacritty
 rctrl + rcmd - e : /Applications/Emacs.app/Contents/MacOS/Emacs
 rctrl + rcmd - b : /Applications/Brave\ Browser.app/Contents/MacOS/Brave\ Browser
 
+## send window to monitor and follow focus
+lshift + lalt + lcmd + lctrl + rshift - h : ~/.scripts/yabai/moveWindowLeftAndFollowFocus.sh
+lshift + lalt + lcmd + lctrl + rshift - l : ~/.scripts/yabai/moveWindowRightAndFollowFocus.sh
+
 ## swap window
 hyper - j : yabai -m display --focus south
 hyper - k : yabai -m display --focus north
 hyper - l : yabai -m display --focus east
 hyper - h : yabai -m display --focus west
-
-## send window to monitor and follow focus
-ctrl + alt + cmd + lshift + rshift - h : ~/.scripts/yabai/moveWindowLeftAndFollowFocus.sh
-ctrl + alt + cmd + lshift + rshift - l : ~/.scripts/yabai/moveWindowRightAndFollowFocus.sh
 
 ## increase window size
 shift + alt - a : yabai -m window --resize left:-20:0
@@ -46,9 +46,9 @@ alt - x : yabai -m space --mirror x-axis
 
 # Move active window to next space on current display
 # hyper key won't work since it is conflicting with space moving
-lshift + lalt + lcmd + lctrl + rctrl - 1 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '1' ]]; then yabai -m window --space 2; elif [[ '{}' = '2' ]]; then yabai -m window --space 1; fi"
-lshift + lalt + lcmd + lctrl + rctrl - 2 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '3' ]]; then yabai -m window --space 4; elif [[ '{}' = '4' ]]; then yabai -m window --space 3; fi"
-lshift + lalt + lcmd + lctrl + rctrl - 3 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '5' ]]; then yabai -m window --space 6; elif [[ '{}' = '6' ]]; then yabai -m window --space 5; fi"
+lshift + lalt + lcmd + lctrl + rshift - 1 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '1' ]]; then yabai -m window --space 2; elif [[ '{}' = '2' ]]; then yabai -m window --space 1; fi"
+lshift + lalt + lcmd + lctrl + rshift - 2 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '3' ]]; then yabai -m window --space 4; elif [[ '{}' = '4' ]]; then yabai -m window --space 3; fi"
+lshift + lalt + lcmd + lctrl + rshift - 3 : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '5' ]]; then yabai -m window --space 6; elif [[ '{}' = '6' ]]; then yabai -m window --space 5; fi"
 
 # show next space per display
 hyper - 1 : ~/.scripts/yabai/switchAndFocusSIP.sh 1
