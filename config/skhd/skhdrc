@@ -19,10 +19,10 @@ lshift + lalt + lcmd + lctrl + rshift - h : ~/.scripts/yabai/moveWindowLeftAndFo
 lshift + lalt + lcmd + lctrl + rshift - l : ~/.scripts/yabai/moveWindowRightAndFollowFocus.sh
 
 ## swap window
-hyper - j : yabai -m display --focus south
-hyper - k : yabai -m display --focus north
-hyper - l : yabai -m display --focus east
-hyper - h : yabai -m display --focus west
+hyper - j : yabai -m window --focus south || yabai -m display --focus south
+hyper - k : yabai -m window --focus north || yabai -m display --focus north
+hyper - l : yabai -m window --focus east || yabai -m display --focus east
+hyper - h : yabai -m window --focus west || yabai -m display --focus west
 
 ## increase window size
 shift + alt - a : yabai -m window --resize left:-20:0
