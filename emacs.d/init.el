@@ -558,7 +558,7 @@
   :init
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :custom
-  (lsp-file-watch-threshold 2000)
+  (lsp-file-watch-threshold 5000)
   (lsp-diagnostics-provider :flycheck)
   :config
   (lsp-enable-which-key-integration t))
