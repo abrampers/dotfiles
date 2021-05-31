@@ -736,7 +736,10 @@
          (python-mode . electric-pair-local-mode)
          (python-mode . lsp-deferred)))
 
-(add-hook 'js-mode-hook 'electric-pair-local-mode)
+(add-hook 'js-mode-hook
+          (lambda ()
+            (setq tab-width 2)
+            (setq js-indent-level 2)))
 
 (add-to-list 'auto-mode-alist '("zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.zshrc\\.local\\'" . sh-mode))

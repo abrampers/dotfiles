@@ -1364,7 +1364,10 @@ Use electric pair mode on c/c++ mode
 
 #+begin_src emacs-lisp
 
-  (add-hook 'js-mode-hook 'electric-pair-local-mode)
+  (add-hook 'js-mode-hook
+            (lambda ()
+              (setq tab-width 2)
+              (setq js-indent-level 2)))
 
 #+end_src
 
