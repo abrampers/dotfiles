@@ -559,6 +559,7 @@
   (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
   :custom
   (lsp-file-watch-threshold 2000)
+  (lsp-diagnostics-provider :flycheck)
   :config
   (lsp-enable-which-key-integration t))
 
@@ -595,15 +596,32 @@
 
 (use-package flycheck)
 
+(defvar-local flycheck-local-checkers nil)
+  (defun +flycheck-checker-get(fn checker property)
+    (or (alist-get property (alist-get checker flycheck-local-checkers))
+        (funcall fn checker property)))
+  (advice-add 'flycheck-checker-get :around '+flycheck-checker-get)
+
 (use-package go-mode
   :mode "\\.go\\'"
   :hook ((go-mode . lsp-deferred)
          (go-mode . abram/evil-lsp-keybindings)
          (go-mode . electric-pair-local-mode))
-  :init 
+  :init
   (setq gofmt-command "goimports")
   (flycheck-mode)
-  :config (add-hook 'before-save-hook 'gofmt-before-save))
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
+
+(defun abram/setup-golangci-lint ()
+ (flycheck-golangci-lint-setup)
+ (setq flycheck-local-checkers '((lsp . ((next-checkers . (golangci-lint)))))))
+
+(use-package flycheck-golangci-lint
+  :hook (go-mode . abram/setup-golangci-lint)
+  :init
+  (setq flycheck-golangci-lint-disable-all t)
+  (setq flycheck-golangci-lint-enable-linters '("staticcheck" "gosimple" "structcheck" "varcheck" "ineffassign" "deadcode" "typecheck" "stylecheck" "gosec" "interfacer" "unconvert" "gofmt" "unparam" "nakedret" "gochecknoinits" "depguard" "gocyclo" "misspell" "megacheck" "goimports" "golint")))
 
 (use-package go-playground
   :commands go-playground)
