@@ -40,9 +40,9 @@ shift + cmd - d : yabai -m window --resize right:20:0
 hyper - r : yabai -m space --rotate 90
 
 # mirror tree y-axis
-alt - y : yabai -m space --mirror y-axis
+fn - y : yabai -m space --mirror y-axis
 # mirror tree x-axis
-alt - x : yabai -m space --mirror x-axis
+fn - x : yabai -m space --mirror x-axis
 
 # Move active window to next space on current display
 # hyper key won't work since it is conflicting with space moving
