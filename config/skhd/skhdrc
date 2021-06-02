@@ -24,6 +24,9 @@ hyper - k : yabai -m window --focus north || yabai -m display --focus north
 hyper - l : yabai -m window --focus east || yabai -m display --focus east
 hyper - h : yabai -m window --focus west || yabai -m display --focus west
 
+## toggle window fullscreen zoom
+hyper - f : yabai -m window --toggle zoom-fullscreen
+
 ## increase window size
 shift + alt - a : yabai -m window --resize left:-20:0
 shift + alt - s : yabai -m window --resize bottom:0:20
@@ -80,7 +83,7 @@ hyper - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.
 hyper - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first || yabai -m window --focus next
 
 # toggle stack in current space
-hyper - f : ~/.scripts/yabai/toggleStackLayout.sh
+hyper - s : ~/.scripts/yabai/toggleStackLayout.sh
 
 # stack next window onto current window. Next window is determined by the direction. (e.g: k means the window above, l means window to the right)
 cmd + alt + ctrl - h : window=$(yabai -m query --windows --window | jq -r '.id') && yabai -m window west --stack $window || (yabai -m window $window --toggle float && yabai -m window $window --toggle float)
