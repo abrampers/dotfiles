@@ -17,23 +17,23 @@
   (when (file-exists-p private-init-file)
     (load-file private-init-file)))
 
-;; Initialize package sources
-(require 'package)
+(setq package-enable-at-startup nil)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+  (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+  (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+    (url-retrieve-synchronously
+    "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+    'silent 'inhibit-cookies)
+  (goto-char (point-max))
+  (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+(straight-use-package 'use-package)
 
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
-
-  ;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
+(setq straight-use-package-by-default t)
 
 (use-package doom-themes)
 (use-package nord-theme)
@@ -276,7 +276,7 @@
 (setq insert-directory-program "gls" dired-use-ls-dired t)
 
 (use-package dired
-  :ensure nil
+  :straight (:type built-in)
   :commands (dired dired-jump)
   :bind (("C-x C-j" . dired-jump))
   :custom ((dired-listing-switches "-agho --group-directories-first")))
@@ -322,6 +322,7 @@
   (visual-line-mode 1))
 
 (use-package org
+  :straight (:type built-in)
   :hook (org-mode . abram/org-mode-setup)
   :custom ((org-image-actual-width nil)
            (org-startup-folded 'content))
