@@ -937,6 +937,11 @@ See `org-capture-templates' for more information."
 (evil-global-set-key 'normal (kbd ",b") 'previous-buffer)
 (evil-global-set-key 'normal (kbd ",f") 'next-buffer)
 
+(evil-global-set-key 'normal (kbd "C-s-h") 'evil-window-left)
+(evil-global-set-key 'normal (kbd "C-s-j") 'evil-window-down)
+(evil-global-set-key 'normal (kbd "C-s-k") 'evil-window-up)
+(evil-global-set-key 'normal (kbd "C-s-l") 'evil-window-right)
+
 (evil-collection-define-key 'normal 'dired-mode-map
   "h" 'dired-single-up-directory
   "l" 'dired-single-buffer

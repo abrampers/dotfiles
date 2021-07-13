@@ -1788,6 +1788,17 @@ Next & Previous buffers
 - Use =C-w= prefix for moving windows around.
 - Use =C-x 5= for moving around frames.
 - Use =s-`= to move to other frame.
+
+Add keybinding for easier window navigation
+
+#+begin_src emacs-lisp
+
+  (evil-global-set-key 'normal (kbd "C-s-h") 'evil-window-left)
+  (evil-global-set-key 'normal (kbd "C-s-j") 'evil-window-down)
+  (evil-global-set-key 'normal (kbd "C-s-k") 'evil-window-up)
+  (evil-global-set-key 'normal (kbd "C-s-l") 'evil-window-right)
+
+#+end_src
 ** Dired
 
 #+begin_src emacs-lisp
