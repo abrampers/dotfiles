@@ -630,7 +630,7 @@
   :hook (go-mode . abram/setup-golangci-lint)
   :init
   (setq flycheck-golangci-lint-disable-all t)
-  (setq flycheck-golangci-lint-enable-linters '("staticcheck" "unused" "gosimple" "structcheck" "varcheck" "ineffassign" "deadcode" "typecheck" "stylecheck" "gosec" "interfacer" "unconvert" "gofmt" "unparam" "nakedret" "gochecknoinits" "depguard" "gocyclo" "misspell" "megacheck" "goimports" "golint"))
+  (setq flycheck-golangci-lint-enable-linters '("staticcheck" "unused" "gosimple" "structcheck" "varcheck" "ineffassign" "deadcode" "typecheck" "stylecheck" "gosec" "unconvert" "gofmt" "unparam" "nakedret" "gochecknoinits" "depguard" "gocyclo" "misspell" "megacheck" "goimports" "govet" "whitespace"))
     (setq flycheck-golangci-lint-disable-all "5m"))
 
 (use-package go-playground
