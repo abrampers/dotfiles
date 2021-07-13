@@ -387,6 +387,11 @@ The legendary [[https://github.com/TeMPOraL/nyan-mode/][nyan-mode]].
     :config
     (ivy-mode 1))
 
+  (setq ivy-re-builders-alist
+        '((lsp-ivy-workspace-symbol . ivy--regex-plus)
+          (lsp-ivy-global-workspace-symbol . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
+
   (use-package ivy-rich
     :after ivy
     :init
@@ -963,7 +968,7 @@ I'm using [[https://github.com/akhramov/org-wild-notifier.el][org-wild-notifier]
     :config (projectile-mode)
     :custom
     (projectile-completion-system 'ivy)
-    (projectile-switch-project-action #'counsel-fzf)
+    (projectile-switch-project-action #'projectile-find-file)
     :bind-keymap
     ("C-c p" . projectile-command-map))
 
@@ -976,7 +981,12 @@ Set general keybinding to run =projectile-test-project=.
   (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
 
 #+end_src
+*** Counsel Projectile
 
+#+begin_src emacs-lisp
+  (use-package counsel-projectile
+    :after projectile)
+#+end_src
 ** LSP
 *** lsp-mode
 
@@ -1819,7 +1829,7 @@ Find file using =C-p=.
 
 #+begin_src emacs-lisp
 
-  (evil-global-set-key 'normal (kbd "C-p") 'counsel-fzf)
+  (evil-global-set-key 'normal (kbd "C-p") 'projectile-find-file)
 
 #+end_src
 

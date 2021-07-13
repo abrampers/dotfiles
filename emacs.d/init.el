@@ -193,6 +193,11 @@
   :config
   (ivy-mode 1))
 
+(setq ivy-re-builders-alist
+      '((lsp-ivy-workspace-symbol . ivy--regex-plus)
+        (lsp-ivy-global-workspace-symbol . ivy--regex-plus)
+        (t . ivy--regex-fuzzy)))
+
 (use-package ivy-rich
   :after ivy
   :init
@@ -538,11 +543,14 @@
   :config (projectile-mode)
   :custom
   (projectile-completion-system 'ivy)
-  (projectile-switch-project-action #'counsel-fzf)
+  (projectile-switch-project-action #'projectile-find-file)
   :bind-keymap
   ("C-c p" . projectile-command-map))
 
 (evil-global-set-key 'normal (kbd "tp") 'projectile-test-project)
+
+(use-package counsel-projectile
+  :after projectile)
 
 (defun abram/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(symbols))
@@ -942,7 +950,7 @@ See `org-capture-templates' for more information."
 
 (evil-global-set-key 'normal (kbd "=") 'evil-toggle-fold)
 
-(evil-global-set-key 'normal (kbd "C-p") 'counsel-fzf)
+(evil-global-set-key 'normal (kbd "C-p") 'projectile-find-file)
 
 (abram/leader-keys-map
   "f" 'counsel-projectile-rg)
