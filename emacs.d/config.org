@@ -1,7 +1,6 @@
 #+title: Abram's Emacs Configuration
 #+author: Abram Situmorang
 #+email: abram.perdanaputra@gmail.com
-#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
 * Welcome!
 
@@ -99,11 +98,12 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 
 #+end_src
 
-Activate nord theme.
+Activate theme.
 
 #+begin_src emacs-lisp
 
-  (load-theme 'gruvbox-dark-medium t)
+  ;; (load-theme 'gruvbox-dark-medium t)
+  (load-theme 'doom-one t)
 
 #+end_src
 ** Start Fullscreen
@@ -152,10 +152,12 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 
 #+begin_src emacs-lisp
 
-;; You will most likely need to adjust this font size for your system!
-(defvar abram/default-font-size 140)
+  ;; You will most likely need to adjust this font size for your system!
+  (defvar abram/default-font-size 140)
 
-(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
+  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
+
+  (setq default-frame-alist '((font . "SauceCodePro Nerd Font Mono-14")))
 
 #+end_src
 
@@ -256,7 +258,7 @@ When running emacs from the app, emacs won't have the user's shell environment v
 #+begin_src emacs-lisp
 
   (use-package exec-path-from-shell
-    :if (memq window-system '(mac ns x))
+    :if (or (memq window-system '(mac ns x)) (daemonp))
     :custom
     (exec-path-from-shell-arguments '("-l"))
     :init
