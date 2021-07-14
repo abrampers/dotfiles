@@ -735,9 +735,8 @@
 (add-hook 'cider-mode-hook
           (lambda () (add-hook 'before-save-hook #'abram/cider-format-for-clj)))
 
-(use-package ccls
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda () (require 'ccls) (lsp))))
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
 
 (add-hook 'c-mode-hook 'electric-pair-local-mode)
 (add-hook 'c++-mode-hook 'electric-pair-local-mode)

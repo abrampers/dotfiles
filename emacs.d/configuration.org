@@ -1334,11 +1334,8 @@ Add hook to format buffer for clojure files.
 We're using [[https://github.com/MaskRay/ccls][ccls]] for C family lsp.
 
 #+begin_src emacs-lisp
-
-(use-package ccls
-  :hook ((c-mode c++-mode objc-mode cuda-mode) .
-         (lambda () (require 'ccls) (lsp))))
-
+  (add-hook 'c-mode-hook 'lsp)
+  (add-hook 'c++-mode-hook 'lsp)
 #+end_src
 
 Use electric pair mode on c/c++ mode
