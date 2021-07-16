@@ -95,6 +95,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (use-package gruvbox-theme)
   (use-package material-theme)
   (use-package seti-theme)
+  (use-package ayu-theme)
 
 #+end_src
 
@@ -102,8 +103,10 @@ Activate theme.
 
 #+begin_src emacs-lisp
 
-  ;; (load-theme 'gruvbox-dark-medium t)
-  (load-theme 'doom-one t)
+  ;; (load-theme 'gruvbox-dark-hard t)
+  ;; (load-theme 'doom-one t)
+  (load-theme 'nord t)
+  ;; (load-theme 'ayu-dark t)
 
 #+end_src
 ** Start Fullscreen
