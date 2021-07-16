@@ -1290,9 +1290,7 @@ For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test 
     :hook ((clojure-mode . cider-mode)
            (clojure-mode . company-mode)
            (cider-repl-mode . company-mode))
-    :bind (:map company-active-map
-           ("TAB" . company-complete-selection))
-          (:map cider-mode-map
+    :bind (:map cider-mode-map
            ("TAB" . company-indent-or-complete-common)))
 
 #+end_src
