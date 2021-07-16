@@ -308,12 +308,6 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
 
   (use-package all-the-icons)
 
-  (setq display-time-format "(%I.%M %p) [%A %b %d, %Y]")
-  (setq display-time-load-average-threshold 4)
-  (display-time-mode)
-  (display-battery-mode)
-
-
   (use-package doom-modeline
     :custom
     (doom-modeline-icon t)
@@ -335,20 +329,6 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
     (doom-modeline-mode 1))
 
 #+end_src
-
-** Nyan Mode
-
-The legendary [[https://github.com/TeMPOraL/nyan-mode/][nyan-mode]].
-
-#+begin_src emacs-lisp
-
-  (use-package nyan-mode
-    :init (setq nyan-animate-nyancat t
-                nyan-wavy-trail t)
-    :config (nyan-mode))
-
-#+end_src
-
 ** Which Key
 
 [[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key binding in Emacs to offer you all possible completions for the prefix.  For example, if you press =C-c= (hold control and press the letter =c=), a panel will appear at the bottom of the frame displaying all of the bindings under that prefix and which command they run.  This is very useful for learning the possible key bindings in the mode of your current buffer.
