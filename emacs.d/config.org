@@ -360,6 +360,9 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
 
 #+begin_src emacs-lisp
 
+  (use-package swiper)
+  (use-package hydra)
+
   (use-package ivy
     :diminish
     :bind (("C-s" . swiper)
@@ -378,15 +381,15 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
     :config
     (ivy-mode 1))
 
+  (use-package ivy-hydra
+    :after (ivy hydra))
+
   (setq ivy-re-builders-alist
         '((lsp-ivy-workspace-symbol . ivy--regex-plus)
           (lsp-ivy-global-workspace-symbol . ivy--regex-plus)
+          (counsel-projectile-rg . ivy--regex-plus)
+          (projectile-switch-project . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
-
-  (use-package ivy-rich
-    :after ivy
-    :init
-    (ivy-rich-mode 1))
 
   (use-package counsel
     :bind (("C-M-j" . 'counsel-switch-buffer)
@@ -396,6 +399,11 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
            ("C-r" . 'counsel-minibuffer-history))
     :config
     (counsel-mode 1))
+
+  (use-package ivy-rich
+    :after (ivy counsel)
+    :init
+    (ivy-rich-mode 1))
 
 #+end_src
 
@@ -1707,8 +1715,6 @@ See `org-capture-templates' for more information."
 Hydra debugger prefix
 
 #+begin_src emacs-lisp
-
-  (use-package hydra)
 
   (general-define-key
     :keymaps 'lsp-mode-map
