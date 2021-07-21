@@ -80,6 +80,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (straight-use-package 'use-package)
 
   (setq straight-use-package-by-default t)
+  (setq straight-vc-git-default-protocol 'ssh)
 
 #+end_src
 
@@ -91,11 +92,16 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 #+begin_src emacs-lisp
 
   (use-package doom-themes)
-  (use-package nord-theme)
   (use-package gruvbox-theme)
   (use-package material-theme)
   (use-package seti-theme)
   (use-package ayu-theme)
+
+  (use-package nord-theme
+    :straight (nord-theme :type git
+                          :host github
+                          :repo "arcticicestudio/nord-emacs"
+                          :fork "abrampers/nord-emacs"))
 
 #+end_src
 
