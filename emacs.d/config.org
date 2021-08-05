@@ -395,13 +395,6 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
   (use-package ivy-hydra
     :after (ivy hydra))
 
-  (setq ivy-re-builders-alist
-        '((lsp-ivy-workspace-symbol . ivy--regex-plus)
-          (lsp-ivy-global-workspace-symbol . ivy--regex-plus)
-          (counsel-projectile-rg . ivy--regex-plus)
-          (projectile-switch-project . ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
-
   (use-package counsel
     :bind (("C-M-j" . 'counsel-switch-buffer)
            ("M-x" . counsel-M-x) ;; Check if without this M-x still go to counsel
@@ -418,6 +411,19 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
 
 #+end_src
 
+To configure regex builder per function, please follow the steps on [[https://github.com/abo-abo/swiper/issues/2620][this issue]].
+
+#+begin_src emacs-lisp
+
+  (setq ivy-re-builders-alist
+        '((lsp-ivy-workspace-symbol . ivy--regex-plus)
+          (counsel-rg . ivy--regex-plus)
+          (projectile-completing-read . ivy--regex-plus)
+          (magit-rebase-branch . ivy--regex-plus)
+          (magit-checkout . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
+
+#+end_src
 
 *** Improved Candidate Sorting with prescient.el
 
