@@ -178,7 +178,7 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 #+begin_src emacs-lisp
 
   ;; You will most likely need to adjust this font size for your system!
-  (defvar abram/default-font-size 140)
+  (defvar abram/default-font-size 200)
 
   (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
 
