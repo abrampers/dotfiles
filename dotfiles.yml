@@ -185,9 +185,6 @@
         path: ~/tmp/limelight-temp
         state: absent
 
-    - name: neofetch | Install neofetch | brew
-      community.general.homebrew:
-        name: neofetch
 
     - name: rcm | Installs rcm | brew
       community.general.homebrew:
