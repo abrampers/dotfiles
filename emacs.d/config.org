@@ -94,14 +94,22 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (use-package doom-themes)
   (use-package gruvbox-theme)
   (use-package material-theme)
-  (use-package seti-theme)
-  (use-package ayu-theme)
 
   (use-package nord-theme
     :straight (nord-theme :type git
                           :host github
                           :repo "arcticicestudio/nord-emacs"
                           :fork "abrampers/nord-emacs"))
+  (use-package ayu-theme
+    :straight (ayu-theme :type git
+                         :host github
+                         :repo "vutran1710/Ayu-Theme-Emacs"
+                         :fork "abrampers/Ayu-Theme-Emacs"))
+  (use-package seti-theme
+    :straight (seti-theme :type git
+                          :host github
+                          :repo "caisah/seti-theme"
+                          :fork "abrampers/seti-theme"))
 
 #+end_src
 
@@ -111,8 +119,10 @@ Activate theme.
 
   ;; (load-theme 'gruvbox-dark-hard t)
   ;; (load-theme 'doom-one t)
-  (load-theme 'nord t)
+  ;; (load-theme 'nord t)
   ;; (load-theme 'ayu-dark t)
+  ;; (load-theme 'seti t)
+  (load-theme 'ayu-grey t)
 
 #+end_src
 
@@ -630,11 +640,21 @@ Now here's the real =dired= configuration.
   (use-package dired-single
     :commands (dired dired-jump))
 
-  (use-package all-the-icons-dired
-    :hook (dired-mode . all-the-icons-dired-mode))
+  ;; (use-package all-the-icons-dired
+  ;;   :hook (dired-mode . all-the-icons-dired-mode))
 
   (use-package dired-hide-dotfiles
     :hook (dired-mode . dired-hide-dotfiles-mode))
+
+#+end_src
+** VSCode Icons
+
+To have cool icons on the tree, we're using [[https://github.com/jojojames/vscode-icon-emacs][vscode-icon-emacs]].
+
+#+begin_src emacs-lisp
+
+  (use-package vscode-icon
+    :commands (vscode-icon-for-file))
 
 #+end_src
 
@@ -647,6 +667,8 @@ Now here's the real =dired= configuration.
   (use-package dired-sidebar
     :commands (dired-sidebar-toggle-sidebar)
     :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+    :custom
+    (dired-sidebar-theme 'vscode)
     :init
     (add-hook 'dired-sidebar-mode-hook
               (lambda ()
