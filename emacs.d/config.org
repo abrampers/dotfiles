@@ -1187,6 +1187,19 @@ I'm using [[https://www.flycheck.org/en/latest/index.html][flycheck]] for code d
 
 #+end_src
 
+** Rainbow Delimiters
+
+[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is useful in programming modes because it colorizes nested parentheses and brackets according to their nesting depth.  This makes it a lot easier to visually match parentheses in Emacs Lisp code without having to count them yourself.
+
+#+begin_src emacs-lisp
+
+(use-package rainbow-delimiters
+  :hook ((clojure-mode . rainbow-delimiters-mode)
+         (lisp-mode . rainbow-delimiters-mode)
+         (emacs-lisp-mode . rainbow-delimiters-mode)))
+
+#+end_src
+
 ** Language Support
 *** Go
 **** =go-mode=
@@ -1554,19 +1567,6 @@ I'm using [[https://github.com/emacsorphanage/git-gutter][git-gutter.el]] to sho
   (use-package browse-at-remote
     :commands browse-at-remote
     :bind (("C-c g g" . browse-at-remote)))
-
-#+end_src
-
-** Rainbow Delimiters
-
-[[https://github.com/Fanael/rainbow-delimiters][rainbow-delimiters]] is useful in programming modes because it colorizes nested parentheses and brackets according to their nesting depth.  This makes it a lot easier to visually match parentheses in Emacs Lisp code without having to count them yourself.
-
-#+begin_src emacs-lisp
-
-(use-package rainbow-delimiters
-  :hook ((clojure-mode . rainbow-delimiters-mode)
-         (lisp-mode . rainbow-delimiters-mode)
-         (emacs-lisp-mode . rainbow-delimiters-mode)))
 
 #+end_src
 
