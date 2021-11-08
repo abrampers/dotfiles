@@ -1071,8 +1071,9 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
-    :hook
-    (lsp-mode . abram/lsp-mode-setup)
+    :hook ((lsp-mode . abram/lsp-mode-setup)
+           (lsp-mode . abram/evil-lsp-keybindings)
+           (js-mode . lsp-deferred))
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :custom
@@ -1211,7 +1212,6 @@ This is a basic configuration for the Go language so that =.go= files activate =
   (use-package go-mode
     :mode "\\.go\\'"
     :hook ((go-mode . lsp-deferred)
-           (go-mode . abram/evil-lsp-keybindings)
            (go-mode . electric-pair-local-mode))
     :init
     (setq gofmt-command "goimports")
@@ -1301,7 +1301,7 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
     (let ((func-name (nth 1 (go-test--get-current-test-info)))
           (suite-name (nth 0 (go-test--get-current-test-info))))
       (if (= (length suite-name) 0)
-        (dap-debug 
+        (dap-debug
             (list :type "go"
                 :request "launch"
                 :name (format "Launch test %s" func-name)
@@ -1311,7 +1311,7 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
                 :args (format "-test.v -test.run %s" func-name)
                 :env nil
                 :envFile nil))
-        (dap-debug 
+        (dap-debug
             (list :type "go"
                 :request "launch"
                 :name (format "Launch test %s.%s" suite-name func-name)
@@ -1322,8 +1322,8 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
                 :env nil
                 :envFile nil)))))
 
-              
-(add-hook 
+
+(add-hook
   'go-mode-hook
   (lambda ()
     (evil-local-set-key 'normal (kbd "td") 'abram/go-test-debug)))
@@ -1474,12 +1474,40 @@ Use electric pair mode on c/c++ mode
 
 #+begin_src emacs-lisp
 
-  (add-hook 'js-mode-hook
-            (lambda ()
-              (setq tab-width 2)
-              (setq js-indent-level 2)))
+  (defun abrampers/set-js-indentation ()
+    (setq-default js-indent-level 2)
+    (setq-default evil-shift-width js-indent-level)
+    (setq-default tab-width 2))
+
+  (add-to-list 'magic-mode-alist '("#!/user/bin/env node" . js-mode))
+  (add-hook 'js-mode-hook #'abrampers/set-js-indentation)
+  (add-hook 'json-mode-hook #'abrampers/set-js-indentation)
 
 #+end_src
+
+*** TypeScript
+
+This is a basic configuration for the TypeScript language so that =.ts= files activate =typescript-mode= when opened. We’re also adding a hook to =typescript-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit TypeScript code.
+
+#+begin_src emacs-lisp
+
+  (use-package typescript-mode
+    :mode "\\.ts\\'"
+    :hook (typescript-mode . lsp-deferred)
+    :config
+    (setq typescript-indent-level 2))
+
+#+end_src
+
+*Important note!* For lsp-mode to work with TypeScript (and JavaScript) you will need to install a language server on your machine. If you have Node.js installed, the easiest way to do that is by running the following command:
+
+#+begin_src bash :tangle no
+
+npm install -g typescript-language-server typescript
+
+#+end_src
+
+This will install the [[https://github.com/theia-ide/typescript-language-server][typescript-language-server]] and the TypeScript compiler package.
 
 *** zsh
 
