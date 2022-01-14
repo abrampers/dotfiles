@@ -1623,6 +1623,8 @@ Enable =whitespace-mode= when starting =prog-mode=.
 
 ** Commenting
 
+*** evil-commentary
+
 Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/linktohack/evil-commentary][evil-commentary]] to provide a more familiar behavior (just like in vim).
 
 #+begin_src emacs-lisp
