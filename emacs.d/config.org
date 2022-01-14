@@ -196,6 +196,14 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 
 #+end_src
 
+*** Unicode fonts
+
+#+begin_src emacs-lisp
+  (use-package unicode-fonts
+    :config
+    (unicode-fonts-setup))
+#+end_src
+
 ** Line Numbers Configuration
 
 Setup line and column number mode.
