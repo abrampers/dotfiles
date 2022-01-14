@@ -1476,13 +1476,24 @@ Use electric pair mode on c/c++ mode
 
   (defun abrampers/set-js-indentation ()
     (setq-default js-indent-level 2)
-    (setq-default evil-shift-width js-indent-level)
-    (setq-default tab-width 2))
+    (setq evil-shift-width js-indent-level)
+    (setq tab-width 2))
 
   (add-to-list 'magic-mode-alist '("#!/user/bin/env node" . js-mode))
   (add-hook 'js-mode-hook #'abrampers/set-js-indentation)
   (add-hook 'json-mode-hook #'abrampers/set-js-indentation)
+  (add-hook 'js-mode-hook 'electric-pair-local-mode)
+  (add-hook 'before-save-hook #'lsp-format-buffer)
+  (add-hook 'before-save-hook #'lsp-organize-imports)
 
+  (defun abrampers/set-eslint-config()
+    (setq lsp-eslint-auto-fix-on-save t))
+
+  (use-package js2-mode
+    :hook (js-mode . js2-minor-mode)
+    :custom
+    (js2-mode-show-parse-errors nil)
+    (js2-mode-show-strict-warnings nil))
 #+end_src
 
 *** TypeScript
@@ -1495,7 +1506,9 @@ This is a basic configuration for the TypeScript language so that =.ts= files ac
     :mode "\\.ts\\'"
     :hook (typescript-mode . lsp-deferred)
     :config
-    (setq typescript-indent-level 2))
+    (setq typescript-indent-level 2)
+    (add-hook 'before-save-hook #'lsp-format-buffer)
+    (add-hook 'before-save-hook #'lsp-organize-imports))
 
 #+end_src
 
