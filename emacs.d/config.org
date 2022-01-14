@@ -1251,7 +1251,8 @@ Setup =tab-width= for =.go= files.
 
   (add-hook 'go-mode-hook
             (lambda ()
-              (setq indent-tabs-mode t)))
+              (setq indent-tabs-mode t)
+              (setq tab-width 4)))
 
 #+end_src
 
