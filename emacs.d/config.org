@@ -94,6 +94,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (use-package doom-themes)
   (use-package gruvbox-theme)
   (use-package material-theme)
+  (use-package night-owl-theme)
 
   (use-package nord-theme
     :straight (nord-theme :type git
@@ -117,12 +118,7 @@ Activate theme.
 
 #+begin_src emacs-lisp
 
-  ;; (load-theme 'gruvbox-dark-hard t)
-  ;; (load-theme 'doom-one t)
-  ;; (load-theme 'nord t)
-  ;; (load-theme 'ayu-dark t)
-  ;; (load-theme 'seti t)
-  (load-theme 'ayu-grey t)
+  (load-theme 'gruvbox-dark-hard t)
 
 #+end_src
 
@@ -130,7 +126,7 @@ Activate theme.
 
 [[https://github.com/emacs-dashboard/emacs-dashboard][Dashboard]] package will show make initial buffer more usable.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
   (use-package dashboard
     :custom
@@ -140,10 +136,6 @@ Activate theme.
     (dashboard-set-init-info t)
     (dashboard-set-footer nil)
     (dashboard-center-content t)
-    (dashboard-projects-backend 'projectile)
-    (dashboard-items '((projects . 5)
-                       (recents . 5)
-                       (agenda . 5)))
     :config
     (dashboard-setup-startup-hook))
 
@@ -1085,6 +1077,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :custom
+    (lsp-clojure-server-command '("bash" "-c" "clojure-lsp"))
     (lsp-file-watch-threshold 5000)
     (lsp-diagnostics-provider :flycheck)
     :config
@@ -1350,7 +1343,7 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
 (add-hook 'ruby-mode-hook
           (lambda ()
             (abram/evil-lsp-keybindings)
-            (lsp)))
+            (lsp-deferred)))
 
 #+end_src
 
@@ -1392,7 +1385,8 @@ For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test 
   (use-package cider
     :hook ((clojure-mode . cider-mode)
            (clojure-mode . company-mode)
-           (cider-repl-mode . company-mode))
+           (cider-repl-mode . company-mode)
+           (clojure-mode . lsp-deferred))
     :bind (:map cider-mode-map
            ("TAB" . company-indent-or-complete-common)))
 
@@ -1498,8 +1492,8 @@ Use electric pair mode on c/c++ mode
   (defun abrampers/set-eslint-config()
     (setq lsp-eslint-auto-fix-on-save t))
 
-  (use-package js2-mode
-    :hook (js-mode . js2-minor-mode)
+  (use-package rjsx-mode
+    :mode "\\.js\\'"
     :custom
     (js2-mode-show-parse-errors nil)
     (js2-mode-show-strict-warnings nil))
@@ -1540,6 +1534,27 @@ This will install the [[https://github.com/theia-ide/typescript-language-server]
 
 #+end_src
 
+*** Groovy
+
+#+begin_src emacs-lisp
+
+  (use-package groovy-mode)
+
+#+end_src
+*** jsonnet
+
+#+begin_src emacs-lisp
+
+  (use-package jsonnet-mode)
+
+#+end_src
+*** erlang
+
+#+begin_src emacs-lisp
+  (use-package erlang
+    :mode "\\.erl\\'"
+    :hook ((erlang-mode . lsp)))
+#+end_src
 ** Markup language support
 
 *** YAML
