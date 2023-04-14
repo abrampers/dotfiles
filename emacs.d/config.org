@@ -80,7 +80,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (straight-use-package 'use-package)
 
   (setq straight-use-package-by-default t)
-  (setq straight-vc-git-default-protocol 'ssh)
+  (setq straight-vc-git-default-protocol 'https)
 
 #+end_src
 
@@ -100,17 +100,20 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
     :straight (nord-theme :type git
                           :host github
                           :repo "arcticicestudio/nord-emacs"
-                          :fork "abrampers/nord-emacs"))
+                          :fork "abrampers/nord-emacs"
+                          :protocol ssh))
   (use-package ayu-theme
     :straight (ayu-theme :type git
                          :host github
                          :repo "vutran1710/Ayu-Theme-Emacs"
-                         :fork "abrampers/Ayu-Theme-Emacs"))
+                         :fork "abrampers/Ayu-Theme-Emacs"
+                         :protocol ssh))
   (use-package seti-theme
     :straight (seti-theme :type git
                           :host github
                           :repo "caisah/seti-theme"
-                          :fork "abrampers/seti-theme"))
+                          :fork "abrampers/seti-theme"
+                          :protocol ssh))
 
 #+end_src
 
@@ -1524,6 +1527,26 @@ npm install -g typescript-language-server typescript
 #+end_src
 
 This will install the [[https://github.com/theia-ide/typescript-language-server][typescript-language-server]] and the TypeScript compiler package.
+
+**** tsx
+
+#+begin_src emacs-lisp
+
+  (straight-use-package '(tsi :type git
+                              :host github
+                              :repo "orzechowskid/tsi.el"))
+  (require 'tsi-typescript)
+
+  (use-package tsx-mode
+    :straight (tsx-mode :type git
+                        :host github
+                        :repo "orzechowskid/tsx-mode.el"
+                        :branch "emacs28")
+    :mode "\\.tsx\\'"
+    :hook ((tsx-mode . lsp-deferred)
+           (tsx-mode . tsi-typescript-mode)))
+
+#+end_src
 
 *** zsh
 
