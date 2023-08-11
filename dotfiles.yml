@@ -71,12 +71,14 @@
 
     - name: emacs-plus | Installs emacs-plus | brew
       community.general.homebrew:
-        name: emacs-plus
-        options: with-modern-icon
+        name: emacs-plus@29
+        options:
+          - with-modern-vscode-icon
+          - with-native-comp
 
     - name: emacs-plus | Create symlink | file
       ansible.builtin.file:
-        src: /usr/local/opt/emacs-plus@27/Emacs.app
+        src: /usr/local/opt/emacs-plus@29/Emacs.app
         dest: /Applications/Emacs.app
         state: link
 
@@ -92,9 +94,47 @@
       community.general.homebrew:
         name: cmake
 
+    - name: leningen | Installs leiningen | brew
+      community.general.homebrew:
+        name: leiningen
+
+    - name: clojure-lsp | Installs clojure-lsp | brew
+      community.general.homebrew:
+        name: clojure-lsp/brew/clojure-lsp-native
+
     - name: go | Installs go | brew
       community.general.homebrew:
         name: go
+
+    - name: erlang | Installs erlang | brew
+      community.general.homebrew:
+        name: erlang
+
+    - name: erlang_ls | Installs rebar3 | brew
+      community.general.homebrew:
+        name: rebar3
+
+    - name: erlang_ls | Check erlang_ls binary installed | file
+      stat:
+        path: /usr/local/bin/erlang_ls
+      register: erlang_ls_binary_stat
+
+    - name: erlang_ls | Clone erlang_ls repo | git
+      ansible.builtin.git:
+        repo: https://github.com/erlang-ls/erlang_ls.git
+        dest: ~/tmp/erlang_ls-tmp
+      when: not (ansible_check_mode or erlang_ls_binary_stat['stat']['exists'])
+
+    - name: erlang_ls | Build erlang_ls | make
+      community.general.make:
+        chdir: ~/tmp/erlang_ls-tmp
+        target: install
+      when: not (ansible_check_mode or erlang_ls_binary_stat['stat']['exists'])
+
+    - name: erlang_ls | Remove repo | file
+      ansible.builtin.file:
+        path: ~/tmp/erlang_ls-temp
+        state: absent
 
     - name: python | Installs python | brew
       community.general.homebrew:
@@ -185,6 +225,9 @@
         path: ~/tmp/limelight-temp
         state: absent
 
+    - name: iglance | Installs iglance | brew cask
+      community.general.homebrew_cask:
+        name: iglance
 
     - name: rcm | Installs rcm | brew
       community.general.homebrew:
@@ -203,3 +246,5 @@
       register: rcup_output
       failed_when: rcup_output.rc >= 1
       changed_when: rcup_output.rc == 0
+
+      # TODO: add yarn & typescript language server

@@ -95,25 +95,29 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (use-package gruvbox-theme)
   (use-package material-theme)
   (use-package night-owl-theme)
+  (use-package nord-theme)
+  (use-package ayu-theme)
+  (use-package seti-theme)
+  (use-package nordic-night-theme)
 
-  (use-package nord-theme
-    :straight (nord-theme :type git
-                          :host github
-                          :repo "arcticicestudio/nord-emacs"
-                          :fork "abrampers/nord-emacs"
-                          :protocol ssh))
-  (use-package ayu-theme
-    :straight (ayu-theme :type git
-                         :host github
-                         :repo "vutran1710/Ayu-Theme-Emacs"
-                         :fork "abrampers/Ayu-Theme-Emacs"
-                         :protocol ssh))
-  (use-package seti-theme
-    :straight (seti-theme :type git
-                          :host github
-                          :repo "caisah/seti-theme"
-                          :fork "abrampers/seti-theme"
-                          :protocol ssh))
+  ;; (use-package nord-theme
+  ;;   :straight (nord-theme :type git
+  ;;                         :host github
+  ;;                         :repo "arcticicestudio/nord-emacs"
+  ;;                         :fork "abrampers/nord-emacs"
+  ;;                         :protocol ssh))
+  ;; (use-package ayu-theme
+  ;;   :straight (ayu-theme :type git
+  ;;                        :host github
+  ;;                        :repo "vutran1710/Ayu-Theme-Emacs"
+  ;;                        :fork "abrampers/Ayu-Theme-Emacs"
+  ;;                        :protocol ssh))
+  ;; (use-package seti-theme
+  ;;   :straight (seti-theme :type git
+  ;;                         :host github
+  ;;                         :repo "caisah/seti-theme"
+  ;;                         :fork "abrampers/seti-theme"
+  ;;                         :protocol ssh))
 
 #+end_src
 
@@ -121,7 +125,8 @@ Activate theme.
 
 #+begin_src emacs-lisp
 
-  (load-theme 'gruvbox-dark-hard t)
+  ;; (load-theme 'gruvbox-dark-hard t)
+  (load-theme 'doom-spacegrey t)
 
 #+end_src
 
@@ -183,11 +188,13 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 #+begin_src emacs-lisp
 
   ;; You will most likely need to adjust this font size for your system!
-  (defvar abram/default-font-size 200)
+  (defvar abram/default-font-size 155)
 
-  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
+  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size :weight 'medium)
 
-  (setq default-frame-alist '((font . "SauceCodePro Nerd Font Mono-14")))
+  ;; (setq default-frame-alist '((font . "SauceCodePro Nerd Font Mono-14")))
+  ;; (add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font Mono-14"))
+  ;; (add-to-list 'default-frame-alist '(height . abram/default-font-size))
 
 #+end_src
 
@@ -335,11 +342,11 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
 
 [[https://github.com/seagle0128/doom-modeline][doom-modeline]] is a very attractive and rich (yet still minimal) mode line configuration for Emacs.  The default configuration is quite good but you can check out the [[https://github.com/seagle0128/doom-modeline#customize][configuration options]] for more things you can enable or disable.
 
-*NOTE:* The first time you load your configuration on a new machine, you'll need to run `M-x all-the-icons-install-fonts` so that mode line icons display correctly.
+*NOTE:* The first time you load your configuration on a new machine, you'll need to run `M-x nerd-icons-install-fonts` so that mode line icons display correctly.
 
 #+begin_src emacs-lisp
 
-  (use-package all-the-icons)
+  (use-package nerd-icons)
 
   (use-package doom-modeline
     :custom
@@ -354,6 +361,7 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
     (doom-modeline-indent-info t)
     (doom-modeline-checker-simple-format t)
     (doom-modeline-vcs-max-length 30)
+    (doom-modeline-height 50)
     (doom-modeline-env-version t)
     (doom-modeline-irc-stylize 'identity)
     (doom-modeline-github-timer nil)
@@ -642,9 +650,6 @@ Now here's the real =dired= configuration.
 
   (use-package dired-single
     :commands (dired dired-jump))
-
-  ;; (use-package all-the-icons-dired
-  ;;   :hook (dired-mode . all-the-icons-dired-mode))
 
   (use-package dired-hide-dotfiles
     :hook (dired-mode . dired-hide-dotfiles-mode))
@@ -1343,10 +1348,11 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
 
 #+begin_src emacs-lisp
 
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (abram/evil-lsp-keybindings)
-            (lsp-deferred)))
+  (add-hook 'ruby-mode-hook
+            (lambda ()
+              (abram/evil-lsp-keybindings)
+              ;; (lsp-deferred)
+              ))
 
 #+end_src
 
@@ -1478,7 +1484,7 @@ Use electric pair mode on c/c++ mode
 
 *** JavaScript
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
   (defun abrampers/set-js-indentation ()
     (setq-default js-indent-level 2)
@@ -1489,14 +1495,14 @@ Use electric pair mode on c/c++ mode
   (add-hook 'js-mode-hook #'abrampers/set-js-indentation)
   (add-hook 'json-mode-hook #'abrampers/set-js-indentation)
   (add-hook 'js-mode-hook 'electric-pair-local-mode)
-  (add-hook 'before-save-hook #'lsp-format-buffer)
-  (add-hook 'before-save-hook #'lsp-organize-imports)
+  ;; (add-hook 'before-save-hook #'lsp-format-buffer)
+  ;; (add-hook 'before-save-hook #'lsp-organize-imports)
 
   (defun abrampers/set-eslint-config()
     (setq lsp-eslint-auto-fix-on-save t))
 
   (use-package rjsx-mode
-    :mode "\\.js\\'"
+    :mode "\\.jsx\\'"
     :custom
     (js2-mode-show-parse-errors nil)
     (js2-mode-show-strict-warnings nil))
@@ -1504,17 +1510,56 @@ Use electric pair mode on c/c++ mode
 
 *** TypeScript
 
-This is a basic configuration for the TypeScript language so that =.ts= files activate =typescript-mode= when opened. We’re also adding a hook to =typescript-mode-hook= to call =lsp-deferred= so that we activate =lsp-mode= to get LSP features every time we edit TypeScript code.
+I'm following this tutorial [[https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022][this tutorial]] to setup javascript development environment.
+
+==global-tree-sitter-mode== on any buffer to activate it.
+
+#+begin_src emacs-lisp
+
+  (use-package tree-sitter
+    :config
+    (global-tree-sitter-mode)
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
+  (use-package tree-sitter-langs
+    :after tree-sitter)
+
+#+end_src
+
+The following configuration will ensure that tree-sitter's dedicated ==tsx== parser will be used for tsx (typescript + react) files. By default this currently is **not** the case, as it uses the ==typescript== parser which does not understand ==tsx== extensions.
+
+Here we create a new derived mode that will map to both ==.tsx== and ==.ts==. Due to the derived mode's name, the typescript language server will select tsx support, and due to the explicit mapping, tree-sitter will select its tsx parser.
 
 #+begin_src emacs-lisp
 
   (use-package typescript-mode
-    :mode "\\.ts\\'"
-    :hook (typescript-mode . lsp-deferred)
+    :after tree-sitter
     :config
-    (setq typescript-indent-level 2)
-    (add-hook 'before-save-hook #'lsp-format-buffer)
-    (add-hook 'before-save-hook #'lsp-organize-imports))
+    (define-derived-mode typescriptreact-mode typescript-mode "TypeScript TSX")
+    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+    (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
+    :init
+    (add-hook 'typescript-mode-hook #'lsp)
+    (add-hook 'typescriptreact-mode-hook #'lsp))
+
+#+end_src
+
+[[https://github.com/orzechowskid/tsi.el/][tsi.el]] package will give us tree-sitter based indentation for TypeScript, JSON, and (S)CSS.
+
+#+begin_src emacs-lisp
+
+  (use-package tsi
+    :after tree-sitter
+    :straight (tsi :type git
+                   :host github
+                   :repo "orzechowskid/tsi.el")
+    :commands
+    (tsi-typescript-mode tsi-json-mode tsi-css-mode)
+    :init
+    (add-hook 'typescript-mode-hook (lambda () (tsi-typescript-mode 1)))
+    (add-hook 'json-mode-hook (lambda () (tsi-json-mode 1)))
+    (add-hook 'css-mode-hook (lambda () (tsi-css-mode 1)))
+    (add-hook 'scss-mode-hook (lambda () (tsi-scss-mode 1))))
 
 #+end_src
 
@@ -1526,25 +1571,10 @@ npm install -g typescript-language-server typescript
 
 #+end_src
 
-This will install the [[https://github.com/theia-ide/typescript-language-server][typescript-language-server]] and the TypeScript compiler package.
 
-**** tsx
 
-#+begin_src emacs-lisp
 
-  (straight-use-package '(tsi :type git
-                              :host github
-                              :repo "orzechowskid/tsi.el"))
-  (require 'tsi-typescript)
 
-  (use-package tsx-mode
-    :straight (tsx-mode :type git
-                        :host github
-                        :repo "orzechowskid/tsx-mode.el"
-                        :branch "emacs28")
-    :mode "\\.tsx\\'"
-    :hook ((tsx-mode . lsp-deferred)
-           (tsx-mode . tsi-typescript-mode)))
 
 #+end_src
 
