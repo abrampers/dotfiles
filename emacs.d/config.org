@@ -125,8 +125,7 @@ Activate theme.
 
 #+begin_src emacs-lisp
 
-  ;; (load-theme 'gruvbox-dark-hard t)
-  (load-theme 'doom-spacegrey t)
+  (load-theme 'nord t)
 
 #+end_src
 
@@ -161,7 +160,10 @@ This section configures basic UI settings that remove unneeded elements to make 
   (tooltip-mode -1)           ; Disable tooltips
   (set-fringe-mode 10)        ; Give some breathing room
 
-  (menu-bar-mode -1)            ; Disable the menu bar
+  (menu-bar-mode t)           ; Enable the menu bar
+
+  ;; no titlebar, but rounded
+  (add-to-list 'default-frame-alist '(undecorated-round . t))
 
   ;; Set up the visible bell
   (setq visible-bell t)
@@ -188,9 +190,10 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
 #+begin_src emacs-lisp
 
   ;; You will most likely need to adjust this font size for your system!
-  (defvar abram/default-font-size 155)
+  (defvar abram/default-font-size 140)
 
-  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size :weight 'medium)
+  ;; (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size :weight 'medium)
+  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
 
   ;; (setq default-frame-alist '((font . "SauceCodePro Nerd Font Mono-14")))
   ;; (add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font Mono-14"))
@@ -366,6 +369,7 @@ We use the [[https://github.com/emacscollective/no-littering/blob/master/no-litt
     (doom-modeline-irc-stylize 'identity)
     (doom-modeline-github-timer nil)
     (doom-modeline-gnus-timer nil)
+    (doom-modeline-buffer-file-name-style 'relative-from-project)
     :init
     (doom-modeline-mode 1))
 
@@ -492,7 +496,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
   (use-package undo-tree
     :after evil
-    :config (global-undo-tree-mode))
+    :custom
+    (undo-tree-auto-save-history t)
+    (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+    :config
+    (global-undo-tree-mode))
 
   (use-package evil
     :init
