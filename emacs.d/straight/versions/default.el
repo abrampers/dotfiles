@@ -7,7 +7,7 @@
  ("auto-package-update.el" . "22130fb17d00d79497253c94f3e88382cb40c3ac")
  ("autothemer" . "8ec0c27a73b2d0a335eda63fde695a101e2956b2")
  ("avy" . "e92cb37457b43336b765630dbfbea8ba4be601fa")
- ("browse-at-remote" . "cef26f2c063f2473af42d0e126c8613fe2f709e4")
+ ("browse-at-remote" . "76aa27dfd469fcae75ed7031bb73830831aaccbf")
  ("bui.el" . "f3a137628e112a91910fd33c0cff0948fa58d470")
  ("cfrs" . "2cb7f1cbf9292b0efe167ef372cfb5a7600564eb")
  ("cider" . "fe8cf244fd3426261f9f630c981a6296afd433a4")
