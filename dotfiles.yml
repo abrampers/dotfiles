@@ -73,8 +73,7 @@
       community.general.homebrew:
         name: emacs-plus@29
         options:
-          - with-modern-vscode-icon
-          - with-native-comp
+          - with-modern-purple-flat-icon
 
     - name: emacs-plus | Create symlink | file
       ansible.builtin.file:
@@ -161,13 +160,13 @@
       community.general.homebrew:
         name: nvm
 
-    - name: AdoptOpenJDK8 | Tap AdoptOpenJDK | brew tap
+    - name: jdk8 | Tap cask versions | brew tap
       community.general.homebrew_tap:
-        name: AdoptOpenJDK/openjdk
+        name: homebrew/cask-versions
 
-    - name: AdoptOpenJDK8 | Installs AdoptOpenJDK8 | brew cask
+    - name: jdk8 | Installs jdk8 | brew cask
       community.general.homebrew_cask:
-        name: adoptopenjdk8
+        name: temurin@8
 
     - name: fzf | Installs fzf | brew
       community.general.homebrew:
@@ -246,5 +245,3 @@
       register: rcup_output
       failed_when: rcup_output.rc >= 1
       changed_when: rcup_output.rc == 0
-
-      # TODO: add yarn & typescript language server
