@@ -1218,6 +1218,37 @@ I'm using [[https://www.flycheck.org/en/latest/index.html][flycheck]] for code d
 
 #+end_src
 
+** GitHub Copilot
+
+This will setup GitHub Copilot for pair programming.
+
+#+begin_src emacs-lisp
+  (defun rk/copilot-complete-or-accept ()
+    "Command that either triggers a completion or accepts one if one
+  is available. Useful if you tend to hammer your keys like I do."
+    (interactive)
+    (if (copilot--overlay-visible)
+        (progn
+          (copilot-accept-completion)
+          (open-line 1)
+          (next-line))
+      (copilot-complete)))
+
+  (use-package copilot
+    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+    :init
+    (setq copilot-log-level 'error)
+    :bind
+    (:map copilot-mode-map
+          ("C-M-<next>" . copilot-next-completion)
+          ("C-M-<prior>" . copilot-previous-completion)
+          ("C-M-<right>" . copilot-accept-completion-by-word)
+          ("C-M-<down>" . copilot-accept-completion-by-line))
+    (:map global-map
+          ("C-M-<return>" . rk/copilot-complete-or-accept))
+    :hook ((prog-mode . copilot-mode)))
+#+end_src
+
 ** Language Support
 *** Go
 **** =go-mode=
@@ -1232,20 +1263,10 @@ This is a basic configuration for the Go language so that =.go= files activate =
            (go-mode . electric-pair-local-mode))
     :init
     (setq gofmt-command "goimports")
+    (setq go-indent-offset 4)
     (flycheck-mode)
     :config
     (add-hook 'before-save-hook 'gofmt-before-save))
-
-  (defun abram/setup-golangci-lint ()
-   (flycheck-golangci-lint-setup)
-   (setq flycheck-local-checkers '((lsp . ((next-checkers . (golangci-lint)))))))
-
-  (use-package flycheck-golangci-lint
-    :hook (go-mode . abram/setup-golangci-lint)
-    :init
-    (setq flycheck-golangci-lint-disable-all t)
-    (setq flycheck-golangci-lint-enable-linters '("staticcheck" "unused" "gosimple" "structcheck" "varcheck" "ineffassign" "deadcode" "typecheck" "stylecheck" "gosec" "unconvert" "gofmt" "unparam" "nakedret" "gochecknoinits" "depguard" "gocyclo" "misspell" "megacheck" "goimports" "govet" "whitespace"))
-      (setq flycheck-golangci-lint-disable-all "5m"))
 
   (use-package go-playground
     :commands go-playground)
@@ -1405,7 +1426,7 @@ For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test 
            (cider-repl-mode . company-mode)
            (clojure-mode . lsp-deferred))
     :bind (:map cider-mode-map
-           ("TAB" . company-indent-or-complete-common)))
+                ("TAB" . company-indent-or-complete-common)))
 
 #+end_src
 
@@ -1579,10 +1600,27 @@ npm install -g typescript-language-server typescript
 
 #+end_src
 
+*** Lua
 
+#+begin_src emacs-lisp
+  (use-package lua-mode
+    :mode "\\.lua\\'"
+    :hook ((lua-mode . lsp-deferred)
+           (go-mode . electric-pair-local-mode)))
 
+#+end_src
 
+**** Custom project type
 
+#+begin_src emacs-lisp
+  (with-eval-after-load 'projectile
+    (projectile-register-project-type 'lua-kong '("src/handler.lua")
+                                      :project-file "src/handler.lua"
+                                      :compile "make build"
+                                      :src-dir "src/"
+                                      :test "make spec"
+                                      :test-dir "spec/"
+                                      :test-suffix "_spec"))
 
 #+end_src
 
