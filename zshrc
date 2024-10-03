@@ -53,6 +53,8 @@ if [ "$(uname)" = "Darwin" ]; then
   fi
 fi
 
+eval $(/opt/homebrew/bin/brew shellenv)
+
 #
 # Completion
 #

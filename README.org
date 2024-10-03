@@ -84,10 +84,24 @@ git clone --recursive https://github.com/abrampers/dotfiles
 
 This repo is using [[https://docs.ansible.com/ansible/latest/index.html][Ansible]] to automate installation. Please follow [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos][Ansible installation guide]] to install ansible.
 
-Then run ansible.
+Install =ansible-core= for minimal footprint.
+#+begin_src shell
+
+python3 -m pip install --user ansible-core
+
+#+end_src
+
+Install =community-general= module
 
 #+begin_src shell
 
+ansible-galaxy collection install community.general
+
+#+end_src
+
+Then run ansible.
+
+#+begin_src shell
 ansible-playbook dotfiles.yml
 
 #+end_src

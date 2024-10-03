@@ -2,14 +2,25 @@
 - name: Setup local workstation
   hosts: localhost
   vars:
-    install_homebrwe_if_missing: false
+    install_homebrew_if_missing: false
   vars_files:
     - ./vars/custom.yml
   pre_tasks:
-    - name: Ensuring Homebrew Is Installed
+    - name: intel | Ensure Homebrew Is Installed
       stat:
         path: /usr/local/bin/brew
       register: homebrew_check
+      when:
+        - ansible_facts['os_family'] == 'Darwin'
+        - ansible_facts['architecture'] == 'x86_64'
+
+    - name: apple silicon | Ensure Homebrew Is Installed
+      stat:
+        path: /opt/homebrew/bin/brew
+      register: homebrew_check
+      when:
+        - ansible_facts['os_family'] == 'Darwin'
+        - ansible_facts['architecture'] == 'arm64'
 
     - name: Fail If Homebrew Is Not Installed and install_homebrew_if_missing Is False
       fail:
@@ -23,6 +34,27 @@
       when:
         - not homebrew_check.stat.exists
         - install_homebrew_if_missing
+
+    - name: ~/bin | Check if user bin folder is created
+      stat:
+        path: ~/bin
+      register: user_bin_created
+
+    - name: ~/bin | Remove bin if not directory
+      ansible.builtin.file:
+        path: ~/bin
+        state: absent
+      when:
+        - user_bin_created.stat.exists
+        - not (user_bin_created.stat.isdir is defined and user_bin_created.stat.isdir)
+
+    - name: ~/bin | Create user bin directory
+      ansible.builtin.file:
+        path: ~/bin
+        state: directory
+      when:
+        - not (user_bin_created.stat.isdir is defined and user_bin_created.stat.isdir)
+
   tasks:
     - name: Get the username running the deploy | whoami
       local_action: command whoami
@@ -75,11 +107,23 @@
         options:
           - with-modern-purple-flat-icon
 
-    - name: emacs-plus | Create symlink | file
+    - name: emacs-plus | intel | Create symlink | file
       ansible.builtin.file:
         src: /usr/local/opt/emacs-plus@29/Emacs.app
         dest: /Applications/Emacs.app
         state: link
+      when:
+        - ansible_facts['os_family'] == 'Darwin'
+        - ansible_facts['architecture'] == 'x86_64'
+
+    - name: emacs-plus | apple silicon | Create symlink | file
+      ansible.builtin.file:
+        src: /opt/homebrew/opt/emacs-plus@29/Emacs.app
+        dest: /Applications/Emacs.app
+        state: link
+      when:
+        - ansible_facts['os_family'] == 'Darwin'
+        - ansible_facts['architecture'] == 'arm64'
 
     - name: ripgrep | Installs ripgrep | brew
       community.general.homebrew:
@@ -97,9 +141,13 @@
       community.general.homebrew:
         name: leiningen
 
-    - name: clojure-lsp | Installs clojure-lsp | brew
+    - name: clojure-lsp | Tap clojure-lsp | brew tap
+      community.general.homebrew_tap:
+        name: clojure-lsp/brew
+
+    - name: clojure-lsp | Installs clojure-lsp-native | brew
       community.general.homebrew:
-        name: clojure-lsp/brew/clojure-lsp-native
+        name: clojure-lsp-native
 
     - name: go | Installs go | brew
       community.general.homebrew:
@@ -115,29 +163,31 @@
 
     - name: erlang_ls | Check erlang_ls binary installed | file
       stat:
-        path: /usr/local/bin/erlang_ls
+        path: ~/bin/erlang_ls
       register: erlang_ls_binary_stat
 
     - name: erlang_ls | Clone erlang_ls repo | git
       ansible.builtin.git:
         repo: https://github.com/erlang-ls/erlang_ls.git
         dest: ~/tmp/erlang_ls-tmp
-      when: not (ansible_check_mode or erlang_ls_binary_stat['stat']['exists'])
+      when: 
+        - not ansible_check_mode
+        - not erlang_ls_binary_stat['stat']['exists']
 
     - name: erlang_ls | Build erlang_ls | make
       community.general.make:
         chdir: ~/tmp/erlang_ls-tmp
         target: install
-      when: not (ansible_check_mode or erlang_ls_binary_stat['stat']['exists'])
+        params:
+          PREFIX: ~/bin
+      when: 
+      - not ansible_check_mode
+      - not erlang_ls_binary_stat['stat']['exists']
 
     - name: erlang_ls | Remove repo | file
       ansible.builtin.file:
         path: ~/tmp/erlang_ls-temp
         state: absent
-
-    - name: python | Installs python | brew
-      community.general.homebrew:
-        name: python
 
     - name: pyenv | Installs pyenv | brew
       community.general.homebrew:
@@ -147,7 +197,29 @@
       community.general.homebrew:
         name: pyenv-virtualenv
 
-    - name: python | Installs neovim package | pip
+    - name: python | check installation
+      stat: 
+        path: ~/.pyenv/versions/3.12.7
+      register: pyenv_python
+
+    - name: python | apple silicon
+      shell: /opt/homebrew/bin/pyenv install 3.12.7
+      when:
+        - ansible_facts['os_family'] == 'Darwin'
+        - ansible_facts['architecture'] == 'arm64'
+        - not pyenv_python.stat.exists
+
+    - name: python | intel
+      shell: /opt/homebrew/bin/pyenv install 3.12.7
+      when:
+        - ansible_facts['os_family'] == 'Darwin'
+        - ansible_facts['architecture'] == 'x86_64'
+        - not pyenv_python.stat.exists
+
+    - name: python | activate version 3.12
+      shell: /opt/homebrew/bin/pyenv global 3.12
+
+    - name: neovim | Installs neovim package | pip
       pip:
         name: neovim
         executable: ~/.pyenv/shims/pip3
@@ -159,10 +231,6 @@
     - name: nvm | Installs nvm | brew
       community.general.homebrew:
         name: nvm
-
-    - name: jdk8 | Tap cask versions | brew tap
-      community.general.homebrew_tap:
-        name: homebrew/cask-versions
 
     - name: jdk8 | Installs jdk8 | brew cask
       community.general.homebrew_cask:
@@ -196,37 +264,13 @@
       community.general.homebrew:
         name: jq
 
-    - name: limelight | Check limelight binary installed | file
-      stat:
-        path: /usr/local/bin/limelight
-      register: limelight_binary_stat
-
-    - name: limelight | Clone limelight repo | git
-      ansible.builtin.git:
-        repo: https://github.com/koekeishiya/limelight.git
-        dest: ~/tmp/limelight-temp
-      when: not (ansible_check_mode or limelight_binary_stat['stat']['exists'])
-
-    - name: limelight | Build limelight | make
-      community.general.make:
-        chdir: ~/tmp/limelight-temp
-      when: not (ansible_check_mode or limelight_binary_stat['stat']['exists'])
-
-    - name: limelight | Copy binary | file
-      ansible.builtin.copy:
-        src: ~/tmp/limelight-temp/bin/limelight
-        dest: /usr/local/bin/limelight
-        mode: '755'
-      when: not (ansible_check_mode or limelight_binary_stat['stat']['exists'])
-
-    - name: limelight | Remove repo | file
-      ansible.builtin.file:
-        path: ~/tmp/limelight-temp
-        state: absent
-
     - name: iglance | Installs iglance | brew cask
       community.general.homebrew_cask:
         name: iglance
+
+    - name: Source Code Pro for Powerline | Install font | brew cask
+      community.general.homebrew_cask:
+        name: font-source-code-pro-for-powerline
 
     - name: rcm | Installs rcm | brew
       community.general.homebrew:
