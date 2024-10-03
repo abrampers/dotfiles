@@ -13,3 +13,6 @@
 [submodule "zsh/zsh-history-substring-search"]
 	path = zsh/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "zsh/base16-shell"]
+	path = zsh/base16-shell
+	url = git@github.com:abrampers/base16-shell.git
