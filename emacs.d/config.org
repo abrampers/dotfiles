@@ -98,26 +98,6 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (use-package nord-theme)
   (use-package ayu-theme)
   (use-package seti-theme)
-  (use-package nordic-night-theme)
-
-  ;; (use-package nord-theme
-  ;;   :straight (nord-theme :type git
-  ;;                         :host github
-  ;;                         :repo "arcticicestudio/nord-emacs"
-  ;;                         :fork "abrampers/nord-emacs"
-  ;;                         :protocol ssh))
-  ;; (use-package ayu-theme
-  ;;   :straight (ayu-theme :type git
-  ;;                        :host github
-  ;;                        :repo "vutran1710/Ayu-Theme-Emacs"
-  ;;                        :fork "abrampers/Ayu-Theme-Emacs"
-  ;;                        :protocol ssh))
-  ;; (use-package seti-theme
-  ;;   :straight (seti-theme :type git
-  ;;                         :host github
-  ;;                         :repo "caisah/seti-theme"
-  ;;                         :fork "abrampers/seti-theme"
-  ;;                         :protocol ssh))
 
 #+end_src
 

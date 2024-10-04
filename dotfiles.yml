@@ -264,13 +264,21 @@
       community.general.homebrew:
         name: jq
 
-    - name: iglance | Installs iglance | brew cask
-      community.general.homebrew_cask:
-        name: iglance
+    - name: stats | Installs stats | brew cask
+      community.general.homebrew:
+        name: stats
 
     - name: Source Code Pro for Powerline | Install font | brew cask
       community.general.homebrew_cask:
         name: font-source-code-pro-for-powerline
+
+    - name: SauceCodePro Nerd Font Mono | Install font | brew cask
+      community.general.homebrew_cask:
+        name: font-sauce-code-pro-nerd-font
+
+    - name: grpcurl | Install grpcurl | brew
+      community.general.homebrew:
+        name: grpcurl
 
     - name: rcm | Installs rcm | brew
       community.general.homebrew:
