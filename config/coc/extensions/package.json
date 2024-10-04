@@ -3,5 +3,7 @@
     "coc-marketplace": ">=1.8.0",
     "coc-solargraph": ">=1.1.8",
     "coc-vimlsp": ">=0.11.0"
-  }
+  },
+  "disabled": [],
+  "locked": []
 }

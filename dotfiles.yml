@@ -93,6 +93,13 @@
       community.general.homebrew:
         name: neovim
 
+    - name: neovim | Install vim-plug for Neovim | shell
+      shell: |
+        curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      args:
+        creates: "{{ lookup('env', 'XDG_DATA_HOME') | default(ansible_env.HOME + '/.local/share') }}/nvim/site/autoload/plug.vim"
+
     - name: tmux | Installs tmux | brew
       community.general.homebrew:
         name: tmux
