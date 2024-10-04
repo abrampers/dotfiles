@@ -1066,6 +1066,10 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     (setq lsp-completion-show-kind t))
 
   (use-package lsp-mode
+    :straight (:host github
+               :repo "emacs-lsp/lsp-mode"
+               :branch "master"
+               :tag "v9.0.0") 
     :commands (lsp lsp-deferred)
     :hook ((lsp-mode . abram/lsp-mode-setup)
            (lsp-mode . abram/evil-lsp-keybindings)
