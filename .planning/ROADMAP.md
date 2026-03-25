@@ -55,7 +55,9 @@ Plans:
   3. Saving a .go file still uses gofmt (format-on-save does not interfere with Go's formatter)
   4. Completing a symbol from another module triggers auto-import (import statement added automatically)
   5. User can invoke organize-imports code action to sort/clean import statements
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 03-01-PLAN.md — Add format-on-save and code actions (auto-import, organize imports) to config.org
 
 ## Progress
 
