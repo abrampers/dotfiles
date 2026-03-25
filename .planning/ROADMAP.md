@@ -41,7 +41,9 @@ Plans:
   3. User can go-to-definition (gd), find-references (gr), find-implementation (gi), find-type-definition (gy), and rename symbol (,r) in both .ts and .tsx files
   4. Go LSP (gopls) still works after the lsp-mode change — gd/gr work in a .go file
   5. Other language LSPs (Clojure, etc.) are unaffected — no errors on startup or when opening those file types
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 02-01-PLAN.md — Update lsp-mode lockfile to 9.0.0 and verify navigation keybindings
 
 ### Phase 3: Format-on-Save & Code Actions
 **Goal**: TypeScript files auto-format on save and code actions (auto-import, organize imports) are available
@@ -63,5 +65,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Diagnose & Fix Environment | 2/2 | Complete | 2026-03-25 |
-| 2. Fix LSP Connection & Verify Navigation | 0/0 | Not started | - |
+| 2. Fix LSP Connection & Verify Navigation | 0/1 | Not started | - |
 | 3. Format-on-Save & Code Actions | 0/0 | Not started | - |
