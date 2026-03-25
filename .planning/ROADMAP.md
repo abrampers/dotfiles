@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Diagnose & Fix Environment** - Establish ground truth about lsp-mode version, Node.js, and Emacs PATH before changing anything
 - [ ] **Phase 2: Fix LSP Connection & Verify Navigation** - Fix the lsp-mode/typescript-language-server version mismatch and confirm all 5 navigation keybindings work
-- [ ] **Phase 3: Format-on-Save & Code Actions** - Add buffer-local format-on-save and auto-import as new config.org features
+- [x] **Phase 3: Format-on-Save & Code Actions** - Add buffer-local format-on-save and auto-import as new config.org features (completed 2026-03-25)
 
 ## Phase Details
 
@@ -57,7 +57,7 @@ Plans:
   5. User can invoke organize-imports code action to sort/clean import statements
 **Plans**: 1 plan
 Plans:
-- [ ] 03-01-PLAN.md — Add format-on-save and code actions (auto-import, organize imports) to config.org
+- [x] 03-01-PLAN.md — Add format-on-save and code actions (auto-import, organize imports) to config.org
 
 ## Progress
 
@@ -68,4 +68,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Diagnose & Fix Environment | 2/2 | Complete | 2026-03-25 |
 | 2. Fix LSP Connection & Verify Navigation | 0/1 | Not started | - |
-| 3. Format-on-Save & Code Actions | 0/0 | Not started | - |
+| 3. Format-on-Save & Code Actions | 1/1 | Complete   | 2026-03-25 |

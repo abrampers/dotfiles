@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-03-25T11:54:19.041Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-03-25T12:30:36.695Z"
 progress:
   total_phases: 3
-  completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  completed_phases: 3
+  total_plans: 4
+  completed_plans: 4
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files inside a Next.js project, matching the Go editing experience.
-**Current focus:** Phase 02 — fix-lsp-connection-verify-navigation
+**Current focus:** Phase 03 — format-on-save-code-actions
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 03 (format-on-save-code-actions) — EXECUTING
+Plan: 1 of 1
 
 ## Performance Metrics
 
@@ -48,6 +48,7 @@ Plan: Not started
 *Updated after each plan completion*
 | Phase 01 P01 | 15min | 2 tasks | 1 files |
 | Phase 01 P02 | 8min | 3 tasks | 1 files |
+| Phase 03 P01 | 45min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,8 @@ Recent decisions affecting current work:
 - [Phase 01]: exec-path-from-shell works for PATH including nvm — no PATH fix needed, only lsp-mode update required
 - [Phase 01]: NVM_DIR added to exec-path-from-shell — ensures Emacs GUI has NVM_DIR env var for tools that reference it directly
 - [Phase 01]: Split .ts/.tsx mode routing with lsp-deferred hooks — matches go-mode pattern, prevents eager LSP startup
+- [Phase 03]: Switched from lsp-format-buffer-on-save to lsp-eslint-auto-fix-on-save for TypeScript formatting — user's project uses ESLint+Prettier
+- [Phase 03]: Set typescript-indent-level to 2 to match project Prettier tabWidth
 
 ### Pending Todos
 
@@ -75,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T11:22:15.976Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-03-25T12:30:36.692Z
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None

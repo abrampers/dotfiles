@@ -29,14 +29,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Format
 
-- [ ] **FMT-01**: TypeScript files (.ts) auto-format on save via Prettier
-- [ ] **FMT-02**: TSX files (.tsx) auto-format on save via Prettier
-- [ ] **FMT-03**: Format-on-save is buffer-local (does not affect Go gofmt or other language formatters)
+- [x] **FMT-01**: TypeScript files (.ts) auto-format on save via Prettier
+- [x] **FMT-02**: TSX files (.tsx) auto-format on save via Prettier
+- [x] **FMT-03**: Format-on-save is buffer-local (does not affect Go gofmt or other language formatters)
 
 ### Code Actions
 
-- [ ] **ACT-01**: Auto-import symbols on completion (lsp-mode auto-import)
-- [ ] **ACT-02**: Organize imports code action available
+- [x] **ACT-01**: Auto-import symbols on completion (lsp-mode auto-import)
+- [x] **ACT-02**: Organize imports code action available
 
 ### Regression
 
@@ -91,11 +91,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAV-03 | Phase 2 | Pending |
 | NAV-04 | Phase 2 | Pending |
 | NAV-05 | Phase 2 | Pending |
-| FMT-01 | Phase 3 | Pending |
-| FMT-02 | Phase 3 | Pending |
-| FMT-03 | Phase 3 | Pending |
-| ACT-01 | Phase 3 | Pending |
-| ACT-02 | Phase 3 | Pending |
+| FMT-01 | Phase 3 | Complete |
+| FMT-02 | Phase 3 | Complete |
+| FMT-03 | Phase 3 | Complete |
+| ACT-01 | Phase 3 | Complete |
+| ACT-02 | Phase 3 | Complete |
 | REG-01 | Phase 2 | Pending |
 | REG-02 | Phase 2 | Pending |
 
