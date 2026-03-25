@@ -1,9 +1,6 @@
 # Editor
 export EDITOR='nvim'
 
-# GO
-export GOPATH=$HOME/.gvm/pkgsets/go1.14.5/global
-
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 

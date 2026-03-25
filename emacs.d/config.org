@@ -1248,6 +1248,9 @@ This is a basic configuration for the Go language so that =.go= files activate =
     :init
     (setq gofmt-command "goimports")
     (setq go-indent-offset 4)
+    (setq lsp-go-gopls-server-path
+          (expand-file-name "bin/gopls"
+            (car (split-string (or (getenv "GOPATH") "~") ":"))))
     (flycheck-mode)
     :config
     (add-hook 'before-save-hook 'gofmt-before-save))
