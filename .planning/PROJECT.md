@@ -31,11 +31,17 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 - ✓ Go LSP (gopls) unaffected by lsp-mode update — Validated in Phase 2
 - ✓ Other language LSPs (Clojure) unaffected — Validated in Phase 2
 
+- ✓ Format-on-save for TypeScript/TSX via lsp-eslint-auto-fix-on-save (ESLint+Prettier) — Validated in Phase 3
+- ✓ Organize-imports on save for TypeScript/TSX (buffer-local before-save-hook) — Validated in Phase 3
+- ✓ Auto-import on completion (default lsp-completion-enable-additional-text-edit) — Validated in Phase 3
+
 ### Active
+
+<!-- All requirements validated. Project complete. -->
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Format-on-save for TypeScript/TSX files
+- [x] ~~Format-on-save for TypeScript/TSX files~~ → moved to Validated (Phase 3, via ESLint+Prettier)
 - [x] ~~Fix ts-ls error: `unknown option '--tsserver-path'`~~ → moved to Validated
 - [x] ~~LSP keybindings (gd, gi, gr, gy, ,r) work in .ts and .tsx files~~ → moved to Validated
 - [x] ~~Auto-mode-alist correctly routes .ts and .tsx to appropriate modes~~ → moved to Validated
@@ -57,6 +63,9 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 - Node.js v22.9.0 via nvm (terminal), v18.20.5 in Emacs GUI (nvm default at launch). Both work. typescript-language-server v4.3.3 installed under v22.
 - Go LSP (gopls) works, confirming lsp-mode infrastructure is sound
 - LSP connects and keybindings work in .ts and .tsx files — core value delivered
+- Format-on-save uses ESLint auto-fix (lsp-eslint-auto-fix-on-save) which invokes Prettier via eslint-plugin-prettier, respecting project .prettierrc.json
+- Organize-imports runs as buffer-local before-save-hook on TypeScript modes
+- **All 3 phases complete. Project goal achieved.**
 
 ## Constraints
 
@@ -74,8 +83,8 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 |----------|-----------|---------|
 | Fix ts-ls compatibility rather than switch LSP client | lsp-mode works for Go; the issue is version mismatch, not lsp-mode itself | ✓ Confirmed — lockfile update fixed it |
 | Research best LSP server for Next.js before committing | typescript-language-server v4.x changed API; need to verify best option in 2025 | ✓ ts-ls with typescript-language-server v4.3.3 works after lsp-mode 9.0.0 |
-| TS/TSX only, no JS/JSX | User's Next.js project is TypeScript-only | — Pending |
-| Format-on-save via LSP formatter | Simplest integration with existing lsp-mode setup | — Pending |
+| TS/TSX only, no JS/JSX | User's Next.js project is TypeScript-only | — Confirmed |
+| Format-on-save via ESLint+Prettier | User's project uses eslint-plugin-prettier; ESLint auto-fix respects .prettierrc.json (tabWidth: 2) | ✓ Confirmed — lsp-eslint-auto-fix-on-save works |
 
 ## Evolution
 
@@ -95,4 +104,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after Phase 2 completion*
+*Last updated: 2026-03-25 after Phase 3 completion — all phases complete*
