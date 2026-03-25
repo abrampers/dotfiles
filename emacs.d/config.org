@@ -1549,7 +1549,7 @@ I'm following this tutorial [[https://vxlabs.com/2022/06/12/typescript-developme
 
 The following configuration will ensure that tree-sitter's dedicated ==tsx== parser will be used for tsx (typescript + react) files. By default this currently is **not** the case, as it uses the ==typescript== parser which does not understand ==tsx== extensions.
 
-Here we create a new derived mode that will map to both ==.tsx== and ==.ts==. Due to the derived mode's name, the typescript language server will select tsx support, and due to the explicit mapping, tree-sitter will select its tsx parser.
+Here we create a derived mode for TSX files and configure separate mode routing: ==.ts== files use ==typescript-mode== and ==.tsx== files use ==typescriptreact-mode==. Each mode has its own tree-sitter parser mapping and ==lsp-deferred== hook.
 
 #+begin_src emacs-lisp
 
@@ -1557,11 +1557,13 @@ Here we create a new derived mode that will map to both ==.tsx== and ==.ts==. Du
     :after tree-sitter
     :config
     (define-derived-mode typescriptreact-mode typescript-mode "TypeScript TSX")
-    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
     (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
+    (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-mode . typescript))
     :init
-    (add-hook 'typescript-mode-hook #'lsp)
-    (add-hook 'typescriptreact-mode-hook #'lsp))
+    (add-hook 'typescript-mode-hook #'lsp-deferred)
+    (add-hook 'typescriptreact-mode-hook #'lsp-deferred))
 
 #+end_src
 
