@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Diagnostics
 
-- [ ] **DIAG-01**: Verify actual loaded lsp-mode commit hash matches v9.0.0 tag
+- [x] **DIAG-01**: Verify actual loaded lsp-mode commit hash matches v9.0.0 tag
 - [ ] **DIAG-02**: Fix straight.el lockfile to point to correct lsp-mode v9.0.0 commit
-- [ ] **DIAG-03**: Verify Node.js version (via nvm) is sufficient for typescript-language-server
+- [x] **DIAG-03**: Verify Node.js version (via nvm) is sufficient for typescript-language-server
 - [ ] **DIAG-04**: Install typescript-language-server and typescript as npm global packages and pin versions in the codebase
 
 ### Environment
@@ -80,9 +80,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DIAG-01 | Phase 1 | Pending |
+| DIAG-01 | Phase 1 | Complete |
 | DIAG-02 | Phase 2 | Pending |
-| DIAG-03 | Phase 1 | Pending |
+| DIAG-03 | Phase 1 | Complete |
 | DIAG-04 | Phase 2 | Pending |
 | ENV-01 | Phase 1 | Pending |
 | ENV-02 | Phase 1 | Pending |

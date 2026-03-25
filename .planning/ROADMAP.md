@@ -28,7 +28,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Evaluating `(executable-find "typescript-language-server")` in Emacs returns a valid path (or confirms it's not yet installed — either way, the PATH is correct)
 **Plans**: 2 plans
 Plans:
-- [ ] 01-01-PLAN.md — Diagnose lsp-mode version and Node.js environment
+- [x] 01-01-PLAN.md — Diagnose lsp-mode version and Node.js environment
 - [ ] 01-02-PLAN.md — Fix exec-path-from-shell PATH and TypeScript mode routing
 
 ### Phase 2: Fix LSP Connection & Verify Navigation
