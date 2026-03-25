@@ -43,7 +43,7 @@ Plans:
   5. Other language LSPs (Clojure, etc.) are unaffected — no errors on startup or when opening those file types
 **Plans**: 1 plan
 Plans:
-- [ ] 02-01-PLAN.md — Update lsp-mode lockfile to 9.0.0 and verify navigation keybindings
+- [x] 02-01-PLAN.md — Update lsp-mode lockfile to 9.0.0 and verify navigation keybindings
 
 ### Phase 3: Format-on-Save & Code Actions
 **Goal**: TypeScript files auto-format on save and code actions (auto-import, organize imports) are available
