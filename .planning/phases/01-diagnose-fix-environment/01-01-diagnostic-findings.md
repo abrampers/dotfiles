@@ -52,12 +52,39 @@ Date: 2021-07-11 11:40:17 -0300
 
 **Conclusion:** In batch mode, Emacs CAN find both `node` and `typescript-language-server`. The exec-path-from-shell package is working for batch mode. GUI session needs verification (Task 2 checkpoint).
 
+## 4. Emacs GUI Session (Checkpoint Verification)
+
+Verified by user in live Emacs GUI session on 2026-03-25.
+
+### lsp-mode version
+- **`M-x lsp-version`** → `Wrong type argument: package-desc, nil` — **BROKEN**
+  - Confirms lsp-mode is stale/misconfigured; the package-desc is nil meaning straight.el can't resolve the package metadata for this old commit
+- **`M-: (straight--get-recipe 'lsp-mode)`** → `void-function` error
+  - `straight--get-recipe` is internal to straight.el build process, not available at runtime
+
+### Node.js visibility
+- **`(executable-find "node")`** → `/Users/abram.perdanaputra/.nvm/versions/node/v18.20.5/bin/node`
+  - **IMPORTANT:** GUI Emacs sees **v18.20.5**, while terminal defaults to **v22.9.0**
+  - This means exec-path-from-shell captured the PATH at a time when nvm was set to v18
+- **`(executable-find "typescript-language-server")`** → `/Users/abram.perdanaputra/.nvm/versions/node/v22.9.0/bin/typescript-language-server`
+  - typescript-language-server is installed under v22, but node is v18 in Emacs
+  - **Potential mismatch:** tls binary lives under v22 path but Emacs will invoke it with v18's node
+- **`(getenv "NVM_DIR")`** → `/Users/abram.perdanaputra/.nvm` — correct
+- **`(getenv "PATH")`** → Contains `.nvm/versions/` paths — nvm IS visible
+
+### Key GUI Findings
+1. **Node version mismatch between GUI and terminal:** Emacs GUI has v18.20.5 in PATH, terminal has v22.9.0. This is because exec-path-from-shell captures PATH at Emacs launch time, and the nvm default at that point was v18.
+2. **typescript-language-server path mismatch:** tls binary is under v22 path but node is v18 — may work if the binary is compatible, but is fragile.
+3. **lsp-mode is broken:** `lsp-version` fails with nil package-desc, confirming the stale 2021 commit is not functional as a modern lsp-mode.
+
 ## Summary for Plan 02
 
 | Finding | Status | Impact on Plan 02 |
 |---------|--------|--------------------|
 | lsp-mode commit is from 2021, not v9.0.0 | CONFIRMED | Must update lockfile to modern lsp-mode |
-| Node.js v22.9.0 available | OK | No action needed |
-| typescript-language-server v4.3.3 installed | OK | Compatible with modern lsp-mode |
-| Emacs batch-mode finds node/tls | OK | exec-path-from-shell works in batch mode |
-| GUI exec-path state | PENDING | Needs checkpoint verification |
+| Node.js v22.9.0 in terminal | OK | No action needed for terminal |
+| Node.js v18.20.5 in Emacs GUI | MISMATCH | exec-path-from-shell captures nvm default at launch time; Plan 02 should ensure consistent node version |
+| typescript-language-server v4.3.3 installed | OK | Under v22 path; works but fragile with v18 node |
+| NVM_DIR and nvm paths in Emacs | OK | exec-path-from-shell successfully imports PATH with nvm |
+| lsp-version command | BROKEN | Nil package-desc confirms stale lsp-mode needs update |
+| GUI exec-path state | VERIFIED | nvm paths present, node/tls findable but version mismatch |
