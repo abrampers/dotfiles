@@ -58,7 +58,7 @@
  ("let-alist" . "6708ec0b2e6dff80ff5b64698aa009d9070a2ed2")
  ("log4e" . "7df0c1ff4656f8f993b87064b1567618eadb5546")
  ("lsp-ivy" . "bccd86028e669f5a1cad78364775fe7a0741ff93")
- ("lsp-mode" . "bdae0f406d040366193a359ab70f55af30e928ae")
+ ("lsp-mode" . "a478e03cd1a5dc84ad496234fd57241ff9dca57a")
  ("lsp-origami" . "bedea3d25552d6969e917a15a0acc3d333ddc742")
  ("lsp-treemacs" . "905cc74726438cf06d8ad7cabb2efae75aeb2359")
  ("lsp-ui" . "9953a4857227ad83fb18bc295c8c12b1e4d29007")
