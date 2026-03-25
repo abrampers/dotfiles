@@ -1085,6 +1085,8 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     (lsp-clojure-server-command '("bash" "-c" "clojure-lsp"))
     (lsp-file-watch-threshold 5000)
     (lsp-diagnostics-provider :flycheck)
+    (lsp-format-buffer-on-save t)
+    (lsp-format-buffer-on-save-list '(typescript-mode typescriptreact-mode))
     :config
     (lsp-enable-which-key-integration t))
 
@@ -1549,7 +1551,7 @@ I'm following this tutorial [[https://vxlabs.com/2022/06/12/typescript-developme
 
 The following configuration will ensure that tree-sitter's dedicated ==tsx== parser will be used for tsx (typescript + react) files. By default this currently is **not** the case, as it uses the ==typescript== parser which does not understand ==tsx== extensions.
 
-Here we create a derived mode for TSX files and configure separate mode routing: ==.ts== files use ==typescript-mode== and ==.tsx== files use ==typescriptreact-mode==. Each mode has its own tree-sitter parser mapping and ==lsp-deferred== hook.
+Here we create a derived mode for TSX files and configure separate mode routing: ==.ts== files use ==typescript-mode== and ==.tsx== files use ==typescriptreact-mode==. Each mode has its own tree-sitter parser mapping, ==lsp-deferred== hook, and buffer-local ==lsp-organize-imports== before-save hook. Format-on-save is handled globally by ==lsp-format-buffer-on-save== with a mode list that includes only TypeScript modes.
 
 #+begin_src emacs-lisp
 
@@ -1561,6 +1563,10 @@ Here we create a derived mode for TSX files and configure separate mode routing:
     (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
     (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx))
     (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-mode . typescript))
+    (add-hook 'typescript-mode-hook
+              (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
+    (add-hook 'typescriptreact-mode-hook
+              (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
     :init
     (add-hook 'typescript-mode-hook #'lsp-deferred)
     (add-hook 'typescriptreact-mode-hook #'lsp-deferred))
