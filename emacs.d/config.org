@@ -80,7 +80,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (straight-use-package 'use-package)
 
   (setq straight-use-package-by-default t)
-  (setq straight-vc-git-default-protocol 'https)
+  (setq straight-vc-git-default-protocol 'ssh)
 
 #+end_src
 
@@ -95,7 +95,11 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (use-package gruvbox-theme)
   (use-package material-theme)
   (use-package night-owl-theme)
-  (use-package nord-theme)
+  (use-package nord-theme
+    :straight (:host github
+               :repo "nordtheme/emacs"
+               :branch "main"
+               :tag "v0.6.0"))
   (use-package ayu-theme)
   (use-package seti-theme)
 
@@ -288,7 +292,7 @@ When running emacs from the app, emacs won't have the user's shell environment v
     (setq exec-path-from-shell-check-startup-files nil)
     :config
     (exec-path-from-shell-copy-env "GOPATH")
-    (exec-path-from-shell-copy-env "PYENV_ROOT")
+    ;; (exec-path-from-shell-copy-env "PYENV_ROOT")
     (exec-path-from-shell-initialize))
 
 #+end_src
