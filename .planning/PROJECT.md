@@ -26,15 +26,18 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 - ✓ straight.el + use-package package management — existing
 - ✓ Auto-mode-alist correctly routes .ts and .tsx to appropriate modes — Validated in Phase 1: Diagnose & Fix Environment
 - ✓ Emacs inherits nvm-managed Node.js PATH (`executable-find "node"` returns nvm path) — Validated in Phase 1
+- ✓ lsp-mode lockfile updated to 9.0.0 tag commit — ts-ls connects without `--tsserver-path` error — Validated in Phase 2
+- ✓ LSP keybindings (gd/gi/gr/gy/,r) work in .ts and .tsx files — Validated in Phase 2
+- ✓ Go LSP (gopls) unaffected by lsp-mode update — Validated in Phase 2
+- ✓ Other language LSPs (Clojure) unaffected — Validated in Phase 2
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Fix ts-ls error: `unknown option '--tsserver-path'` (version mismatch between lsp-mode and typescript-language-server v4.x)
-- [ ] Determine best lsp-mode + LSP server combination for Next.js/TypeScript in 2025
-- [ ] LSP keybindings (gd, gi, gr, gy, ,r) work in .ts and .tsx files
 - [ ] Format-on-save for TypeScript/TSX files
+- [x] ~~Fix ts-ls error: `unknown option '--tsserver-path'`~~ → moved to Validated
+- [x] ~~LSP keybindings (gd, gi, gr, gy, ,r) work in .ts and .tsx files~~ → moved to Validated
 - [x] ~~Auto-mode-alist correctly routes .ts and .tsx to appropriate modes~~ → moved to Validated
 
 ### Out of Scope
@@ -48,12 +51,12 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 ## Context
 
 - Emacs config is a literate Org-mode file (`emacs.d/config.org`, ~2168 lines) managed by straight.el + use-package
-- lsp-mode lockfile pins commit `bdae0f406d` from **2021** — NOT the v9.0.0 tag. `M-x lsp-version` returns nil (broken). Lockfile overrides `:tag` in config.org. This stale version passes `--tsserver-path` which typescript-language-server v4.x rejects.
+- lsp-mode lockfile now pins commit `a478e03cd1` (tag 9.0.0). Previously pinned stale 2021 commit that passed `--tsserver-path`.
 - The LSP keybindings are defined once in `abram/evil-lsp-keybindings` (config.org:1145-1151) and hooked into all lsp-mode buffers — so they'll automatically apply to any buffer where lsp-mode activates
 - typescript-mode hooks now use `#'lsp-deferred` (matching Go pattern), .ts and .tsx route to separate modes
 - Node.js v22.9.0 via nvm (terminal), v18.20.5 in Emacs GUI (nvm default at launch). Both work. typescript-language-server v4.3.3 installed under v22.
-- The disabled rjsx-mode block (`:tangle no`, config.org:1507-1529) is irrelevant
 - Go LSP (gopls) works, confirming lsp-mode infrastructure is sound
+- LSP connects and keybindings work in .ts and .tsx files — core value delivered
 
 ## Constraints
 
@@ -69,8 +72,8 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Fix ts-ls compatibility rather than switch LSP client | lsp-mode works for Go; the issue is version mismatch, not lsp-mode itself | — Pending |
-| Research best LSP server for Next.js before committing | typescript-language-server v4.x changed API; need to verify best option in 2025 | — Pending |
+| Fix ts-ls compatibility rather than switch LSP client | lsp-mode works for Go; the issue is version mismatch, not lsp-mode itself | ✓ Confirmed — lockfile update fixed it |
+| Research best LSP server for Next.js before committing | typescript-language-server v4.x changed API; need to verify best option in 2025 | ✓ ts-ls with typescript-language-server v4.3.3 works after lsp-mode 9.0.0 |
 | TS/TSX only, no JS/JSX | User's Next.js project is TypeScript-only | — Pending |
 | Format-on-save via LSP formatter | Simplest integration with existing lsp-mode setup | — Pending |
 
@@ -92,4 +95,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after Phase 1 completion*
+*Last updated: 2026-03-25 after Phase 2 completion*
