@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-25T11:10:45.624Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-03-25T11:22:15.979Z"
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -47,6 +47,7 @@ Plan: 2 of 2
 
 *Updated after each plan completion*
 | Phase 01 P01 | 15min | 2 tasks | 1 files |
+| Phase 01 P02 | 8min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -60,6 +61,8 @@ Recent decisions affecting current work:
 - [Phase 01]: lsp-mode lockfile commit bdae0f406d is from 2021-07-11, NOT v9.0.0 — straight.el lockfile overrides :tag in config.org
 - [Phase 01]: Node version mismatch: Emacs GUI sees v18.20.5, terminal v22.9.0 — exec-path-from-shell captures PATH at launch time
 - [Phase 01]: exec-path-from-shell works for PATH including nvm — no PATH fix needed, only lsp-mode update required
+- [Phase 01]: NVM_DIR added to exec-path-from-shell — ensures Emacs GUI has NVM_DIR env var for tools that reference it directly
+- [Phase 01]: Split .ts/.tsx mode routing with lsp-deferred hooks — matches go-mode pattern, prevents eager LSP startup
 
 ### Pending Todos
 
@@ -72,6 +75,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T11:10:45.620Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-03-25T11:22:15.976Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None

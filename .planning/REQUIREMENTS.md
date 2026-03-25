@@ -16,8 +16,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Environment
 
-- [ ] **ENV-01**: Emacs inherits nvm-managed Node.js PATH so that LSP servers installed via npm are discoverable
-- [ ] **ENV-02**: exec-path-from-shell config updated to ensure nvm shims are on Emacs exec-path
+- [x] **ENV-01**: Emacs inherits nvm-managed Node.js PATH so that LSP servers installed via npm are discoverable
+- [x] **ENV-02**: exec-path-from-shell config updated to ensure nvm shims are on Emacs exec-path
 
 ### LSP Navigation
 
@@ -84,8 +84,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DIAG-02 | Phase 2 | Pending |
 | DIAG-03 | Phase 1 | Complete |
 | DIAG-04 | Phase 2 | Pending |
-| ENV-01 | Phase 1 | Pending |
-| ENV-02 | Phase 1 | Pending |
+| ENV-01 | Phase 1 | Complete |
+| ENV-02 | Phase 1 | Complete |
 | NAV-01 | Phase 2 | Pending |
 | NAV-02 | Phase 2 | Pending |
 | NAV-03 | Phase 2 | Pending |

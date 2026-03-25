@@ -12,7 +12,7 @@ Fix the version mismatch between lsp-mode and typescript-language-server that pr
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Diagnose & Fix Environment** - Establish ground truth about lsp-mode version, Node.js, and Emacs PATH before changing anything
+- [x] **Phase 1: Diagnose & Fix Environment** - Establish ground truth about lsp-mode version, Node.js, and Emacs PATH before changing anything
 - [ ] **Phase 2: Fix LSP Connection & Verify Navigation** - Fix the lsp-mode/typescript-language-server version mismatch and confirm all 5 navigation keybindings work
 - [ ] **Phase 3: Format-on-Save & Code Actions** - Add buffer-local format-on-save and auto-import as new config.org features
 
@@ -29,7 +29,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 Plans:
 - [x] 01-01-PLAN.md — Diagnose lsp-mode version and Node.js environment
-- [ ] 01-02-PLAN.md — Fix exec-path-from-shell PATH and TypeScript mode routing
+- [x] 01-02-PLAN.md — Fix exec-path-from-shell PATH and TypeScript mode routing
 
 ### Phase 2: Fix LSP Connection & Verify Navigation
 **Goal**: LSP connects successfully in .ts and .tsx files, and all 5 navigation keybindings work at Go-parity
@@ -62,6 +62,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Diagnose & Fix Environment | 0/2 | Planned | - |
+| 1. Diagnose & Fix Environment | 2/2 | Complete | 2026-03-25 |
 | 2. Fix LSP Connection & Verify Navigation | 0/0 | Not started | - |
 | 3. Format-on-Save & Code Actions | 0/0 | Not started | - |
