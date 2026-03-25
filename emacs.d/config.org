@@ -1085,8 +1085,6 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     (lsp-clojure-server-command '("bash" "-c" "clojure-lsp"))
     (lsp-file-watch-threshold 5000)
     (lsp-diagnostics-provider :flycheck)
-    (lsp-format-buffer-on-save t)
-    (lsp-format-buffer-on-save-list '(typescript-mode typescriptreact-mode))
     :config
     (lsp-enable-which-key-integration t))
 
@@ -1505,32 +1503,6 @@ Use electric pair mode on c/c++ mode
 
 #+end_src
 
-*** JavaScript
-
-#+begin_src emacs-lisp :tangle no
-
-  (defun abrampers/set-js-indentation ()
-    (setq-default js-indent-level 2)
-    (setq evil-shift-width js-indent-level)
-    (setq tab-width 2))
-
-  (add-to-list 'magic-mode-alist '("#!/user/bin/env node" . js-mode))
-  (add-hook 'js-mode-hook #'abrampers/set-js-indentation)
-  (add-hook 'json-mode-hook #'abrampers/set-js-indentation)
-  (add-hook 'js-mode-hook 'electric-pair-local-mode)
-  ;; (add-hook 'before-save-hook #'lsp-format-buffer)
-  ;; (add-hook 'before-save-hook #'lsp-organize-imports)
-
-  (defun abrampers/set-eslint-config()
-    (setq lsp-eslint-auto-fix-on-save t))
-
-  (use-package rjsx-mode
-    :mode "\\.jsx\\'"
-    :custom
-    (js2-mode-show-parse-errors nil)
-    (js2-mode-show-strict-warnings nil))
-#+end_src
-
 *** TypeScript
 
 I'm following this tutorial [[https://vxlabs.com/2022/06/12/typescript-development-with-emacs-tree-sitter-and-lsp-in-2022][this tutorial]] to setup javascript development environment.
@@ -1551,12 +1523,14 @@ I'm following this tutorial [[https://vxlabs.com/2022/06/12/typescript-developme
 
 The following configuration will ensure that tree-sitter's dedicated ==tsx== parser will be used for tsx (typescript + react) files. By default this currently is **not** the case, as it uses the ==typescript== parser which does not understand ==tsx== extensions.
 
-Here we create a derived mode for TSX files and configure separate mode routing: ==.ts== files use ==typescript-mode== and ==.tsx== files use ==typescriptreact-mode==. Each mode has its own tree-sitter parser mapping, ==lsp-deferred== hook, and buffer-local ==lsp-organize-imports== before-save hook. Format-on-save is handled globally by ==lsp-format-buffer-on-save== with a mode list that includes only TypeScript modes.
+Here we create a derived mode for TSX files and configure separate mode routing: ==.ts== files use ==typescript-mode== and ==.tsx== files use ==typescriptreact-mode==. Each mode has its own tree-sitter parser mapping, ==lsp-deferred== hook, and buffer-local ==lsp-organize-imports== before-save hook. Format-on-save is handled by ==lsp-eslint-auto-fix-on-save== which runs ==eslint --fix== on save — this invokes Prettier through the ESLint plugin, respecting the project's ==.prettierrc.json== settings (including ==tabWidth==).
 
 #+begin_src emacs-lisp
 
   (use-package typescript-mode
     :after tree-sitter
+    :custom
+    (typescript-indent-level 2)
     :config
     (define-derived-mode typescriptreact-mode typescript-mode "TypeScript TSX")
     (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescriptreact-mode))
@@ -1569,7 +1543,11 @@ Here we create a derived mode for TSX files and configure separate mode routing:
               (lambda () (add-hook 'before-save-hook #'lsp-organize-imports nil t)))
     :init
     (add-hook 'typescript-mode-hook #'lsp-deferred)
-    (add-hook 'typescriptreact-mode-hook #'lsp-deferred))
+    (add-hook 'typescriptreact-mode-hook #'lsp-deferred)
+    (add-hook 'typescript-mode-hook
+              (lambda () (setq-local lsp-eslint-auto-fix-on-save t)))
+    (add-hook 'typescriptreact-mode-hook
+              (lambda () (setq-local lsp-eslint-auto-fix-on-save t))))
 
 #+end_src
 
