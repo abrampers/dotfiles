@@ -24,6 +24,8 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 - ✓ company-mode completion framework — existing
 - ✓ lsp-ui, lsp-treemacs, lsp-ivy supporting packages — existing
 - ✓ straight.el + use-package package management — existing
+- ✓ Auto-mode-alist correctly routes .ts and .tsx to appropriate modes — Validated in Phase 1: Diagnose & Fix Environment
+- ✓ Emacs inherits nvm-managed Node.js PATH (`executable-find "node"` returns nvm path) — Validated in Phase 1
 
 ### Active
 
@@ -33,7 +35,7 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 - [ ] Determine best lsp-mode + LSP server combination for Next.js/TypeScript in 2025
 - [ ] LSP keybindings (gd, gi, gr, gy, ,r) work in .ts and .tsx files
 - [ ] Format-on-save for TypeScript/TSX files
-- [ ] Auto-mode-alist correctly routes .ts and .tsx to appropriate modes
+- [x] ~~Auto-mode-alist correctly routes .ts and .tsx to appropriate modes~~ → moved to Validated
 
 ### Out of Scope
 
@@ -46,12 +48,11 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 ## Context
 
 - Emacs config is a literate Org-mode file (`emacs.d/config.org`, ~2168 lines) managed by straight.el + use-package
-- lsp-mode is pinned to v9.0.0 via straight.el tag. This version passes `--tsserver-path` to typescript-language-server, which was removed in typescript-language-server v4.x
+- lsp-mode lockfile pins commit `bdae0f406d` from **2021** — NOT the v9.0.0 tag. `M-x lsp-version` returns nil (broken). Lockfile overrides `:tag` in config.org. This stale version passes `--tsserver-path` which typescript-language-server v4.x rejects.
 - The LSP keybindings are defined once in `abram/evil-lsp-keybindings` (config.org:1145-1151) and hooked into all lsp-mode buffers — so they'll automatically apply to any buffer where lsp-mode activates
-- typescript-mode already has LSP hooks (config.org:1562-1563) calling `#'lsp`, and typescriptreact-mode is derived from it
-- auto-mode-alist maps `\.tsx?\` to typescriptreact-mode (config.org:1558)
+- typescript-mode hooks now use `#'lsp-deferred` (matching Go pattern), .ts and .tsx route to separate modes
+- Node.js v22.9.0 via nvm (terminal), v18.20.5 in Emacs GUI (nvm default at launch). Both work. typescript-language-server v4.3.3 installed under v22.
 - The disabled rjsx-mode block (`:tangle no`, config.org:1507-1529) is irrelevant
-- Node.js managed via nvm, so `typescript-language-server` would be installed via npm
 - Go LSP (gopls) works, confirming lsp-mode infrastructure is sound
 
 ## Constraints
@@ -91,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after initialization*
+*Last updated: 2026-03-25 after Phase 1 completion*
