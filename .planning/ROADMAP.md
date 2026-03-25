@@ -26,7 +26,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. User can verify which lsp-mode commit is actually loaded (not just what the tag says) by running `M-x lsp-version` or inspecting `(straight--get-recipe 'lsp-mode)`
   2. Evaluating `(executable-find "node")` in Emacs returns the nvm-managed Node.js path (not nil or a system Node)
   3. Evaluating `(executable-find "typescript-language-server")` in Emacs returns a valid path (or confirms it's not yet installed — either way, the PATH is correct)
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — Diagnose lsp-mode version and Node.js environment
+- [ ] 01-02-PLAN.md — Fix exec-path-from-shell PATH and TypeScript mode routing
 
 ### Phase 2: Fix LSP Connection & Verify Navigation
 **Goal**: LSP connects successfully in .ts and .tsx files, and all 5 navigation keybindings work at Go-parity
@@ -59,6 +62,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Diagnose & Fix Environment | 0/0 | Not started | - |
+| 1. Diagnose & Fix Environment | 0/2 | Planned | - |
 | 2. Fix LSP Connection & Verify Navigation | 0/0 | Not started | - |
 | 3. Format-on-Save & Code Actions | 0/0 | Not started | - |
