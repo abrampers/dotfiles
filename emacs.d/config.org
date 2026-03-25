@@ -292,6 +292,7 @@ When running emacs from the app, emacs won't have the user's shell environment v
     (setq exec-path-from-shell-check-startup-files nil)
     :config
     (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "NVM_DIR")
     ;; (exec-path-from-shell-copy-env "PYENV_ROOT")
     (exec-path-from-shell-initialize))
 
