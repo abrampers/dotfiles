@@ -284,6 +284,24 @@ When running emacs from the app, emacs won't have the user's shell environment v
 
 #+begin_src emacs-lisp
 
+  ;; gvm may set GOPATH correctly while leaving an older ~/bin/gopls earlier on PATH.
+  ;; Prefer the active GOPATH's bin directory so executable-find resolves the same gopls.
+  (defun abram/prepend-path-entry (path)
+    (when path
+      (setq exec-path (cons path (delete path exec-path)))
+      (setenv "PATH"
+              (mapconcat #'identity
+                         (cons path
+                               (delete path
+                                       (split-string (or (getenv "PATH") "") path-separator t)))
+                         path-separator))))
+
+  (defun abram/prefer-gopath-bin ()
+    (when-let ((gopath (getenv "GOPATH")))
+      (abram/prepend-path-entry
+       (expand-file-name "bin"
+                         (car (split-string gopath path-separator t))))))
+
   (use-package exec-path-from-shell
     :if (or (memq window-system '(mac ns x)) (daemonp))
     :custom
@@ -294,7 +312,8 @@ When running emacs from the app, emacs won't have the user's shell environment v
     (exec-path-from-shell-copy-env "GOPATH")
     (exec-path-from-shell-copy-env "NVM_DIR")
     ;; (exec-path-from-shell-copy-env "PYENV_ROOT")
-    (exec-path-from-shell-initialize))
+    (exec-path-from-shell-initialize)
+    (abram/prefer-gopath-bin))
 
 #+end_src
 
