@@ -85,6 +85,7 @@ LSP code navigation (gd, gi, gr, gy, ,r) works reliably in .ts and .tsx files in
 | Research best LSP server for Next.js before committing | typescript-language-server v4.x changed API; need to verify best option in 2025 | ✓ ts-ls with typescript-language-server v4.3.3 works after lsp-mode 9.0.0 |
 | TS/TSX only, no JS/JSX | User's Next.js project is TypeScript-only | — Confirmed |
 | Format-on-save via ESLint+Prettier | User's project uses eslint-plugin-prettier; ESLint auto-fix respects .prettierrc.json (tabWidth: 2) | ✓ Confirmed — lsp-eslint-auto-fix-on-save works |
+| Prefer `GOPATH/bin` after shell import for Go tools | gvm exported the right `GOPATH`, but stale `~/bin/gopls` stayed earlier on `PATH`, so `executable-find` chose the wrong binary | ✓ Confirmed — Emacs now resolves the active-session `gopls` |
 
 ## Evolution
 
@@ -104,4 +105,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-25 after Phase 3 completion — all phases complete*
+*Last updated: 2026-03-26 after quick fix for active-session gopls path resolution*

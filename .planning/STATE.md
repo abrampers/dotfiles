@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Milestone complete
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-25T12:32:17.222Z"
+stopped_at: Completed quick task 260326-rcr
+last_updated: "2026-03-26T04:23:31.295Z"
 progress:
   total_phases: 3
   completed_phases: 3
@@ -66,6 +66,7 @@ Recent decisions affecting current work:
 - [Phase 01]: Split .ts/.tsx mode routing with lsp-deferred hooks — matches go-mode pattern, prevents eager LSP startup
 - [Phase 03]: Switched from lsp-format-buffer-on-save to lsp-eslint-auto-fix-on-save for TypeScript formatting — user's project uses ESLint+Prettier
 - [Phase 03]: Set typescript-indent-level to 2 to match project Prettier tabWidth
+- [Quick 260326-rcr]: Emacs now prepends active `GOPATH/bin` after shell import so `executable-find` resolves the gvm session's `gopls` instead of stale `~/bin/gopls`
 
 ### Pending Todos
 
@@ -78,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T12:30:36.692Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-26T04:23:31.295Z
+Stopped at: Completed quick task 260326-rcr
 Resume file: None
