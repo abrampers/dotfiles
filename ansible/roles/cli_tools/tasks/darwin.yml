@@ -1,0 +1,47 @@
+---
+- name: cli_tools | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    cli_tools_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: cli_tools | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ cli_tools_homebrew_bin }}"
+  register: cli_tools_homebrew
+
+- name: cli_tools | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - cli_tools_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ cli_tools_homebrew_bin }} before cli_tools runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ cli_tools_homebrew_bin }} for cli_tools installs."
+
+- name: cli_tools | darwin | configure taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ cli_tools_homebrew_taps }}"
+  when: cli_tools_homebrew_taps | length > 0
+
+- name: cli_tools | darwin | install formulae
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ cli_tools_homebrew_formulae }}"
+  when: cli_tools_homebrew_formulae | length > 0
+
+- name: cli_tools | darwin | install casks
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ cli_tools_homebrew_casks }}"
+  when: cli_tools_homebrew_casks | length > 0

@@ -1,4 +1,9 @@
 ---
-- name: cli_tools | role contract placeholder
+- name: cli_tools | darwin | import platform tasks
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: cli_tools | unsupported platform placeholder
   ansible.builtin.debug:
-    msg: "CLI tools will own shared command-line packages here."
+    msg: "cli_tools role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'
