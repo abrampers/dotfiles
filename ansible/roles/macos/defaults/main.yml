@@ -1,3 +1,21 @@
 ---
-macos_homebrew_formulae: []
-macos_homebrew_casks: []
+macos_homebrew_taps:
+  - koekeishiya/formulae
+macos_homebrew_formulae:
+  - yabai
+  - skhd
+macos_homebrew_casks:
+  - karabiner-elements
+  - stats
+  - font-source-code-pro-for-powerline
+  - font-sauce-code-pro-nerd-font
+macos_binary_assertions:
+  - name: yabai
+    path: /opt/homebrew/bin/yabai
+  - name: skhd
+    path: /opt/homebrew/bin/skhd
+macos_app_assertions:
+  - name: Karabiner-Elements
+    path: /Applications/Karabiner-Elements.app
+  - name: Stats
+    path: /Applications/Stats.app

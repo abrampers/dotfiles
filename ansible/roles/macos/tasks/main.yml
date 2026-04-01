@@ -1,4 +1,9 @@
 ---
-- name: macos | role contract placeholder
+- name: macos | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: macos | unsupported platform placeholder
   ansible.builtin.debug:
-    msg: "macOS will own yabai, skhd, Karabiner, and desktop tooling here."
+    msg: "macos role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'
