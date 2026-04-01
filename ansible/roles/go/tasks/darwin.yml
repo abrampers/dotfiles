@@ -1,0 +1,100 @@
+---
+- name: go | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    go_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+    go_gvm_script: >-
+      {{
+        go_gvm_script_arm64
+        if ansible_facts['architecture'] == 'arm64'
+        else go_gvm_script_x86_64
+      }}
+    go_runtime_install_dir: "{{ ansible_env.HOME }}/.gvm/gos/{{ go_runtime_version }}"
+    go_gopls_path: "{{ ansible_env.HOME }}/.gvm/pkgsets/{{ go_runtime_version }}/global/bin/gopls"
+  changed_when: false
+
+- name: go | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ go_homebrew_bin }}"
+  register: go_homebrew
+
+- name: go | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - go_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ go_homebrew_bin }} before the go role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ go_homebrew_bin }} for Go installs."
+
+- name: go | darwin | install gvm
+  community.general.homebrew:
+    name: gvm
+    state: present
+
+- name: go | darwin | check gvm script
+  ansible.builtin.stat:
+    path: "{{ go_gvm_script }}"
+  register: go_gvm
+  changed_when: false
+
+- name: go | darwin | assert gvm script exists
+  ansible.builtin.assert:
+    that:
+      - go_gvm.stat.exists
+    fail_msg: "Expected gvm script at {{ go_gvm_script }} after installing gvm."
+    success_msg: "gvm script detected at {{ go_gvm_script }}."
+
+- name: go | darwin | check Go runtime install
+  ansible.builtin.stat:
+    path: "{{ go_runtime_install_dir }}"
+  register: go_runtime
+  changed_when: false
+
+- name: go | darwin | preview gvm install
+  ansible.builtin.debug:
+    msg: "Check mode: would source {{ go_gvm_script }} and run gvm install {{ go_runtime_version }} && gvm use {{ go_runtime_version }} --default"
+  when:
+    - ansible_check_mode
+    - not go_runtime.stat.exists
+
+- name: go | darwin | install Go runtime with gvm
+  ansible.builtin.shell: |
+    source "{{ go_gvm_script }}"
+    gvm install "{{ go_runtime_version }}"
+    gvm use "{{ go_runtime_version }}" --default
+  args:
+    executable: /bin/bash
+  when:
+    - not ansible_check_mode
+    - not go_runtime.stat.exists
+
+- name: go | darwin | check gopls binary
+  ansible.builtin.stat:
+    path: "{{ go_gopls_path }}"
+  register: go_gopls
+  changed_when: false
+
+- name: go | darwin | preview gopls install
+  ansible.builtin.debug:
+    msg: "Check mode: would source {{ go_gvm_script }}, use {{ go_runtime_version }}, and run go install {{ go_gopls_package }}"
+  when:
+    - ansible_check_mode
+    - not go_gopls.stat.exists
+
+- name: go | darwin | install gopls with gvm-managed go
+  ansible.builtin.shell: |
+    source "{{ go_gvm_script }}"
+    gvm use "{{ go_runtime_version }}" --default
+    go install "{{ go_gopls_package }}"
+  args:
+    executable: /bin/bash
+  when:
+    - not ansible_check_mode
+    - not go_gopls.stat.exists

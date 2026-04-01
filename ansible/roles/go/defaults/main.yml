@@ -1,0 +1,5 @@
+---
+go_runtime_version: go1.24.2
+go_gopls_package: golang.org/x/tools/gopls@latest
+go_gvm_script_arm64: /opt/homebrew/opt/gvm/scripts/gvm
+go_gvm_script_x86_64: /usr/local/opt/gvm/scripts/gvm
