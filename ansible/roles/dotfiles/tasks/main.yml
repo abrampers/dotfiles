@@ -15,13 +15,28 @@
       Run the package_manager role first so rcm is available.
     success_msg: "rcup detected for dotfiles deployment."
 
+- name: dotfiles | preview rcrc bootstrap
+  ansible.builtin.debug:
+    msg: "Check mode: would run rcup rcrc before full dotfiles deployment."
+  when:
+    - ansible_check_mode
+    - dotfiles_rcrc_bootstrap_args | length > 0
+
 - name: dotfiles | bootstrap rcrc
   ansible.builtin.command:
     argv:
       - rcup
       - rcrc
-  when: dotfiles_rcrc_bootstrap_args | length > 0
+  when:
+    - not ansible_check_mode
+    - dotfiles_rcrc_bootstrap_args | length > 0
+
+- name: dotfiles | preview full dotfiles deployment
+  ansible.builtin.debug:
+    msg: "Check mode: would run {{ ((['rcup'] + dotfiles_rcup_flags) | join(' ')) }}."
+  when: ansible_check_mode
 
 - name: dotfiles | deploy dotfiles
   ansible.builtin.command:
     argv: "{{ ['rcup'] + dotfiles_rcup_flags }}"
+  when: not ansible_check_mode
