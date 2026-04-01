@@ -23,6 +23,15 @@
   when:
     - install_homebrew_if_missing
     - not bootstrap_homebrew_x86_64.stat.exists
+    - not ansible_check_mode
+
+- name: bootstrap | x86_64 | check mode install preview
+  ansible.builtin.debug:
+    msg: "Homebrew would be installed at {{ bootstrap_homebrew_bin_x86_64 }} when not running in check mode."
+  when:
+    - install_homebrew_if_missing
+    - not bootstrap_homebrew_x86_64.stat.exists
+    - ansible_check_mode
 
 - name: bootstrap | x86_64 | Homebrew contract
   ansible.builtin.set_fact:
