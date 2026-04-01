@@ -1,4 +1,47 @@
 ---
-- name: package_manager | darwin contract placeholder
-  ansible.builtin.debug:
-    msg: "Package manager tasks will own Homebrew taps, formulae, and casks here."
+- name: package_manager | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    package_manager_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: package_manager | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ package_manager_homebrew_bin }}"
+  register: package_manager_homebrew
+
+- name: package_manager | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - package_manager_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ package_manager_homebrew_bin }} before package_manager runs.
+      Run the bootstrap role first or enable install_homebrew_if_missing for bootstrap.
+    success_msg: "Homebrew detected at {{ package_manager_homebrew_bin }} for package_manager."
+
+- name: package_manager | darwin | configure taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ package_manager_homebrew_taps }}"
+  when: package_manager_homebrew_taps | length > 0
+
+- name: package_manager | darwin | install formulae
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ package_manager_homebrew_formulae }}"
+  when: package_manager_homebrew_formulae | length > 0
+
+- name: package_manager | darwin | install casks
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ package_manager_homebrew_casks }}"
+  when: package_manager_homebrew_casks | length > 0

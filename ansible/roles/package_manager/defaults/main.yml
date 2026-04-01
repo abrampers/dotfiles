@@ -1,2 +1,5 @@
 ---
 package_manager_homebrew_taps: []
+package_manager_homebrew_formulae:
+  - rcm
+package_manager_homebrew_casks: []
