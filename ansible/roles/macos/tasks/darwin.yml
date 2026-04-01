@@ -51,3 +51,43 @@
   loop_control:
     label: "{{ item }}"
   when: macos_homebrew_casks | length > 0
+
+- name: macos | darwin | check binary assertions
+  ansible.builtin.stat:
+    path: "{{ item.path }}"
+  register: macos_binary_stats
+  changed_when: false
+  loop: "{{ macos_binary_assertions }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: macos | darwin | check app assertions
+  ansible.builtin.stat:
+    path: "{{ item.path }}"
+  register: macos_app_stats
+  changed_when: false
+  loop: "{{ macos_app_assertions }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: macos | darwin | assert binary installs
+  ansible.builtin.assert:
+    that:
+      - item.stat.exists
+    fail_msg: "Expected {{ item.item.name }} at {{ item.item.path }} after macos role install."
+    success_msg: "Verified {{ item.item.name }} at {{ item.item.path }}."
+  loop: "{{ macos_binary_stats.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: not ansible_check_mode
+
+- name: macos | darwin | assert app installs
+  ansible.builtin.assert:
+    that:
+      - item.stat.exists
+    fail_msg: "Expected {{ item.item.name }} at {{ item.item.path }} after macos role install."
+    success_msg: "Verified {{ item.item.name }} at {{ item.item.path }}."
+  loop: "{{ macos_app_stats.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: not ansible_check_mode
