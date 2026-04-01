@@ -1,0 +1,21 @@
+---
+- name: emacs | darwin x86_64 | verify Emacs app source
+  ansible.builtin.stat:
+    path: "{{ editors_emacs_app_source_x86_64 }}"
+  register: emacs_app_x86_64
+  changed_when: false
+
+- name: emacs | darwin x86_64 | assert Emacs app source exists
+  ansible.builtin.assert:
+    that:
+      - emacs_app_x86_64.stat.exists
+    fail_msg: >-
+      Expected Intel Emacs app at {{ editors_emacs_app_source_x86_64 }} after installing
+      {{ editors_emacs_formula }}.
+    success_msg: "Intel Emacs app detected at {{ editors_emacs_app_source_x86_64 }}."
+
+- name: emacs | darwin x86_64 | link Emacs app
+  ansible.builtin.file:
+    src: "{{ editors_emacs_app_source_x86_64 }}"
+    dest: "{{ editors_emacs_app_destination }}"
+    state: link

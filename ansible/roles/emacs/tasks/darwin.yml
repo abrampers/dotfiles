@@ -1,0 +1,51 @@
+---
+- name: emacs | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    emacs_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: emacs | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ emacs_homebrew_bin }}"
+  register: emacs_homebrew
+
+- name: emacs | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - emacs_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ emacs_homebrew_bin }} before the emacs role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ emacs_homebrew_bin }} for Emacs installs."
+
+- name: emacs | darwin | configure emacs-plus tap
+  community.general.homebrew_tap:
+    name: d12frosted/emacs-plus
+    state: present
+
+- name: emacs | darwin | install Emacs formula
+  community.general.homebrew:
+    name: "{{ editors_emacs_formula }}"
+    install_options: "{{ editors_emacs_install_options }}"
+    state: present
+
+- name: emacs | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: emacs | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: emacs | darwin unsupported architecture placeholder
+  ansible.builtin.debug:
+    msg: "Emacs role currently has app linking for arm64 and x86_64 only."
+  changed_when: false
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
