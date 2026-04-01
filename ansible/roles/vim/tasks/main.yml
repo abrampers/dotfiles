@@ -1,0 +1,9 @@
+---
+- name: vim | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: vim | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "Vim role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'

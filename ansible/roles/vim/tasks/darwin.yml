@@ -1,0 +1,43 @@
+---
+- name: vim | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    vim_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: vim | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ vim_homebrew_bin }}"
+  register: vim_homebrew
+
+- name: vim | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - vim_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ vim_homebrew_bin }} before the vim role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ vim_homebrew_bin }} for Vim installs."
+
+- name: vim | darwin | install neovim
+  community.general.homebrew:
+    name: neovim
+    state: present
+
+- name: vim | darwin | ensure vim-plug directory exists
+  ansible.builtin.file:
+    path: "{{ editors_vim_plug_path | dirname }}"
+    state: directory
+    mode: '0755'
+
+- name: vim | darwin | install vim-plug
+  ansible.builtin.get_url:
+    url: "{{ editors_vim_plug_url }}"
+    dest: "{{ editors_vim_plug_path }}"
+    mode: '0644'
