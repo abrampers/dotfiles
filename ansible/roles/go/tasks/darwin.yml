@@ -9,12 +9,7 @@
           else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
         )
       }}
-    go_gvm_script: >-
-      {{
-        go_gvm_script_arm64
-        if ansible_facts['architecture'] == 'arm64'
-        else go_gvm_script_x86_64
-      }}
+    go_gvm_script: "{{ ansible_env.HOME }}/.gvm/scripts/gvm"
     go_runtime_install_dir: "{{ ansible_env.HOME }}/.gvm/gos/{{ go_runtime_version }}"
     go_gopls_path: "{{ ansible_env.HOME }}/.gvm/pkgsets/{{ go_runtime_version }}/global/bin/gopls"
   changed_when: false
@@ -33,9 +28,9 @@
       Run bootstrap first or enable install_homebrew_if_missing there.
     success_msg: "Homebrew detected at {{ go_homebrew_bin }} for Go installs."
 
-- name: go | darwin | install gvm
+- name: go | darwin | install mercurial prerequisite
   community.general.homebrew:
-    name: gvm
+    name: mercurial
     state: present
 
 - name: go | darwin | check gvm script
@@ -47,8 +42,38 @@
 - name: go | darwin | assert gvm script exists
   ansible.builtin.assert:
     that:
-      - go_gvm.stat.exists
+      - go_gvm.stat.exists or ansible_check_mode
     fail_msg: "Expected gvm script at {{ go_gvm_script }} after installing gvm."
+    success_msg: "gvm script detected at {{ go_gvm_script }}."
+
+- name: go | darwin | preview gvm installer
+  ansible.builtin.debug:
+    msg: "Check mode: would run bash < <(curl -s -S -L {{ go_gvm_installer_url }})"
+  when:
+    - ansible_check_mode
+    - not go_gvm.stat.exists
+
+- name: go | darwin | install gvm
+  ansible.builtin.shell: |
+    export GVM_NO_UPDATE_PROFILE=1
+    bash < <(curl -s -S -L "{{ go_gvm_installer_url }}")
+  args:
+    executable: /bin/bash
+  when:
+    - not ansible_check_mode
+    - not go_gvm.stat.exists
+
+- name: go | darwin | recheck gvm script
+  ansible.builtin.stat:
+    path: "{{ go_gvm_script }}"
+  register: go_gvm_post_install
+  changed_when: false
+
+- name: go | darwin | assert gvm installer succeeded
+  ansible.builtin.assert:
+    that:
+      - go_gvm_post_install.stat.exists or ansible_check_mode
+    fail_msg: "Expected gvm script at {{ go_gvm_script }} after running the installer."
     success_msg: "gvm script detected at {{ go_gvm_script }}."
 
 - name: go | darwin | check Go runtime install
@@ -67,7 +92,7 @@
 - name: go | darwin | install Go runtime with gvm
   ansible.builtin.shell: |
     source "{{ go_gvm_script }}"
-    gvm install "{{ go_runtime_version }}"
+    gvm install "{{ go_runtime_version }}" -B
     gvm use "{{ go_runtime_version }}" --default
   args:
     executable: /bin/bash
