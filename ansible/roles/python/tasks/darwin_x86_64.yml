@@ -1,0 +1,5 @@
+---
+- name: python | darwin x86_64 | set pyenv path
+  ansible.builtin.set_fact:
+    python_pyenv_bin: /usr/local/bin/pyenv
+  changed_when: false
