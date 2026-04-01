@@ -18,6 +18,8 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
+    - role: homebrew
+      tags: [homebrew]
     - role: shell
       tags: [shell]
     - role: dotfiles
