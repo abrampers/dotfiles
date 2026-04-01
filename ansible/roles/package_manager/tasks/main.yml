@@ -1,0 +1,4 @@
+---
+- name: package_manager | placeholder contract
+  ansible.builtin.debug:
+    msg: "Package manager role skeleton lands in Plan 01-02."

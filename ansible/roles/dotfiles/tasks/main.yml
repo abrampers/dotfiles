@@ -1,0 +1,4 @@
+---
+- name: dotfiles | placeholder contract
+  ansible.builtin.debug:
+    msg: "Dotfiles role skeleton lands in Plan 01-02."

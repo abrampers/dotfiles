@@ -1,0 +1,4 @@
+---
+- name: bootstrap | placeholder contract
+  ansible.builtin.debug:
+    msg: "Bootstrap role skeleton lands in Plan 01-02."

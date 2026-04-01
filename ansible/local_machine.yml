@@ -1,0 +1,32 @@
+---
+- name: Provision local machine
+  hosts: localhost
+  gather_facts: true
+  pre_tasks:
+    - name: private vars | check custom vars file
+      ansible.builtin.stat:
+        path: "{{ dotfiles_private_vars_file }}"
+      register: dotfiles_private_vars
+
+    - name: private vars | load optional custom vars
+      ansible.builtin.include_vars:
+        file: "{{ dotfiles_private_vars_file }}"
+      when: dotfiles_private_vars.stat.exists
+
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: shell
+      tags: [shell]
+    - role: package_manager
+      tags: [package_manager]
+    - role: dotfiles
+      tags: [dotfiles]
+    - role: cli_tools
+      tags: [cli_tools]
+    - role: editors
+      tags: [editors]
+    - role: runtimes
+      tags: [runtimes]
+    - role: macos
+      tags: [macos]

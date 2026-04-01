@@ -1,0 +1,4 @@
+---
+- name: macos | placeholder contract
+  ansible.builtin.debug:
+    msg: "macOS role skeleton lands in Plan 01-02."

@@ -1,0 +1,4 @@
+---
+- name: cli_tools | placeholder contract
+  ansible.builtin.debug:
+    msg: "CLI tools role skeleton lands in Plan 01-02."

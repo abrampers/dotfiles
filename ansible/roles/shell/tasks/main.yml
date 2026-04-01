@@ -1,0 +1,4 @@
+---
+- name: shell | placeholder contract
+  ansible.builtin.debug:
+    msg: "Shell role skeleton lands in Plan 01-02."
