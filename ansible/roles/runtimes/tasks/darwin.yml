@@ -65,3 +65,102 @@
     msg: "Runtimes role currently has Darwin path handling for arm64 and x86_64 only."
   changed_when: false
   when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
+
+- name: runtimes | darwin | check python version install
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.pyenv/versions/{{ runtimes_python_version }}"
+  register: runtimes_python_version_dir
+  changed_when: false
+
+- name: runtimes | darwin | preview pyenv install
+  ansible.builtin.debug:
+    msg: "Check mode: would run {{ runtimes_pyenv_bin }} install {{ runtimes_python_version }}"
+  when:
+    - ansible_check_mode
+    - not runtimes_python_version_dir.stat.exists
+
+- name: runtimes | darwin | install python version
+  ansible.builtin.command:
+    cmd: "{{ runtimes_pyenv_bin }} install {{ runtimes_python_version }}"
+  when:
+    - not ansible_check_mode
+    - not runtimes_python_version_dir.stat.exists
+
+- name: runtimes | darwin | read global python version
+  ansible.builtin.command:
+    cmd: "{{ runtimes_pyenv_bin }} global"
+  register: runtimes_python_global_read
+  changed_when: false
+
+- name: runtimes | darwin | preview pyenv global
+  ansible.builtin.debug:
+    msg: "Check mode: would run {{ runtimes_pyenv_bin }} global {{ runtimes_python_global_version }}"
+  when:
+    - ansible_check_mode
+    - runtimes_python_global_read.stdout != runtimes_python_global_version
+
+- name: runtimes | darwin | set global python version
+  ansible.builtin.command:
+    cmd: "{{ runtimes_pyenv_bin }} global {{ runtimes_python_global_version }}"
+  when:
+    - not ansible_check_mode
+    - runtimes_python_global_read.stdout != runtimes_python_global_version
+
+- name: runtimes | darwin | install Neovim Python provider
+  ansible.builtin.pip:
+    name: "{{ runtimes_neovim_pip_package }}"
+    executable: "{{ ansible_env.HOME }}/.pyenv/shims/pip3"
+
+- name: runtimes | darwin | check erlang_ls binary
+  ansible.builtin.stat:
+    path: "{{ runtimes_erlang_ls_prefix }}/erlang_ls"
+  register: runtimes_erlang_ls_binary
+  changed_when: false
+
+- name: runtimes | darwin | check erlang_ls checkout
+  ansible.builtin.stat:
+    path: "{{ runtimes_erlang_ls_checkout }}"
+  register: runtimes_erlang_ls_checkout_stat
+  changed_when: false
+
+- name: runtimes | darwin | preview erlang_ls build
+  ansible.builtin.debug:
+    msg: >-
+      Check mode: would clone {{ runtimes_erlang_ls_repo }} into {{ runtimes_erlang_ls_checkout }}
+      and run make install with PREFIX={{ runtimes_erlang_ls_prefix }}.
+  when:
+    - ansible_check_mode
+    - not runtimes_erlang_ls_binary.stat.exists
+
+- name: runtimes | darwin | clone erlang_ls source
+  ansible.builtin.git:
+    repo: "{{ runtimes_erlang_ls_repo }}"
+    dest: "{{ runtimes_erlang_ls_checkout }}"
+  when:
+    - not ansible_check_mode
+    - not runtimes_erlang_ls_binary.stat.exists
+
+- name: runtimes | darwin | build erlang_ls
+  community.general.make:
+    chdir: "{{ runtimes_erlang_ls_checkout }}"
+    target: install
+    params:
+      PREFIX: "{{ runtimes_erlang_ls_prefix }}"
+  when:
+    - not ansible_check_mode
+    - not runtimes_erlang_ls_binary.stat.exists
+
+- name: runtimes | darwin | remove erlang_ls checkout
+  ansible.builtin.debug:
+    msg: "Check mode: would remove {{ runtimes_erlang_ls_checkout }} after erlang_ls install work."
+  when:
+    - ansible_check_mode
+    - runtimes_erlang_ls_checkout_stat.stat.exists
+
+- name: runtimes | darwin | remove erlang_ls checkout
+  ansible.builtin.file:
+    path: "{{ runtimes_erlang_ls_checkout }}"
+    state: absent
+  when:
+    - not ansible_check_mode
+    - runtimes_erlang_ls_checkout_stat.stat.exists
