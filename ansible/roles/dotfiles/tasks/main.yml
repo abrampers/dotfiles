@@ -1,4 +1,27 @@
 ---
-- name: dotfiles | role contract placeholder
-  ansible.builtin.debug:
-    msg: "Dotfiles will own rcm and rcup deployment here."
+- name: dotfiles | verify rcup is available
+  ansible.builtin.command:
+    cmd: which rcup
+  register: dotfiles_rcup_check
+  changed_when: false
+  check_mode: false
+
+- name: dotfiles | assert rcup is available
+  ansible.builtin.assert:
+    that:
+      - dotfiles_rcup_check.rc == 0
+    fail_msg: >-
+      rcup must be installed before the dotfiles role runs.
+      Run the package_manager role first so rcm is available.
+    success_msg: "rcup detected for dotfiles deployment."
+
+- name: dotfiles | bootstrap rcrc
+  ansible.builtin.command:
+    argv:
+      - rcup
+      - rcrc
+  when: dotfiles_rcrc_bootstrap_args | length > 0
+
+- name: dotfiles | deploy dotfiles
+  ansible.builtin.command:
+    argv: "{{ ['rcup'] + dotfiles_rcup_flags }}"
