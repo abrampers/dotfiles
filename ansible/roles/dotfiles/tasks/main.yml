@@ -1,4 +1,41 @@
 ---
+- name: dotfiles | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    dotfiles_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: dotfiles | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ dotfiles_homebrew_bin }}"
+  register: dotfiles_homebrew
+
+- name: dotfiles | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - dotfiles_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ dotfiles_homebrew_bin }} before the dotfiles role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ dotfiles_homebrew_bin }} for dotfiles prerequisites."
+
+- name: dotfiles | preview rcm install
+  ansible.builtin.debug:
+    msg: "Check mode: would install rcm with Homebrew before rcup checks."
+  when: ansible_check_mode
+
+- name: dotfiles | install rcm
+  community.general.homebrew:
+    name: rcm
+    state: present
+  when: not ansible_check_mode
+
 - name: dotfiles | verify rcup is available
   ansible.builtin.command:
     cmd: which rcup
@@ -11,8 +48,7 @@
     that:
       - dotfiles_rcup_check.rc == 0
     fail_msg: >-
-      rcup must be installed before the dotfiles role runs.
-      Run the package_manager role first so rcm is available.
+      rcup must be installed by the dotfiles role before deployment can continue.
     success_msg: "rcup detected for dotfiles deployment."
 
 - name: dotfiles | read rcrc install state
