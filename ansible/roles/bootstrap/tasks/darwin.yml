@@ -1,0 +1,4 @@
+---
+- name: bootstrap | darwin contract placeholder
+  ansible.builtin.debug:
+    msg: "Bootstrap will own Homebrew checks and ~/bin preparation here."

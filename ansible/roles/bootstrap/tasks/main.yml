@@ -1,4 +1,9 @@
 ---
-- name: bootstrap | placeholder contract
+- name: bootstrap | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: bootstrap | unsupported platform placeholder
   ansible.builtin.debug:
-    msg: "Bootstrap role skeleton lands in Plan 01-02."
+    msg: "Bootstrap role contract is defined; non-Darwin support lands later."
+  when: ansible_facts['os_family'] != 'Darwin'

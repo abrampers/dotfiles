@@ -1,4 +1,4 @@
 ---
-- name: macos | placeholder contract
+- name: macos | role contract placeholder
   ansible.builtin.debug:
-    msg: "macOS role skeleton lands in Plan 01-02."
+    msg: "macOS will own yabai, skhd, Karabiner, and desktop tooling here."

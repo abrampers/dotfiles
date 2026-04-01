@@ -1,4 +1,4 @@
 ---
-- name: cli_tools | placeholder contract
+- name: cli_tools | role contract placeholder
   ansible.builtin.debug:
-    msg: "CLI tools role skeleton lands in Plan 01-02."
+    msg: "CLI tools will own shared command-line packages here."

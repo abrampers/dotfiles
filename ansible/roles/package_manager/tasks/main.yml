@@ -1,4 +1,9 @@
 ---
-- name: package_manager | placeholder contract
+- name: package_manager | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: package_manager | unsupported platform placeholder
   ansible.builtin.debug:
-    msg: "Package manager role skeleton lands in Plan 01-02."
+    msg: "Package manager role contract is defined; non-Darwin support lands later."
+  when: ansible_facts['os_family'] != 'Darwin'

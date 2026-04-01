@@ -1,4 +1,4 @@
 ---
-- name: editors | placeholder contract
+- name: editors | role contract placeholder
   ansible.builtin.debug:
-    msg: "Editors role skeleton lands in Plan 01-02."
+    msg: "Editors will own terminal and editor installs here."

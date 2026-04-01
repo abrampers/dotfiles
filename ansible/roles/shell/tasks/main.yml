@@ -1,4 +1,4 @@
 ---
-- name: shell | placeholder contract
+- name: shell | role contract placeholder
   ansible.builtin.debug:
-    msg: "Shell role skeleton lands in Plan 01-02."
+    msg: "Shell will own zsh installation and login-shell configuration here."

@@ -1,4 +1,4 @@
 ---
-- name: runtimes | placeholder contract
+- name: runtimes | role contract placeholder
   ansible.builtin.debug:
-    msg: "Runtimes role skeleton lands in Plan 01-02."
+    msg: "Runtimes will own language toolchains and version managers here."

@@ -1,4 +1,4 @@
 ---
-- name: dotfiles | placeholder contract
+- name: dotfiles | role contract placeholder
   ansible.builtin.debug:
-    msg: "Dotfiles role skeleton lands in Plan 01-02."
+    msg: "Dotfiles will own rcm and rcup deployment here."

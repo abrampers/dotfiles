@@ -1,0 +1,4 @@
+---
+- name: package_manager | darwin contract placeholder
+  ansible.builtin.debug:
+    msg: "Package manager tasks will own Homebrew taps, formulae, and casks here."
