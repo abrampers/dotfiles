@@ -18,17 +18,43 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
-    - role: shell
-      tags: [shell]
     - role: package_manager
       tags: [package_manager]
+    - role: shell
+      tags: [shell]
     - role: dotfiles
       tags: [dotfiles]
     - role: cli_tools
       tags: [cli_tools]
-    - role: editors
-      tags: [editors]
-    - role: runtimes
-      tags: [runtimes]
+    - role: vim
+      tags: [vim]
+    - role: emacs
+      tags: [emacs]
+    - role: vscode
+      tags: [vscode]
+    - role: go
+      tags: [go]
+    - role: node
+      tags: [node]
+    - role: python
+      tags: [python]
+    - role: ruby
+      tags: [ruby]
+    - role: java
+      tags: [java]
+    - role: elixir
+      tags: [elixir]
+    - role: clojure
+      tags: [clojure]
+    - role: kubernetes
+      tags: [kubernetes]
+    - role: opencode
+      tags: [opencode]
+    - role: gemini_cli
+      tags: [gemini_cli]
+    - role: copilot_cli
+      tags: [copilot_cli]
+    - role: claude
+      tags: [claude]
     - role: macos
       tags: [macos]
