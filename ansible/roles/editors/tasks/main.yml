@@ -1,4 +1,9 @@
 ---
-- name: editors | role contract placeholder
+- name: editors | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: editors | unsupported platform placeholder
   ansible.builtin.debug:
-    msg: "Editors will own terminal and editor installs here."
+    msg: "Editors role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'
