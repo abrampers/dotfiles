@@ -1,0 +1,90 @@
+---
+- name: elixir | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    elixir_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: elixir | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ elixir_homebrew_bin }}"
+  register: elixir_homebrew
+
+- name: elixir | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - elixir_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ elixir_homebrew_bin }} before the elixir role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ elixir_homebrew_bin }} for Elixir installs."
+
+- name: elixir | darwin | install erlang
+  community.general.homebrew:
+    name: erlang
+    state: present
+
+- name: elixir | darwin | install rebar3
+  community.general.homebrew:
+    name: rebar3
+    state: present
+
+- name: elixir | darwin | check erlang_ls binary
+  ansible.builtin.stat:
+    path: "{{ elixir_erlang_ls_prefix }}/erlang_ls"
+  register: elixir_erlang_ls_binary
+  changed_when: false
+
+- name: elixir | darwin | check erlang_ls checkout
+  ansible.builtin.stat:
+    path: "{{ elixir_erlang_ls_checkout }}"
+  register: elixir_erlang_ls_checkout_stat
+  changed_when: false
+
+- name: elixir | darwin | preview erlang_ls build
+  ansible.builtin.debug:
+    msg: >-
+      Check mode: would clone {{ elixir_erlang_ls_repo }} into {{ elixir_erlang_ls_checkout }}
+      and run make install with PREFIX={{ elixir_erlang_ls_prefix | dirname }}.
+  when:
+    - ansible_check_mode
+    - not elixir_erlang_ls_binary.stat.exists
+
+- name: elixir | darwin | clone erlang_ls source
+  ansible.builtin.git:
+    repo: "{{ elixir_erlang_ls_repo }}"
+    dest: "{{ elixir_erlang_ls_checkout }}"
+  when:
+    - not ansible_check_mode
+    - not elixir_erlang_ls_binary.stat.exists
+
+- name: elixir | darwin | build erlang_ls
+  community.general.make:
+    chdir: "{{ elixir_erlang_ls_checkout }}"
+    target: install
+    params:
+      PREFIX: "{{ elixir_erlang_ls_prefix | dirname }}"
+  when:
+    - not ansible_check_mode
+    - not elixir_erlang_ls_binary.stat.exists
+
+- name: elixir | darwin | preview erlang_ls cleanup
+  ansible.builtin.debug:
+    msg: "Check mode: would remove {{ elixir_erlang_ls_checkout }} after erlang_ls install work."
+  when:
+    - ansible_check_mode
+    - elixir_erlang_ls_checkout_stat.stat.exists
+
+- name: elixir | darwin | remove erlang_ls checkout
+  ansible.builtin.file:
+    path: "{{ elixir_erlang_ls_checkout }}"
+    state: absent
+  when:
+    - not ansible_check_mode
+    - elixir_erlang_ls_checkout_stat.stat.exists

@@ -1,0 +1,9 @@
+---
+- name: elixir | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: elixir | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "Elixir role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'
