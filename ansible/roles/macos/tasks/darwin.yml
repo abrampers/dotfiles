@@ -25,32 +25,40 @@
       Run bootstrap first or enable install_homebrew_if_missing there.
     success_msg: "Homebrew detected at {{ macos_homebrew_bin }} for macOS desktop installs."
 
-- name: macos | darwin | configure taps
+- name: macos | darwin | configure koekeishiya tap
   community.general.homebrew_tap:
-    name: "{{ item }}"
+    name: koekeishiya/formulae
     state: present
-  loop: "{{ macos_homebrew_taps }}"
-  loop_control:
-    label: "{{ item }}"
-  when: macos_homebrew_taps | length > 0
 
-- name: macos | darwin | install formulae
+- name: macos | darwin | install yabai
   community.general.homebrew:
-    name: "{{ item }}"
+    name: yabai
     state: present
-  loop: "{{ macos_homebrew_formulae }}"
-  loop_control:
-    label: "{{ item }}"
-  when: macos_homebrew_formulae | length > 0
 
-- name: macos | darwin | install casks
-  community.general.homebrew_cask:
-    name: "{{ item }}"
+- name: macos | darwin | install skhd
+  community.general.homebrew:
+    name: skhd
     state: present
-  loop: "{{ macos_homebrew_casks }}"
-  loop_control:
-    label: "{{ item }}"
-  when: macos_homebrew_casks | length > 0
+
+- name: macos | darwin | install karabiner-elements
+  community.general.homebrew_cask:
+    name: karabiner-elements
+    state: present
+
+- name: macos | darwin | install stats
+  community.general.homebrew_cask:
+    name: stats
+    state: present
+
+- name: macos | darwin | install Source Code Pro for Powerline
+  community.general.homebrew_cask:
+    name: font-source-code-pro-for-powerline
+    state: present
+
+- name: macos | darwin | install SauceCodePro Nerd Font
+  community.general.homebrew_cask:
+    name: font-sauce-code-pro-nerd-font
+    state: present
 
 - name: macos | darwin | check binary assertions
   ansible.builtin.stat:

@@ -1,14 +1,4 @@
 ---
-macos_homebrew_taps:
-  - koekeishiya/formulae
-macos_homebrew_formulae:
-  - yabai
-  - skhd
-macos_homebrew_casks:
-  - karabiner-elements
-  - stats
-  - font-source-code-pro-for-powerline
-  - font-sauce-code-pro-nerd-font
 macos_binary_assertions:
   - name: yabai
     path: /opt/homebrew/bin/yabai

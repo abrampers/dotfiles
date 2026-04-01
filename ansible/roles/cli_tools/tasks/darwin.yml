@@ -25,29 +25,37 @@
       Run bootstrap first or enable install_homebrew_if_missing there.
     success_msg: "Homebrew detected at {{ cli_tools_homebrew_bin }} for cli_tools installs."
 
-- name: cli_tools | darwin | configure taps
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ cli_tools_homebrew_taps }}"
-  loop_control:
-    label: "{{ item }}"
-  when: cli_tools_homebrew_taps | length > 0
-
-- name: cli_tools | darwin | install formulae
+- name: cli_tools | darwin | install ripgrep
   community.general.homebrew:
-    name: "{{ item }}"
+    name: ripgrep
     state: present
-  loop: "{{ cli_tools_homebrew_formulae }}"
-  loop_control:
-    label: "{{ item }}"
-  when: cli_tools_homebrew_formulae | length > 0
 
-- name: cli_tools | darwin | install casks
-  community.general.homebrew_cask:
-    name: "{{ item }}"
+- name: cli_tools | darwin | install tig
+  community.general.homebrew:
+    name: tig
     state: present
-  loop: "{{ cli_tools_homebrew_casks }}"
-  loop_control:
-    label: "{{ item }}"
-  when: cli_tools_homebrew_casks | length > 0
+
+- name: cli_tools | darwin | install cmake
+  community.general.homebrew:
+    name: cmake
+    state: present
+
+- name: cli_tools | darwin | install fzf
+  community.general.homebrew:
+    name: fzf
+    state: present
+
+- name: cli_tools | darwin | install bat
+  community.general.homebrew:
+    name: bat
+    state: present
+
+- name: cli_tools | darwin | install grpcurl
+  community.general.homebrew:
+    name: grpcurl
+    state: present
+
+- name: cli_tools | darwin | install jq
+  community.general.homebrew:
+    name: jq
+    state: present
