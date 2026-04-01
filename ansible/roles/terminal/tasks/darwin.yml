@@ -1,0 +1,36 @@
+---
+- name: terminal | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    terminal_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: terminal | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ terminal_homebrew_bin }}"
+  register: terminal_homebrew
+
+- name: terminal | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - terminal_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ terminal_homebrew_bin }} before the terminal role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ terminal_homebrew_bin }} for terminal installs."
+
+- name: terminal | darwin | install tmux
+  community.general.homebrew:
+    name: tmux
+    state: present
+
+- name: terminal | darwin | install alacritty
+  community.general.homebrew_cask:
+    name: alacritty
+    state: present
