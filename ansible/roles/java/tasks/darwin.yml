@@ -1,0 +1,5 @@
+---
+- name: java | darwin | install Temurin 8
+  community.general.homebrew_cask:
+    name: temurin@8
+    state: present

@@ -1,0 +1,4 @@
+---
+elixir_erlang_ls_repo: https://github.com/erlang-ls/erlang_ls.git
+elixir_erlang_ls_checkout: "{{ ansible_env.HOME }}/tmp/erlang_ls-tmp"
+elixir_erlang_ls_prefix: "{{ ansible_env.HOME }}/bin"

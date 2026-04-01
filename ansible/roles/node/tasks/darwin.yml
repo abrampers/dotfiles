@@ -1,0 +1,63 @@
+---
+- name: node | darwin | set nvm paths
+  ansible.builtin.set_fact:
+    node_nvm_script: >-
+      {{
+        node_nvm_script_arm64
+        if ansible_facts['architecture'] == 'arm64'
+        else node_nvm_script_x86_64
+      }}
+  changed_when: false
+
+- name: node | darwin | install nvm
+  community.general.homebrew:
+    name: nvm
+    state: present
+
+- name: node | darwin | ensure nvm directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.nvm"
+    state: directory
+    mode: '0755'
+
+- name: node | darwin | check nvm script
+  ansible.builtin.stat:
+    path: "{{ node_nvm_script }}"
+  register: node_nvm
+  changed_when: false
+
+- name: node | darwin | assert nvm script exists
+  ansible.builtin.assert:
+    that:
+      - node_nvm.stat.exists
+    fail_msg: "Expected nvm script at {{ node_nvm_script }} after installing nvm."
+    success_msg: "nvm script detected at {{ node_nvm_script }}."
+
+- name: node | darwin | read installed node version
+  ansible.builtin.shell: |
+    export NVM_DIR="{{ ansible_env.HOME }}/.nvm"
+    source "{{ node_nvm_script }}"
+    nvm version "{{ node_runtime_version }}"
+  args:
+    executable: /bin/bash
+  register: node_version_read
+  changed_when: false
+
+- name: node | darwin | preview node install
+  ansible.builtin.debug:
+    msg: "Check mode: would source {{ node_nvm_script }} and run nvm install {{ node_runtime_version }} && nvm alias default {{ node_runtime_version }}"
+  when:
+    - ansible_check_mode
+    - (node_version_read.stdout | trim) == 'N/A'
+
+- name: node | darwin | install node with nvm
+  ansible.builtin.shell: |
+    export NVM_DIR="{{ ansible_env.HOME }}/.nvm"
+    source "{{ node_nvm_script }}"
+    nvm install "{{ node_runtime_version }}"
+    nvm alias default "{{ node_runtime_version }}"
+  args:
+    executable: /bin/bash
+  when:
+    - not ansible_check_mode
+    - (node_version_read.stdout | trim) == 'N/A'

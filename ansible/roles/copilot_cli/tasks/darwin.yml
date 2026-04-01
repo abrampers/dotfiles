@@ -1,0 +1,5 @@
+---
+- name: copilot_cli | darwin | install copilot-cli
+  community.general.homebrew:
+    name: copilot-cli
+    state: present

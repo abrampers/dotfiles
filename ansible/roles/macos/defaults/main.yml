@@ -1,0 +1,11 @@
+---
+macos_binary_assertions:
+  - name: yabai
+    path: /opt/homebrew/bin/yabai
+  - name: skhd
+    path: /opt/homebrew/bin/skhd
+macos_app_assertions:
+  - name: Karabiner-Elements
+    path: /Applications/Karabiner-Elements.app
+  - name: Stats
+    path: /Applications/Stats.app

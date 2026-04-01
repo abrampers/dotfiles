@@ -1,0 +1,25 @@
+---
+- name: emacs | darwin | configure emacs-plus tap
+  community.general.homebrew_tap:
+    name: d12frosted/emacs-plus
+    state: present
+
+- name: emacs | darwin | install Emacs formula
+  community.general.homebrew:
+    name: "{{ editors_emacs_formula }}"
+    install_options: "{{ editors_emacs_install_options }}"
+    state: present
+
+- name: emacs | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: emacs | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: emacs | darwin unsupported architecture placeholder
+  ansible.builtin.debug:
+    msg: "Emacs role currently has app linking for arm64 and x86_64 only."
+  changed_when: false
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']

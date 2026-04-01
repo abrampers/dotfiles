@@ -1,0 +1,9 @@
+---
+- name: macos | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: macos | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "macos role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'

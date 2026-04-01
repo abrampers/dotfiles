@@ -1,0 +1,17 @@
+---
+- name: vim | darwin | install neovim
+  community.general.homebrew:
+    name: neovim
+    state: present
+
+- name: vim | darwin | ensure vim-plug directory exists
+  ansible.builtin.file:
+    path: "{{ editors_vim_plug_path | dirname }}"
+    state: directory
+    mode: '0755'
+
+- name: vim | darwin | install vim-plug
+  ansible.builtin.get_url:
+    url: "{{ editors_vim_plug_url }}"
+    dest: "{{ editors_vim_plug_path }}"
+    mode: '0644'

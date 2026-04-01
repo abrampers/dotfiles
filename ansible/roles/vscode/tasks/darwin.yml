@@ -1,0 +1,5 @@
+---
+- name: vscode | darwin | install Visual Studio Code
+  community.general.homebrew_cask:
+    name: visual-studio-code
+    state: present

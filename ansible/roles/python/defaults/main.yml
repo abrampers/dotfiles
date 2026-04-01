@@ -1,0 +1,4 @@
+---
+python_version: 3.12.7
+python_global_version: 3.12
+python_neovim_pip_package: neovim

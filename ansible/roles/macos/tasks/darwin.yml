@@ -1,0 +1,75 @@
+---
+- name: macos | darwin | configure koekeishiya tap
+  community.general.homebrew_tap:
+    name: koekeishiya/formulae
+    state: present
+
+- name: macos | darwin | install yabai
+  community.general.homebrew:
+    name: yabai
+    state: present
+
+- name: macos | darwin | install skhd
+  community.general.homebrew:
+    name: skhd
+    state: present
+
+- name: macos | darwin | install karabiner-elements
+  community.general.homebrew_cask:
+    name: karabiner-elements
+    state: present
+
+- name: macos | darwin | install stats
+  community.general.homebrew_cask:
+    name: stats
+    state: present
+
+- name: macos | darwin | install Source Code Pro for Powerline
+  community.general.homebrew_cask:
+    name: font-source-code-pro-for-powerline
+    state: present
+
+- name: macos | darwin | install SauceCodePro Nerd Font
+  community.general.homebrew_cask:
+    name: font-sauce-code-pro-nerd-font
+    state: present
+
+- name: macos | darwin | check binary assertions
+  ansible.builtin.stat:
+    path: "{{ item.path }}"
+  register: macos_binary_stats
+  changed_when: false
+  loop: "{{ macos_binary_assertions }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: macos | darwin | check app assertions
+  ansible.builtin.stat:
+    path: "{{ item.path }}"
+  register: macos_app_stats
+  changed_when: false
+  loop: "{{ macos_app_assertions }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: macos | darwin | assert binary installs
+  ansible.builtin.assert:
+    that:
+      - item.stat.exists
+    fail_msg: "Expected {{ item.item.name }} at {{ item.item.path }} after macos role install."
+    success_msg: "Verified {{ item.item.name }} at {{ item.item.path }}."
+  loop: "{{ macos_binary_stats.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: not ansible_check_mode
+
+- name: macos | darwin | assert app installs
+  ansible.builtin.assert:
+    that:
+      - item.stat.exists
+    fail_msg: "Expected {{ item.item.name }} at {{ item.item.path }} after macos role install."
+    success_msg: "Verified {{ item.item.name }} at {{ item.item.path }}."
+  loop: "{{ macos_app_stats.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: not ansible_check_mode

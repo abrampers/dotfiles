@@ -1,0 +1,9 @@
+---
+- name: shell | darwin | import platform tasks
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: shell | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "Shell role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'

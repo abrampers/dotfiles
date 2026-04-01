@@ -1,0 +1,7 @@
+---
+editors_emacs_formula: emacs-plus@30
+editors_emacs_install_options:
+  - with-modern-purple-flat-icon
+editors_emacs_app_destination: /Applications/Emacs.app
+editors_emacs_app_source_arm64: "/opt/homebrew/opt/{{ editors_emacs_formula }}/Emacs.app"
+editors_emacs_app_source_x86_64: "/usr/local/opt/{{ editors_emacs_formula }}/Emacs.app"

@@ -1,0 +1,4 @@
+---
+node_runtime_version: --lts
+node_nvm_script_arm64: /opt/homebrew/opt/nvm/nvm.sh
+node_nvm_script_x86_64: /usr/local/opt/nvm/nvm.sh

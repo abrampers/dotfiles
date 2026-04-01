@@ -1,0 +1,39 @@
+---
+- name: homebrew | x86_64 | detect Homebrew
+  ansible.builtin.stat:
+    path: "{{ homebrew_bin_x86_64 }}"
+  register: homebrew_x86_64
+
+- name: homebrew | x86_64 | fail when Homebrew is missing
+  ansible.builtin.assert:
+    that:
+      - homebrew_x86_64.stat.exists
+    fail_msg: >-
+      Homebrew is required at {{ homebrew_bin_x86_64 }} for Darwin x86_64 hosts.
+      Set install_homebrew_if_missing=true to allow the homebrew role to install Homebrew automatically.
+    success_msg: "Homebrew detected at {{ homebrew_bin_x86_64 }}."
+  when: not install_homebrew_if_missing
+
+- name: homebrew | x86_64 | install Homebrew when allowed
+  ansible.builtin.shell: >-
+    {{ homebrew_install_command_prefix }}
+    "$(curl -fsSL {{ homebrew_install_script_url }})"
+  args:
+    creates: "{{ homebrew_bin_x86_64 }}"
+  when:
+    - install_homebrew_if_missing
+    - not homebrew_x86_64.stat.exists
+    - not ansible_check_mode
+
+- name: homebrew | x86_64 | check mode install preview
+  ansible.builtin.debug:
+    msg: "Homebrew would be installed at {{ homebrew_bin_x86_64 }} when not running in check mode."
+  when:
+    - install_homebrew_if_missing
+    - not homebrew_x86_64.stat.exists
+    - ansible_check_mode
+
+- name: homebrew | x86_64 | Homebrew contract
+  ansible.builtin.set_fact:
+    bootstrap_homebrew_bin: "{{ homebrew_bin_x86_64 }}"
+  changed_when: false

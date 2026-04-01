@@ -1,0 +1,15 @@
+---
+- name: clojure | darwin | configure clojure-lsp tap
+  community.general.homebrew_tap:
+    name: clojure-lsp/brew
+    state: present
+
+- name: clojure | darwin | install leiningen
+  community.general.homebrew:
+    name: leiningen
+    state: present
+
+- name: clojure | darwin | install clojure-lsp-native
+  community.general.homebrew:
+    name: clojure-lsp-native
+    state: present

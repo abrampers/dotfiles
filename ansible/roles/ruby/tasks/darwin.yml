@@ -1,0 +1,5 @@
+---
+- name: ruby | darwin | install rbenv
+  community.general.homebrew:
+    name: rbenv
+    state: present

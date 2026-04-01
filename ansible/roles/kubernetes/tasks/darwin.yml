@@ -1,0 +1,20 @@
+---
+- name: kubernetes | darwin | configure k9s tap
+  community.general.homebrew_tap:
+    name: derailed/k9s
+    state: present
+
+- name: kubernetes | darwin | install kubernetes-cli
+  community.general.homebrew:
+    name: kubernetes-cli
+    state: present
+
+- name: kubernetes | darwin | install k9s
+  community.general.homebrew:
+    name: k9s
+    state: present
+
+- name: kubernetes | darwin | install kubectx
+  community.general.homebrew:
+    name: kubectx
+    state: present

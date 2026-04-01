@@ -1,0 +1,35 @@
+---
+- name: cli_tools | darwin | install ripgrep
+  community.general.homebrew:
+    name: ripgrep
+    state: present
+
+- name: cli_tools | darwin | install tig
+  community.general.homebrew:
+    name: tig
+    state: present
+
+- name: cli_tools | darwin | install cmake
+  community.general.homebrew:
+    name: cmake
+    state: present
+
+- name: cli_tools | darwin | install fzf
+  community.general.homebrew:
+    name: fzf
+    state: present
+
+- name: cli_tools | darwin | install bat
+  community.general.homebrew:
+    name: bat
+    state: present
+
+- name: cli_tools | darwin | install grpcurl
+  community.general.homebrew:
+    name: grpcurl
+    state: present
+
+- name: cli_tools | darwin | install jq
+  community.general.homebrew:
+    name: jq
+    state: present

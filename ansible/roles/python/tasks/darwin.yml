@@ -1,0 +1,69 @@
+---
+- name: python | darwin | install pyenv
+  community.general.homebrew:
+    name: pyenv
+    state: present
+
+- name: python | darwin | install pyenv-virtualenv
+  community.general.homebrew:
+    name: pyenv-virtualenv
+    state: present
+
+- name: python | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: python | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: python | darwin unsupported architecture placeholder
+  ansible.builtin.debug:
+    msg: "Python role currently has Darwin path handling for arm64 and x86_64 only."
+  changed_when: false
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
+
+- name: python | darwin | check python version install
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.pyenv/versions/{{ python_version }}"
+  register: python_version_dir
+  changed_when: false
+
+- name: python | darwin | preview pyenv install
+  ansible.builtin.debug:
+    msg: "Check mode: would run {{ python_pyenv_bin }} install {{ python_version }}"
+  when:
+    - ansible_check_mode
+    - not python_version_dir.stat.exists
+
+- name: python | darwin | install python version
+  ansible.builtin.command:
+    cmd: "{{ python_pyenv_bin }} install {{ python_version }}"
+  when:
+    - not ansible_check_mode
+    - not python_version_dir.stat.exists
+
+- name: python | darwin | read global python version
+  ansible.builtin.command:
+    cmd: "{{ python_pyenv_bin }} global"
+  register: python_global_read
+  changed_when: false
+
+- name: python | darwin | preview pyenv global
+  ansible.builtin.debug:
+    msg: "Check mode: would run {{ python_pyenv_bin }} global {{ python_global_version | string }}"
+  when:
+    - ansible_check_mode
+    - (python_global_read.stdout | trim) != (python_global_version | string)
+
+- name: python | darwin | set global python version
+  ansible.builtin.command:
+    cmd: "{{ python_pyenv_bin }} global {{ python_global_version | string }}"
+  when:
+    - not ansible_check_mode
+    - (python_global_read.stdout | trim) != (python_global_version | string)
+
+- name: python | darwin | install Neovim Python provider
+  ansible.builtin.pip:
+    name: "{{ python_neovim_pip_package }}"
+    executable: "{{ ansible_env.HOME }}/.pyenv/shims/pip3"

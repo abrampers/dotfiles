@@ -1,0 +1,9 @@
+---
+- name: terminal | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: terminal | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "Terminal role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'

@@ -1,0 +1,5 @@
+---
+- name: gemini_cli | darwin | install gemini-cli
+  community.general.homebrew:
+    name: gemini-cli
+    state: present

@@ -82,16 +82,18 @@ git clone --recursive https://github.com/abrampers/dotfiles
 ⚠️ *WARNING*: This install method will install every bit of my configuration. In the future, I'll be supporting customized install method.
 #+end_quote
 
-This repo is using [[https://docs.ansible.com/ansible/latest/index.html][Ansible]] to automate installation. Please follow [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos][Ansible installation guide]] to install ansible.
+This repo uses [[https://docs.ansible.com/ansible/latest/index.html][Ansible]] to automate installation. Please follow [[https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos][Ansible installation guide]] to install Ansible.
 
-Install =ansible-core= for minimal footprint.
+*** Prerequisites
+
+Install =ansible-core= for a minimal footprint.
 #+begin_src shell
 
 python3 -m pip install --user ansible-core
 
 #+end_src
 
-Install =community-general= module
+Install the =community.general= collection.
 
 #+begin_src shell
 
@@ -99,14 +101,37 @@ ansible-galaxy collection install community.general
 
 #+end_src
 
-Then run ansible.
+Provisioning now lives under =ansible/= and the main entry point is =ansible/local_machine.yml=. The =rcrc= configuration excludes the =ansible/= tree, so provisioning files are not deployed as dotfiles by =rcup=.
+
+*** Full apply
 
 #+begin_src shell
-ansible-playbook dotfiles.yml
+
+ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml
 
 #+end_src
 
-To find what's included in the installation, go to [[dotfiles.yml]].
+*** Dry run
+
+Review the full bootstrap before applying it.
+
+#+begin_src shell
+
+ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --check --diff
+
+#+end_src
+
+*** Targeted role execution
+
+Run just one role slice by tag when you only want to inspect or apply a subset.
+
+#+begin_src shell
+
+ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --tags dotfiles
+
+#+end_src
+
+To find the available role tags, inspect [[ansible/local_machine.yml]].
 
 * References
 1. [[https://github.com/wincent/wincent][Greg Hurell's dotfiles setup]]

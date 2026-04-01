@@ -1,0 +1,10 @@
+---
+- name: terminal | darwin | install tmux
+  community.general.homebrew:
+    name: tmux
+    state: present
+
+- name: terminal | darwin | install alacritty
+  community.general.homebrew_cask:
+    name: alacritty
+    state: present

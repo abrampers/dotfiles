@@ -1,0 +1,9 @@
+---
+- name: vscode | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: vscode | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "VS Code role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'
