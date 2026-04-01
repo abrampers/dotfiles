@@ -1,2 +1,6 @@
 ---
+shell_homebrew_formulae:
+  - zsh
 shell_default_executable: /bin/zsh
+shell_login_shell_targets:
+  - "{{ ansible_user_id }}"

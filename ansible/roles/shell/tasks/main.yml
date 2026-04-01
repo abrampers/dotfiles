@@ -1,4 +1,9 @@
 ---
-- name: shell | role contract placeholder
+- name: shell | darwin | import platform tasks
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: shell | unsupported platform placeholder
   ansible.builtin.debug:
-    msg: "Shell will own zsh installation and login-shell configuration here."
+    msg: "Shell role currently supports Darwin only."
+  when: ansible_facts['os_family'] != 'Darwin'
