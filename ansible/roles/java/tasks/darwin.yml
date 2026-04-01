@@ -1,0 +1,31 @@
+---
+- name: java | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    java_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: java | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ java_homebrew_bin }}"
+  register: java_homebrew
+
+- name: java | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - java_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ java_homebrew_bin }} before the java role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ java_homebrew_bin }} for Java installs."
+
+- name: java | darwin | install Temurin 8
+  community.general.homebrew_cask:
+    name: temurin@8
+    state: present
