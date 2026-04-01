@@ -94,17 +94,17 @@
 
 - name: runtimes | darwin | preview pyenv global
   ansible.builtin.debug:
-    msg: "Check mode: would run {{ runtimes_pyenv_bin }} global {{ runtimes_python_global_version }}"
+    msg: "Check mode: would run {{ runtimes_pyenv_bin }} global {{ runtimes_python_global_version | string }}"
   when:
     - ansible_check_mode
-    - runtimes_python_global_read.stdout != runtimes_python_global_version
+    - (runtimes_python_global_read.stdout | trim) != (runtimes_python_global_version | string)
 
 - name: runtimes | darwin | set global python version
   ansible.builtin.command:
-    cmd: "{{ runtimes_pyenv_bin }} global {{ runtimes_python_global_version }}"
+    cmd: "{{ runtimes_pyenv_bin }} global {{ runtimes_python_global_version | string }}"
   when:
     - not ansible_check_mode
-    - runtimes_python_global_read.stdout != runtimes_python_global_version
+    - (runtimes_python_global_read.stdout | trim) != (runtimes_python_global_version | string)
 
 - name: runtimes | darwin | install Neovim Python provider
   ansible.builtin.pip:
@@ -127,7 +127,7 @@
   ansible.builtin.debug:
     msg: >-
       Check mode: would clone {{ runtimes_erlang_ls_repo }} into {{ runtimes_erlang_ls_checkout }}
-      and run make install with PREFIX={{ runtimes_erlang_ls_prefix }}.
+      and run make install with PREFIX={{ runtimes_erlang_ls_prefix | dirname }}.
   when:
     - ansible_check_mode
     - not runtimes_erlang_ls_binary.stat.exists
@@ -145,7 +145,7 @@
     chdir: "{{ runtimes_erlang_ls_checkout }}"
     target: install
     params:
-      PREFIX: "{{ runtimes_erlang_ls_prefix }}"
+      PREFIX: "{{ runtimes_erlang_ls_prefix | dirname }}"
   when:
     - not ansible_check_mode
     - not runtimes_erlang_ls_binary.stat.exists

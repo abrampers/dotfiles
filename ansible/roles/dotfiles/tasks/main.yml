@@ -15,12 +15,38 @@
       Run the package_manager role first so rcm is available.
     success_msg: "rcup detected for dotfiles deployment."
 
+- name: dotfiles | read rcrc install state
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.rcrc"
+  register: dotfiles_rcrc_state
+  changed_when: false
+
+- name: dotfiles | read rcup deployment state
+  ansible.builtin.command:
+    cmd: lsrc -F
+  register: dotfiles_lsrc_state
+  changed_when: false
+  check_mode: false
+
+- name: dotfiles | determine rcup deployment need
+  ansible.builtin.set_fact:
+    dotfiles_rcup_needs_deploy: >-
+      {{
+        dotfiles_lsrc_state.stdout_lines
+        | reject('equalto', '')
+        | reject('search', ':[@$X]$')
+        | list
+        | length > 0
+      }}
+  changed_when: false
+
 - name: dotfiles | preview rcrc bootstrap
   ansible.builtin.debug:
     msg: "Check mode: would run rcup rcrc before full dotfiles deployment."
   when:
     - ansible_check_mode
     - dotfiles_rcrc_bootstrap_args | length > 0
+    - not dotfiles_rcrc_state.stat.exists
 
 - name: dotfiles | bootstrap rcrc
   ansible.builtin.command:
@@ -30,13 +56,17 @@
   when:
     - not ansible_check_mode
     - dotfiles_rcrc_bootstrap_args | length > 0
+    - not dotfiles_rcrc_state.stat.exists
 
 - name: dotfiles | preview full dotfiles deployment
   ansible.builtin.debug:
-    msg: "Check mode: would run {{ ((['rcup'] + dotfiles_rcup_flags) | join(' ')) }}."
+    msg: >-
+      Check mode: would {{ 'run ' + ((['rcup'] + dotfiles_rcup_flags) | join(' ')) if dotfiles_rcup_needs_deploy else 'skip rcup because all managed files are already linked or copied.' }}
   when: ansible_check_mode
 
-- name: dotfiles | deploy dotfiles
+- name: dotfiles | deploy dotfiles when needed
   ansible.builtin.command:
     argv: "{{ ['rcup'] + dotfiles_rcup_flags }}"
-  when: not ansible_check_mode
+  when:
+    - not ansible_check_mode
+    - dotfiles_rcup_needs_deploy
