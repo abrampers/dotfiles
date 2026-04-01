@@ -1,0 +1,30 @@
+---
+- name: bootstrap | arm64 | detect Homebrew
+  ansible.builtin.stat:
+    path: "{{ bootstrap_homebrew_bin_arm64 }}"
+  register: bootstrap_homebrew_arm64
+
+- name: bootstrap | arm64 | fail when Homebrew is missing
+  ansible.builtin.assert:
+    that:
+      - bootstrap_homebrew_arm64.stat.exists
+    fail_msg: >-
+      Homebrew is required at {{ bootstrap_homebrew_bin_arm64 }} for Darwin arm64 hosts.
+      Set install_homebrew_if_missing=true to allow bootstrap to install Homebrew automatically.
+    success_msg: "Homebrew detected at {{ bootstrap_homebrew_bin_arm64 }}."
+  when: not install_homebrew_if_missing
+
+- name: bootstrap | arm64 | install Homebrew when allowed
+  ansible.builtin.shell: >-
+    {{ bootstrap_homebrew_install_command_prefix }}
+    "$(curl -fsSL {{ bootstrap_homebrew_install_script_url }})"
+  args:
+    creates: "{{ bootstrap_homebrew_bin_arm64 }}"
+  when:
+    - install_homebrew_if_missing
+    - not bootstrap_homebrew_arm64.stat.exists
+
+- name: bootstrap | arm64 | Homebrew contract
+  ansible.builtin.set_fact:
+    bootstrap_homebrew_bin: "{{ bootstrap_homebrew_bin_arm64 }}"
+  changed_when: false

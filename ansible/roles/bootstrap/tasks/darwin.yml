@@ -1,4 +1,19 @@
 ---
-- name: bootstrap | darwin contract placeholder
+- name: ~/bin | create user bin directory
+  ansible.builtin.file:
+    path: ~/bin
+    state: directory
+    mode: "0755"
+
+- name: bootstrap | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: bootstrap | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: bootstrap | unsupported darwin architecture placeholder
   ansible.builtin.debug:
-    msg: "Bootstrap will own Homebrew checks and ~/bin preparation here."
+    msg: "Bootstrap Darwin support currently targets arm64 and x86_64 architectures."
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
