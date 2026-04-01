@@ -1,9 +1,0 @@
----
-- name: runtimes | darwin entrypoint
-  ansible.builtin.import_tasks: darwin.yml
-  when: ansible_facts['os_family'] == 'Darwin'
-
-- name: runtimes | unsupported platform placeholder
-  ansible.builtin.debug:
-    msg: "Runtimes role currently supports Darwin only."
-  when: ansible_facts['os_family'] != 'Darwin'
