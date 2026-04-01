@@ -67,3 +67,17 @@
   ansible.builtin.debug:
     msg: "Architecture-specific Emacs app linking is defined in darwin_arm64.yml and darwin_x86_64.yml."
   changed_when: false
+
+- name: editors | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: editors | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: editors | darwin unsupported architecture placeholder
+  ansible.builtin.debug:
+    msg: "Editors role currently has Emacs link handling for arm64 and x86_64 only."
+  changed_when: false
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
