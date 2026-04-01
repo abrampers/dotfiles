@@ -7,11 +7,13 @@
       ansible.builtin.stat:
         path: "{{ dotfiles_private_vars_file }}"
       register: dotfiles_private_vars
+      tags: [always]
 
     - name: private vars | load optional custom vars
       ansible.builtin.include_vars:
         file: "{{ dotfiles_private_vars_file }}"
       when: dotfiles_private_vars.stat.exists
+      tags: [always]
 
   roles:
     - role: bootstrap
