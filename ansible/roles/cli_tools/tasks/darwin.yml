@@ -30,6 +30,8 @@
     name: "{{ item }}"
     state: present
   loop: "{{ cli_tools_homebrew_taps }}"
+  loop_control:
+    label: "{{ item }}"
   when: cli_tools_homebrew_taps | length > 0
 
 - name: cli_tools | darwin | install formulae
@@ -37,6 +39,8 @@
     name: "{{ item }}"
     state: present
   loop: "{{ cli_tools_homebrew_formulae }}"
+  loop_control:
+    label: "{{ item }}"
   when: cli_tools_homebrew_formulae | length > 0
 
 - name: cli_tools | darwin | install casks
@@ -44,4 +48,6 @@
     name: "{{ item }}"
     state: present
   loop: "{{ cli_tools_homebrew_casks }}"
+  loop_control:
+    label: "{{ item }}"
   when: cli_tools_homebrew_casks | length > 0
