@@ -1,0 +1,5 @@
+---
+# Override shared defaults here for this machine only.
+# Example:
+# install_homebrew_if_missing: true
+# local_machine_primary_platform: macos-apple-silicon
