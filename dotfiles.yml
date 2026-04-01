@@ -287,6 +287,14 @@
       community.general.homebrew:
         name: grpcurl
 
+    - name: k9s | Tap derailed/k9s | brew tap
+      community.general.homebrew_tap:
+        name: derailed/k9s
+
+    - name: k9s | Install k9s | brew
+      community.general.homebrew:
+        name: k9s
+
     - name: rcm | Installs rcm | brew
       community.general.homebrew:
         name: rcm
