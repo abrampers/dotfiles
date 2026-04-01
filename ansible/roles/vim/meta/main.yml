@@ -1,2 +1,4 @@
 ---
-dependencies: []
+dependencies:
+  - role: homebrew
+  - role: python
