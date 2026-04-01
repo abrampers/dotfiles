@@ -1,32 +1,10 @@
 ---
-- name: go | darwin | resolve Homebrew binary
+- name: go | darwin | set runtime paths
   ansible.builtin.set_fact:
-    go_homebrew_bin: >-
-      {{
-        bootstrap_homebrew_bin | default(
-          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
-          if ansible_facts['architecture'] == 'arm64'
-          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
-        )
-      }}
     go_gvm_script: "{{ ansible_env.HOME }}/.gvm/scripts/gvm"
     go_runtime_install_dir: "{{ ansible_env.HOME }}/.gvm/gos/{{ go_runtime_version }}"
     go_gopls_path: "{{ ansible_env.HOME }}/.gvm/pkgsets/{{ go_runtime_version }}/global/bin/gopls"
   changed_when: false
-
-- name: go | darwin | verify Homebrew binary
-  ansible.builtin.stat:
-    path: "{{ go_homebrew_bin }}"
-  register: go_homebrew
-
-- name: go | darwin | assert Homebrew is available
-  ansible.builtin.assert:
-    that:
-      - go_homebrew.stat.exists
-    fail_msg: >-
-      Homebrew must be available at {{ go_homebrew_bin }} before the go role runs.
-      Run bootstrap first or enable install_homebrew_if_missing there.
-    success_msg: "Homebrew detected at {{ go_homebrew_bin }} for Go installs."
 
 - name: go | darwin | install mercurial prerequisite
   community.general.homebrew:
