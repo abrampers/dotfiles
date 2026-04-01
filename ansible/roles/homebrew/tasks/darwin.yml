@@ -1,0 +1,13 @@
+---
+- name: homebrew | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: homebrew | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: homebrew | unsupported darwin architecture placeholder
+  ansible.builtin.debug:
+    msg: "Homebrew Darwin support currently targets arm64 and x86_64 architectures."
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']

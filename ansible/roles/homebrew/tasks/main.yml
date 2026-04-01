@@ -1,0 +1,9 @@
+---
+- name: homebrew | darwin entrypoint
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: homebrew | unsupported platform placeholder
+  ansible.builtin.debug:
+    msg: "Homebrew role contract is defined; non-Darwin support lands later."
+  when: ansible_facts['os_family'] != 'Darwin'

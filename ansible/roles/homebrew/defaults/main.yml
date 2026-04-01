@@ -1,0 +1,5 @@
+---
+homebrew_install_script_url: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+homebrew_bin_arm64: /opt/homebrew/bin/brew
+homebrew_bin_x86_64: /usr/local/bin/brew
+homebrew_install_command_prefix: /bin/bash -c
