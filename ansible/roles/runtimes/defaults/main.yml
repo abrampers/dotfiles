@@ -1,2 +1,21 @@
 ---
-runtimes_homebrew_formulae: []
+runtimes_homebrew_taps:
+  - clojure-lsp/brew
+runtimes_homebrew_formulae:
+  - leiningen
+  - clojure-lsp-native
+  - go
+  - erlang
+  - rebar3
+  - pyenv
+  - pyenv-virtualenv
+  - rbenv
+  - nvm
+runtimes_homebrew_casks:
+  - temurin@8
+runtimes_python_version: 3.12.7
+runtimes_python_global_version: 3.12
+runtimes_neovim_pip_package: neovim
+runtimes_erlang_ls_repo: https://github.com/erlang-ls/erlang_ls.git
+runtimes_erlang_ls_checkout: "{{ ansible_env.HOME }}/tmp/erlang_ls-tmp"
+runtimes_erlang_ls_prefix: "{{ ansible_env.HOME }}/bin"

@@ -1,0 +1,5 @@
+---
+- name: runtimes | darwin arm64 | set pyenv path
+  ansible.builtin.set_fact:
+    runtimes_pyenv_bin: /opt/homebrew/bin/pyenv
+  changed_when: false

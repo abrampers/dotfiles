@@ -1,0 +1,67 @@
+---
+- name: runtimes | darwin | resolve Homebrew binary
+  ansible.builtin.set_fact:
+    runtimes_homebrew_bin: >-
+      {{
+        bootstrap_homebrew_bin | default(
+          (bootstrap_homebrew_bin_arm64 | default('/opt/homebrew/bin/brew'))
+          if ansible_facts['architecture'] == 'arm64'
+          else (bootstrap_homebrew_bin_x86_64 | default('/usr/local/bin/brew'))
+        )
+      }}
+  changed_when: false
+
+- name: runtimes | darwin | verify Homebrew binary
+  ansible.builtin.stat:
+    path: "{{ runtimes_homebrew_bin }}"
+  register: runtimes_homebrew
+
+- name: runtimes | darwin | assert Homebrew is available
+  ansible.builtin.assert:
+    that:
+      - runtimes_homebrew.stat.exists
+    fail_msg: >-
+      Homebrew must be available at {{ runtimes_homebrew_bin }} before the runtimes role runs.
+      Run bootstrap first or enable install_homebrew_if_missing there.
+    success_msg: "Homebrew detected at {{ runtimes_homebrew_bin }} for runtime installs."
+
+- name: runtimes | darwin | configure taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ runtimes_homebrew_taps }}"
+  loop_control:
+    label: "{{ item }}"
+  when: runtimes_homebrew_taps | length > 0
+
+- name: runtimes | darwin | install formulae
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ runtimes_homebrew_formulae }}"
+  loop_control:
+    label: "{{ item }}"
+  when: runtimes_homebrew_formulae | length > 0
+
+- name: runtimes | darwin | install casks
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ runtimes_homebrew_casks }}"
+  loop_control:
+    label: "{{ item }}"
+  when: runtimes_homebrew_casks | length > 0
+
+- name: runtimes | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: runtimes | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'
+
+- name: runtimes | darwin unsupported architecture placeholder
+  ansible.builtin.debug:
+    msg: "Runtimes role currently has Darwin path handling for arm64 and x86_64 only."
+  changed_when: false
+  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
