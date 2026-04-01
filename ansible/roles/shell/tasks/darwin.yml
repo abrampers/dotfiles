@@ -41,8 +41,20 @@
   loop: "{{ shell_login_shell_targets }}"
 
 - name: shell | darwin | change login shell when needed
+  ansible.builtin.debug:
+    msg: >-
+      Check mode: would run chsh -s {{ shell_default_executable }} {{ item.item }}
+      because the current login shell is
+      {{ item.stdout | regex_replace('^UserShell:\\s*', '') | default('unknown') }}.
+  when:
+    - ansible_check_mode
+    - (item.stdout | regex_replace('^UserShell:\\s*', '') | default('')) != shell_default_executable
+  loop: "{{ shell_login_shell_reads.results }}"
+
+- name: shell | darwin | change login shell when needed
   ansible.builtin.command:
     cmd: "chsh -s {{ shell_default_executable }} {{ item.item }}"
   when: >-
-    (item.stdout | regex_search('UserShell: (.+)', '\\1') | first | default('')) != shell_default_executable
+    not ansible_check_mode and
+    (item.stdout | regex_replace('^UserShell:\\s*', '') | default('')) != shell_default_executable
   loop: "{{ shell_login_shell_reads.results }}"
