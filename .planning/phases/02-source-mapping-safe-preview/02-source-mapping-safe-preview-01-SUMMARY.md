@@ -52,7 +52,7 @@ Each task was committed atomically:
 1. **Task 1: Create the bounded chezmoi root and explicit boundary policy** - `ba01db4` (feat)
 2. **Task 2: Derive the approved import set and human-readable target map from the saved baseline** - `dcfe933` (feat)
 
-**Plan metadata:** Pending final docs commit
+**Plan metadata:** `013e136` (docs)
 
 ## Files Created/Modified
 - `.chezmoiroot` - Redirects chezmoi source state into the bounded `home/` subtree.
