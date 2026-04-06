@@ -1,0 +1,9 @@
+---
+- name: dotfiles | describe chezmoi migration controls
+  ansible.builtin.debug:
+    msg: >-
+      Chezmoi migration path is enabled={{ dotfiles_chezmoi_enabled }},
+      preview_only={{ dotfiles_chezmoi_preview_only }},
+      apply_enabled={{ dotfiles_chezmoi_apply_enabled }} while rcup remains
+      the active deployment path until migration tasks are completed.
+  when: dotfiles_chezmoi_enabled
