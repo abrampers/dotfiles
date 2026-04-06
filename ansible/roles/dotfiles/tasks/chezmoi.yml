@@ -1,9 +1,55 @@
 ---
+- name: dotfiles | preview chezmoi install
+  ansible.builtin.debug:
+    msg: >-
+      Check mode: would install {{ dotfiles_chezmoi_package_name }} with Homebrew,
+      keep rcup as the active deployment path, and preserve the preview/apply
+      boundary because dotfiles_chezmoi_preview_only={{ dotfiles_chezmoi_preview_only }}
+      and dotfiles_chezmoi_apply_enabled={{ dotfiles_chezmoi_apply_enabled }}.
+  when:
+    - dotfiles_chezmoi_enabled
+    - ansible_check_mode
+
+- name: dotfiles | install chezmoi
+  community.general.homebrew:
+    name: "{{ dotfiles_chezmoi_package_name }}"
+    state: present
+  when:
+    - dotfiles_chezmoi_enabled
+    - not ansible_check_mode
+
+- name: dotfiles | verify chezmoi is available
+  ansible.builtin.command:
+    cmd: which chezmoi
+  register: dotfiles_chezmoi_check
+  changed_when: false
+  check_mode: false
+  when: dotfiles_chezmoi_enabled
+
+- name: dotfiles | assert chezmoi is available
+  ansible.builtin.assert:
+    that:
+      - dotfiles_chezmoi_check.rc == 0
+    fail_msg: >-
+      chezmoi must be installed by the dotfiles role before migration preview
+      tasks can continue.
+    success_msg: "chezmoi detected for migration preview tasks."
+  when: dotfiles_chezmoi_enabled
+
+- name: dotfiles | verify chezmoi version
+  ansible.builtin.command:
+    cmd: chezmoi --version
+  register: dotfiles_chezmoi_version
+  changed_when: false
+  check_mode: false
+  when: dotfiles_chezmoi_enabled
+
 - name: dotfiles | describe chezmoi migration controls
   ansible.builtin.debug:
     msg: >-
       Chezmoi migration path is enabled={{ dotfiles_chezmoi_enabled }},
       preview_only={{ dotfiles_chezmoi_preview_only }},
       apply_enabled={{ dotfiles_chezmoi_apply_enabled }} while rcup remains
-      the active deployment path until migration tasks are completed.
+      the active deployment path until migration tasks are completed. Installed
+      chezmoi version: {{ dotfiles_chezmoi_version.stdout | default('unknown') }}.
   when: dotfiles_chezmoi_enabled
