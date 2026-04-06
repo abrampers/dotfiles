@@ -1,0 +1,7 @@
+# one target path per line, comments allowed with #
+.zshrc.local
+.zsh/host/**
+.vim/vimrc.local
+.tmux-local.conf
+.emacs.d/private-init.el
+.vim/plugin/local-settings.vim
