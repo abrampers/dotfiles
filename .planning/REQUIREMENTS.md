@@ -16,8 +16,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Source Layout
 
-- [ ] **LAYO-01**: Operator can store managed home-state in a bounded `chezmoi` source layout that fits this repository's existing structure.
-- [ ] **LAYO-02**: Operator can preserve the current `rcrc` exclusion contract in the new `chezmoi` configuration so previously excluded files do not become managed accidentally.
+- [x] **LAYO-01**: Operator can store managed home-state in a bounded `chezmoi` source layout that fits this repository's existing structure.
+- [x] **LAYO-02**: Operator can preserve the current `rcrc` exclusion contract in the new `chezmoi` configuration so previously excluded files do not become managed accidentally.
 - [ ] **LAYO-03**: Operator can import existing `rcm`-managed targets into `chezmoi` without importing symlink artifacts instead of real file contents.
 
 ### Verification
@@ -25,7 +25,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **VERI-01**: Operator can capture a durable baseline of the current `rcm`-managed file set before the first non-dry-run `chezmoi apply`.
 - [ ] **VERI-02**: Operator can review `chezmoi` dry-run or diff output before the first real apply.
 - [ ] **VERI-03**: Operator can verify after cutover that the `chezmoi`-managed target set matches the recorded `rcm` baseline or documents intentional exceptions.
-- [ ] **VERI-04**: Operator can keep local/private override files out of the shared managed set during migration.
+- [x] **VERI-04**: Operator can keep local/private override files out of the shared managed set during migration.
 
 ### Cutover
 
@@ -79,13 +79,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROV-02 | Phase 1 | Complete |
 | PROV-03 | Phase 1 | Complete |
 | PROV-04 | Phase 1 | Complete |
-| LAYO-01 | Phase 2 | Pending |
-| LAYO-02 | Phase 2 | Pending |
+| LAYO-01 | Phase 2 | Complete |
+| LAYO-02 | Phase 2 | Complete |
 | LAYO-03 | Phase 2 | Pending |
 | VERI-01 | Phase 1 | Complete |
 | VERI-02 | Phase 2 | Pending |
 | VERI-03 | Phase 3 | Pending |
-| VERI-04 | Phase 2 | Pending |
+| VERI-04 | Phase 2 | Complete |
 | CUTO-01 | Phase 3 | Pending |
 | CUTO-02 | Phase 3 | Pending |
 | CUTO-03 | Phase 3 | Pending |

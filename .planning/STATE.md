@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Phase complete — ready for verification
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-04-06T08:59:16.935Z"
+status: Ready to execute
+stopped_at: Completed 02-source-mapping-safe-preview-01-PLAN.md
+last_updated: "2026-04-06T11:24:46.334Z"
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 6
+  completed_plans: 3
 ---
 
 # Project State
@@ -19,20 +19,20 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-06)
 
 **Core value:** Replace `rcm` with `chezmoi` without changing the working local-machine experience or losing confidence in which files are managed.
-**Current focus:** Phase 01 — provisioning-coexistence-baseline
+**Current focus:** Phase 02 — source-mapping-safe-preview
 
 ## Current Position
 
-Phase: 01 (provisioning-coexistence-baseline) — COMPLETE
-Plan: 2 of 2 (complete)
+Phase: 02 (source-mapping-safe-preview) — EXECUTING
+Plan: 2 of 4
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 2
-- Average duration: 66.5 min
-- Total execution time: 2.2 hours
+- Total plans completed: 3
+- Average duration: 63.7 min
+- Total execution time: 3.2 hours
 
 **By Phase:**
 
@@ -42,12 +42,13 @@ Plan: 2 of 2 (complete)
 
 **Recent Trend:**
 
-- Last 5 plans: Phase 01 P01, Phase 01 P02
+- Last 5 plans: Phase 01 P01, Phase 01 P02, Phase 02 P01
 - Trend: Stable
 
 *Updated after each plan completion*
 | Phase 01-provisioning-coexistence-baseline P01 | 129 | 2 tasks | 4 files |
 | Phase 01 P02 | 4 min | 2 tasks | 2 files |
+| Phase 02-source-mapping-safe-preview P01 | 58 min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,8 @@ Recent decisions affecting current work:
 - [Phase 01-provisioning-coexistence-baseline]: Made chezmoi introduction preview-first with explicit enabled and apply control variables so installation never implies a real apply.
 - [Phase 01]: Stored the first lsrc-derived rcm baseline under ~/.local/state/dotfiles-migration so later cutover checks can compare against a durable pre-apply snapshot.
 - [Phase 01]: Kept ansible/local_machine.yml on chezmoi init plus apply --dry-run --verbose only, leaving real apply outside the default Phase 1 path.
+- [Phase 02-source-mapping-safe-preview]: Redirected chezmoi source state into repo-local home/ so repo root stays outside managed home-state.
+- [Phase 02-source-mapping-safe-preview]: Derived Phase 2 import targets from the saved rcm baseline after denylist and exception filtering instead of rediscovering from the repo tree.
 
 ### Pending Todos
 
@@ -79,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06T08:59:11.038Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-04-06T11:24:46.330Z
+Stopped at: Completed 02-source-mapping-safe-preview-01-PLAN.md
 Resume file: None
