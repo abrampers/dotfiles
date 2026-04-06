@@ -103,13 +103,25 @@ ansible-galaxy collection install community.general
 
 Provisioning now lives under =ansible/= and the main entry point is =ansible/local_machine.yml=. The =rcrc= configuration excludes the =ansible/= tree, so provisioning files are not deployed as dotfiles by =rcup=.
 
-*** Full apply
+*** Provisioning with preview-only `chezmoi`
+
+During the `chezmoi` migration, install/preview and real apply are intentionally separate steps. =ansible/local_machine.yml= remains the main provisioning entry point, and its default migration behavior stops at a safe `chezmoi` preview so you can inspect the migration boundary before any real apply exists.
 
 #+begin_src shell
 
 ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml
 
 #+end_src
+
+That default local-machine path currently does all of the following:
+
+- installs =chezmoi= alongside the existing =rcm=/=rcup= workflow
+- keeps =rcup= as the active deployment path for the shared dotfiles set
+- saves the current =rcm=-managed baseline to =~/.local/state/dotfiles-migration/rcm-managed-files.txt=
+- initializes the default empty chezmoi source directory with =chezmoi init= when needed
+- runs =chezmoi apply --dry-run --verbose= only
+
+Real apply remains opt-in and is not part of the default =ansible/local_machine.yml= path in Phase 1.
 
 *** Dry run
 
@@ -120,6 +132,8 @@ Review the full bootstrap before applying it.
 ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --check --diff
 
 #+end_src
+
+For the `chezmoi` migration path, this is also where you review the saved baseline and the =chezmoi apply --dry-run --verbose= output. The real apply step remains opt-in and outside the default local-machine workflow for now.
 
 *** Targeted role execution
 
