@@ -1,0 +1,23 @@
+set surround
+set commentary
+set argtextobj
+set textobj-entire
+set clipboard+=unnamed
+
+let mapleader = " "
+
+nmap ,a :action GotoTest<CR>
+nmap ,w :w<CR>
+
+nmap <Leader>f :action FindInPath<CR>
+nmap <Leader>c :action GotoClass<CR>
+nmap <C-p> :action GotoFile<CR>
+nmap <C-a><C-a> :action HideAllWindows<CR>
+
+nmap mb :action ToggleLineBreakpoint<CR>
+
+nmap tt :action RunCoverage<CR>
+nmap td :action DebugClass<CR>
+nmap ts :action Run<CR>
+
+nmap ,r :action Run<CR>
