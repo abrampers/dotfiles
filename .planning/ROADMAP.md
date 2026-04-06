@@ -12,7 +12,7 @@ This roadmap replaces `rcm` with `chezmoi` in a safety-first sequence: first pre
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Provisioning Coexistence & Baseline** - Install `chezmoi` into the current Ansible flow, keep apply separate, preserve `rcm`, and record the current managed-file truth.
+- [x] **Phase 1: Provisioning Coexistence & Baseline** - Install `chezmoi` into the current Ansible flow, keep apply separate, preserve `rcm`, and record the current managed-file truth.
 - [ ] **Phase 2: Source Mapping & Safe Preview** - Create bounded `chezmoi` source state, preserve exclusions, protect local overrides, and make migration changes reviewable before apply.
 - [ ] **Phase 3: Confirmation-Gated Cutover & Parity Proof** - Run the first real `chezmoi` apply safely from either an independent playbook or an explicit local-machine apply path, require explicit cleanup confirmation, document the operator flow, and verify parity plus machine stability afterward.
 
@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] `01-01-PLAN.md` — Split the dotfiles role into explicit `rcm` and `chezmoi` slices, install `chezmoi`, and preserve the existing `rcup` path.
-- [ ] `01-02-PLAN.md` — Capture the `rcm` baseline, run preview-only `chezmoi` behavior, and document the operator flow.
+- [x] `01-02-PLAN.md` — Capture the `rcm` baseline, run preview-only `chezmoi` behavior, and document the operator flow.
 
 ### Phase 2: Source Mapping & Safe Preview
 **Goal**: Operator can represent the current managed home-state in bounded `chezmoi` source state without accidentally expanding scope or importing the wrong content.
@@ -66,6 +66,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Provisioning Coexistence & Baseline | 1/2 | In Progress | - |
+| 1. Provisioning Coexistence & Baseline | 2/2 | Complete | 2026-04-06 |
 | 2. Source Mapping & Safe Preview | 0/TBD | Not started | - |
 | 3. Confirmation-Gated Cutover & Parity Proof | 0/TBD | Not started | - |

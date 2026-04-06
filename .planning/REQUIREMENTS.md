@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PROV-01**: Operator can install `chezmoi` through the existing Ansible Homebrew workflow without removing `rcm`.
 - [x] **PROV-02**: Operator can run the migration workflow while `rcm` remains available as the current deployment path until cutover is verified.
 - [x] **PROV-03**: Operator can treat `chezmoi` installation and the first real `chezmoi apply` as separate workflow steps rather than a single automation action.
-- [ ] **PROV-04**: Operator can run `ansible/local_machine.yml` so it executes `chezmoi` dry-run/preview behavior and then leaves the real apply decision to the operator.
+- [x] **PROV-04**: Operator can run `ansible/local_machine.yml` so it executes `chezmoi` dry-run/preview behavior and then leaves the real apply decision to the operator.
 
 ### Source Layout
 
@@ -22,7 +22,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Verification
 
-- [ ] **VERI-01**: Operator can capture a durable baseline of the current `rcm`-managed file set before the first non-dry-run `chezmoi apply`.
+- [x] **VERI-01**: Operator can capture a durable baseline of the current `rcm`-managed file set before the first non-dry-run `chezmoi apply`.
 - [ ] **VERI-02**: Operator can review `chezmoi` dry-run or diff output before the first real apply.
 - [ ] **VERI-03**: Operator can verify after cutover that the `chezmoi`-managed target set matches the recorded `rcm` baseline or documents intentional exceptions.
 - [ ] **VERI-04**: Operator can keep local/private override files out of the shared managed set during migration.
@@ -78,11 +78,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROV-01 | Phase 1 | Complete |
 | PROV-02 | Phase 1 | Complete |
 | PROV-03 | Phase 1 | Complete |
-| PROV-04 | Phase 1 | Pending |
+| PROV-04 | Phase 1 | Complete |
 | LAYO-01 | Phase 2 | Pending |
 | LAYO-02 | Phase 2 | Pending |
 | LAYO-03 | Phase 2 | Pending |
-| VERI-01 | Phase 1 | Pending |
+| VERI-01 | Phase 1 | Complete |
 | VERI-02 | Phase 2 | Pending |
 | VERI-03 | Phase 3 | Pending |
 | VERI-04 | Phase 2 | Pending |
