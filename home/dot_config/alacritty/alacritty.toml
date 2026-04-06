@@ -1,0 +1,23 @@
+[font]
+size = 14.0
+
+[font.bold]
+family = "Source Code Pro for Powerline"
+style = "Bold"
+
+[font.bold_italic]
+family = "Source Code Pro for Powerline"
+style = "Bold Italic"
+
+[font.italic]
+family = "Source Code Pro for Powerline"
+style = "Italic"
+
+[font.normal]
+family = "Source Code Pro for Powerline"
+style = "Regular"
+
+[window]
+opacity = 0.9
+decorations = "buttonless"
+padding = { x = 10, y = 10 }

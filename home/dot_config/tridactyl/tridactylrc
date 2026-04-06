@@ -1,0 +1,42 @@
+" vim: filetype=vim
+
+" delete all settings except what is here
+sanitize tridactyllocal tridactylsync
+
+" manage screen space
+guiset_quiet hoverlink right
+
+color --url https://raw.githubusercontent.com/bezmi/base16-tridactyl/master/base16-gruvbox-dark-soft.css gruvbox-dark-soft
+
+" key bindings for usability
+unbind d
+bind dd tabclose
+bind <C-j> tabmove -1
+bind <C-k> tabmove +1
+bind J tabprev
+bind K tabnext
+bind <C-i> mode ignore
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext +1
+bind N findnext -1
+bind ,<Space> nohlsearch
+set smoothscroll true
+
+" from example rc files
+bind gd tabdetach
+bind gD composite tabduplicate; tabdetach
+
+" search and translate
+set searchurls.translate https://translate.google.com/#view=home&op=translate&sl=%s1&tl=%s2&text=%s3
+set searchurls.gs https:scholar.google.com/scholar?q=
+
+" Don't run Tridactyl on some web sites because it doesn't work well, or
+" because the web site has its own keybindings.
+autocmd DocStart mail.google.com mode ignore
+
+bind --mode=ex <C-j> ex.next_completion
+bind --mode=ex <C-k> ex.prev_completion
+
+set completions.open.autoselect false
+set completions.tabopen.autoselect false
