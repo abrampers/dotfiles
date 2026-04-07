@@ -18,7 +18,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **LAYO-01**: Operator can store managed home-state in a bounded `chezmoi` source layout that fits this repository's existing structure.
 - [x] **LAYO-02**: Operator can preserve the current `rcrc` exclusion contract in the new `chezmoi` configuration so previously excluded files do not become managed accidentally.
-- [ ] **LAYO-03**: Operator can import existing `rcm`-managed targets into `chezmoi` without importing symlink artifacts instead of real file contents.
+- [x] **LAYO-03**: Operator can import existing `rcm`-managed targets into `chezmoi` without importing symlink artifacts instead of real file contents.
 
 ### Verification
 
@@ -81,7 +81,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROV-04 | Phase 1 | Complete |
 | LAYO-01 | Phase 2 | Complete |
 | LAYO-02 | Phase 2 | Complete |
-| LAYO-03 | Phase 2 | Pending |
+| LAYO-03 | Phase 2 | Complete |
 | VERI-01 | Phase 1 | Complete |
 | VERI-02 | Phase 2 | Pending |
 | VERI-03 | Phase 3 | Pending |

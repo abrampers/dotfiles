@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 02-source-mapping-safe-preview-01-PLAN.md
-last_updated: "2026-04-06T11:24:46.334Z"
+stopped_at: Completed 02-source-mapping-safe-preview-02-PLAN.md
+last_updated: "2026-04-07T06:26:30.892Z"
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-04-06)
 ## Current Position
 
 Phase: 02 (source-mapping-safe-preview) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ Plan: 2 of 4
 | Phase 01-provisioning-coexistence-baseline P01 | 129 | 2 tasks | 4 files |
 | Phase 01 P02 | 4 min | 2 tasks | 2 files |
 | Phase 02-source-mapping-safe-preview P01 | 58 min | 2 tasks | 11 files |
+| Phase 02-source-mapping-safe-preview P02 | 6 | 2 tasks | 298 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Kept ansible/local_machine.yml on chezmoi init plus apply --dry-run --verbose only, leaving real apply outside the default Phase 1 path.
 - [Phase 02-source-mapping-safe-preview]: Redirected chezmoi source state into repo-local home/ so repo root stays outside managed home-state.
 - [Phase 02-source-mapping-safe-preview]: Derived Phase 2 import targets from the saved rcm baseline after denylist and exception filtering instead of rediscovering from the repo tree.
+- [Phase 02-source-mapping-safe-preview]: Treat the approved import contract as the only source for root and tool-tree imports instead of rediscovering files from the repo.
+- [Phase 02-source-mapping-safe-preview]: Re-import shared tool trees from deployed home paths with chezmoi add --follow so home/ stores real contents instead of placeholder symlink artifacts.
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-06T11:24:46.330Z
-Stopped at: Completed 02-source-mapping-safe-preview-01-PLAN.md
+Last session: 2026-04-07T06:26:30.884Z
+Stopped at: Completed 02-source-mapping-safe-preview-02-PLAN.md
 Resume file: None
