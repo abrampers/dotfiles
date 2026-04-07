@@ -6,6 +6,11 @@ dotfiles_chezmoi_enabled: true
 dotfiles_chezmoi_preview_only: true
 dotfiles_chezmoi_apply_enabled: false
 dotfiles_chezmoi_package_name: chezmoi
-dotfiles_chezmoi_source_dir: "{{ ansible_env.HOME }}/.local/share/chezmoi"
+dotfiles_chezmoi_source_dir: "{{ playbook_dir | dirname }}"
 dotfiles_migration_state_dir: "{{ ansible_env.HOME }}/.local/state/dotfiles-migration"
 dotfiles_rcm_baseline_file: "{{ dotfiles_migration_state_dir }}/rcm-managed-files.txt"
+dotfiles_chezmoi_managed_file: "{{ dotfiles_migration_state_dir }}/chezmoi-managed-files.json"
+dotfiles_chezmoi_preview_report_file: "{{ dotfiles_migration_state_dir }}/chezmoi-preview-report.md"
+dotfiles_chezmoi_import_targets_file: "{{ playbook_dir | dirname }}/migration/chezmoi-import-targets.txt"
+dotfiles_chezmoi_local_denylist_file: "{{ playbook_dir | dirname }}/migration/chezmoi-local-denylist.txt"
+dotfiles_chezmoi_exception_file: "{{ playbook_dir | dirname }}/migration/chezmoi-parity-exceptions.txt"

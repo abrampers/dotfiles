@@ -124,17 +124,28 @@
 - name: dotfiles | preview chezmoi dry-run apply
   ansible.builtin.debug:
     msg: >-
-      Check mode: would run chezmoi apply --dry-run --verbose from the default
-      preview-only migration path.
+      Check mode: would run chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" diff
+      followed by chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply
+      --dry-run --verbose from the default preview-only migration path.
   when:
     - dotfiles_chezmoi_enabled
     - ansible_check_mode
     - dotfiles_chezmoi_preview_only
     - not dotfiles_chezmoi_apply_enabled
 
+- name: dotfiles | run chezmoi diff
+  ansible.builtin.command:
+    cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" diff
+  changed_when: false
+  when:
+    - dotfiles_chezmoi_enabled
+    - not ansible_check_mode
+    - dotfiles_chezmoi_preview_only
+    - not dotfiles_chezmoi_apply_enabled
+
 - name: dotfiles | run chezmoi dry-run apply
   ansible.builtin.command:
-    cmd: chezmoi apply --dry-run --verbose
+    cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply --dry-run --verbose
   changed_when: false
   when:
     - dotfiles_chezmoi_enabled
