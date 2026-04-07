@@ -79,7 +79,9 @@
       provisioning path. Keep dotfiles_chezmoi_apply_enabled=false so plain
       apply remains disabled here.
     success_msg: "Chezmoi migration remains on the preview-only path."
-  when: dotfiles_chezmoi_enabled
+  when:
+    - dotfiles_chezmoi_enabled
+    - not dotfiles_chezmoi_cutover_enabled
 
 - name: dotfiles | ensure migration state directory exists
   ansible.builtin.file:

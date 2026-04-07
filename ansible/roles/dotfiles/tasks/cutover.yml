@@ -1,0 +1,136 @@
+---
+- name: dotfiles | run chezmoi apply cutover
+  tags: [chezmoi_apply]
+  when:
+    - dotfiles_chezmoi_enabled
+    - dotfiles_chezmoi_cutover_enabled
+    - dotfiles_chezmoi_apply_enabled
+  block:
+    - name: dotfiles | assert preview-safe cutover controls
+      ansible.builtin.assert:
+        that:
+          - not dotfiles_chezmoi_preview_only
+        fail_msg: >-
+          Real chezmoi apply requires dotfiles_chezmoi_preview_only=false so the
+          cutover path is always explicit.
+        success_msg: "Chezmoi cutover path is explicitly enabled for real apply."
+
+    - name: dotfiles | rerun chezmoi preview report before apply
+      ansible.builtin.command:
+        argv:
+          - bash
+          - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/generatePreviewReport.sh"
+          - "{{ dotfiles_chezmoi_source_dir }}"
+          - "{{ dotfiles_rcm_baseline_file }}"
+          - "{{ dotfiles_migration_state_dir }}"
+          - "{{ dotfiles_chezmoi_import_targets_file }}"
+          - "{{ dotfiles_chezmoi_local_denylist_file }}"
+          - "{{ dotfiles_chezmoi_exception_file }}"
+      changed_when: false
+
+    - name: dotfiles | capture workstation state before apply
+      ansible.builtin.command:
+        argv:
+          - bash
+          - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/runWorkstationSmokeChecks.sh"
+          - before
+          - "{{ dotfiles_chezmoi_stability_before_file }}"
+      changed_when: false
+
+    - name: dotfiles | apply chezmoi cutover
+      ansible.builtin.command:
+        cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply --verbose
+
+    - name: dotfiles | generate post-apply parity proof
+      ansible.builtin.command:
+        argv:
+          - bash
+          - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/generateCutoverParityReport.sh"
+          - "{{ dotfiles_chezmoi_source_dir }}"
+          - "{{ dotfiles_rcm_baseline_file }}"
+          - "{{ dotfiles_migration_state_dir }}"
+          - "{{ dotfiles_chezmoi_import_targets_file }}"
+          - "{{ dotfiles_chezmoi_local_denylist_file }}"
+          - "{{ dotfiles_chezmoi_exception_file }}"
+      changed_when: false
+
+    - name: dotfiles | capture workstation state after apply
+      ansible.builtin.command:
+        argv:
+          - bash
+          - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/runWorkstationSmokeChecks.sh"
+          - after
+          - "{{ dotfiles_chezmoi_stability_after_file }}"
+      changed_when: false
+
+    - name: dotfiles | read post-apply parity proof
+      ansible.builtin.slurp:
+        path: "{{ dotfiles_chezmoi_parity_json_file }}"
+      register: dotfiles_chezmoi_parity_json_raw
+
+    - name: dotfiles | parse post-apply parity proof
+      ansible.builtin.set_fact:
+        dotfiles_chezmoi_parity_result: "{{ dotfiles_chezmoi_parity_json_raw.content | b64decode | from_json }}"
+
+    - name: dotfiles | assert post-apply parity is eligible for cleanup review
+      ansible.builtin.assert:
+        that:
+          - dotfiles_chezmoi_parity_result.status != 'failed'
+        fail_msg: >-
+          Post-apply parity failed. Review {{ dotfiles_chezmoi_parity_report_file }}
+          and {{ dotfiles_chezmoi_parity_json_file }} before retrying cleanup.
+        success_msg: >-
+          Post-apply parity is {{ dotfiles_chezmoi_parity_result.status }}.
+          Cleanup remains a separate operator-confirmed step.
+
+- name: dotfiles | run chezmoi cleanup
+  tags: [chezmoi_cleanup]
+  when:
+    - dotfiles_chezmoi_enabled
+    - dotfiles_chezmoi_cleanup_enabled
+  block:
+    - name: dotfiles | assert cleanup confirmation string
+      ansible.builtin.assert:
+        that:
+          - dotfiles_chezmoi_cleanup_confirmation == 'cleanup-rcm'
+        fail_msg: >-
+          Cleanup is destructive. Re-run with
+          dotfiles_chezmoi_cleanup_confirmation=cleanup-rcm to continue.
+        success_msg: "Cleanup confirmation accepted."
+
+    - name: dotfiles | read post-apply parity proof for cleanup
+      ansible.builtin.slurp:
+        path: "{{ dotfiles_chezmoi_parity_json_file }}"
+      register: dotfiles_chezmoi_cleanup_parity_raw
+
+    - name: dotfiles | read post-apply stability report for cleanup
+      ansible.builtin.slurp:
+        path: "{{ dotfiles_chezmoi_stability_after_file }}"
+      register: dotfiles_chezmoi_cleanup_stability_raw
+
+    - name: dotfiles | parse cleanup gate artifacts
+      ansible.builtin.set_fact:
+        dotfiles_chezmoi_cleanup_parity: "{{ dotfiles_chezmoi_cleanup_parity_raw.content | b64decode | from_json }}"
+        dotfiles_chezmoi_cleanup_stability: "{{ dotfiles_chezmoi_cleanup_stability_raw.content | b64decode }}"
+
+    - name: dotfiles | announce cleanup gate status
+      ansible.builtin.debug:
+        msg: >-
+          Chezmoi apply succeeded earlier. Parity summary status is
+          {{ dotfiles_chezmoi_cleanup_parity.status }}.
+          Review {{ dotfiles_chezmoi_parity_report_file }} before cleanup.
+
+    - name: dotfiles | assert cleanup gate artifacts are clean enough
+      ansible.builtin.assert:
+        that:
+          - dotfiles_chezmoi_cleanup_parity.status in ['clean', 'exceptions_only']
+          - dotfiles_chezmoi_cleanup_stability is regex('(?m)^- Result: passed$')
+        fail_msg: >-
+          Cleanup stays blocked until parity is clean or exceptions_only and the
+          post-apply workstation smoke check reports '- Result: passed' in
+          {{ dotfiles_chezmoi_stability_after_file }}.
+        success_msg: "Cleanup gate passed with parity and workstation evidence."
+
+    - name: dotfiles | cleanup-rcm
+      ansible.builtin.command:
+        cmd: rcdn
