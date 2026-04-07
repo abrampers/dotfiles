@@ -48,7 +48,7 @@ Plans:
 Plans:
 - [x] `02-01-PLAN.md` — Define the bounded chezmoi root, explicit ignore/denylist rules, and baseline-derived import contract.
 - [x] `02-02-PLAN.md` — Import root and top-level managed targets into `home/` with `chezmoi add --follow`.
-- [ ] `02-03-PLAN.md` — Import the XDG-managed set into `home/dot_config` without broad `.config` ownership.
+- [x] `02-03-PLAN.md` — Import the XDG-managed set into `home/dot_config` without broad `.config` ownership.
 - [ ] `02-04-PLAN.md` — Wire repo-backed preview evidence and mismatch blocking into `ansible/local_machine.yml`.
 
 ### Phase 3: Confirmation-Gated Cutover & Parity Proof
@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Provisioning Coexistence & Baseline | 2/2 | Complete | 2026-04-06 |
-| 2. Source Mapping & Safe Preview | 2/4 | In Progress | - |
+| 2. Source Mapping & Safe Preview | 3/4 | In Progress | - |
 | 3. Confirmation-Gated Cutover & Parity Proof | 0/TBD | Not started | - |

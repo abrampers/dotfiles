@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 02-source-mapping-safe-preview-02-PLAN.md
-last_updated: "2026-04-07T06:26:30.892Z"
+stopped_at: Completed 02-source-mapping-safe-preview-03-PLAN.md
+last_updated: "2026-04-07T06:32:49.339Z"
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-04-06)
 ## Current Position
 
 Phase: 02 (source-mapping-safe-preview) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ Plan: 3 of 4
 | Phase 01 P02 | 4 min | 2 tasks | 2 files |
 | Phase 02-source-mapping-safe-preview P01 | 58 min | 2 tasks | 11 files |
 | Phase 02-source-mapping-safe-preview P02 | 6 | 2 tasks | 298 files |
+| Phase 02-source-mapping-safe-preview P03 | 4 | 2 tasks | 30 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,8 @@ Recent decisions affecting current work:
 - [Phase 02-source-mapping-safe-preview]: Derived Phase 2 import targets from the saved rcm baseline after denylist and exception filtering instead of rediscovering from the repo tree.
 - [Phase 02-source-mapping-safe-preview]: Treat the approved import contract as the only source for root and tool-tree imports instead of rediscovering files from the repo.
 - [Phase 02-source-mapping-safe-preview]: Re-import shared tool trees from deployed home paths with chezmoi add --follow so home/ stores real contents instead of placeholder symlink artifacts.
+- [Phase 02-source-mapping-safe-preview]: Import approved XDG targets into home/dot_config as explicit file mappings instead of claiming broad .config ownership.
+- [Phase 02-source-mapping-safe-preview]: Keep XDG cleanup limited to home/ with denylist verification rather than altering legacy repo paths outside the bounded subtree.
 
 ### Pending Todos
 
@@ -85,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-07T06:26:30.884Z
-Stopped at: Completed 02-source-mapping-safe-preview-02-PLAN.md
+Last session: 2026-04-07T06:32:49.328Z
+Stopped at: Completed 02-source-mapping-safe-preview-03-PLAN.md
 Resume file: None
