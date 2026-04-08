@@ -62,7 +62,20 @@ Each task was committed atomically:
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+### Auto-fixed Issues
+
+**1. [Rule 3 - Blocking] Force-added planning artifacts for the metadata commit**
+- **Found during:** Final documentation commit
+- **Issue:** Local `.gitignore` rules ignored `.planning/`, which blocked staging the required quick-task summary and state update.
+- **Fix:** Used `git add -f` for `.planning/quick/260408-eo0-exclude-readme-org-from-chezmoi-home-sta/260408-eo0-SUMMARY.md` and `.planning/STATE.md` only, then retried the docs commit.
+- **Files modified:** `.planning/quick/260408-eo0-exclude-readme-org-from-chezmoi-home-sta/260408-eo0-SUMMARY.md`, `.planning/STATE.md`
+- **Verification:** The final docs commit completed successfully and the summary file is tracked in git.
+- **Committed in:** `68249de`
+
+---
+
+**Total deviations:** 1 auto-fixed (1 blocking)
+**Impact on plan:** The fix only unblocked the required planning-artifact commit and did not change task scope.
 
 ## Issues Encountered
 
