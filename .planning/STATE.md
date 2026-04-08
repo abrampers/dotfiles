@@ -59,6 +59,12 @@ None.
 
 - The guarded cutover flow is wired and syntax-checked, but the first real `chezmoi apply` still needs live-machine verification before legacy cleanup should be attempted.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260408-eo0 | Exclude README.org from chezmoi home state and remove it from chezmoi-managed home output | 2026-04-08 | 3f4b48c | [260408-eo0-exclude-readme-org-from-chezmoi-home-sta](./quick/260408-eo0-exclude-readme-org-from-chezmoi-home-sta/) |
+
 ## Session Continuity
 
 Last session: 2026-04-08T03:37:42Z
