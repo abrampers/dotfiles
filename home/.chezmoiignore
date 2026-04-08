@@ -1,5 +1,9 @@
 # Preserve the current rcm exclusion contract.
 *.md
+
+# Keep repo-only Org docs out of home state for parity.
+.README.org
+
 *.png
 *.jpg
 install.sh
