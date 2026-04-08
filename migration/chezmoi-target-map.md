@@ -5,7 +5,6 @@ This report derives the approved Phase 2 import set from `~/.local/state/dotfile
 ## Mapped targets
 
 ### Root dotfiles
-- `/Users/abram.perdanaputra/.README.org`
 - `/Users/abram.perdanaputra/.ideavimrc`
 - `/Users/abram.perdanaputra/.rcrc`
 - `/Users/abram.perdanaputra/.tigrc`

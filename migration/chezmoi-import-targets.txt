@@ -1,4 +1,3 @@
-/Users/abram.perdanaputra/.README.org
 /Users/abram.perdanaputra/.config/alacritty/alacritty.toml
 /Users/abram.perdanaputra/.config/bat/config
 /Users/abram.perdanaputra/.config/coc/extensions/db.json
