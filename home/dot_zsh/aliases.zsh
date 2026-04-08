@@ -22,3 +22,6 @@ alias :q='exit'
 # ctags
 alias ctags="$(brew --prefix)/bin/ctags"
 
+# kubernetes
+alias kn='kubens'
+alias kx='kubectx'
