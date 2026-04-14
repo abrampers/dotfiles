@@ -8,6 +8,18 @@
     type = "git-repo"
     url = "https://github.com/tinted-theming/tinted-shell.git"
     clone.args = ["--revision=84d8165d682cd49c6d476b064769b338be8f13f2"]
+[".zsh/zsh-syntax-highlighting"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/refs/tags/0.8.0.tar.gz"
+    exact = true
+    stripComponents = 1
+    include = ["*/*.zsh", "*/.version", "*/.revision-hash"]
+[".zsh/zsh-autosuggestions"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/tags/v0.7.1.tar.gz"
+    exact = true
+    stripComponents = 1
+    include = ["*/*.zsh", "*/.version", "*/.revision-hash"]
 [".vim/pack/bundle/opt/vim-go"]
     type = "archive"
     url = "https://github.com/fatih/vim-go/archive/refs/tags/v1.29.tar.gz"
