@@ -1,0 +1,41 @@
+[".zsh/zsh-history-substring-search"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-history-substring-search/archive/refs/tags/v1.1.0.tar.gz"
+    exact = true
+    stripComponents = 1
+    include = ["*/*.zsh", "*/.version", "*/.revision-hash"]
+[".zsh/tinted-shell"]
+    type = "git-repo"
+    url = "https://github.com/tinted-theming/tinted-shell.git"
+    clone.args = ["--revision=84d8165d682cd49c6d476b064769b338be8f13f2"]
+[".zsh/zsh-syntax-highlighting"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/refs/tags/0.8.0.tar.gz"
+    exact = true
+    stripComponents = 1
+[".zsh/zsh-autosuggestions"]
+    type = "archive"
+    url = "https://github.com/zsh-users/zsh-autosuggestions/archive/refs/tags/v0.7.1.tar.gz"
+    exact = true
+    stripComponents = 1
+[".tmux/nord-tmux"]
+    type = "archive"
+    url = "https://github.com/nordtheme/tmux/archive/refs/tags/v0.3.0.tar.gz"
+    exact = true
+    stripComponents = 1
+    include = ["src/*", "nord.tmux"]
+[".tmux/tmux-prefix-highlihgt"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tmux-prefix-highlight.git"
+    include = ["prefix_highlight.tmux"]
+    clone.args = ["--revision=06cbb4ecd3a0a918ce355c70dc56d79debd455c7"]
+[".vim/pack/bundle/opt/vim-go"]
+    type = "archive"
+    url = "https://github.com/fatih/vim-go/archive/refs/tags/v1.29.tar.gz"
+[".vim/pack/bundle/opt/ferret"]
+    type = "archive"
+    url = "https://github.com/wincent/ferret/archive/refs/tags/5.0.tar.gz"
+[".vim/pack/bundle/opt/base16-vim"]
+    type = "git-repo"
+    url = "https://github.com/chriskempson/base16-vim.git"
+    clone.args = ["--revision=3be3cd82cd31acfcab9a41bad853d9c68d30478d"]

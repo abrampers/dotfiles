@@ -1,0 +1,5 @@
+---
+- name: mintotp | install mintotp
+  ansible.builtin.pip:
+    name: "mintotp"
+    executable: "{{ ansible_env.HOME }}/.pyenv/shims/pip3"

@@ -1,0 +1,14 @@
+---
+- name: git | darwin arm64 | verify git app source
+  ansible.builtin.stat:
+    path: "{{ git_executable_path_arm64 }}"
+  register: git_app_arm64
+  changed_when: false
+
+- name: git | darwin arm64 | assert git app source exists
+  ansible.builtin.assert:
+    that:
+      - git_app_arm64.stat.exists
+    fail_msg: >-
+      Expected Apple Silicon git app at {{ git_executable_path_arm64 }} after installing git.
+    success_msg: "Apple Silicon git app detected at {{ git_executable_path_arm64 }}."

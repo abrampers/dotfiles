@@ -103,13 +103,37 @@ ansible-galaxy collection install community.general
 
 Provisioning now lives under =ansible/= and the main entry point is =ansible/local_machine.yml=. The =rcrc= configuration excludes the =ansible/= tree, so provisioning files are not deployed as dotfiles by =rcup=.
 
-*** Full apply
+*** Provisioning your local machine
 
 #+begin_src shell
 
 ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml
 
 #+end_src
+
+This step will get all dependencies only. Dotfiles apply will be handled separately
+
+*** Apply dotfiles
+
+Use the dedicated playbook to run =chezmoi apply=.
+
+#+begin_src shell
+
+ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/chezmoi_apply.yml
+
+#+end_src
+
+*** Advanced real apply from `ansible/local_machine.yml`
+
+If you specifically want the main provisioning playbook to run the same real-apply path, you must opt in with both the dedicated tag and the explicit enablement variables:
+
+#+begin_src shell
+
+ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --tags dotfiles,chezmoi_apply -e dotfiles_chezmoi_apply_enabled=true
+
+#+end_src
+
+That advanced route exists for parity with the dedicated playbook, but the dedicated =ansible/chezmoi_apply.yml= path is the normal documented cutover command.
 
 *** Dry run
 
@@ -120,6 +144,8 @@ Review the full bootstrap before applying it.
 ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --check --diff
 
 #+end_src
+
+For the `chezmoi` migration path, this is also where you review the saved baseline and the =chezmoi apply --dry-run --verbose= output. The real apply step remains opt-in and outside the default local-machine workflow for now.
 
 *** Targeted role execution
 

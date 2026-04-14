@@ -1,4 +1,3 @@
 ---
-dotfiles_rcup_flags: []
-dotfiles_rcrc_bootstrap_args:
-  - rcrc
+dotfiles_chezmoi_source_dir: "{{ playbook_dir | dirname }}"
+dotfiles_chezmoi_apply_enabled: false

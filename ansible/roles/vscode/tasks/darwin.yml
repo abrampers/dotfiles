@@ -3,3 +3,17 @@
   community.general.homebrew_cask:
     name: visual-studio-code
     state: present
+
+- name: vscode | darwin | verify Visual Studio Code app source
+  ansible.builtin.stat:
+    path: "{{ vscode_app_source }}"
+  register: vscode_app
+  changed_when: false
+
+- name: vscode | darwin | assert Visual Studio Code app source exists
+  ansible.builtin.assert:
+    that:
+      - vscode_app.stat.exists
+    fail_msg: >-
+      Expected Visual Studio Code app at {{ vscode_app_source }} after installing visual-studio-code.
+    success_msg: "Visual Studio Code app detected at {{ vscode_app_source }}."

@@ -1,0 +1,96 @@
+---
+- name: dotfiles | install chezmoi
+  community.general.homebrew:
+    name: chezmoi
+    state: present
+  when:
+    - not ansible_check_mode
+
+- name: dotfiles | verify chezmoi is available
+  ansible.builtin.command:
+    cmd: which chezmoi
+  register: dotfiles_chezmoi_check
+  changed_when: false
+  check_mode: false
+  when:
+    - not ansible_check_mode
+
+- name: dotfiles | assert chezmoi is available
+  ansible.builtin.assert:
+    that:
+      - dotfiles_chezmoi_check.rc == 0
+    fail_msg: >-
+      chezmoi must be installed by the dotfiles role before migration preview
+      tasks can continue.
+    success_msg: "chezmoi detected for migration preview tasks."
+  when:
+    - not ansible_check_mode
+
+- name: dotfiles | verify chezmoi version
+  ansible.builtin.command:
+    cmd: chezmoi --version
+  register: dotfiles_chezmoi_version
+  changed_when: false
+  check_mode: false
+  when:
+    - not ansible_check_mode
+
+- name: dotfiles | preview chezmoi verification
+  ansible.builtin.debug:
+    msg: >-
+      Check mode: would verify chezmoi availability and version after the
+      install step before running preview-only migration commands.
+  when:
+    - ansible_check_mode
+
+- name: dotfiles | read chezmoi source state
+  ansible.builtin.stat:
+    path: "{{ dotfiles_chezmoi_source_dir }}/.git"
+  register: dotfiles_chezmoi_source_state
+  changed_when: false 
+
+- name: dotfiles | run chezmoi diff
+  ansible.builtin.command:
+    cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" diff
+  register: dotfiles_chezmoi_diff
+  changed_when: dotfiles_chezmoi_diff.stdout | trim | length > 0
+  when: ansible_check_mode or not dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | output diff results
+  ansible.builtin.debug:
+    msg: "{{ dotfiles_chezmoi_diff.stdout }}"
+  when: ansible_check_mode or not dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | run chezmoi dry-run apply
+  ansible.builtin.command:
+    cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply --dry-run --verbose
+  register: dotfiles_chezmoi_dry_run
+  changed_when: dotfiles_chezmoi_dry_run.stdout | trim | length > 0
+  when:
+    - not ansible_check_mode
+    - not dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | output dry run results
+  ansible.builtin.debug:
+    msg: "{{ dotfiles_chezmoi_dry_run.stdout }}"
+  when:
+    - not ansible_check_mode
+    - not dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | run chezmoi apply
+  tags: [chezmoi_apply]
+  ansible.builtin.command:
+    cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply --verbose
+  register: dotfiles_chezmoi_apply
+  changed_when: dotfiles_chezmoi_apply.stdout | trim | length > 0
+  when: 
+  - not ansible_check_mode
+  - dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | output apply results
+  ansible.builtin.debug:
+    msg: "{{ dotfiles_chezmoi_apply.stdout }}"
+  when:
+    - not ansible_check_mode
+    - dotfiles_chezmoi_apply_enabled
+    - dotfiles_chezmoi_apply.stdout | trim | length > 0

@@ -1,0 +1,13 @@
+---
+- name: git | darwin | install git
+  community.general.homebrew:
+    name: git
+    state: present
+
+- name: git | darwin arm64 entrypoint
+  ansible.builtin.import_tasks: darwin_arm64.yml
+  when: ansible_facts['architecture'] == 'arm64'
+
+- name: git | darwin x86_64 entrypoint
+  ansible.builtin.import_tasks: darwin_x86_64.yml
+  when: ansible_facts['architecture'] == 'x86_64'

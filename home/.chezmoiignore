@@ -1,0 +1,25 @@
+# Preserve the current rcm exclusion contract.
+*.md
+
+# Keep repo-only Org docs out of home state for parity.
+.README.org
+
+*.png
+*.jpg
+install.sh
+dotfiles.yml
+dotfiles.yaml
+tags*
+sample*
+ansible
+ansible/**
+
+# Keep known local and private overrides unmanaged.
+.zshrc.local
+.zsh/host/**
+.vim/vimrc.local
+.tmux-local.conf
+.emacs.d/private-init.el
+.vim/plugin/local-settings.vim
+
+.zshrc.sample.local
