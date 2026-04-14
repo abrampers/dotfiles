@@ -1,0 +1,14 @@
+---
+- name: git | darwin x86_64 | verify git app source
+  ansible.builtin.stat:
+    path: "{{ git_executable_path_x86_64 }}"
+  register: git_app_x86_64
+  changed_when: false
+
+- name: git | darwin x86_64 | assert git app source exists
+  ansible.builtin.assert:
+    that:
+      - git_app_x86_64.stat.exists
+    fail_msg: >-
+      Expected Intel git app at {{ git_executable_path_x86_64 }} after installing git.
+    success_msg: "Intel git app detected at {{ git_executable_path_x86_64 }}."
