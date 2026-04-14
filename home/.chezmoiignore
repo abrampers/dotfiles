@@ -21,3 +21,5 @@ ansible/**
 .tmux-local.conf
 .emacs.d/private-init.el
 .vim/plugin/local-settings.vim
+
+.zshrc.sample.local
