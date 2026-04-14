@@ -7,4 +7,12 @@
 [".zsh/tinted-shell"]
     type = "git-repo"
     url = "https://github.com/tinted-theming/tinted-shell.git"
-
+[".vim/pack/bundle/opt/vim-go"]
+    type = "archive"
+    url = "https://github.com/fatih/vim-go/archive/refs/tags/v1.29.tar.gz"
+[".vim/pack/bundle/opt/ferret"]
+    type = "archive"
+    url = "https://github.com/wincent/ferret/archive/refs/tags/5.0.tar.gz"
+[".vim/pack/bundle/opt/base16-vim"]
+    type = "git-repo"
+    url = "https://github.com/chriskempson/base16-vim.git"
