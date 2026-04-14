@@ -1,3 +1,0 @@
-# target-path<TAB>reason
-.zsh/.zsh	legacy rcm artifact if present in baseline
-.emacs.d/sample.private-init.el	sample template should stay repo-only if baseline captured it
