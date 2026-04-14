@@ -4,3 +4,7 @@
     exact = true
     stripComponents = 1
     include = ["*/*.zsh", "*/.version", "*/.revision-hash"]
+[".zsh/tinted-shell"]
+    type = "git-repo"
+    url = "https://github.com/tinted-theming/tinted-shell.git"
+

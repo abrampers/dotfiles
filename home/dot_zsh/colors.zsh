@@ -49,13 +49,13 @@ color() {
   fi
 
   local SCHEME="$1"
-  local BASE16_DIR=~/.zsh/base16-shell/scripts
+  local TINTED_SHELL_DIR=~/.zsh/tinted-shell/scripts
   local BASE16_CONFIG_PREVIOUS="${__ABRAMPERS[BASE16_CONFIG]}.previous"
   local STATUS=0
 
   __color() {
     SCHEME=$1
-    local FILE="$BASE16_DIR/base16-$SCHEME.sh"
+    local FILE="$TINTED_SHELL_DIR/base16-$SCHEME.sh"
     if [[ -e "$FILE" ]]; then
       local BG=$(grep color_background= "$FILE" | cut -d \" -f2 | sed -e 's#/##g')
       local LUMA=$(luma "$BG")
@@ -83,7 +83,7 @@ color() {
         fi
       fi
     else
-      echo "Scheme '$SCHEME' not found in $BASE16_DIR"
+      echo "Scheme '$SCHEME' not found in $TINTED_SHELL_DIR"
       STATUS=1
     fi
   }
@@ -108,7 +108,7 @@ color() {
     return
     ;;
   ls)
-    find "$BASE16_DIR" -name 'base16-*.sh' | \
+    find "$TINTED_SHELL_DIR" -name 'base16-*.sh' | \
       sed -E 's|.+/base16-||' | \
       sed -E 's/\.sh//' | \
       column
