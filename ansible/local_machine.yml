@@ -36,6 +36,8 @@
       tags: [python]
     - role: vim
       tags: [vim]
+    - role: mintotp
+      tags: [mintotp]
     - role: emacs
       tags: [emacs]
     - role: vscode

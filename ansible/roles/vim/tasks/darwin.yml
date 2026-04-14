@@ -1,4 +1,9 @@
 ---
+- name: vim | darwin | install Neovim Python provider
+  ansible.builtin.pip:
+    name: "{{ neovim_pip_package }}"
+    executable: "{{ ansible_env.HOME }}/.pyenv/shims/pip3"
+
 - name: vim | darwin | install neovim
   community.general.homebrew:
     name: neovim
@@ -6,12 +11,12 @@
 
 - name: vim | darwin | ensure vim-plug directory exists
   ansible.builtin.file:
-    path: "{{ editors_vim_plug_path | dirname }}"
+    path: "{{ vim_plug_path | dirname }}"
     state: directory
     mode: '0755'
 
 - name: vim | darwin | install vim-plug
   ansible.builtin.get_url:
-    url: "{{ editors_vim_plug_url }}"
-    dest: "{{ editors_vim_plug_path }}"
+    url: "{{ vim_plug_url }}"
+    dest: "{{ vim_plug_path }}"
     mode: '0644'

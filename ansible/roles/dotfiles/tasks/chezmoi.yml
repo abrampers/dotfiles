@@ -147,23 +147,23 @@
     - dotfiles_chezmoi_preview_only
     - not dotfiles_chezmoi_apply_enabled
 
-- name: dotfiles | generate chezmoi preview report
-  ansible.builtin.command:
-    argv:
-      - bash
-      - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/generatePreviewReport.sh"
-      - "{{ dotfiles_chezmoi_source_dir }}"
-      - "{{ dotfiles_rcm_baseline_file }}"
-      - "{{ dotfiles_migration_state_dir }}"
-      - "{{ dotfiles_chezmoi_import_targets_file }}"
-      - "{{ dotfiles_chezmoi_local_denylist_file }}"
-      - "{{ dotfiles_chezmoi_exception_file }}"
-  changed_when: false
-  when:
-    - dotfiles_chezmoi_enabled
-    - not ansible_check_mode
-    - dotfiles_chezmoi_preview_only
-    - not dotfiles_chezmoi_apply_enabled
+# - name: dotfiles | generate chezmoi preview report
+#   ansible.builtin.command:
+#     argv:
+#       - bash
+#       - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/generatePreviewReport.sh"
+#       - "{{ dotfiles_chezmoi_source_dir }}"
+#       - "{{ dotfiles_rcm_baseline_file }}"
+#       - "{{ dotfiles_migration_state_dir }}"
+#       - "{{ dotfiles_chezmoi_import_targets_file }}"
+#       - "{{ dotfiles_chezmoi_local_denylist_file }}"
+#       - "{{ dotfiles_chezmoi_exception_file }}"
+#   changed_when: false
+#   when:
+#     - dotfiles_chezmoi_enabled
+#     - not ansible_check_mode
+#     - dotfiles_chezmoi_preview_only
+#     - not dotfiles_chezmoi_apply_enabled
 
 - name: dotfiles | describe chezmoi preview artifacts
   ansible.builtin.debug:

@@ -1,0 +1,4 @@
+---
+vscode_app_destination: /Applications/Visual Studio Code.app
+vscode_app_source_arm64: "/opt/homebrew/opt/visual-studio-code/Visual Studio Code.app"
+vscode_app_source_x86_64: "/usr/local/opt/visual-studio-code/Visual Studio Code.app"
