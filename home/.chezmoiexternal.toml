@@ -23,8 +23,8 @@
     url = "https://github.com/nordtheme/tmux/archive/refs/tags/v0.3.0.tar.gz"
     exact = true
     stripComponents = 1
-    include = ["src/*", "nord.tmux"]
-[".tmux/tmux-prefix-highlihgt"]
+    exclude = ["*/*.md"]
+[".tmux/tmux-prefix-highlight"]
     type = "git-repo"
     url = "https://github.com/tmux-plugins/tmux-prefix-highlight.git"
     include = ["prefix_highlight.tmux"]
