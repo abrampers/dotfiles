@@ -6,6 +6,4 @@
     - role: dotfiles
       tags: [dotfiles, chezmoi_apply]
       vars:
-        dotfiles_chezmoi_preview_only: false
         dotfiles_chezmoi_apply_enabled: true
-        dotfiles_chezmoi_cutover_enabled: true
