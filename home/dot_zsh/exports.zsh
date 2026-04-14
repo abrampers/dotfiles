@@ -21,3 +21,5 @@ export GPG_TTY=$(tty)
 
 # Node version manager
 export NVM_DIR="$HOME/.nvm"
+
+export HOMEBREW_NO_AUTO_UPDATE=1
