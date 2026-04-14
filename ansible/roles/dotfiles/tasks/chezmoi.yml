@@ -1,21 +1,9 @@
 ---
-- name: dotfiles | preview chezmoi install
-  ansible.builtin.debug:
-    msg: >-
-      Check mode: would install {{ dotfiles_chezmoi_package_name }} with Homebrew,
-      keep rcup as the active deployment path, and preserve the preview/apply
-      boundary because dotfiles_chezmoi_preview_only={{ dotfiles_chezmoi_preview_only }}
-      and dotfiles_chezmoi_apply_enabled={{ dotfiles_chezmoi_apply_enabled }}.
-  when:
-    - dotfiles_chezmoi_enabled
-    - ansible_check_mode
-
 - name: dotfiles | install chezmoi
   community.general.homebrew:
-    name: "{{ dotfiles_chezmoi_package_name }}"
+    name: chezmoi
     state: present
   when:
-    - dotfiles_chezmoi_enabled
     - not ansible_check_mode
 
 - name: dotfiles | verify chezmoi is available
@@ -25,7 +13,6 @@
   changed_when: false
   check_mode: false
   when:
-    - dotfiles_chezmoi_enabled
     - not ansible_check_mode
 
 - name: dotfiles | assert chezmoi is available
@@ -37,7 +24,6 @@
       tasks can continue.
     success_msg: "chezmoi detected for migration preview tasks."
   when:
-    - dotfiles_chezmoi_enabled
     - not ansible_check_mode
 
 - name: dotfiles | verify chezmoi version
@@ -47,7 +33,6 @@
   changed_when: false
   check_mode: false
   when:
-    - dotfiles_chezmoi_enabled
     - not ansible_check_mode
 
 - name: dotfiles | preview chezmoi verification
@@ -56,132 +41,56 @@
       Check mode: would verify chezmoi availability and version after the
       install step before running preview-only migration commands.
   when:
-    - dotfiles_chezmoi_enabled
     - ansible_check_mode
-
-- name: dotfiles | describe chezmoi migration controls
-  ansible.builtin.debug:
-    msg: >-
-      Chezmoi migration path is enabled={{ dotfiles_chezmoi_enabled }},
-      preview_only={{ dotfiles_chezmoi_preview_only }},
-      apply_enabled={{ dotfiles_chezmoi_apply_enabled }} while rcup remains
-      the active deployment path until migration tasks are completed. Installed
-      chezmoi version: {{ dotfiles_chezmoi_version.stdout | default('unknown') }}.
-  when: dotfiles_chezmoi_enabled
-
-- name: dotfiles | assert chezmoi stays preview-only by default
-  ansible.builtin.assert:
-    that:
-      - dotfiles_chezmoi_preview_only
-      - not dotfiles_chezmoi_apply_enabled
-    fail_msg: >-
-      Phase 1 only supports preview-safe chezmoi behavior from the main
-      provisioning path. Keep dotfiles_chezmoi_apply_enabled=false so plain
-      apply remains disabled here.
-    success_msg: "Chezmoi migration remains on the preview-only path."
-  when:
-    - dotfiles_chezmoi_enabled
-    - not dotfiles_chezmoi_cutover_enabled
-
-- name: dotfiles | ensure migration state directory exists
-  ansible.builtin.file:
-    path: "{{ dotfiles_migration_state_dir }}"
-    state: directory
-    mode: "0755"
-  when: dotfiles_chezmoi_enabled
-
-- name: dotfiles | capture rcm managed-file baseline
-  ansible.builtin.copy:
-    content: "{{ dotfiles_lsrc_state.stdout }}\n"
-    dest: "{{ dotfiles_rcm_baseline_file }}"
-    force: false
-    mode: "0644"
-  when: dotfiles_chezmoi_enabled
 
 - name: dotfiles | read chezmoi source state
   ansible.builtin.stat:
     path: "{{ dotfiles_chezmoi_source_dir }}/.git"
   register: dotfiles_chezmoi_source_state
-  changed_when: false
-  when: dotfiles_chezmoi_enabled
-
-- name: dotfiles | preview chezmoi source initialization
-  ansible.builtin.debug:
-    msg: >-
-      Check mode: would run chezmoi init to create the default source directory
-      because {{ dotfiles_chezmoi_source_dir }}/.git is absent.
-  when:
-    - dotfiles_chezmoi_enabled
-    - ansible_check_mode
-    - not dotfiles_chezmoi_source_state.stat.exists
-
-- name: dotfiles | initialize chezmoi source directory
-  ansible.builtin.command:
-    cmd: chezmoi init
-  when:
-    - dotfiles_chezmoi_enabled
-    - not ansible_check_mode
-    - not dotfiles_chezmoi_source_state.stat.exists
-
-- name: dotfiles | preview chezmoi dry-run apply
-  ansible.builtin.debug:
-    msg: >-
-      Check mode: would run chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" diff
-      plus bash scripts/chezmoi/generatePreviewReport.sh for durable preview
-      evidence,
-      followed by chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply
-      --dry-run --verbose from the default preview-only migration path.
-  when:
-    - dotfiles_chezmoi_enabled
-    - ansible_check_mode
-    - dotfiles_chezmoi_preview_only
-    - not dotfiles_chezmoi_apply_enabled
+  changed_when: false 
 
 - name: dotfiles | run chezmoi diff
   ansible.builtin.command:
     cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" diff
-  changed_when: false
-  when:
-    - dotfiles_chezmoi_enabled
-    - not ansible_check_mode
-    - dotfiles_chezmoi_preview_only
-    - not dotfiles_chezmoi_apply_enabled
+  register: dotfiles_chezmoi_diff
+  changed_when: dotfiles_chezmoi_diff.stdout | trim | length > 0
+  when: ansible_check_mode or not dotfiles_chezmoi_apply_enabled
 
-# - name: dotfiles | generate chezmoi preview report
-#   ansible.builtin.command:
-#     argv:
-#       - bash
-#       - "{{ dotfiles_chezmoi_source_dir }}/scripts/chezmoi/generatePreviewReport.sh"
-#       - "{{ dotfiles_chezmoi_source_dir }}"
-#       - "{{ dotfiles_rcm_baseline_file }}"
-#       - "{{ dotfiles_migration_state_dir }}"
-#       - "{{ dotfiles_chezmoi_import_targets_file }}"
-#       - "{{ dotfiles_chezmoi_local_denylist_file }}"
-#       - "{{ dotfiles_chezmoi_exception_file }}"
-#   changed_when: false
-#   when:
-#     - dotfiles_chezmoi_enabled
-#     - not ansible_check_mode
-#     - dotfiles_chezmoi_preview_only
-#     - not dotfiles_chezmoi_apply_enabled
-
-- name: dotfiles | describe chezmoi preview artifacts
+- name: dotfiles | output diff results
   ansible.builtin.debug:
-    msg: >-
-      Durable preview artifacts are written to
-      {{ dotfiles_chezmoi_managed_file }} and
-      {{ dotfiles_chezmoi_preview_report_file }}.
-  when:
-    - dotfiles_chezmoi_enabled
-    - dotfiles_chezmoi_preview_only
-    - not dotfiles_chezmoi_apply_enabled
+    msg: "{{ dotfiles_chezmoi_diff.stdout }}"
+  when: ansible_check_mode or not dotfiles_chezmoi_apply_enabled
 
 - name: dotfiles | run chezmoi dry-run apply
   ansible.builtin.command:
     cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply --dry-run --verbose
-  changed_when: false
+  register: dotfiles_chezmoi_dry_run
+  changed_when: dotfiles_chezmoi_dry_run.stdout | trim | length > 0
   when:
-    - dotfiles_chezmoi_enabled
     - not ansible_check_mode
-    - dotfiles_chezmoi_preview_only
     - not dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | output dry run results
+  ansible.builtin.debug:
+    msg: "{{ dotfiles_chezmoi_dry_run.stdout }}"
+  when:
+    - not ansible_check_mode
+    - not dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | run chezmoi apply
+  tags: [chezmoi_apply]
+  ansible.builtin.command:
+    cmd: chezmoi -S "{{ dotfiles_chezmoi_source_dir }}" apply --verbose
+  register: dotfiles_chezmoi_apply
+  changed_when: dotfiles_chezmoi_apply.stdout | trim | length > 0
+  when: 
+  - not ansible_check_mode
+  - dotfiles_chezmoi_apply_enabled
+
+- name: dotfiles | output apply results
+  ansible.builtin.debug:
+    msg: "{{ dotfiles_chezmoi_apply.stdout }}"
+  when:
+    - not ansible_check_mode
+    - dotfiles_chezmoi_apply_enabled
+    - dotfiles_chezmoi_apply.stdout | trim | length > 0

@@ -103,9 +103,7 @@ ansible-galaxy collection install community.general
 
 Provisioning now lives under =ansible/= and the main entry point is =ansible/local_machine.yml=. The =rcrc= configuration excludes the =ansible/= tree, so provisioning files are not deployed as dotfiles by =rcup=.
 
-*** Provisioning with preview-first `chezmoi`
-
-During the `chezmoi` migration, install/preview, real apply, and legacy cleanup are intentionally separate steps. =ansible/local_machine.yml= remains the main provisioning entry point, and its default migration behavior stops at a safe `chezmoi` preview so you can inspect the migration boundary before the first real apply.
+*** Provisioning your local machine
 
 #+begin_src shell
 
@@ -113,24 +111,11 @@ ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml
 
 #+end_src
 
-That default local-machine path currently does all of the following:
+This step will get all dependencies only. Dotfiles apply will be handled separately
 
-- installs =chezmoi= alongside the existing =rcm=/=rcup= workflow
-- keeps =rcup= as the active deployment path for the shared dotfiles set
-- saves the current =rcm=-managed baseline to =~/.local/state/dotfiles-migration/rcm-managed-files.txt=
-- initializes the default empty chezmoi source directory with =chezmoi init= when needed
-- runs =chezmoi apply --dry-run --verbose= only
-- leaves real apply and cleanup as explicit later steps
+*** Apply dotfiles
 
-Review the preview artifacts in =~/.local/state/dotfiles-migration/= before choosing the next step:
-
-- =chezmoi-preview-report.md= summarizes the preview parity decision
-- =chezmoi-managed-files.json= captures the managed target evidence
-- =rcm-managed-files.txt= keeps the saved pre-cutover baseline
-
-*** Apply cutover with the dedicated playbook
-
-Use the dedicated playbook for the first real =chezmoi apply=. It reruns the preview gate, captures workstation smoke checks before and after apply, and writes the post-apply parity report plus JSON proof into =~/.local/state/dotfiles-migration/=.
+Use the dedicated playbook to run =chezmoi apply=.
 
 #+begin_src shell
 
@@ -138,36 +123,17 @@ ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/chezmoi_apply.yml
 
 #+end_src
 
-After a successful run, inspect these cutover artifacts:
-
-- =chezmoi-post-apply-report.md=
-- =chezmoi-post-apply-report.json=
-- =chezmoi-stability-before.txt=
-- =chezmoi-stability-after.txt=
-
 *** Advanced real apply from `ansible/local_machine.yml`
 
 If you specifically want the main provisioning playbook to run the same real-apply path, you must opt in with both the dedicated tag and the explicit enablement variables:
 
 #+begin_src shell
 
-ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --tags dotfiles,chezmoi_apply -e dotfiles_chezmoi_apply_enabled=true -e dotfiles_chezmoi_cutover_enabled=true
+ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/local_machine.yml --tags dotfiles,chezmoi_apply -e dotfiles_chezmoi_apply_enabled=true
 
 #+end_src
 
 That advanced route exists for parity with the dedicated playbook, but the dedicated =ansible/chezmoi_apply.yml= path is the normal documented cutover command.
-
-*** Cleanup legacy `rcm` links only after parity review
-
-Cleanup never runs automatically. Only run it after the apply succeeds, the post-apply parity summary is acceptable (=clean= or =exceptions_only=), and the after-sweep workstation report ends with =- Result: passed=.
-
-#+begin_src shell
-
-ANSIBLE_CONFIG=ansible/ansible.cfg ansible-playbook ansible/chezmoi_apply.yml --tags chezmoi_cleanup -e dotfiles_chezmoi_cleanup_enabled=true -e dotfiles_chezmoi_cleanup_confirmation=cleanup-rcm
-
-#+end_src
-
-The confirmation string must be exactly =cleanup-rcm=. This keeps destructive =rcdn= cleanup separate from the first real =chezmoi apply= trust boundary.
 
 *** Dry run
 

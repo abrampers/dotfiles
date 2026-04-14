@@ -20,10 +20,10 @@
       tags: [bootstrap]
     - role: homebrew
       tags: [homebrew]
+    - role: git
+      tags: [git]
     - role: shell
       tags: [shell]
-    - role: dotfiles
-      tags: [dotfiles]
     - role: cli_tools
       tags: [cli_tools]
     - role: terminal
@@ -62,3 +62,5 @@
       tags: [claude]
     - role: macos
       tags: [macos]
+    - role: dotfiles
+      tags: [dotfiles]

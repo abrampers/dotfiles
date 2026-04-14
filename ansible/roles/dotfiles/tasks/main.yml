@@ -1,9 +1,3 @@
 ---
-# - name: dotfiles | manage rcm deployment path
-#   ansible.builtin.import_tasks: rcm.yml
-
-# - name: dotfiles | manage chezmoi migration path
-#   ansible.builtin.import_tasks: chezmoi.yml
-
-# - name: dotfiles | manage chezmoi cutover path
-#   ansible.builtin.import_tasks: cutover.yml
+- name: dotfiles | manage chezmoi migration path
+  ansible.builtin.import_tasks: chezmoi.yml
