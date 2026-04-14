@@ -7,6 +7,7 @@
 [".zsh/tinted-shell"]
     type = "git-repo"
     url = "https://github.com/tinted-theming/tinted-shell.git"
+    clone.args = ["--revision=84d8165d682cd49c6d476b064769b338be8f13f2"]
 [".vim/pack/bundle/opt/vim-go"]
     type = "archive"
     url = "https://github.com/fatih/vim-go/archive/refs/tags/v1.29.tar.gz"
@@ -16,3 +17,4 @@
 [".vim/pack/bundle/opt/base16-vim"]
     type = "git-repo"
     url = "https://github.com/chriskempson/base16-vim.git"
+    clone.args = ["--revision=3be3cd82cd31acfcab9a41bad853d9c68d30478d"]
