@@ -1,0 +1,46 @@
+---
+- name: cursor | darwin | check if Cursor app already installed
+  ansible.builtin.stat:
+    path: "{{ cursor_app_source }}"
+  register: cursor_app_pre
+  changed_when: false
+
+- name: cursor | darwin | install Cursor app
+  community.general.homebrew_cask:
+    name: cursor
+    state: present
+  when: not cursor_app_pre.stat.exists
+
+- name: cursor | darwin | install Cursor CLI
+  community.general.homebrew_cask:
+    name: cursor-cli
+    state: present
+
+- name: cursor | darwin | verify Cursor app source
+  ansible.builtin.stat:
+    path: "{{ cursor_app_source }}"
+  register: cursor_app
+  changed_when: false
+
+- name: cursor | darwin | assert Cursor app source exists
+  ansible.builtin.assert:
+    that:
+      - cursor_app.stat.exists
+    fail_msg: >-
+      Expected Cursor app at {{ cursor_app_source }} after installing cursor cask.
+    success_msg: "Cursor app detected at {{ cursor_app_source }}."
+
+- name: cursor | darwin | verify cursor-agent is on PATH
+  ansible.builtin.command:
+    cmd: command -v cursor-agent
+  register: cursor_agent_path
+  changed_when: false
+  failed_when: false
+
+- name: cursor | darwin | assert cursor-agent is available
+  ansible.builtin.assert:
+    that:
+      - cursor_agent_path.rc == 0
+    fail_msg: >-
+      Expected cursor-agent on PATH after installing cursor-cli cask.
+    success_msg: "cursor-agent available at {{ cursor_agent_path.stdout }}."
