@@ -1,0 +1,5 @@
+---
+- name: glab | darwin | install glab
+  community.general.homebrew:
+    name: glab
+    state: present
