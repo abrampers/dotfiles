@@ -42,6 +42,8 @@
       tags: [emacs]
     - role: vscode
       tags: [vscode]
+    - role: cursor
+      tags: [cursor]
     - role: ruby
       tags: [ruby]
     - role: java
