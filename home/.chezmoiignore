@@ -1,8 +1,5 @@
-# Preserve the current rcm exclusion contract.
+# Never manage markdown docs.
 *.md
-
-# Keep repo-only Org docs out of home state for parity.
-.README.org
 
 *.png
 *.jpg
@@ -23,3 +20,8 @@ ansible/**
 .vim/plugin/local-settings.vim
 
 .zshrc.sample.local
+# coc runtime state (extensions, histories)
+.config/coc/extensions/node_modules
+.config/coc/extensions/db.json
+.config/coc/list-*.json
+.config/coc/memos.json
