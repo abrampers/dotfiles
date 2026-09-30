@@ -2,4 +2,4 @@
 dotfiles_repo_root: "{{ playbook_dir | dirname }}"
 dotfiles_private_vars_file: "{{ dotfiles_repo_root }}/vars/custom.yml"
 install_homebrew_if_missing: false
-local_machine_primary_platform: macos-apple-silicon
+homebrew_prefix: "{{ '/opt/homebrew' if ansible_facts['architecture'] == 'arm64' else '/usr/local' }}"
