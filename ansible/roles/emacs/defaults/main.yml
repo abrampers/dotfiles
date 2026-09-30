@@ -1,5 +1,5 @@
 ---
-editors_emacs_formula: emacs-plus@30
+editors_emacs_formula: emacs-plus@31
 editors_emacs_install_options:
   - with-modern-purple-flat-icon
 editors_emacs_app_destination: /Applications/Emacs.app
