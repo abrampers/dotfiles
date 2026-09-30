@@ -2,22 +2,7 @@
 #+author: Abram Situmorang
 #+email: abram.perdanaputra@gmail.com
 
-* Welcome!
-
-This is the configuration we've been building in the *[[https://www.youtube.com/watch?v=74zOY-vgkyw&list=PLEoMzSkcN8oPH1au7H6B7bBJ4ZO7BXjSZ][Emacs From Scratch]]* series, now written as an Org Mode document.  This file generates [[file:init.el][init.el]] which can be loaded by Emacs at startup.
-
-The following variables are used to tweak some of the configuration pieces for use in the live streams so you might need to adjust them for your local machine if you try to use this configuration directly.
-
-#+begin_src emacs-lisp
-
-;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
-;;       in Emacs and init.el will be generated automatically!
-
-#+end_src
-
-* Tips for Use
-
-In this document I've added links in many places that lead you to documentation for the various packages we use.  If you're looking at this file in Emacs, you can put your cursor on a link and press =C-c C-o= or run =M-x org-open-at-point= to open the link in your web browser.
+This file is tangled into =init.el= at startup (see =init.el=). Edit this file, not the tangled output.
 
 * Startup Performance
 
@@ -50,7 +35,7 @@ We might want to customize stuff locally.
 #+end_src
 
 * Package System Setup
-** Bootsrap straight.el
+** Bootstrap straight.el
 
 A much better way to install packages than package.el.
 
@@ -92,16 +77,11 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 #+begin_src emacs-lisp
 
   (use-package doom-themes)
-  (use-package gruvbox-theme)
-  (use-package material-theme)
-  (use-package night-owl-theme)
   (use-package nord-theme
     :straight (:host github
                :repo "nordtheme/emacs"
                :branch "main"
                :tag "v0.6.0"))
-  (use-package ayu-theme)
-  (use-package seti-theme)
 
 #+end_src
 
@@ -113,24 +93,6 @@ Activate theme.
 
 #+end_src
 
-* Dashboard
-
-[[https://github.com/emacs-dashboard/emacs-dashboard][Dashboard]] package will show make initial buffer more usable.
-
-#+begin_src emacs-lisp :tangle no
-
-  (use-package dashboard
-    :custom
-    (dashboard-startup-banner 'logo)
-    (dashboard-set-heading-icons t)
-    (dashboard-set-file-icons t)
-    (dashboard-set-init-info t)
-    (dashboard-set-footer nil)
-    (dashboard-center-content t)
-    :config
-    (dashboard-setup-startup-hook))
-
-#+end_src
 * Basic UI Configuration
 
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.  If you're just getting started in Emacs, the menu bar might be helpful so you can remove the =(menu-bar-mode -1)= line if you'd like to still see that.
@@ -245,14 +207,6 @@ Highlight current line
 
 #+end_src
 
-** Set dashboard as initial buffer
-
-#+begin_src emacs-lisp
-
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-
-#+end_src
-
 ** =xterm-color= for compilation modes
 
 #+begin_src emacs-lisp
@@ -266,18 +220,6 @@ Highlight current line
   (advice-add 'compilation-filter :around #'abram/advice-compilation-filter)
 #+end_src
 
-* Automatic Package Updates
-
-The auto-package-update package helps us keep our Emacs packages up to date!  It will prompt you after a certain number of days either at startup or at a specific time of day to remind you to update your packages.
-
-You can also use =M-x auto-package-update-now= to update right now!
-
-#+begin_src emacs-lisp
-
-  (use-package auto-package-update
-    :commands auto-package-update-now)
-
-#+end_src
 * Environment Variables
 
 When running emacs from the app, emacs won't have the user's shell environment variable. [[https://github.com/purcell/exec-path-from-shell][exec-path-from-shell]] will help us to sync user shell's environment variable with emacs environment variable.
@@ -1052,8 +994,24 @@ I'm using [[https://github.com/akhramov/org-wild-notifier.el][org-wild-notifier]
     :custom
     (projectile-completion-system 'ivy)
     (projectile-switch-project-action #'projectile-find-file)
+    ;; Several `emacs .' sessions share known-projects.el; auto-tracking made
+    ;; them fight over its file lock. Discover projects from disk instead.
+    (projectile-track-known-projects-automatically nil)
+    (projectile-project-search-path '("~/Code"))
     :bind-keymap
     ("C-c p" . projectile-command-map))
+
+#+end_src
+
+As a safety net, never create lock files while projectile saves its known-projects file (lock files stay enabled everywhere else). Run =M-x projectile-discover-projects-in-search-path= to refresh the list.
+
+#+begin_src emacs-lisp
+
+  (defun abram/projectile-without-lockfiles (fn &rest args)
+    (let ((create-lockfiles nil))
+      (apply fn args)))
+
+  (advice-add 'projectile-serialize :around #'abram/projectile-without-lockfiles)
 
 #+end_src
 
@@ -1500,17 +1458,6 @@ Use electric pair mode on c/c++ mode
 
 *** Python
 
-#+begin_src emacs-lisp :tangle no
-
-  (use-package lsp-pyright
-    :hook (python-mode . (lambda ()
-                           (require 'lsp-pyright)
-                            (lsp-deferred)))
-    :custom
-    (lsp-pyright-venv-path (format "%s/versions" (getenv "PYENV_ROOT"))))
-
-#+end_src
-
 #+begin_src emacs-lisp
 
   (setq lsp-pyls-plugins-jedi-use-pyenv-environment t)
@@ -1603,7 +1550,7 @@ npm install -g typescript-language-server typescript
   (use-package lua-mode
     :mode "\\.lua\\'"
     :hook ((lua-mode . lsp-deferred)
-           (go-mode . electric-pair-local-mode)))
+           (lua-mode . electric-pair-local-mode)))
 
 #+end_src
 
@@ -1679,16 +1626,6 @@ npm install -g typescript-language-server typescript
 
 #+end_src
 
-We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
-
-#+begin_src emacs-lisp :tangle no
-
-  (use-package company-box
-    :hook (company-mode . company-box-mode)
-    :init
-    (setq company-box-enable-icon nil))
-
-#+end_src
 ** Magit
 
 [[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
