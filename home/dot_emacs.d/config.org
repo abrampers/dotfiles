@@ -1216,6 +1216,22 @@ This will setup GitHub Copilot for pair programming.
 #+end_src
 
 ** Language Support
+
+*** Test keybindings
+
+All languages share the same evil normal-state keys, mirroring =vim-test= in vim: =tt= nearest test, =tf= file, =t.= rerun last, =ts= whole suite.
+
+#+begin_src emacs-lisp
+
+  (defun abram/test-keybindings (test file rerun suite)
+    "Bind tt/tf/t./ts locally in evil normal state to TEST, FILE, RERUN, SUITE."
+    (evil-local-set-key 'normal (kbd "tt") test)
+    (evil-local-set-key 'normal (kbd "tf") file)
+    (evil-local-set-key 'normal (kbd "t.") rerun)
+    (evil-local-set-key 'normal (kbd "ts") suite))
+
+#+end_src
+
 *** Go
 **** =go-mode=
 
@@ -1287,10 +1303,8 @@ For Go, I use [[https://github.com/nlamirault/gotest.el][gotest]] to run test in
 
     (defun abram/go-test-keybindings ()
       (require 'gotest)
-      (evil-local-set-key 'normal (kbd "tt") 'go-test-current-test)
-      (evil-local-set-key 'normal (kbd "tf") 'go-test-current-file)
-      (evil-local-set-key 'normal (kbd "t.") 'go-test-current-test-cache)
-      (evil-local-set-key 'normal (kbd "ts") 'abram/go-test-current-project))
+      (abram/test-keybindings 'go-test-current-test 'go-test-current-file
+                              'go-test-current-test-cache 'abram/go-test-current-project))
 
     (use-package gotest
       :after go-mode
@@ -1361,10 +1375,8 @@ For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test 
 #+begin_src emacs-lisp
 
   (defun abram/rspec-keybindings ()
-    (evil-local-set-key 'normal (kbd "tt") 'rspec-verify-single)
-    (evil-local-set-key 'normal (kbd "tf") 'rspec-verify-matching)
-    (evil-local-set-key 'normal (kbd "t.") 'rspec-rerun)
-    (evil-local-set-key 'normal (kbd "ts") 'rspec-verify-all))
+    (abram/test-keybindings 'rspec-verify-single 'rspec-verify-matching
+                            'rspec-rerun 'rspec-verify-all))
 
   (use-package rspec-mode
     :hook (ruby-mode . abram/rspec-keybindings))
@@ -1396,6 +1408,18 @@ For Ruby, I use [[https://github.com/pezra/rspec-mode][rspec-mode]] to run test 
            (clojure-mode . lsp-deferred))
     :bind (:map cider-mode-map
                 ("TAB" . company-indent-or-complete-common)))
+
+#+end_src
+
+Test keybindings (=tt= / =tf= / =t.= / =ts=) use CIDER's test runner and need a connected REPL.
+
+#+begin_src emacs-lisp
+
+  (defun abram/clojure-test-keybindings ()
+    (abram/test-keybindings 'cider-test-run-test 'cider-test-run-ns-tests
+                            'cider-test-rerun-test 'cider-test-run-project-tests))
+
+  (add-hook 'clojure-mode-hook #'abram/clojure-test-keybindings)
 
 #+end_src
 
@@ -1514,6 +1538,23 @@ Here we create a derived mode for TSX files and configure separate mode routing:
               (lambda () (setq-local lsp-eslint-auto-fix-on-save t)))
     (add-hook 'typescriptreact-mode-hook
               (lambda () (setq-local lsp-eslint-auto-fix-on-save t))))
+
+#+end_src
+
+Run tests with =jest-test-mode= (=tt= at point, =tf= file, =t.= rerun, =ts= all) in JavaScript, TypeScript and TSX buffers (=typescriptreact-mode= derives from =typescript-mode=).
+
+#+begin_src emacs-lisp
+
+  (use-package jest-test-mode
+    :commands (jest-test-run jest-test-run-at-point jest-test-run-all-tests jest-test-rerun-test))
+
+  (defun abram/jest-keybindings ()
+    (require 'jest-test-mode)
+    (abram/test-keybindings 'jest-test-run-at-point 'jest-test-run
+                            'jest-test-rerun-test 'jest-test-run-all-tests))
+
+  (dolist (hook '(js-mode-hook typescript-mode-hook))
+    (add-hook hook #'abram/jest-keybindings))
 
 #+end_src
 
