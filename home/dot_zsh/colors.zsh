@@ -152,4 +152,3 @@ function () {
 
 # Color
 export CLICOLOR=true
-export TERM=xterm-256color

@@ -7,10 +7,7 @@ let maplocalleader=","
 
 if has('nvim')
   let g:python3_host_prog = $HOME . '/.pyenv/shims/python3'
-  let g:ruby_host_prog = $HOME . '/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
 endif
-
-let g:ruby_path = $HOME . '/.rbenv/versions/2.7.1/bin/neovim-ruby-host'
 
 " Extension -> filetype mappings.
 let filetype_m='objc'
@@ -57,7 +54,12 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'chriskempson/base16-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug '/usr/local/opt/fzf'
+for s:fzf in ['/opt/homebrew/opt/fzf', '/usr/local/opt/fzf']
+  if isdirectory(s:fzf)
+    execute "Plug '" . s:fzf . "'"
+    break
+  endif
+endfor
 Plug 'junegunn/fzf.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'junegunn/goyo.vim'

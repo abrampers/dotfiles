@@ -1,3 +1,16 @@
+function s:PinnacleActive() abort
+  return exists('*wincent#pinnacle#active') && wincent#pinnacle#active()
+endfunction
+
+function s:Colorscheme(name) abort
+  try
+    execute 'colorscheme ' . a:name
+    return 1
+  catch /^Vim\%((\a\+)\)\=:E185/
+    return 0
+  endtry
+endfunction
+
 function s:CheckColorScheme()
   if !has('termguicolors')
     let g:base16colorspace=256
@@ -16,9 +29,9 @@ function s:CheckColorScheme()
     if s:config[0] == 'nord'
       let g:nord_uniform_diff_background = 1
       let g:nord_cursor_line_number_background = 1
-      colorscheme nord
+      call s:Colorscheme('nord')
 
-      if wincent#pinnacle#active()
+      if s:PinnacleActive()
         highlight clear Special
         execute 'highlight Special ' . pinnacle#extract_highlight('SpecialComment')
 
@@ -29,20 +42,22 @@ function s:CheckColorScheme()
         execute 'highlight goParamName ' . pinnacle#extract_highlight('goBuiltins')
       endif
     elseif s:config[0] =~ 'gruvbox'
-      colorscheme gruvbox
+      call s:Colorscheme('gruvbox')
     else
       if filereadable(expand('~/.vim/plugged/base16-vim/colors/base16-' . s:config[0] . '.vim'))
-        execute 'colorscheme base16-' . s:config[0]
+        call s:Colorscheme('base16-' . s:config[0])
       else
         echoerr 'Bad scheme ' . s:config[0] . ' in ' . s:config_file
       endif
     endif
   else " default
     set background=dark
-    colorscheme base16-default-dark
+    if !s:Colorscheme('base16-default-dark')
+      colorscheme default
+    endif
   endif
 
-  if wincent#pinnacle#active()
+  if s:PinnacleActive()
     execute 'highlight Comment ' . pinnacle#italicize('Comment')
   endif
 
@@ -54,7 +69,7 @@ function s:CheckColorScheme()
   " highlight clear NonText
   " highlight link NonText Conceal
 
-  if wincent#pinnacle#active()
+  if s:PinnacleActive()
     highlight clear CursorLineNr
     execute 'highlight CursorLineNr ' . pinnacle#extract_highlight('DiffText')
   endif
@@ -67,7 +82,7 @@ function s:CheckColorScheme()
   " highlight link vimUserFunc NONE
   " highlight link NERDTreeFile NONE
 
-  if wincent#pinnacle#active()
+  if s:PinnacleActive()
     let l:highlight=pinnacle#italicize('ModeMsg')
     execute 'highlight User8 ' . l:highlight
   endif

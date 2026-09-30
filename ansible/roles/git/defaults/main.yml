@@ -1,3 +1,2 @@
 ---
-git_executable_path_arm64: "/opt/homebrew/bin/git"
-git_executable_path_x86_64: "/usr/local/bin/git"
+git_executable_path: "{{ homebrew_prefix }}/bin/git"

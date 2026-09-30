@@ -4,7 +4,6 @@ unset PATH
 # keep these on separate lines to make changing their order easier
 PATH=$HOME/bin
 PATH=$PATH:$HOME/.zsh/bin
-PATH=$PATH:$HOME/.vim/pack/bundle/opt/vcs-jump/bin
 
 test -n "$N_PREFIX" && PATH=$PATH:$N_PREFIX/bin
 

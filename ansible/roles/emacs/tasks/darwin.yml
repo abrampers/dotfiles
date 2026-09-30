@@ -10,16 +10,23 @@
     install_options: "{{ editors_emacs_install_options }}"
     state: present
 
-- name: emacs | darwin arm64 entrypoint
-  ansible.builtin.import_tasks: darwin_arm64.yml
-  when: ansible_facts['architecture'] == 'arm64'
-
-- name: emacs | darwin x86_64 entrypoint
-  ansible.builtin.import_tasks: darwin_x86_64.yml
-  when: ansible_facts['architecture'] == 'x86_64'
-
-- name: emacs | darwin unsupported architecture placeholder
-  ansible.builtin.debug:
-    msg: "Emacs role currently has app linking for arm64 and x86_64 only."
+- name: emacs | darwin | verify Emacs app source
+  ansible.builtin.stat:
+    path: "{{ editors_emacs_app_source }}"
+  register: emacs_app
   changed_when: false
-  when: ansible_facts['architecture'] not in ['arm64', 'x86_64']
+
+- name: emacs | darwin | assert Emacs app source exists
+  ansible.builtin.assert:
+    that:
+      - emacs_app.stat.exists
+    fail_msg: >-
+      Expected Emacs app at {{ editors_emacs_app_source }} after installing
+      {{ editors_emacs_formula }}.
+    success_msg: "Emacs app detected at {{ editors_emacs_app_source }}."
+
+- name: emacs | darwin | link Emacs app
+  ansible.builtin.file:
+    src: "{{ editors_emacs_app_source }}"
+    dest: "{{ editors_emacs_app_destination }}"
+    state: link

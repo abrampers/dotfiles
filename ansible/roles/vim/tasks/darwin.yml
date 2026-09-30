@@ -20,3 +20,9 @@
     url: "{{ vim_plug_url }}"
     dest: "{{ vim_plug_path }}"
     mode: '0644'
+
+- name: vim | darwin | install vim-plug plugins
+  ansible.builtin.command:
+    cmd: nvim --headless +PlugInstall +qall
+    creates: "{{ lookup('env', 'HOME') }}/.vim/plugged/nord-vim"
+  changed_when: true

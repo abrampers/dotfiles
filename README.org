@@ -11,7 +11,7 @@ Here's a few examples of my workspace.
 - Visible in the screenshot:
   - [[https://www.nordtheme.com][nord]] colorscheme.
   - [[https://www.nerdfonts.com/font-downloads][SauceCodePro Nerd Font]] (Regular) font.
-  - neovim, running inside tmux, inside iTerm2, on macOS 10.15 Catalina
+  - neovim, running inside tmux
 
 #+caption: Emacs
 #+attr_html: :width 800
@@ -32,7 +32,7 @@ that.
 
 Since I'm using =evil-mode=, I configured vim and emacs to have the same keybindings when possible.
 
-** [[zshrc][zsh]]
+** zsh (=home/dot_zshrc=)
 
 - [[https://github.com/junegunn/fzf][fzf]]: fuzzy finder to search for files, strings, or history
 - =color=: change terminal and Vim color scheme
@@ -43,7 +43,7 @@ Since I'm using =evil-mode=, I configured vim and emacs to have the same keybind
 
 and many more..
 
-** [[vim/vimrc][vim]]
+** vim / neovim (=home/dot_vim/vimrc=)
 
 - [[https://github.com/neoclide/coc.nvim][coc.nvim]]: code completion engine + language server. easy plugin installation
 - [[https://github.com/junegunn/fzf.vim][fzf.vim]]: fuzzy finder in vim
@@ -52,9 +52,7 @@ and many more..
 
 and many more..
 
-For cheatsheet, go to [[vim/README.md]].
-
-** [[emacs.d/configuration.org][emacs]]
+** emacs (=home/dot_emacs.d/config.org=)
 
 - [[https://github.com/emacs-evil/evil][evil-mode]]: vim emulation on emacs
 - [[https://orgmode.org][org-mode]]: must have outliner + planner + life management tool
@@ -68,11 +66,11 @@ and many more..
 
 ** Clone
 
-Clone repo to =~/.dotfiles=
+Clone the repo (dotfiles are applied by chezmoi from =home/=, see =.chezmoiroot=)
 
 #+begin_src shell
 
-git clone --recursive https://github.com/abrampers/dotfiles
+git clone https://github.com/abrampers/dotfiles ~/.dotfiles
 
 #+end_src
 
@@ -101,7 +99,7 @@ ansible-galaxy collection install community.general
 
 #+end_src
 
-Provisioning now lives under =ansible/= and the main entry point is =ansible/local_machine.yml=. The =rcrc= configuration excludes the =ansible/= tree, so provisioning files are not deployed as dotfiles by =rcup=.
+Provisioning now lives under =ansible/= and the main entry point is =ansible/local_machine.yml=. Only =home/= is deployed as dotfiles (via chezmoi), so provisioning files stay out of your home directory.
 
 *** Provisioning your local machine
 
