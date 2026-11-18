@@ -64,6 +64,8 @@
       tags: [claude]
     - role: glab
       tags: [glab]
+    - role: bruno
+      tags: [bruno]
     - role: macos
       tags: [macos]
     - role: dotfiles
