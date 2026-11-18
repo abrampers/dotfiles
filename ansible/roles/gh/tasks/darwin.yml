@@ -1,0 +1,5 @@
+---
+- name: gh | darwin | install gh
+  community.general.homebrew:
+    name: gh
+    state: present
