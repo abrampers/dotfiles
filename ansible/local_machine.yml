@@ -66,6 +66,8 @@
       tags: [claude]
     - role: glab
       tags: [glab]
+    - role: bruno
+      tags: [bruno]
     - role: gh
       tags: [gh]
     - role: macos
