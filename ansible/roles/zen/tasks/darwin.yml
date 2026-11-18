@@ -1,0 +1,5 @@
+---
+- name: zen | darwin | install zen
+  community.general.homebrew_cask:
+    name: zen
+    state: present

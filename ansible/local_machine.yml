@@ -28,6 +28,8 @@
       tags: [cli_tools]
     - role: terminal
       tags: [terminal]
+    - role: zen
+      tags: [zen]
     - role: go
       tags: [go]
     - role: node
@@ -66,6 +68,8 @@
       tags: [glab]
     - role: bruno
       tags: [bruno]
+    - role: gh
+      tags: [gh]
     - role: macos
       tags: [macos]
     - role: dotfiles
