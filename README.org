@@ -62,6 +62,31 @@ and many more..
 
 and many more..
 
+* Workflow: one Emacs server, per-project toolchains
+
+A single Emacs server (started at login by =brew services=, =emacs --fg-daemon=) serves every project. Each buffer gets its project's Go ([[https://github.com/moovweb/gvm][gvm]]), Node ([[https://github.com/nvm-sh/nvm][nvm]]) and JDK environment through [[https://direnv.net][direnv]] and [[https://github.com/purcell/envrc][envrc.el]]. Design notes: =docs/plans/single-emacs-env.md=.
+
+- Go version comes from =go.mod= (a =toolchain= line wins, otherwise the highest installed patch of the =go= line's minor). Each repo gets its own gvm pkgset named after its =origin= remote, with a shared =GOMODCACHE=. gopls and goimports are installed into the pkgset.
+- Node comes from =.nvmrc=. JDK is 8 unless an untracked =.java-version= says otherwise.
+- =.envrc=, =.direnv/= and =.java-version= are in the global git ignore.
+
+** First time in a repo
+
+#+begin_src shell
+cd ~/Code/some-repo
+envrc-init          # or M-x abram/envrc-init in Emacs
+#+end_src
+
+This writes a git-ignored =.envrc= (=use gvm_project=, =use nvm_project=, =use jdk_project= depending on what the repo contains) and runs =direnv allow=.
+
+** Every day
+
+- =ec .= opens a new frame of the running server on that directory; =C-c p p= switches projects inside Emacs.
+- LSP, compile, test, format-on-save and CIDER run with the buffer's own environment. Go 1.21 and Go 1.26 repos can be open together.
+- In a terminal, =cd= into a repo switches Go/Node/JDK the same way (direnv zsh hook).
+- After editing =go.mod=, =.nvmrc= or =.java-version=: =M-x abram/env-reload=.
+- Version not installed: the error ends with a =Next:= line; run =M-x abram/toolchain-install= (terminal: =toolchain-install=).
+
 * Installation
 
 ** Clone

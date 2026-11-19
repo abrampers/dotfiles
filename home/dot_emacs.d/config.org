@@ -1204,6 +1204,11 @@ This will setup GitHub Copilot for pair programming.
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
     :init
     (setq copilot-log-level 'error)
+    ;; Pinned to the newest nvm Node, independent of projects.
+    (let ((nodes (file-expand-wildcards (expand-file-name "~/.nvm/versions/node/*/bin/node"))))
+      (when nodes
+        (setq copilot-node-executable
+              (car (last (sort nodes #'version<))))))
     :bind
     (:map copilot-mode-map
           ("C-M-<next>" . copilot-next-completion)
@@ -1239,16 +1244,48 @@ This is a basic configuration for the Go language so that =.go= files activate =
 
 #+begin_src emacs-lisp
 
+  (defvar abram/go-tools-installing nil
+    "GOPATHs with a gopls/goimports install currently running.")
+
+  (defun abram/go-install-tools ()
+    "Install gopls and goimports into the current buffer's gvm pkgset."
+    (interactive)
+    (let* ((gopath (getenv "GOPATH"))
+           (bin (and gopath (expand-file-name "bin" (car (split-string gopath path-separator t))))))
+      (cond
+       ((not gopath) (message "No GOPATH in this buffer. Next: M-x abram/envrc-init"))
+       ((member gopath abram/go-tools-installing) nil)
+       (t
+        (push gopath abram/go-tools-installing)
+        (let ((process-environment (append '("GOTOOLCHAIN=auto") process-environment))
+              (default-directory default-directory)
+              (buf (current-buffer)))
+          (make-process
+           :name "go-tools-install" :buffer "*go-tools-install*"
+           :command '("sh" "-c" "go install golang.org/x/tools/gopls@latest && go install golang.org/x/tools/cmd/goimports@latest")
+           :sentinel (lambda (proc _e)
+                       (when (memq (process-status proc) '(exit signal))
+                         (setq abram/go-tools-installing (delete gopath abram/go-tools-installing))
+                         (if (zerop (process-exit-status proc))
+                             (when (buffer-live-p buf)
+                               (with-current-buffer buf (lsp-deferred)))
+                           (message "gopls/goimports install failed. See *go-tools-install*. Next: M-x abram/go-install-tools")))))))
+       )
+      bin))
+
+  (defun abram/go-ensure-tools-then-lsp ()
+    "Start LSP in a Go buffer, installing gopls into the pkgset first if missing."
+    (if (executable-find "gopls")
+        (lsp-deferred)
+      (abram/go-install-tools)))
+
   (use-package go-mode
     :mode "\\.go\\'"
-    :hook ((go-mode . lsp-deferred)
+    :hook ((go-mode . abram/go-ensure-tools-then-lsp)
            (go-mode . electric-pair-local-mode))
     :init
     (setq gofmt-command "goimports")
     (setq go-indent-offset 4)
-    (setq lsp-go-gopls-server-path
-          (expand-file-name "bin/gopls"
-            (car (split-string (or (getenv "GOPATH") "~") ":"))))
     (flycheck-mode)
     :config
     (add-hook 'before-save-hook 'gofmt-before-save))
@@ -2138,6 +2175,62 @@ this functions came from [[http://xahlee.info/emacs/emacs/emacs_url_percent_deco
         (progn
           (delete-region $p1 $p2)
           (insert $newStr)))))
+#+end_src
+
+* Per-project Environments (direnv)
+
+One Emacs server serves every project. [[https://github.com/purcell/envrc][envrc.el]] applies each project's direnv environment (Go via gvm, Node via nvm, JDK) to its buffers, so LSP servers, compile, test and format run with the right toolchain. =.envrc= is created only by explicit command.
+
+#+begin_src emacs-lisp
+
+  (defun abram/project-dir ()
+    (or (and (fboundp 'projectile-project-root) (projectile-project-root))
+        default-directory))
+
+  (defun abram/envrc-init ()
+    "Write a .envrc for the current project and allow it."
+    (interactive)
+    (let ((default-directory (abram/project-dir)))
+      (if (zerop (call-process-shell-command "zsh -ic envrc-init" nil "*envrc-init*"))
+          (progn (envrc-reload) (message "envrc initialised"))
+        (message "envrc-init wrote nothing. See *envrc-init*."))))
+
+  (defun abram/env-reload ()
+    "Re-run direnv for the project and restart its LSP servers."
+    (interactive)
+    (envrc-reload)
+    (when (bound-and-true-p lsp-mode)
+      (lsp-workspace-restart (lsp--read-workspace))))
+
+  (defun abram/toolchain-install ()
+    "Install the Go/Node/JDK versions this project is missing, then reload."
+    (interactive)
+    (let ((default-directory (abram/project-dir)))
+      (compilation-start (concat (expand-file-name "~/.scripts/toolchain-install"))
+                         nil (lambda (_) "*toolchain-install*"))
+      (add-hook 'compilation-finish-functions
+                (defun abram/toolchain-install-done (buf status)
+                  (when (and (equal (buffer-name buf) "*toolchain-install*")
+                             (string-prefix-p "finished" status))
+                    (remove-hook 'compilation-finish-functions #'abram/toolchain-install-done)
+                    (abram/env-reload))))))
+
+  ;; Show the "Next:" line of direnv errors in the echo area.
+  (defun abram/envrc-show-next (&rest _)
+    (when-let* ((buf (get-buffer "*envrc*"))
+                (line (with-current-buffer buf
+                        (save-excursion
+                          (goto-char (point-max))
+                          (when (re-search-backward "Next:.*$" nil t) (match-string 0))))))
+      (message "%s" line)))
+
+  (use-package envrc
+    :config
+    (advice-add 'envrc--update :after #'abram/envrc-show-next))
+
+  ;; Keep last so every other mode's buffers get their environment.
+  (envrc-global-mode 1)
+
 #+end_src
 
 * Runtime Performance

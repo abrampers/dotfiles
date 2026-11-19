@@ -491,3 +491,6 @@ eval "$(rbenv init - zsh)"
 rbenv shell $(rbenv global)
 
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+
+# direnv (after gvm/nvm setup)
+eval "$(direnv hook zsh)"

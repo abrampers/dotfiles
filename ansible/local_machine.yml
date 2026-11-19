@@ -68,6 +68,8 @@
       tags: [glab]
     - role: gh
       tags: [gh]
+    - role: direnv
+      tags: [direnv]
     - role: macos
       tags: [macos]
     - role: dotfiles
