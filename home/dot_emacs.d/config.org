@@ -91,6 +91,15 @@ Activate theme.
 
   (load-theme 'nord t)
 
+  ;; In a daemon the theme is loaded before any GUI frame exists, so colors are
+  ;; resolved for a terminal ("unspecified-bg" = white). Re-apply it whenever a
+  ;; graphic frame is created.
+  (defun abram/reapply-theme (&optional frame)
+    (when (display-graphic-p (or frame (selected-frame)))
+      (load-theme 'nord t)))
+  (when (daemonp)
+    (add-hook 'server-after-make-frame-hook #'abram/reapply-theme))
+
 #+end_src
 
 * Basic UI Configuration
