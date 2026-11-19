@@ -257,6 +257,11 @@ When running emacs from the app, emacs won't have the user's shell environment v
     (exec-path-from-shell-initialize)
     (abram/prefer-gopath-bin))
 
+  ;; The launchd-started server has no Homebrew in PATH (brew shellenv lives in
+  ;; .zshrc, which a login shell doesn't read). direnv and gvm helpers need it.
+  (abram/prepend-path-entry "/opt/homebrew/sbin")
+  (abram/prepend-path-entry "/opt/homebrew/bin")
+
 #+end_src
 
 * Keep Folders Clean
