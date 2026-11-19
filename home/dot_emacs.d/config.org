@@ -1245,9 +1245,10 @@ This is a basic configuration for the Go language so that =.go= files activate =
      (lambda (buf)
        (when (buffer-live-p buf)
          (with-current-buffer buf
-           (if (executable-find "gopls")
-               (lsp-deferred)
-             (abram/go-install-tools)))))
+           (unless (and (executable-find "gopls") (executable-find "goimports"))
+             (abram/go-install-tools))
+           (when (executable-find "gopls")
+             (lsp-deferred)))))
      (current-buffer)))
 
   (use-package go-mode
