@@ -1816,6 +1816,12 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
   (use-package lsp-origami
     :hook (lsp-mode . lsp-origami-try-enable))
 
+  ;; origami's default header face has a box whose color is computed at load time.
+  ;; In a daemon that is `unspecified', and creating a GUI frame (emacsclient -c)
+  ;; then fails with "Invalid face box". Give it a valid spec.
+  (with-eval-after-load 'origami
+    (custom-set-faces '(origami-fold-header-face ((t (:box nil))))))
+
 #+end_src
 
 ** Makefile
