@@ -7,7 +7,7 @@ Status: **approved for implementation, not started** (except step 1, drafted and
 Each project currently runs in its own Emacs process (`gvm use …` in a terminal, then `emacs .`), so each Emacs inherits that terminal's Go/Node/Java environment. Side effects:
 
 - Several Emacs processes rewrite Projectile's shared `~/.emacs.d/var/projectile/known-projects.el`. Emacs locks the file during each write, so overlapping writes trigger `error in process sentinel: …/known-projects.el: user@host (pid N)`. Projectile 2.8 (our pinned `002e527`) makes this frequent by saving on every `buffer-list-update-hook`; upstream reverted that in 2.9.0.
-- Every process starts its own Copilot Node agent and LSP servers, so memory use multiplies.
+- Every process starts its own LSP servers, so memory use multiplies.
 
 Goal: a single Emacs server where every project buffer automatically gets the right Go (gvm), Node (nvm) and JDK environment.
 
@@ -28,7 +28,6 @@ Goal: a single Emacs server where every project buffer automatically gets the ri
 | Server start | launchd at login (`brew services` for emacs-plus@30) |
 | Opening projects | `ec .` from a terminal, or Projectile switch inside Emacs |
 | Terminal | direnv zsh hook enabled, so `cd` into a repo switches versions too |
-| Copilot's Node | Pinned to the newest nvm Node, independent of projects |
 | Git ignore | `.envrc`, `.direnv/`, `.java-version` in the global ignore, managed by chezmoi |
 | Environment needed by | LSP servers and compile/test/format (also applies to CIDER and vterm started from a project buffer) |
 
@@ -115,7 +114,6 @@ Go versions before 1.16 have no Apple Silicon build (see Risks). The script dete
 6. **Emacs `config.org`.** First reconcile `~/.emacs.d/config.org` with `home/dot_emacs.d/config.org` (they currently differ). Then:
    - Add `envrc` (with `envrc-global-mode` turned on last in the config).
    - Go: remove the fixed `lsp-go-gopls-server-path` that is computed once at startup. Replace the `go-mode → lsp-deferred` hook with one that installs missing tools into the pkgset (`GOTOOLCHAIN=auto go install …`, run from the source buffer so it uses the project's environment) and then starts LSP. Avoid duplicate installs for the same pkgset.
-   - Set `copilot-node-executable` to the newest nvm Node.
    - Add `abram/envrc-init`, `abram/env-reload` (`envrc-reload`, then restart the project's LSP workspaces), `abram/toolchain-install`, `abram/go-install-tools`.
    - Show direnv `Next:` lines in the echo area if `envrc.el` doesn't already.
    - Keep exec-path-from-shell for the server's default environment.
@@ -127,7 +125,6 @@ Each step is implemented and reviewed separately on `feat/direnv-role`.
 
 - **Terminal:** `cd` into `gfs`, `merchant-listing-service`, `gofood-web-service`, `cashier`; check `go version`, `go env GOPATH GOMODCACHE`, `node -v`, `java -version`.
 - **Emacs, two Go versions:** open two Go repos on different Go versions in one session. In each Go buffer check `M-: (getenv "GOROOT")`. Confirm `lsp-describe-session` shows two gopls processes with different binaries.
-- **Tools:** goimports-on-save uses the pkgset's binary; Copilot runs on the pinned Node; `cider-jack-in` in `cashier` gets JDK 8.
 - **Errors:** remove a version / point `.nvmrc` at an uninstalled version and confirm the `Next:` line appears; run `abram/toolchain-install` and confirm it installs and reloads.
 - **Lock error:** no `known-projects.el` error after a day of use.
 

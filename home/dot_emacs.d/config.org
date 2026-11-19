@@ -1184,45 +1184,6 @@ I'm using [[https://www.flycheck.org/en/latest/index.html][flycheck]] for code d
 
 #+end_src
 
-** GitHub Copilot
-
-This will setup GitHub Copilot for pair programming.
-
-#+begin_src emacs-lisp
-  (defun rk/copilot-complete-or-accept ()
-    "Command that either triggers a completion or accepts one if one
-  is available. Useful if you tend to hammer your keys like I do."
-    (interactive)
-    (if (copilot--overlay-visible)
-        (progn
-          (copilot-accept-completion)
-          (open-line 1)
-          (next-line))
-      (copilot-complete)))
-
-  (use-package copilot
-    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-    :init
-    (setq copilot-log-level 'error)
-    ;; Pinned to the newest nvm Node, independent of projects.
-    (let* ((root (expand-file-name "~/.nvm/versions/node"))
-           (vers (and (file-directory-p root)
-                      (directory-files root nil "\\`v[0-9]+\\.[0-9]+\\.[0-9]+\\'")))
-           (newest (car (last (sort vers (lambda (a b) (version< (substring a 1) (substring b 1))))))))
-      (when newest
-        (setq copilot-node-executable
-              (expand-file-name (concat newest "/bin/node") root))))
-    :bind
-    (:map copilot-mode-map
-          ("C-M-<next>" . copilot-next-completion)
-          ("C-M-<prior>" . copilot-previous-completion)
-          ("C-M-<right>" . copilot-accept-completion-by-word)
-          ("C-M-<down>" . copilot-accept-completion-by-line))
-    (:map global-map
-          ("C-M-<return>" . rk/copilot-complete-or-accept))
-    :hook ((prog-mode . copilot-mode)))
-#+end_src
-
 ** Language Support
 
 *** Test keybindings
