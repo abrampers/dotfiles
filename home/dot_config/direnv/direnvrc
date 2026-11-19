@@ -39,7 +39,7 @@ use_gvm_project() {
   }
   export GOMODCACHE="$HOME/.gvm/gomodcache"
   mkdir -p "$GOMODCACHE"
-  PATH_add "$GOPATH/bin"
+  PATH_add "${GOPATH%%:*}/bin"
 }
 
 use_nvm_project() {

@@ -1239,9 +1239,16 @@ This is a basic configuration for the Go language so that =.go= files activate =
 
   (defun abram/go-ensure-tools-then-lsp ()
     "Start LSP in a Go buffer, installing gopls into the pkgset first if missing."
-    (if (executable-find "gopls")
-        (lsp-deferred)
-      (abram/go-install-tools)))
+    ;; Run after envrc has applied the project's environment to this buffer.
+    (run-with-idle-timer
+     0 nil
+     (lambda (buf)
+       (when (buffer-live-p buf)
+         (with-current-buffer buf
+           (if (executable-find "gopls")
+               (lsp-deferred)
+             (abram/go-install-tools)))))
+     (current-buffer)))
 
   (use-package go-mode
     :mode "\\.go\\'"
@@ -2163,8 +2170,8 @@ One Emacs server serves every project. [[https://github.com/purcell/envrc][envrc
     "Re-run direnv for the project and restart its LSP servers."
     (interactive)
     (envrc-reload)
-    (when (bound-and-true-p lsp-mode)
-      (lsp-workspace-restart (lsp--read-workspace))))
+    (dolist (ws (and (bound-and-true-p lsp-mode) (lsp-workspaces)))
+      (lsp-workspace-restart ws)))
 
   (defun abram/toolchain-install ()
     "Install the Go/Node/JDK versions this project is missing, then reload."
@@ -2180,16 +2187,23 @@ One Emacs server serves every project. [[https://github.com/purcell/envrc][envrc
                     (abram/env-reload))))))
 
   ;; Show the "Next:" line of direnv errors in the echo area.
+  (defvar abram/envrc-log-start 1)
+  (defun abram/envrc-mark-start (&rest _)
+    (setq abram/envrc-log-start
+          (if-let ((buf (get-buffer "*envrc*"))) (with-current-buffer buf (point-max)) 1)))
   (defun abram/envrc-show-next (&rest _)
+    "Echo the last Next: line written since the update started."
     (when-let* ((buf (get-buffer "*envrc*"))
                 (line (with-current-buffer buf
                         (save-excursion
                           (goto-char (point-max))
-                          (when (re-search-backward "Next:.*$" nil t) (match-string 0))))))
+                          (when (re-search-backward "Next:.*$" abram/envrc-log-start t)
+                            (match-string 0))))))
       (message "%s" line)))
 
   (use-package envrc
     :config
+    (advice-add 'envrc--update :before #'abram/envrc-mark-start)
     (advice-add 'envrc--update :after #'abram/envrc-show-next))
 
   ;; Keep last so every other mode's buffers get their environment.
