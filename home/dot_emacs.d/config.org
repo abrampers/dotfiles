@@ -1205,10 +1205,13 @@ This will setup GitHub Copilot for pair programming.
     :init
     (setq copilot-log-level 'error)
     ;; Pinned to the newest nvm Node, independent of projects.
-    (let ((nodes (file-expand-wildcards (expand-file-name "~/.nvm/versions/node/*/bin/node"))))
-      (when nodes
+    (let* ((root (expand-file-name "~/.nvm/versions/node"))
+           (vers (and (file-directory-p root)
+                      (directory-files root nil "\\`v[0-9]+\\.[0-9]+\\.[0-9]+\\'")))
+           (newest (car (last (sort vers (lambda (a b) (version< (substring a 1) (substring b 1))))))))
+      (when newest
         (setq copilot-node-executable
-              (car (last (sort nodes #'version<))))))
+              (expand-file-name (concat newest "/bin/node") root))))
     :bind
     (:map copilot-mode-map
           ("C-M-<next>" . copilot-next-completion)
