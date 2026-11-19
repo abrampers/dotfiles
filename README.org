@@ -19,7 +19,7 @@ Here's a few examples of my workspace.
 
 - Visible in the screenshot:
   - [[https://www.nordtheme.com][nord]] colorscheme.
-  - [[https://github.com/cseelus/monego][Monego]] (Regular) font.
+  - [[https://www.nerdfonts.com/font-downloads][SauceCodePro Nerd Font]] (Mono) font.
   - Emacs
 
 #+begin_quote

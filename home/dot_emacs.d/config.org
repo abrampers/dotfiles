@@ -34,6 +34,24 @@ We might want to customize stuff locally.
 
 #+end_src
 
+* Native Compilation Environment
+
+The launchd-started server has no shell environment, so libgccjit cannot find gcc's libraries or the macOS SDK ("error invoking gcc driver"). Point =LIBRARY_PATH= at them before any package is compiled.
+
+#+begin_src emacs-lisp
+
+  (when (and (eq system-type 'darwin) (featurep 'native-compile))
+    (let* ((sdk (let ((out (ignore-errors (string-trim (shell-command-to-string "/usr/bin/xcrun --show-sdk-path 2>/dev/null")))))
+                  (if (and out (file-directory-p out)) out "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk")))
+           (dirs (seq-filter #'file-directory-p
+                             (list "/opt/homebrew/lib/gcc/current"
+                                   "/opt/homebrew/opt/libgccjit/lib/gcc/current"
+                                   (expand-file-name "usr/lib" sdk)))))
+      (when dirs
+        (setenv "LIBRARY_PATH" (mapconcat #'identity dirs ":")))))
+
+#+end_src
+
 * Package System Setup
 ** Bootstrap straight.el
 
@@ -140,7 +158,7 @@ Get that fancy dark transparent title bar on OSX.
 
 ** Font Configuration
 
-I am using the [[https://github.com/cseelus/monego][Monego]] font for this configuration which will more than likely need to be installed on your machine. Both can usually be found in the various Linux distro package managers or downloaded from the links above.
+I am using the [[https://www.nerdfonts.com/font-downloads][SauceCodePro Nerd Font]] (Mono) font for this configuration which will more than likely need to be installed on your machine. Both can usually be found in the various Linux distro package managers or downloaded from the links above.
 
 #+begin_src emacs-lisp
 
@@ -148,7 +166,17 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
   (defvar abram/default-font-size 140)
 
   ;; (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size :weight 'medium)
-  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
+  ;; In a daemon there is no GUI frame at startup, so the face must be (re)applied
+  ;; whenever a graphic frame is created.
+  (defun abram/apply-font (&optional frame)
+    (let ((frame (or frame (selected-frame))))
+      (when (display-graphic-p frame)
+        (set-face-attribute 'default frame :font "SauceCodePro Nerd Font Mono"
+                            :height abram/default-font-size))))
+  (abram/apply-font)
+  (when (daemonp)
+    (add-hook 'server-after-make-frame-hook #'abram/apply-font)
+    (add-hook 'after-make-frame-functions #'abram/apply-font))
 
   ;; (setq default-frame-alist '((font . "SauceCodePro Nerd Font Mono-14")))
   ;; (add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font Mono-14"))
