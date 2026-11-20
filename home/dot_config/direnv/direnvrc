@@ -1,0 +1,71 @@
+# Per-project Go (gvm), Node (nvm) and JDK environments.
+# Every error ends with a "Next:" line.
+
+_proj_name() {
+  local url name
+  url=$(git remote get-url origin 2>/dev/null)
+  if [[ -n $url ]]; then name=$(basename "${url%.git}"); else name=$(basename "$PWD"); fi
+  echo "$name"
+}
+
+use_gvm_project() {
+  watch_file go.mod
+  [[ -f go.mod ]] || { log_error "no go.mod. Next: remove 'use gvm_project' from .envrc"; return 1; }
+  local want toolchain minor ver
+  toolchain=$(awk '$1=="toolchain"{print $2}' go.mod)
+  if [[ -n $toolchain ]]; then
+    want=${toolchain/#go/go}
+  else
+    minor=$(awk '$1=="go"{split($2,a,"."); print a[1]"."a[2]}' go.mod)
+    want=$(ls "$HOME/.gvm/gos" 2>/dev/null | grep -E "^go${minor//./\\.}(\.[0-9]+)?$" | sort -V | tail -1)
+  fi
+  if [[ -z $want || ! -d "$HOME/.gvm/gos/$want" ]]; then
+    log_error "Go ${toolchain:-$minor} is not installed. Next: M-x abram/toolchain-install (terminal: toolchain-install)"
+    return 1
+  fi
+  local pkgset; pkgset=$(_proj_name)
+  # shellcheck disable=SC1091
+  source "$HOME/.gvm/scripts/gvm" >/dev/null 2>&1
+  if [[ ! -d "$HOME/.gvm/pkgsets/$want/$pkgset" ]]; then
+    gvm use "$want" >/dev/null 2>&1
+    gvm pkgset create "$pkgset" >/dev/null 2>&1 || {
+      log_error "Could not create pkgset. Next: run: gvm use $want && gvm pkgset create $pkgset"
+      return 1
+    }
+  fi
+  gvm use "$want@$pkgset" >/dev/null 2>&1 || {
+    log_error "gvm use $want@$pkgset failed. Next: run: gvm use $want@$pkgset"
+    return 1
+  }
+  export GOMODCACHE="$HOME/.gvm/gomodcache"
+  mkdir -p "$GOMODCACHE"
+  PATH_add "${GOPATH%%:*}/bin"
+}
+
+use_nvm_project() {
+  watch_file .nvmrc
+  [[ -f .nvmrc ]] || { log_error "no .nvmrc. Next: remove 'use nvm_project' from .envrc"; return 1; }
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  # shellcheck disable=SC1091
+  source "$(brew --prefix nvm)/nvm.sh" >/dev/null 2>&1
+  local node; node=$(nvm which "$(cat .nvmrc)" 2>/dev/null)
+  if [[ -z $node || ! -x $node ]]; then
+    log_error "Node $(cat .nvmrc) is not installed. Next: M-x abram/toolchain-install (terminal: toolchain-install)"
+    return 1
+  fi
+  PATH_add "$(dirname "$node")"
+}
+
+use_jdk_project() {
+  watch_file .java-version
+  local v=8
+  [[ -f .java-version ]] && v=$(tr -d '[:space:]' < .java-version)
+  [[ $v == 8 ]] && v=1.8
+  local home; home=$(/usr/libexec/java_home -F -v "$v" 2>/dev/null)
+  if [[ -z $home ]]; then
+    log_error "JDK $v is not installed. Next: M-x abram/toolchain-install (terminal: toolchain-install)"
+    return 1
+  fi
+  export JAVA_HOME=$home
+  PATH_add "$JAVA_HOME/bin"
+}

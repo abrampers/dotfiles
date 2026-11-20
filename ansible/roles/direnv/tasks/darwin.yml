@@ -1,0 +1,5 @@
+---
+- name: direnv | darwin | install direnv
+  community.general.homebrew:
+    name: direnv
+    state: present

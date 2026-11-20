@@ -72,6 +72,8 @@
       tags: [bruno]
     - role: gh
       tags: [gh]
+    - role: direnv
+      tags: [direnv]
     - role: macos
       tags: [macos]
     - role: dotfiles

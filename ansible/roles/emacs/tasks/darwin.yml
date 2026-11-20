@@ -30,3 +30,12 @@
     src: "{{ editors_emacs_app_source }}"
     dest: "{{ editors_emacs_app_destination }}"
     state: link
+
+- name: emacs | darwin | check Emacs server brew service
+  ansible.builtin.command: "{{ homebrew_prefix }}/bin/brew services list"
+  register: emacs_service_list
+  changed_when: false
+
+- name: emacs | darwin | start Emacs server at login (emacs --fg-daemon)
+  ansible.builtin.command: "{{ homebrew_prefix }}/bin/brew services start {{ editors_emacs_formula }}"
+  when: (emacs_service_list.stdout_lines | select('match', '^' ~ editors_emacs_formula ~ '\s+started') | list | length) == 0

@@ -34,6 +34,24 @@ We might want to customize stuff locally.
 
 #+end_src
 
+* Native Compilation Environment
+
+The launchd-started server has no shell environment, so libgccjit cannot find gcc's libraries or the macOS SDK ("error invoking gcc driver"). Point =LIBRARY_PATH= at them before any package is compiled.
+
+#+begin_src emacs-lisp
+
+  (when (and (eq system-type 'darwin) (featurep 'native-compile))
+    (let* ((sdk (let ((out (ignore-errors (string-trim (shell-command-to-string "/usr/bin/xcrun --show-sdk-path 2>/dev/null")))))
+                  (if (and out (file-directory-p out)) out "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk")))
+           (dirs (seq-filter #'file-directory-p
+                             (list "/opt/homebrew/lib/gcc/current"
+                                   "/opt/homebrew/opt/libgccjit/lib/gcc/current"
+                                   (expand-file-name "usr/lib" sdk)))))
+      (when dirs
+        (setenv "LIBRARY_PATH" (mapconcat #'identity dirs ":")))))
+
+#+end_src
+
 * Package System Setup
 ** Bootstrap straight.el
 
@@ -91,6 +109,15 @@ Activate theme.
 
   (load-theme 'nord t)
 
+  ;; In a daemon the theme is loaded before any GUI frame exists, so colors are
+  ;; resolved for a terminal ("unspecified-bg" = white). Re-apply it whenever a
+  ;; graphic frame is created.
+  (defun abram/reapply-theme (&optional frame)
+    (when (display-graphic-p (or frame (selected-frame)))
+      (load-theme 'nord t)))
+  (when (daemonp)
+    (add-hook 'server-after-make-frame-hook #'abram/reapply-theme))
+
 #+end_src
 
 * Basic UI Configuration
@@ -131,7 +158,7 @@ Get that fancy dark transparent title bar on OSX.
 
 ** Font Configuration
 
-I am using the [[https://github.com/cseelus/monego][Monego]] font for this configuration which will more than likely need to be installed on your machine. Both can usually be found in the various Linux distro package managers or downloaded from the links above.
+I am using the [[https://www.nerdfonts.com/font-downloads][SauceCodePro Nerd Font]] (Mono) font for this configuration which will more than likely need to be installed on your machine. Both can usually be found in the various Linux distro package managers or downloaded from the links above.
 
 #+begin_src emacs-lisp
 
@@ -139,7 +166,17 @@ I am using the [[https://github.com/cseelus/monego][Monego]] font for this confi
   (defvar abram/default-font-size 140)
 
   ;; (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size :weight 'medium)
-  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height abram/default-font-size)
+  ;; In a daemon there is no GUI frame at startup, so the face must be (re)applied
+  ;; whenever a graphic frame is created.
+  (defun abram/apply-font (&optional frame)
+    (let ((frame (or frame (selected-frame))))
+      (when (display-graphic-p frame)
+        (set-face-attribute 'default frame :font "SauceCodePro Nerd Font Mono"
+                            :height abram/default-font-size))))
+  (abram/apply-font)
+  (when (daemonp)
+    (add-hook 'server-after-make-frame-hook #'abram/apply-font)
+    (add-hook 'after-make-frame-functions #'abram/apply-font))
 
   ;; (setq default-frame-alist '((font . "SauceCodePro Nerd Font Mono-14")))
   ;; (add-to-list 'default-frame-alist '(font . "SauceCodePro Nerd Font Mono-14"))
@@ -256,6 +293,11 @@ When running emacs from the app, emacs won't have the user's shell environment v
     ;; (exec-path-from-shell-copy-env "PYENV_ROOT")
     (exec-path-from-shell-initialize)
     (abram/prefer-gopath-bin))
+
+  ;; The launchd-started server has no Homebrew in PATH (brew shellenv lives in
+  ;; .zshrc, which a login shell doesn't read). direnv and gvm helpers need it.
+  (abram/prepend-path-entry "/opt/homebrew/sbin")
+  (abram/prepend-path-entry "/opt/homebrew/bin")
 
 #+end_src
 
@@ -1184,37 +1226,6 @@ I'm using [[https://www.flycheck.org/en/latest/index.html][flycheck]] for code d
 
 #+end_src
 
-** GitHub Copilot
-
-This will setup GitHub Copilot for pair programming.
-
-#+begin_src emacs-lisp
-  (defun rk/copilot-complete-or-accept ()
-    "Command that either triggers a completion or accepts one if one
-  is available. Useful if you tend to hammer your keys like I do."
-    (interactive)
-    (if (copilot--overlay-visible)
-        (progn
-          (copilot-accept-completion)
-          (open-line 1)
-          (next-line))
-      (copilot-complete)))
-
-  (use-package copilot
-    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-    :init
-    (setq copilot-log-level 'error)
-    :bind
-    (:map copilot-mode-map
-          ("C-M-<next>" . copilot-next-completion)
-          ("C-M-<prior>" . copilot-previous-completion)
-          ("C-M-<right>" . copilot-accept-completion-by-word)
-          ("C-M-<down>" . copilot-accept-completion-by-line))
-    (:map global-map
-          ("C-M-<return>" . rk/copilot-complete-or-accept))
-    :hook ((prog-mode . copilot-mode)))
-#+end_src
-
 ** Language Support
 
 *** Test keybindings
@@ -1239,16 +1250,62 @@ This is a basic configuration for the Go language so that =.go= files activate =
 
 #+begin_src emacs-lisp
 
+  (defvar abram/go-tools-installing nil
+    "GOPATHs with a gopls/goimports install currently running.")
+
+  (defun abram/go-install-tools ()
+    "Install gopls and goimports into the current buffer's gvm pkgset."
+    (interactive)
+    (let* ((gopath (getenv "GOPATH"))
+           (bin (and gopath (expand-file-name "bin" (car (split-string gopath path-separator t))))))
+      (cond
+       ((not gopath) (message "No GOPATH in this buffer. Next: M-x abram/envrc-init"))
+       ((member gopath abram/go-tools-installing) nil)
+       (t
+        (push gopath abram/go-tools-installing)
+        (let ((process-environment (append '("GOTOOLCHAIN=auto") process-environment))
+              (proc nil))
+          (setq proc
+                (make-process
+                 :name "go-tools-install" :buffer "*go-tools-install*"
+                 :command '("sh" "-c" "go install golang.org/x/tools/gopls@latest && go install golang.org/x/tools/cmd/goimports@latest")
+                 :sentinel #'abram/go-install-sentinel))
+          (process-put proc 'gopath gopath)
+          (process-put proc 'buffer (current-buffer)))))
+      bin))
+
+  (defun abram/go-install-sentinel (proc _event)
+    "Sentinel for the gopls/goimports install; state lives on PROC (no closures)."
+    (when (memq (process-status proc) '(exit signal))
+      (let ((gopath (process-get proc 'gopath))
+            (buf (process-get proc 'buffer)))
+        (setq abram/go-tools-installing (delete gopath abram/go-tools-installing))
+        (if (zerop (process-exit-status proc))
+            (when (buffer-live-p buf)
+              (with-current-buffer buf (lsp-deferred)))
+          (message "gopls/goimports install failed. See *go-tools-install*. Next: M-x abram/go-install-tools")))))
+
+  (defun abram/go-ensure-tools-then-lsp ()
+    "Start LSP in a Go buffer, installing gopls into the pkgset first if missing."
+    ;; Run after envrc has applied the project's environment to this buffer.
+    (run-with-idle-timer
+     0 nil
+     (lambda (buf)
+       (when (buffer-live-p buf)
+         (with-current-buffer buf
+           (unless (and (executable-find "gopls") (executable-find "goimports"))
+             (abram/go-install-tools))
+           (when (executable-find "gopls")
+             (lsp-deferred)))))
+     (current-buffer)))
+
   (use-package go-mode
     :mode "\\.go\\'"
-    :hook ((go-mode . lsp-deferred)
+    :hook ((go-mode . abram/go-ensure-tools-then-lsp)
            (go-mode . electric-pair-local-mode))
     :init
     (setq gofmt-command "goimports")
     (setq go-indent-offset 4)
-    (setq lsp-go-gopls-server-path
-          (expand-file-name "bin/gopls"
-            (car (split-string (or (getenv "GOPATH") "~") ":"))))
     (flycheck-mode)
     :config
     (add-hook 'before-save-hook 'gofmt-before-save))
@@ -1796,6 +1853,12 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
   (use-package lsp-origami
     :hook (lsp-mode . lsp-origami-try-enable))
 
+  ;; origami's default header face has a box whose color is computed at load time.
+  ;; In a daemon that is `unspecified', and creating a GUI frame (emacsclient -c)
+  ;; then fails with "Invalid face box". Give it a valid spec.
+  (with-eval-after-load 'origami
+    (custom-set-faces '(origami-fold-header-face ((t (:box nil))))))
+
 #+end_src
 
 ** Makefile
@@ -2138,6 +2201,69 @@ this functions came from [[http://xahlee.info/emacs/emacs/emacs_url_percent_deco
         (progn
           (delete-region $p1 $p2)
           (insert $newStr)))))
+#+end_src
+
+* Per-project Environments (direnv)
+
+One Emacs server serves every project. [[https://github.com/purcell/envrc][envrc.el]] applies each project's direnv environment (Go via gvm, Node via nvm, JDK) to its buffers, so LSP servers, compile, test and format run with the right toolchain. =.envrc= is created only by explicit command.
+
+#+begin_src emacs-lisp
+
+  (defun abram/project-dir ()
+    (or (and (fboundp 'projectile-project-root) (projectile-project-root))
+        default-directory))
+
+  (defun abram/envrc-init ()
+    "Write a .envrc for the current project and allow it."
+    (interactive)
+    (let ((default-directory (abram/project-dir)))
+      (if (zerop (call-process-shell-command "zsh -ic envrc-init" nil "*envrc-init*"))
+          (progn (envrc-reload) (message "envrc initialised"))
+        (message "envrc-init wrote nothing. See *envrc-init*."))))
+
+  (defun abram/env-reload ()
+    "Re-run direnv for the project and restart its LSP servers."
+    (interactive)
+    (envrc-reload)
+    (dolist (ws (and (bound-and-true-p lsp-mode) (lsp-workspaces)))
+      (lsp-workspace-restart ws)))
+
+  (defun abram/toolchain-install ()
+    "Install the Go/Node/JDK versions this project is missing, then reload."
+    (interactive)
+    (let ((default-directory (abram/project-dir)))
+      (compilation-start (concat (expand-file-name "~/.scripts/toolchain-install"))
+                         nil (lambda (_) "*toolchain-install*"))
+      (add-hook 'compilation-finish-functions
+                (defun abram/toolchain-install-done (buf status)
+                  (when (and (equal (buffer-name buf) "*toolchain-install*")
+                             (string-prefix-p "finished" status))
+                    (remove-hook 'compilation-finish-functions #'abram/toolchain-install-done)
+                    (abram/env-reload))))))
+
+  ;; Show the "Next:" line of direnv errors in the echo area.
+  (defvar abram/envrc-log-start 1)
+  (defun abram/envrc-mark-start (&rest _)
+    (setq abram/envrc-log-start
+          (if-let ((buf (get-buffer "*envrc*"))) (with-current-buffer buf (point-max)) 1)))
+  (defun abram/envrc-show-next (&rest _)
+    "Echo the last Next: line written since the update started."
+    (when-let* ((buf (get-buffer "*envrc*"))
+                (line (with-current-buffer buf
+                        (save-excursion
+                          (goto-char (point-max))
+                          (when (re-search-backward "Next:.*$" abram/envrc-log-start t)
+                            (match-string 0))))))
+      (message "%s" line)))
+
+  (use-package envrc
+    :config
+    (advice-add 'envrc--update :before #'abram/envrc-mark-start)
+    (advice-add 'envrc--update :after #'abram/envrc-show-next))
+
+  ;; Keep last so every other mode's buffers get their environment.
+  (envrc-global-mode 1)
+
 #+end_src
 
 * Runtime Performance

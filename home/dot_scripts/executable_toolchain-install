@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Install the Go / Node / JDK versions the current project needs but are missing.
+set -uo pipefail
+cd "${1:-$PWD}" || exit 1
+source "$HOME/.gvm/scripts/gvm" >/dev/null 2>&1
+export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+source "$(brew --prefix nvm)/nvm.sh" >/dev/null 2>&1
+
+if [[ -f go.mod ]]; then
+  toolchain=$(awk '$1=="toolchain"{print $2}' go.mod)
+  minor=$(awk '$1=="go"{split($2,a,"."); print a[1]"."a[2]}' go.mod)
+  if [[ -n $toolchain ]]; then want=$toolchain
+  else
+    want=$(gvm listall 2>/dev/null | tr -d ' ' | grep -E "^go${minor//./\\.}(\.[0-9]+)?$" | sort -V | tail -1)
+  fi
+  if [[ -z $want ]]; then echo "No Go release found for $minor. See gvm listall."
+  elif [[ ! -d $HOME/.gvm/gos/$want ]]; then
+    case $minor in 1.[0-9]|1.1[0-5])
+      echo "$want has no Apple Silicon build (arm64 starts at 1.16). Use an amd64 Go under Rosetta or a newer Go via override."; exit 1;;
+    esac
+    echo "+ gvm install $want -B"; gvm install "$want" -B || { echo "See output above. Command: gvm install $want -B"; exit 1; }
+  fi
+fi
+
+if [[ -f .nvmrc ]] && ! nvm which "$(cat .nvmrc)" >/dev/null 2>&1; then
+  echo "+ nvm install $(cat .nvmrc)"; nvm install "$(cat .nvmrc)" || { echo "Command: nvm install $(cat .nvmrc)"; exit 1; }
+fi
+
+jv=8; [[ -f .java-version ]] && jv=$(tr -d '[:space:]' < .java-version)
+jq=$jv; [[ $jv == 8 ]] && jq=1.8
+if [[ -z $(/usr/libexec/java_home -F -v "$jq" 2>/dev/null) ]]; then
+  echo "+ brew install --cask temurin@$jv"; brew install --cask "temurin@$jv" || { echo "Command: brew install --cask temurin@$jv"; exit 1; }
+fi
+echo "toolchain-install: done"
