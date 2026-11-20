@@ -1,29 +1,23 @@
 ---
-- name: agy | darwin | check if Antigravity app already installed
-  ansible.builtin.stat:
-    path: "{{ agy_app_source }}"
-  register: agy_app_pre
-  changed_when: false
-
-- name: agy | darwin | install Antigravity (provides the agy CLI)
-  community.general.homebrew_cask:
-    name: antigravity
-    state: present
-  when: not agy_app_pre.stat.exists
-
-- name: agy | darwin | verify agy is on PATH
-  ansible.builtin.shell: "PATH={{ homebrew_prefix }}/bin:$PATH command -v {{ agy_binary_name }}"
-  args:
-    executable: /bin/bash
-  register: agy_path
+- name: agy | darwin | check installed binary
+  ansible.builtin.command:
+    cmd: /bin/sh -c "command -v {{ agy_binary_name }}"
+  register: agy_binary
   changed_when: false
   failed_when: false
-  when: not ansible_check_mode
 
-- name: agy | darwin | assert agy is available
-  ansible.builtin.assert:
-    that:
-      - agy_path.rc == 0
-    fail_msg: "Expected {{ agy_binary_name }} on PATH after installing the antigravity cask."
-    success_msg: "{{ agy_binary_name }} available at {{ agy_path.stdout }}."
-  when: not ansible_check_mode
+- name: agy | darwin | preview installer
+  ansible.builtin.debug:
+    msg: "Check mode: would run curl -fsSL {{ agy_installer_url }} | bash"
+  when:
+    - ansible_check_mode
+    - agy_binary.rc != 0
+
+- name: agy | darwin | install Antigravity CLI
+  ansible.builtin.shell: |
+    curl -fsSL "{{ agy_installer_url }}" | bash
+  args:
+    executable: /bin/bash
+  when:
+    - not ansible_check_mode
+    - agy_binary.rc != 0
