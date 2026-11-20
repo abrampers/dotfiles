@@ -60,6 +60,8 @@
       tags: [opencode]
     - role: gemini_cli
       tags: [gemini_cli]
+    - role: agy
+      tags: [agy]
     - role: copilot_cli
       tags: [copilot_cli]
     - role: claude

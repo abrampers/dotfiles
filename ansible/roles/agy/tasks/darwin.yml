@@ -1,0 +1,23 @@
+---
+- name: agy | darwin | check installed binary
+  ansible.builtin.command:
+    cmd: /bin/sh -c "command -v {{ agy_binary_name }}"
+  register: agy_binary
+  changed_when: false
+  failed_when: false
+
+- name: agy | darwin | preview installer
+  ansible.builtin.debug:
+    msg: "Check mode: would run curl -fsSL {{ agy_installer_url }} | bash"
+  when:
+    - ansible_check_mode
+    - agy_binary.rc != 0
+
+- name: agy | darwin | install Antigravity CLI
+  ansible.builtin.shell: |
+    curl -fsSL "{{ agy_installer_url }}" | bash
+  args:
+    executable: /bin/bash
+  when:
+    - not ansible_check_mode
+    - agy_binary.rc != 0
