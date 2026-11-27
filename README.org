@@ -87,6 +87,48 @@ This writes a git-ignored =.envrc= (=use gvm_project=, =use nvm_project=, =use j
 - After editing =go.mod=, =.nvmrc= or =.java-version=: =M-x abram/env-reload=.
 - Version not installed: the error ends with a =Next:= line; run =M-x abram/toolchain-install= (terminal: =toolchain-install=).
 
+* Emacs: LSP and fd hygiene
+
+The Emacs server never exits. On macOS, file watching (kqueue) costs one open fd per watched directory, so every LSP workspace you open keeps thousands of fds until its language server is stopped (a Go repo with =vendor/= is the worst case). Past roughly 1,024 fds Emacs's event loop (=select()=) starts failing with "Too many open files". Code: the =LSP and fd hygiene= section of =home/dot_emacs.d/config.org=.
+
+** What it does
+
+- The =lsp-mode= block ignores directories lsp-mode does not skip by itself (=vendor=, =.direnv=, =.gvm=, =.cache=) and prompts above 1,000 directories per workspace (=lsp-file-watch-threshold=). =auto-revert-use-notify= is off, so auto-revert polls instead of holding an fd per buffer.
+- Switching project (=C-c p p=, or =ec .= on another project) updates a most-recently-used list. The =abram/lsp-warm-projects= newest projects keep their LSP. When an older project still has a language server running, you are asked whether to release it.
+- Release shuts down that project's language servers only. Its buffers stay open, and the LSP restarts when you switch back (each buffer when it is shown) or open one of its files.
+- If the old project has unsaved files, Emacs asks per file whether to save. Declining any file skips the release.
+- A server that also serves another project's buffers is never shut down by a release.
+- Every 30 seconds Emacs checks its fd count. Above =abram/fd-auto-release-threshold= it releases the oldest project outside the warm window without asking (projects with unsaved files are skipped). If nothing can be released it tells you once.
+
+** Customisation
+
+Set with =M-x customize-group RET abram-lsp=, or =setq= in =config.org=.
+
+| Variable                          | Default | Meaning                                                                           |
+|-----------------------------------+---------+-----------------------------------------------------------------------------------|
+| =abram/lsp-warm-projects=         | =5=     | How many most recent projects keep their LSP. Older ones are released on switch.  |
+| =abram/lsp-release-confirm=       | =t=     | Ask before releasing on switch. =nil= releases silently.                          |
+| =abram/fd-auto-release-threshold= | =600=   | Open-fd count above which the oldest project is released without asking.          |
+| =abram/fd-modeline-enabled=       | =t=     | Show =fd:N= in the mode line (turns the =warning= face above the threshold).      |
+
+** Commands
+
+| Command                                 | Use                                                                                       |
+|-----------------------------------------+-------------------------------------------------------------------------------------------|
+| =M-x abram/fd-report=                   | Open fds by type, and directory fds per project, so you can see who holds the watchers.   |
+| =M-x abram/project-release-current=     | Release the current project's LSP now. Buffers restart when you re-enter the project.     |
+| =M-x abram/project-release-all-but-current= | Emergency: release every other project's LSP.                                         |
+| =M-x abram/fd-modeline-toggle=          | Hide or show the fd count in the mode line. The auto-release check keeps running.         |
+
+** If it is still not enough
+
+Turn file watching off entirely by adding =(lsp-enable-file-watchers nil)= to the =lsp-mode= =:custom= list. The cost: language servers will not notice external changes (=git checkout=, =go mod vendor=) until you reopen the buffer.
+
+** Notes
+
+- The warm window counts projects by when you last switched to them, not by whether a language server is running. A project whose LSP was released, or whose release you declined, is not asked about again until you visit it.
+- Quick manual check of the effect: =lsof -p $(pgrep -f fg-daemon) | awk '$5=="DIR"' | wc -l=.
+
 * Installation
 
 ** Clone
