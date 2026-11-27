@@ -1102,9 +1102,20 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :custom
     (lsp-clojure-server-command '("bash" "-c" "clojure-lsp"))
-    (lsp-file-watch-threshold 5000)
+    ;; The daemon never exits, so every watched directory costs a kqueue fd
+    ;; forever (one fd per directory on macOS). Prompt for big repos instead
+    ;; of silently watching them. See "LSP and fd hygiene".
+    (lsp-file-watch-threshold 1000)
     (lsp-diagnostics-provider :flycheck)
     :config
+    ;; lsp-mode already ignores .git, node_modules, dist and target. These are
+    ;; the ones it misses: Go vendor trees (the bulk of our leaked fds) and
+    ;; the per-project direnv/gvm state.
+    (dolist (re '("[/\\\\]vendor\\'"
+                  "[/\\\\]\\.direnv\\'"
+                  "[/\\\\]\\.gvm\\'"
+                  "[/\\\\]\\.cache\\'"))
+      (add-to-list 'lsp-file-watch-ignored-directories re))
     (lsp-enable-which-key-integration t))
 
 #+end_src
@@ -2263,6 +2274,281 @@ One Emacs server serves every project. [[https://github.com/purcell/envrc][envrc
 
   ;; Keep last so every other mode's buffers get their environment.
   (envrc-global-mode 1)
+
+#+end_src
+
+* LSP and fd hygiene
+
+The Emacs server never exits. On macOS =filenotify= (kqueue) holds one fd per watched directory, so every LSP workspace we open keeps thousands of fds until its language server is shut down. Past about 1,024 fds Emacs's =select()= loop misbehaves ("Too many open files"). Besides the ignore rules in the =lsp-mode= block, this section releases the LSP of projects you have moved away from.
+
+Behaviour, in short (details and options in =README.org=):
+
+- Switching project (=C-c p p=, or =ec .= on another project) records it in an MRU list (=abram/project-lru=). The =abram/lsp-warm-projects= most recent projects keep their LSP; an older project that still has a language server running is released.
+- Release shuts down the project's LSP workspaces only. Buffers stay open, and the LSP restarts when you come back to the project.
+- If the old project has unsaved files you are asked, per file, whether to save. Declining any file skips the release.
+- Normally you are asked before a release (=abram/lsp-release-confirm=). A periodic check releases the oldest project without asking if the fd count passes =abram/fd-auto-release-threshold=.
+
+#+begin_src emacs-lisp
+
+  (require 'cl-lib)
+  (require 'subr-x)
+
+  (defgroup abram-lsp nil
+    "Keep the long-lived Emacs server under the fd limit."
+    :group 'tools)
+
+  (defcustom abram/lsp-warm-projects 5
+    "How many most recently used projects keep their LSP servers running."
+    :type 'integer)
+
+  (defcustom abram/lsp-release-confirm t
+    "Ask before releasing the LSP of a project you switched away from."
+    :type 'boolean)
+
+  (defcustom abram/fd-auto-release-threshold 600
+    "Release the oldest project's LSP without asking above this many open fds.
+Keep it well under 1024, the `select' limit of the Emacs event loop."
+    :type 'integer)
+
+  (defcustom abram/fd-modeline-enabled t
+    "Show the open fd count in the mode line.
+Toggle at runtime with `abram/fd-modeline-toggle'."
+    :type 'boolean)
+
+  ;; auto-revert would otherwise add one more kqueue fd per buffer.
+  (setq auto-revert-use-notify nil)
+
+  ;;; Project bookkeeping
+
+  (defvar abram/project-lru nil
+    "Project roots, most recently used first.")
+
+  (defvar abram/project-release-declined nil
+    "Roots whose release you declined; not asked again until you revisit them.")
+
+  (defun abram/project-root-of (&optional dir)
+    "Return the Projectile root of DIR (default `default-directory'), or nil."
+    (when (fboundp 'projectile-project-root)
+      (let ((default-directory (or dir default-directory)))
+        (when-let ((root (ignore-errors (projectile-project-root))))
+          (let ((root (file-name-as-directory (expand-file-name root))))
+            (unless (equal root (file-name-as-directory (expand-file-name "~")))
+              root))))))
+
+  (defun abram/project--buffer-in-p (buf root)
+    "Non-nil if BUF visits a file under ROOT."
+    (when-let ((file (buffer-file-name buf)))
+      (string-prefix-p root (expand-file-name file))))
+
+  (defun abram/project--lsp-workspaces (root)
+    "Return the live LSP workspaces serving file buffers under ROOT."
+    (let (workspaces)
+      (dolist (buf (buffer-list))
+        (when (abram/project--buffer-in-p buf root)
+          (with-current-buffer buf
+            (when (bound-and-true-p lsp-mode)
+              (dolist (ws (lsp-workspaces))
+                (cl-pushnew ws workspaces))))))
+      workspaces))
+
+  (defun abram/project--unsaved (root)
+    "Return modified file buffers under ROOT."
+    (cl-remove-if-not (lambda (buf)
+                        (and (buffer-modified-p buf)
+                             (abram/project--buffer-in-p buf root)))
+                      (buffer-list)))
+
+  ;;; Release
+
+  (defun abram/project-release (root &optional mode)
+    "Shut down the LSP workspaces of the project at ROOT. Buffers stay open.
+MODE is `confirm' (ask first, unless `abram/lsp-release-confirm' is nil),
+`manual' (never ask) or `auto' (no prompts at all; skip if files are unsaved).
+Return non-nil if something was released."
+    (let ((workspaces (abram/project--lsp-workspaces root)))
+      (cond
+       ((null workspaces) nil)
+       ;; Unsaved files: ask per file, except in the unattended `auto' mode.
+       ((and (abram/project--unsaved root)
+             (not (eq mode 'auto))
+             (progn
+               (save-some-buffers nil (lambda () (abram/project--buffer-in-p (current-buffer) root)))
+               (abram/project--unsaved root)))
+        (message "LSP not released for %s: unsaved files remain. Save them, then M-x abram/project-release."
+                 (abbreviate-file-name root))
+        nil)
+       ((abram/project--unsaved root)
+        (message "LSP not released for %s: unsaved files." (abbreviate-file-name root))
+        nil)
+       ((and (eq mode 'confirm) abram/lsp-release-confirm
+             (not (y-or-n-p (format "Release LSP for %s (%d server%s)? "
+                                    (abbreviate-file-name root) (length workspaces)
+                                    (if (= (length workspaces) 1) "" "s")))))
+        (cl-pushnew root abram/project-release-declined :test #'equal)
+        nil)
+       (t
+        (let ((released 0))
+          (dolist (ws workspaces)
+            ;; A server that also serves another project's buffers (multi-root)
+            ;; must keep running for that project.
+            (if (cl-every (lambda (buf) (abram/project--buffer-in-p buf root))
+                          (lsp--workspace-buffers ws))
+                (progn (lsp-workspace-shutdown ws) (cl-incf released))
+              (message "LSP kept for %s: server also serves another project."
+                       (abbreviate-file-name root))))
+          (when (> released 0)
+            (message "Released %d LSP server%s for %s"
+                     released (if (= released 1) "" "s") (abbreviate-file-name root)))
+          (> released 0))))))
+
+  (defun abram/project--cold-roots ()
+    "Roots older than the warm window that still have LSP workspaces, oldest first."
+    (reverse (cl-remove-if-not #'abram/project--lsp-workspaces
+                               (nthcdr abram/lsp-warm-projects abram/project-lru))))
+
+  (defun abram/project-activate (&optional root)
+    "Make ROOT (default: current buffer's project) the current project.
+Releases the LSP of projects that have fallen out of the warm window."
+    (when-let ((root (or root (abram/project-root-of))))
+      (unless (equal root (car abram/project-lru))
+        (setq abram/project-lru (cons root (delete root abram/project-lru)))
+        (setq abram/project-release-declined (delete root abram/project-release-declined))
+        ;; Returning to a released project: its buffers still have lsp-mode on
+        ;; but no server. `lsp-deferred' restarts each one when it is shown.
+        (dolist (buf (buffer-list))
+          (when (abram/project--buffer-in-p buf root)
+            (with-current-buffer buf
+              (when (and (bound-and-true-p lsp-mode) (null (lsp-workspaces)))
+                (lsp-deferred)))))
+        (dolist (old (nthcdr abram/lsp-warm-projects abram/project-lru))
+          (unless (member old abram/project-release-declined)
+            (abram/project-release old 'confirm))))))
+
+  (defun abram/project-release-current ()
+    "Release the LSP of the current project now. Buffers stay open."
+    (interactive)
+    (if-let ((root (abram/project-root-of)))
+        (unless (abram/project-release root 'manual)
+          (message "Nothing released for %s" (abbreviate-file-name root)))
+      (user-error "Not in a project")))
+
+  (defun abram/project-release-all-but-current ()
+    "Release the LSP of every project except the current one (emergency use)."
+    (interactive)
+    (let ((current (abram/project-root-of))
+          (count 0))
+      (dolist (root abram/project-lru)
+        (unless (equal root current)
+          (when (abram/project-release root 'manual) (cl-incf count))))
+      (message "Released LSP for %d project%s" count (if (= count 1) "" "s"))))
+
+  ;; Triggers: Projectile switch, and `ec .' (emacsclient) opening a project.
+  (with-eval-after-load 'projectile
+    (add-hook 'projectile-after-switch-project-hook #'abram/project-activate))
+  (add-hook 'server-switch-hook #'abram/project-activate)
+  (add-hook 'server-after-make-frame-hook #'abram/project-activate)
+
+  ;;; Visibility and safety net
+
+  (defvar abram/fd-count 0 "Open file descriptors of this Emacs, refreshed every 30s.")
+  (defvar abram/fd--warned nil)
+  (defvar abram/fd--timer nil)
+
+  (defun abram/fd-count ()
+    "Return the number of fds this Emacs has open."
+    ;; /dev/fd lists them on macOS; minus the one used for the listing itself.
+    (max 0 (1- (length (directory-files "/dev/fd" nil directory-files-no-dot-files-regexp)))))
+
+  (defun abram/fd-tick ()
+    "Refresh the fd count and release the oldest project if it is too high."
+    (setq abram/fd-count (abram/fd-count))
+    (if (<= abram/fd-count abram/fd-auto-release-threshold)
+        (setq abram/fd--warned nil)
+      (if-let ((root (cl-find-if (lambda (r) (abram/project-release r 'auto))
+                                 (abram/project--cold-roots))))
+          (message "fd count %d is over %d: released LSP for %s"
+                   abram/fd-count abram/fd-auto-release-threshold (abbreviate-file-name root))
+        (unless abram/fd--warned
+          (setq abram/fd--warned t)
+          (message "fd count %d is over %d and nothing can be auto-released. Try M-x abram/project-release-all-but-current."
+                   abram/fd-count abram/fd-auto-release-threshold))))
+    (force-mode-line-update t))
+
+  (when (timerp abram/fd--timer) (cancel-timer abram/fd--timer))
+  (setq abram/fd--timer (run-with-timer 30 30 #'abram/fd-tick))
+  (setq abram/fd-count (abram/fd-count))
+
+  (defun abram/fd-modeline ()
+    (if abram/fd-modeline-enabled
+        (propertize (format " fd:%d " abram/fd-count)
+                    'face (if (> abram/fd-count abram/fd-auto-release-threshold) 'warning 'shadow)
+                    'help-echo "Open file descriptors. M-x abram/fd-report for details.")
+      ""))
+
+  (add-to-list 'global-mode-string '(:eval (abram/fd-modeline)) t)
+
+  (defun abram/fd-modeline-toggle ()
+    "Show or hide the fd count in the mode line. The auto-release check keeps running."
+    (interactive)
+    (setq abram/fd-modeline-enabled (not abram/fd-modeline-enabled))
+    (force-mode-line-update t)
+    (message "fd modeline %s" (if abram/fd-modeline-enabled "on" "off")))
+
+  (defun abram/fd--owner (path)
+    "Return the known project root PATH is under, or a short fallback label."
+    (or (cl-find-if (lambda (root) (string-prefix-p root (file-name-as-directory path)))
+                    abram/project-lru)
+        (let* ((short (abbreviate-file-name path))
+               (parts (seq-take (split-string short "/" t) 4)))
+          (concat (unless (string-prefix-p "~" short) "/")
+                  (mapconcat #'identity parts "/")
+                  " (not a known project)"))))
+
+  (defun abram/fd--report-sentinel (proc _event)
+    "Render the lsof output of PROC into *fd-report*.
+Written without closures: this config is loaded with dynamic binding."
+    (when (eq (process-status proc) 'exit)
+      (let ((out (process-buffer proc))
+            (report (get-buffer-create "*fd-report*"))
+            (types (make-hash-table :test 'equal))
+            (dirs (make-hash-table :test 'equal))
+            (total 0))
+        (with-current-buffer out
+          (goto-char (point-min))
+          (while (re-search-forward
+                  "^\\S-+ +[0-9]+ +\\S-+ +\\([0-9]+\\)[a-zA-Z]* +\\(\\S-+\\) +\\S-+ +\\S-+ +\\S-+ +\\(.*\\)$" nil t)
+            (let ((type (match-string 2)) (name (match-string 3)))
+              (cl-incf total)
+              (cl-incf (gethash type types 0))
+              (when (equal type "DIR")
+                (cl-incf (gethash (abram/fd--owner name) dirs 0))))))
+        (kill-buffer out)
+        (with-current-buffer report
+          (erase-buffer)
+          (insert (format "Open fds: %d  (auto-release above %d)\n\nBy type:\n"
+                          total abram/fd-auto-release-threshold))
+          (let (rows)
+            (maphash (lambda (k v) (push (cons k v) rows)) types)
+            (dolist (r (sort rows (lambda (a b) (> (cdr a) (cdr b)))))
+              (insert (format "  %-8s %d\n" (car r) (cdr r)))))
+          (insert "\nDirectory fds (file watchers) by project:\n")
+          (let (rows)
+            (maphash (lambda (k v) (push (cons k v) rows)) dirs)
+            (dolist (r (sort rows (lambda (a b) (> (cdr a) (cdr b)))))
+              (insert (format "  %6d  %s\n" (cdr r) (abbreviate-file-name (car r))))))
+          (insert "\nRelease one with M-x abram/project-release-current in that project.\n")))))
+
+  (defun abram/fd-report ()
+    "Show open fds by type, and directory fds by project, in *fd-report*."
+    (interactive)
+    (with-current-buffer (get-buffer-create "*fd-report*")
+      (erase-buffer)
+      (insert "Running lsof...\n"))
+    (display-buffer "*fd-report*")
+    (make-process
+     :name "fd-report" :buffer (generate-new-buffer " *fd-lsof*") :noquery t
+     :command (list "lsof" "-n" "-P" "-w" "-p" (number-to-string (emacs-pid)))
+     :sentinel #'abram/fd--report-sentinel))
 
 #+end_src
 
